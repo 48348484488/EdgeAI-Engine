@@ -1,0 +1,8 @@
+{
+  "seed": 33,
+  "one_block_correct": 59,
+  "two_block_nll_selected_correct": 46,
+  "two_block_generation_selected_correct": 48,
+  "generation_selection_delta": 2,
+  "selected_step": null
+}
