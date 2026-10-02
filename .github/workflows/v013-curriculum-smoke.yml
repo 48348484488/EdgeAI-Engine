@@ -1,0 +1,28 @@
+name: EdgeAI v0.13 Curriculum Smoke
+on:
+  push:
+    branches: [v0.12-multiblock]
+    paths:
+      - tools/instruction_data_v013.py
+      - tests/test_v013_curriculum.py
+      - .github/workflows/v013-curriculum-smoke.yml
+  workflow_dispatch:
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 -m unittest tests.test_v013_curriculum
+      - run: python3 tools/instruction_data_v013.py
+      - name: Verify frozen test hashes
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          a=json.loads(Path('data/instructions_v07/manifest.json').read_text())
+          b=json.loads(Path('data/instructions_v013/manifest.json').read_text())
+          for s in ('test_id','test_template','test_range','test_family'):
+              k=s+'.jsonl'
+              assert a['files'][k]['sha256']==b['files'][k]['sha256'], (s,a['files'][k],b['files'][k])
+          print('sealed v0.12 tests preserved byte-for-byte')
+          PY
