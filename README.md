@@ -51,33 +51,34 @@ Três seeds, 60 s de CPU por arquitetura/seed e avaliação final por geração 
 
 O ensaio curto teacher-forced de 12 s havia favorecido 2 blocos, mas a avaliação principal de 60 s com geração livre não reproduziu um ganho consistente: 2 blocos venceu apenas 1 das 3 seeds. Por isso, **1 bloco continua sendo o padrão**, enquanto o suporte multi-bloco permanece disponível para pesquisa.
 
-### Ablação equal-updates
+### Profundidade: diagnóstico e melhor candidato
 
-Para testar se 2 blocos perdia apenas porque conseguia menos updates dentro dos mesmos 60 s de CPU, repetimos o lado de 2 blocos usando **exatamente o mesmo stream de minibatches, os mesmos checkpoints de validação e o mesmo número de optimizer updates do baseline de 1 bloco** em cada seed.
+A ablação **equal-updates** deu ao modelo de 2 blocos exatamente o mesmo stream de minibatches e o mesmo número de optimizer updates do baseline de 1 bloco. Isso não resolveu a diferença: o baseline ficou em **147/582 exatos (149 `correct`)** e o 2-blocos random-identity em **138/582**. Portanto, menos updates no orçamento fixo de CPU não era a explicação principal.
 
-| Seed | 1 bloco baseline (exato) | 2 blocos equal-updates (exato) |
-|---|---:|---:|
-| 11 | 53/194 | **55/194** |
-| 22 | 37/194 | 37/194 |
-| 33 | **57/194** | 46/194 |
-| **Total** | **147/582** | 138/582 |
+O probe de dinâmica mostrou a causa mais provável: após apenas 128 updates, o bloco herdado havia mudado cerca de **11–12%** da própria norma, enquanto o miolo aleatório do novo bloco havia mudado cerca de **48–55%**. A partir disso, testamos uma inicialização que copia `Q/K/V/up` do bloco treinado para o bloco novo, mantendo `project/down` zerados para preservar exatamente a função inicial.
 
-Pela métrica `correct` usada para expressões, o baseline soma **149/582** e 2 blocos **138/582**. Portanto, igualar a exposição ao treinamento **não removeu a diferença de geração**. O modelo de 2 blocos precisou de cerca de **1,197×** o CPU de treino para receber os mesmos updates. Isso descarta “menos passos no mesmo orçamento de CPU” como explicação principal, mas não prova qual mecanismo de otimização causa a instabilidade entre seeds.
+| Variante de 2 blocos | Exato/correct no teste original | Observação |
+|---|---:|---|
+| random-identity + equal updates | 138/582 | baseline de ablação |
+| copy-inner + LR normal | 145/582 | +7 sobre random-identity |
+| **copy-inner + LR interno 0,25×** | **163/582** | melhor agregado |
 
-O próximo diagnóstico deve medir gradientes e mudança funcional por bloco durante o treino e testar warm-up/congelamento do segundo bloco, em vez de simplesmente aumentar o orçamento.
+O baseline de 1 bloco tem **147/582 exatos** e **149/582 `correct`**. O candidato de 2 blocos com copy-inner + LR interno 0,25× chegou a **163/582** em ambas as métricas, mas no teste original venceu claramente apenas a seed 22; por isso o resultado agregado sozinho não é suficiente para promovê-lo como padrão.
 
-Evidências equal-update: `results/v012_equal_steps/training.json` e `results/v012_equal_steps/evaluation.json`.
+Para uma replicação adicional, congelamos os modelos e construímos depois um holdout de **128 entradas novas por seed**, sem qualquer retreino: strings de tamanho 5, somas com operandos 20–29 e coeficientes 30–39, faixas que não aparecem no dataset v0.7 congelado. Nesse holdout pós-hoc, 1 bloco fez **15/384** exatos e o candidato fez **60/384**, vencendo em **3/3 seeds** (7→10, 4→41 e 4→9). É um sinal forte de generalização dentro dessas tarefas sintéticas, mas o holdout foi criado após observarmos os testes originais e não é um benchmark pré-registrado.
+
+O custo continua real: 2 blocos usa **93.699 parâmetros**, dobra o estado KV e, no holdout executado no mesmo runner, ficou cerca de **18–21% mais lento** internamente que 1 bloco. Por isso, **1 bloco continua sendo o padrão de runtime**, enquanto copy-inner + LR interno 0,25× é o candidato neural experimental preferido para a próxima rodada de pesquisa.
+
+Evidências: `results/v012_equal_steps/`, `results/v012/block_dynamics.json`, `results/v012_copy_init/`, `results/v012_copy_init_low_lr/` e `results/v012_fresh_holdout/`.
 
 Paridade Python/C++: 4/4 casos passaram, com maior erro absoluto de **3,5763e-7**.
 
 ## Verificação v0.12
 
-- Release CTest: **15/15**
-- Python: **138/138**
-- Sem SIMD: **15/15 CTest**
-- ASan + UBSan: **15/15 CTest**
-- Modelos/checkpoints legados preservados: **142/142**
-- Novos artefatos v0.12: **24**
+A verificação final da branch executa Release, suíte Python, paridade Python/C++, build sem SIMD, ASan+UBSan e auditoria dos modelos legados. O resultado reproduzível fica em `results/v012/verification.json`.
+
+- Modelos/checkpoints legados esperados: **142**
+- Modelos/checkpoints experimentais v0.12 preservados no Git: **24**
 
 ## Como funciona
 
