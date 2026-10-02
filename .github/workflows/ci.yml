@@ -2,8 +2,12 @@ name: EdgeAI CI
 
 on:
   push:
-    branches: [main]
+    branches:
+      - v0.11-final-integration
   workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
   verify:
@@ -17,6 +21,46 @@ jobs:
       - name: C++ tests
         run: ctest --test-dir build --output-on-failure
       - name: Install Python test dependencies
-        run: python3 -m pip install --disable-pip-version-check --index-url https://download.pytorch.org/whl/cpu torch==2.10.0 && python3 -m pip install --disable-pip-version-check 'numpy>=1.26,<3'
+        run: |
+          python3 -m pip install 'numpy>=1.26,<3'
+          python3 -m pip install 'torch==2.10.0+cpu' --index-url https://download.pytorch.org/whl/cpu
       - name: Python tests
+        env:
+          EDGEAI_BUILD_DIR: ${{ github.workspace }}/build
         run: python3 -m unittest discover -s tests -p 'test_*.py'
+      - name: v0.10 versus v0.11 ranking benchmark
+        shell: bash
+        run: |
+          chmod +x bin/linux-x86_64/edgeai_code_search
+          python3 - <<'PY'
+          from pathlib import Path
+          import importlib.util, json, statistics
+          spec=importlib.util.spec_from_file_location("bench","benchmarks/code_session_v010.py")
+          bench=importlib.util.module_from_spec(spec);spec.loader.exec_module(bench)
+          root=Path("data/cpython_snapshot/documents").resolve()
+          cases,_=bench.make_cases(root);queries=[c["query"] for c in cases]
+          exes={"v010":Path("bin/linux-x86_64/edgeai_code_search").resolve(),
+                "v011":Path("build/edgeai_code_search").resolve()}
+          summary={}
+          for name,exe in exes.items():
+              runs=[];rows=None
+              for _ in range(5):
+                  ms,current=bench.invoke(exe,root,queries);runs.append(ms)
+                  if rows is not None and rows!=current: raise SystemExit(f"{name} nondeterministic")
+                  rows=current
+              top1=top5=empty=0
+              for case,result in zip(cases,rows):
+                  if case["expected_path"] is None:
+                      empty += not result["hits"]; continue
+                  matches=[h["path"]==case["expected_path"] and h["match_line"]==case["expected_line"] for h in result["hits"]]
+                  top1 += bool(matches and matches[0]); top5 += any(matches)
+              summary[name]={"top1":top1,"top5":top5,"empty":empty,
+                             "median_session_ms":statistics.median(runs)}
+          print(json.dumps(summary,indent=2))
+          old,new=summary["v010"],summary["v011"]
+          if new["top1"] < 22: raise SystemExit("v0.11 top1 below acceptance threshold")
+          if new["top1"] <= old["top1"]: raise SystemExit("v0.11 did not improve top1")
+          if new["top5"] < old["top5"]: raise SystemExit("v0.11 regressed top5")
+          if new["empty"] != 8: raise SystemExit("negative-case regression")
+          if new["median_session_ms"] > old["median_session_ms"]*2: raise SystemExit("v0.11 slower than 2x acceptance limit")
+          PY
