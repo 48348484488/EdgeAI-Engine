@@ -1,0 +1,57 @@
+name: Import EdgeAI package
+
+on:
+  push:
+    paths:
+      - 'EdgeAI-Engine-v0.10.zip'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Extract package
+        shell: bash
+        run: |
+          set -euo pipefail
+          ZIP="EdgeAI-Engine-v0.10.zip"
+          if [ ! -f "$ZIP" ]; then
+            echo "Package not present; nothing to import."
+            exit 0
+          fi
+
+          TMP="$(mktemp -d)"
+          unzip -q "$ZIP" -d "$TMP"
+
+          shopt -s dotglob nullglob
+          entries=("$TMP"/*)
+          if [ "${#entries[@]}" -eq 1 ] && [ -d "${entries[0]}" ]; then
+            cp -a "${entries[0]}"/. .
+          else
+            cp -a "$TMP"/. .
+          fi
+
+          rm -f "$ZIP"
+          rm -rf "$TMP"
+
+      - name: Commit imported project
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git commit -m "Import EdgeAI Engine v0.10"
+          git push
