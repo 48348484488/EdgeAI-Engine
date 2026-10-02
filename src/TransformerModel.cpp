@@ -115,7 +115,7 @@ TransformerModel TransformerModel::load(const std::string&path){
         if((mode==0&&count!=0)||count>4096-(mode==2?259u:257u))throw std::runtime_error("BPE merge limit exceeded");
         binary::remaining(i,std::size_t(count)*8);
         std::vector<ByteBPE::Pair> merges;merges.reserve(count);
-        for(std::uint32_t j=0;j<count;++j)merges.emplace_back(rd<std::uint32_t>(i),rd<std::uint32_t>(i));
+        for(std::uint32_t j=0;j<count;++j){auto a=rd<std::uint32_t>(i);auto b=rd<std::uint32_t>(i);merges.emplace_back(a,b);}
         if(mode==0)m.tokenizer=ByteBPE();
         else m.tokenizer=ByteBPE(std::move(merges),mode==2);
     }else{
@@ -126,7 +126,7 @@ TransformerModel TransformerModel::load(const std::string&path){
             if(count>4096-(version==7?259:257))throw std::runtime_error("BPE merge limit exceeded");
             binary::remaining(i,std::size_t(count)*8);
             std::vector<ByteBPE::Pair> merges;merges.reserve(count);
-            for(std::uint32_t j=0;j<count;++j)merges.emplace_back(rd<std::uint32_t>(i),rd<std::uint32_t>(i));
+            for(std::uint32_t j=0;j<count;++j){auto a=rd<std::uint32_t>(i);auto b=rd<std::uint32_t>(i);merges.emplace_back(a,b);}
             m.tokenizer=ByteBPE(std::move(merges),version==7);
         }
     }
