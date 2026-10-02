@@ -145,7 +145,7 @@ def export_transformer(model,path,max_generate=128,tokenizer=None):
             tmp=Path(f.name)
             if len(model.blocks)==1:
                 version=(7 if tokenizer.instruction else 6) if tokenizer is not None else 5
-                f.write(('EDGEAI'+str(version)+'\\0').encode('ascii'));w_u32(f,version)
+                f.write(('EDGEAI'+str(version)+'\0').encode('ascii'));w_u32(f,version)
                 for n in (model.dim,model.hidden,model.window,max_generate):
                     w_u32(f,n)
                 w_f32(f,model.rope_base)
@@ -158,7 +158,7 @@ def export_transformer(model,path,max_generate=128,tokenizer=None):
                     write_mixed(f,getattr(model.blocks[0],name))
                 write_mixed(f,model.out)
             else:
-                f.write(b'EDGEAI8\\0');w_u32(f,8)
+                f.write(b'EDGEAI8\0');w_u32(f,8)
                 for n in (model.dim,model.hidden,model.window,max_generate):
                     w_u32(f,n)
                 w_f32(f,model.rope_base);w_u32(f,len(model.blocks))
