@@ -6,8 +6,6 @@ from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[1]
 BINARY=Path(os.environ.get('EDGEAI_BUILD_DIR',str(ROOT/'build')))/'edgeai_chat'
-if len(sys.argv)>1 and not sys.argv[1].startswith('-'):
-    BINARY=Path(sys.argv.pop(1)).resolve()
 
 
 class ChatBanner(unittest.TestCase):
@@ -19,4 +17,6 @@ class ChatBanner(unittest.TestCase):
 
 
 if __name__=='__main__':
+    if len(sys.argv)>1 and not sys.argv[1].startswith('-'):
+        BINARY=Path(sys.argv.pop(1)).resolve()
     unittest.main()
