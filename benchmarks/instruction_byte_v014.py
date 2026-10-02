@@ -53,6 +53,16 @@ def build_identity(seed,blocks,cpu,threads,dataset_digest,tok_fp,config):
                 batch=16,lr=.001,weight_decay=.01,clip_norm=1.0,max_length=128,
                 selection='minimum response validation NLL at 25/50/75/100 percent')
 
+def assert_fair_pair(one,two):
+    if one.get('blocks')!=1 or two.get('blocks')!=2:
+        raise ValueError('need blocks 1 and 2')
+    ignore={'blocks'}
+    keys=(set(one)|set(two))-ignore
+    changed=[k for k in sorted(keys) if one.get(k)!=two.get(k)]
+    if changed:
+        raise ValueError('unfair byte-token pair: '+','.join(changed))
+    return True
+
 def train_trial(seed,blocks,cpu_seconds,threads,data,groups,dataset_digest,model_dir):
     base_path=ROOT/f'models/external_v06/bpe513-seed{seed}.pt'
     cp=torch.load(base_path,map_location='cpu',weights_only=True)
@@ -130,8 +140,7 @@ def main():
         for blocks in a.architectures:
             row=train_trial(seed,blocks,a.cpu_seconds,a.threads,data,groups,digest,model_dir)
             report['runs'].append(row);pair.append(row);report['completed']=len(report['runs']);save(a.out,report)
-        if pair[0]['batch_ids_sha256']!=pair[1]['batch_ids_sha256']:
-            raise RuntimeError('paired byte models saw different minibatch streams')
+        assert_fair_pair(pair[0]['identity'],pair[1]['identity'])
     report['completed']=len(report['runs']);report['fairness_verified']=True;save(a.out,report)
     print(json.dumps(dict(completed=report['completed'],fairness_verified=True,out=str(a.out))),flush=True)
 
