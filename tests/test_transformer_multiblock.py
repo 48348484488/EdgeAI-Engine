@@ -1,5 +1,6 @@
 import math
 import sys
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -9,7 +10,8 @@ from torch.nn import functional as F
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
 
-from transformer_model import TinyTransformer, numeric_weight_bytes
+from transformer_model import TinyTransformer, numeric_weight_bytes, export_transformer
+from byte_bpe import ByteBPE
 
 
 class MultiBlockTransformerTests(unittest.TestCase):
@@ -66,6 +68,23 @@ class MultiBlockTransformerTests(unittest.TestCase):
             )
         )
         self.assertEqual(numeric_weight_bytes(two) - numeric_weight_bytes(one), extra)
+
+
+    def test_two_block_export_uses_edgeai8(self):
+        model = TinyTransformer(dim=8, hidden=12, window=4, precision="fp32", blocks=2)
+        with tempfile.TemporaryDirectory() as td:
+            path = Path(td) / "two.edge"
+            export_transformer(model, path, max_generate=16)
+            self.assertEqual(path.read_bytes()[:8], b"EDGEAI8\\0")
+
+    def test_one_block_instruction_export_stays_edgeai7(self):
+        tok = ByteBPE((), instruction=True)
+        model = TinyTransformer(dim=8, hidden=12, window=4, precision="fp32",
+                                vocab_size=tok.vocab_size, blocks=1)
+        with tempfile.TemporaryDirectory() as td:
+            path = Path(td) / "one.edge"
+            export_transformer(model, path, max_generate=16, tokenizer=tok)
+            self.assertEqual(path.read_bytes()[:8], b"EDGEAI7\\0")
 
 
 if __name__ == "__main__":
