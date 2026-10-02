@@ -81,9 +81,16 @@ class V012ExperimentContractTests(unittest.TestCase):
         torch.manual_seed(321)
         base=TinyTransformer(dim=8,hidden=12,window=4,precision='fp32',blocks=1)
         base.eval()
-        two=exp.promote_blocks(base,2,seed=77).eval()
         tokens=torch.tensor([[1,2,3,4,5,6]],dtype=torch.long)
-        torch.testing.assert_close(two(tokens),base(tokens),rtol=0,atol=0)
+        before=base(tokens).detach().clone()
+        two=exp.promote_blocks(base,2,seed=77).eval()
+        torch.testing.assert_close(base(tokens),before,rtol=0,atol=0,msg='promotion mutated base model')
+        base_h=base._forward_block(base.emb(tokens),base.blocks[0])
+        two_h=two._forward_block(two.emb(tokens),two.blocks[0])
+        torch.testing.assert_close(two_h,base_h,rtol=0,atol=0,msg='copied first block diverged')
+        two_h2=two._forward_block(two_h,two.blocks[1])
+        torch.testing.assert_close(two_h2,two_h,rtol=0,atol=0,msg='second block is not identity')
+        torch.testing.assert_close(two(tokens),before,rtol=0,atol=0,msg='final promoted function diverged')
 
     def test_promote_one_block_returns_independent_copy(self):
         torch.manual_seed(456)
