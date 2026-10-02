@@ -72,6 +72,71 @@ std::string json_string(const std::string& s){
  for(unsigned char c:s){switch(c){case '"':o<<"\\\"";break;case '\\':o<<"\\\\";break;case '\n':o<<"\\n";break;case '\r':o<<"\\r";break;case '\t':o<<"\\t";break;default:if(c<32)o<<"\\u"<<std::hex<<std::setw(4)<<std::setfill('0')<<int(c)<<std::dec;else o<<char(c);}}
  o<<'"';return o.str();
 }
+
+std::vector<std::string> project_source_lines(const std::vector<std::string>& lines,const std::string& path){
+ std::vector<std::string> out;out.reserve(lines.size());
+ const auto ext=lower(fs::path(path).extension().string());const bool python=ext==".py"||ext==".pyi";
+ bool block=false,triple=false;char triple_quote=0;
+ for(const auto& line:lines){
+  std::string code=line;bool single=false,dbl=false,escape=false;
+  for(std::size_t i=0;i<line.size();++i){
+   const char c=line[i],next=i+1<line.size()?line[i+1]:'\0';
+   if(python&&triple){
+    code[i]=' ';
+    if(i+2<line.size()&&line[i]==triple_quote&&line[i+1]==triple_quote&&line[i+2]==triple_quote){code[i+1]=code[i+2]=' ';i+=2;triple=false;}
+    continue;
+   }
+   if(!python&&block){code[i]=' ';if(c=='*'&&next=='/'){code[i+1]=' ';++i;block=false;}continue;}
+   if(single||dbl){code[i]=' ';if(escape){escape=false;continue;}if(c=='\\'){escape=true;continue;}if((single&&c=='\'')||(dbl&&c=='"'))single=dbl=false;continue;}
+   if(python&&i+2<line.size()&&((c=='"'&&line[i+1]=='"'&&line[i+2]=='"')||(c=='\''&&line[i+1]=='\''&&line[i+2]=='\''))){triple=true;triple_quote=c;code[i]=code[i+1]=code[i+2]=' ';i+=2;continue;}
+   if(c=='/'&&next=='/'){std::fill(code.begin()+static_cast<std::ptrdiff_t>(i),code.end(),' ');break;}
+   if(!python&&c=='/'&&next=='*'){code[i]=code[i+1]=' ';++i;block=true;continue;}
+   if(python&&c=='#'){std::fill(code.begin()+static_cast<std::ptrdiff_t>(i),code.end(),' ');break;}
+   if(c=='\''){code[i]=' ';single=true;continue;}
+   if(c=='"'){code[i]=' ';dbl=true;continue;}
+  }
+  out.push_back(std::move(code));
+ }
+ return out;
+}
+std::string ltrim_copy(std::string value){auto p=value.find_first_not_of(" \t");return p==std::string::npos?std::string():value.substr(p);}
+bool boundary_after(const std::string& value,std::size_t p){return p>=value.size()||!word(static_cast<unsigned char>(value[p]));}
+bool control_prefix(const std::string& value){
+ return value.rfind("if ",0)==0||value.rfind("if(",0)==0||value.rfind("for ",0)==0||value.rfind("for(",0)==0||
+        value.rfind("while ",0)==0||value.rfind("while(",0)==0||value.rfind("switch ",0)==0||
+        value.rfind("return ",0)==0||value.rfind("throw ",0)==0;
+}
+bool explicit_definition(const std::string& code,const std::set<std::string>& terms){
+ const auto t=ltrim_copy(lower(code));
+ static const std::vector<std::string> prefixes={"def ","async def ","class ","function ","fn ","func ","stock ","public "};
+ for(const auto& term:terms){
+  for(const auto& prefix:prefixes){auto p=t.find(prefix+term);if(p!=std::string::npos&&boundary_after(t,p+prefix.size()+term.size()))return true;}
+  for(const auto& kw:{std::string("const "),std::string("let "),std::string("var ")}){
+   auto p=t.find(kw+term);if(p!=std::string::npos&&boundary_after(t,p+kw.size()+term.size())&&t.find("=>",p)!=std::string::npos)return true;
+  }
+  auto pos=t.find(term);
+  while(pos!=std::string::npos){
+   if((pos==0||!word(static_cast<unsigned char>(t[pos-1])))&&boundary_after(t,pos+term.size())){
+    auto n=pos+term.size();while(n<t.size()&&(t[n]==' '||t[n]=='\t'))++n;
+    if(n<t.size()&&t[n]=='('&&!control_prefix(t)&&t.find('{',n)!=std::string::npos&&pos>0)return true;
+   }
+   pos=t.find(term,pos+term.size());
+  }
+ }
+ return false;
+}
+bool declaration_like(const std::string& code,const std::set<std::string>& terms){
+ const auto t=ltrim_copy(lower(code));if(t.empty()||t.back()!=';'||control_prefix(t))return false;
+ for(const auto& term:terms){auto pos=t.find(term);while(pos!=std::string::npos){
+  if((pos==0||!word(static_cast<unsigned char>(t[pos-1])))&&boundary_after(t,pos+term.size())){
+   auto n=pos+term.size();while(n<t.size()&&(t[n]==' '||t[n]=='\t'))++n;
+   if(n<t.size()&&t[n]=='('&&pos>0)return true;
+  }
+  pos=t.find(term,pos+term.size());
+ }}
+ return false;
+}
+
 } // namespace
 CodeIndex::CodeIndex(const std::string& root,SearchLimits limits):limits_(limits){
  if(!limits.max_files||limits.max_files>100000||!limits.max_file_bytes||
@@ -135,6 +200,7 @@ void CodeIndex::refresh(){
     fresh->entries+=terms.size();fresh->lines.push_back(std::move(line));
    }
    if(oversize){++next.skipped_files;next.partial=true;continue;}
+   fresh->code_lines=project_source_lines(fresh->lines,name);
    source=std::move(fresh);++next.reindexed_files;
   }
   next.total_lines+=source->lines.size();next.index_entries+=source->entries;
@@ -150,24 +216,6 @@ CodeSearchResult CodeIndex::search(const std::string& query,std::size_t limit,st
  if(query.size()>512||!utf8_text(query))throw std::invalid_argument("query must be UTF-8 text of at most 512 bytes");
  if(limit<1||limit>20||context>10)throw std::invalid_argument("limit 1..20 and context 0..10 required");
  auto result=stats_;auto terms=query_tokens(query);if(terms.empty())return result;
- auto classify=[&](const std::string& line,const std::string& term){
-  const auto low=lower(line);const auto first=low.find_first_not_of(" \t");
-  if(first==std::string::npos)return -20.0;
-  if(low.compare(first,2,"//")==0||low[first]=='#'||low.compare(first,2,"/*")==0||low[first]=='*')return -30.0;
-  const auto pos=low.find(term);if(pos==std::string::npos)return 0.0;
-  bool quoted=false;char quote=0;
-  for(std::size_t i=0;i<pos;++i){char c=line[i];if((c=='\''||c=='"')&&(i==0||line[i-1]!='\\')){if(!quoted){quoted=true;quote=c;}else if(quote==c)quoted=false;}}
-  if(quoted)return -25.0;
-  const auto paren=low.find('(',pos+term.size());
-  if(paren==std::string::npos)return 0.0;
-  const auto before=low.substr(first,pos-first);
-  if(before.find("def ")!=std::string::npos||before.find("function ")!=std::string::npos||before.find("func ")!=std::string::npos||before.find("fn ")!=std::string::npos||before.find("stock ")!=std::string::npos||before.find("forward ")!=std::string::npos)return 40.0;
-  if(pos>first){
-   const auto prefix=low.substr(first,pos-first);
-   if(prefix.find('=')==std::string::npos&&prefix.find("return ")==std::string::npos&&prefix.find("if ")==std::string::npos&&prefix.find("while ")==std::string::npos&&prefix.find("for ")==std::string::npos&&prefix.find("switch ")==std::string::npos&&prefix.find("case ")==std::string::npos&&prefix.find(".")==std::string::npos)return 32.0;
-  }
-  return -4.0;
- };
  for(const auto& ptr:sources_){
   const auto& src=*ptr;const std::vector<std::size_t>* rarest=nullptr;bool impossible=false;
   for(const auto&term:terms){
@@ -182,6 +230,7 @@ CodeSearchResult CodeIndex::search(const std::string& query,std::size_t limit,st
    for(const auto&term:terms){auto f=src.postings.find(term);if(f!=src.postings.end())from_paths.insert(from_paths.end(),f->second.begin(),f->second.end());}
    std::sort(from_paths.begin(),from_paths.end());from_paths.erase(std::unique(from_paths.begin(),from_paths.end()),from_paths.end());rarest=&from_paths;
   }
+  std::vector<CodeHit> local_hits;
   for(auto i:*rarest){
    ++result.candidate_lines;bool all=true;std::size_t matched_row=0;
    for(const auto&term:terms){auto f=src.postings.find(term);
@@ -190,19 +239,27 @@ CodeSearchResult CodeIndex::search(const std::string& query,std::size_t limit,st
    }
    if(!all||!matched_row)continue;
    double score=double(matched_row)*10.0;const auto line_lower=lower(src.lines[i]);
-   auto paren=line_lower.find('(');
-   for(const auto&term:terms){auto pos=line_lower.find(term);if(pos!=std::string::npos&&paren!=std::string::npos&&pos<paren)score+=2;score+=classify(src.lines[i],term);}
-   if(line_lower.find('{')!=std::string::npos)score+=1;
+   const auto& code=src.code_lines[i];const auto code_lower=lower(code);std::size_t code_matches=0;
+   for(const auto&term:terms){
+    auto pos=line_lower.find(term);if(pos!=std::string::npos){auto paren=line_lower.find('(',pos);if(paren!=std::string::npos&&pos<paren)score+=2;}
+    if(code_lower.find(term)!=std::string::npos)++code_matches;
+   }
+   if(!code_matches)score-=8;else score+=double(code_matches);
+   if(explicit_definition(code,terms))score+=12;else if(declaration_like(code,terms))score+=6;
+   const auto first=line_lower.find_first_not_of(" \t");
+   if(first!=std::string::npos&&(line_lower.compare(first,2,"//")==0||line_lower[first]=='#'))score-=3;
    CodeHit hit;hit.path=src.path;hit.match_line=i+1;hit.start_line=(i>context?i-context:0)+1;hit.end_line=std::min(src.lines.size(),i+context+1);hit.score=score;
-   for(std::size_t x=hit.start_line-1;x<hit.end_line;++x){if(x>hit.start_line-1)hit.text+='\n';hit.text+=src.lines[x];}
-   result.hits.push_back(std::move(hit));
+   for(std::size_t n=hit.start_line-1;n<hit.end_line;++n){if(n>hit.start_line-1)hit.text+='\n';hit.text+=src.lines[n];}
+   local_hits.push_back(std::move(hit));
   }
+  std::sort(local_hits.begin(),local_hits.end(),[](const CodeHit&a,const CodeHit&b){if(a.score!=b.score)return a.score>b.score;return a.match_line<b.match_line;});
+  const auto per_file=std::min<std::size_t>(3,limit);if(local_hits.size()>per_file)local_hits.resize(per_file);
+  for(auto& hit:local_hits)result.hits.push_back(std::move(hit));
  }
  std::sort(result.hits.begin(),result.hits.end(),[](const CodeHit&a,const CodeHit&b){if(a.score!=b.score)return a.score>b.score;if(a.path!=b.path)return a.path<b.path;return a.match_line<b.match_line;});
  if(result.hits.size()>limit)result.hits.resize(limit);
  return result;
 }
-
 std::string format_code_result(const CodeSearchResult&r){
  std::ostringstream o;if(r.hits.empty())o<<"Nenhum trecho encontrado nos arquivos inspecionados. Isso nao prova que a funcao nao existe.\n";
  for(const auto& h:r.hits){o<<h.path<<":"<<h.match_line<<" (trecho "<<h.start_line<<"-"<<h.end_line<<")\n";std::istringstream s(h.text);std::string line;auto n=h.start_line;while(std::getline(s,line))o<<n++<<" | "<<line<<'\n';}
