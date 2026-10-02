@@ -38,5 +38,5 @@
   },
   "rss_peak_bytes": null,
   "energy_joules": null,
-  "post_verification_note": "After the verified commit, only verification-workflow parsing/evidence files were changed; no runtime/model implementation code changed."
+  "post_verification_note": "After the verified commit, only verification workflow/trigger files, evidence JSON, documentation and test-harness path handling changed; no runtime/model implementation code or model payload changed."
 }
