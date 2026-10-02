@@ -262,7 +262,7 @@ CodeSearchResult CodeIndex::search(const std::string& query,std::size_t limit,st
     else if(!src.path_terms.count(term)){all=false;break;}
    }
    if(!all||!matched_row)continue;
-   double score=double(matched_row)*10.0+structural_score(src.lines[i],terms);const auto line_lower=lower(src.lines[i]);
+   double score=double(matched_row)*10.0+structural_score(src.code_lines[i],terms);const auto line_lower=lower(src.code_lines[i]);
    auto paren=line_lower.find('(');
    for(const auto&term:terms){auto pos=line_lower.find(term);if(pos!=std::string::npos&&paren!=std::string::npos&&pos<paren)score+=2;}
    if(line_lower.find('{')!=std::string::npos)score+=1;
