@@ -1,0 +1,30 @@
+name: EdgeAI v0.13 Length Bridge Smoke
+on:
+  push:
+    branches: [v0.13-curriculum]
+    paths:
+      - tools/instruction_data_v013_length.py
+      - tests/test_v013_length_curriculum.py
+      - .github/workflows/v013-length-smoke.yml
+  workflow_dispatch:
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Contract tests
+        run: python3 -m unittest tests.test_v013_curriculum tests.test_v013_length_curriculum
+      - name: Build length-bridge dataset
+        run: python3 tools/instruction_data_v013_length.py
+      - name: Verify sealed splits
+        run: |
+          for s in valid test_id test_template test_range test_family; do
+            cmp "data/instructions_v07/$s.jsonl" "data/instructions_v013_length/$s.jsonl"
+          done
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          m=json.loads(Path('data/instructions_v013_length/manifest.json').read_text())
+          assert m['files']['train.jsonl']['rows']==7668
+          print('length bridge sealed; train rows=',m['files']['train.jsonl']['rows'])
+          PY
