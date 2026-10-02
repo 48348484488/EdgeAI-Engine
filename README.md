@@ -71,6 +71,14 @@ O custo continua real: 2 blocos usa **93.699 parâmetros**, dobra o estado KV e,
 
 Evidências: `results/v012_equal_steps/`, `results/v012/block_dynamics.json`, `results/v012_copy_init/`, `results/v012_copy_init_low_lr/` e `results/v012_fresh_holdout/`.
 
+### Currículo v0.13 — mais dados, mesmos testes selados
+
+Foi criado um currículo maior sem alterar os quatro arquivos de teste: `test_id`, `test_template`, `test_range` e `test_family` permanecem **byte por byte idênticos** ao benchmark anterior. O treino cresceu de **4.960 para 5.620 exemplos**, ampliando apenas o domínio permitido de treino.
+
+No mesmo orçamento de 60 s de CPU por seed/arquitetura, o total correto subiu para **178/582 com 1 bloco** e **180/582 com 2 blocos**. O ganho, porém, veio quase todo de `test_id` e `test_template`: em `test_range`, 1 bloco fez **0/192** e 2 blocos apenas **2/192**; em `test_family`, ambos continuaram em **0/48**.
+
+Isso mostra que aumentar exemplos próximos ao limite melhora interpolação, mas **não resolve a extrapolação algorítmica**. Os erros continuam estruturais, como somas fora do intervalo aprendido, coeficientes novos e cópia de strings mais longas. Evidência: `results/v013/` e `data/instructions_v013/manifest.json`.
+
 Paridade Python/C++: 4/4 casos passaram, com maior erro absoluto de **3,5763e-7**.
 
 ## Verificação v0.12
