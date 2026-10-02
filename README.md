@@ -81,6 +81,18 @@ Isso mostra que aumentar exemplos próximos ao limite melhora interpolação, ma
 
 Paridade Python/C++: 4/4 casos passaram, com maior erro absoluto de **3,5763e-7**.
 
+### v0.14/v0.15 — onde a generalização realmente quebra
+
+A v0.14 trocou o BPE por tokenização byte pura mantendo o mesmo currículo. Isso **não resolveu a extrapolação**: no comparativo agregado, BPE ficou em **358 acertos** contra **341** do byte puro; `test_family` continuou em zero e `test_range` permaneceu praticamente zerado. A curva pós-hoc mostrou cliffs nítidos perto das fronteiras de treino: somas deixam de funcionar quando os operandos saem da faixa aprendida, expressões caem depois dos coeficientes vistos e strings maiores que o comprimento treinado degradam rapidamente.
+
+A v0.15 testou diretamente essa hipótese. O treino foi ampliado para strings de 5–6 caracteres, operandos até 39 e coeficientes até 49. O antigo `test_range` foi aposentado para essa rodada e um novo holdout foi definido **antes do treino**: strings de tamanho 7, somas com operandos 40–49 e coeficientes 50–59.
+
+No novo range, 1 bloco fez **1/384** correto e 2 blocos fez **41/384**. O ganho do modelo de 2 blocos veio de `expression` (**25/96**) e `copy` (**14/96**), com apenas **2/96** em `uppercase`. Em **addition**, ambos ficaram em **0/96**. Ao mesmo tempo, o currículo maior reduziu o desempenho nos splits compartilhados sob o mesmo orçamento de 60 s: em `test_id`, 1 bloco caiu de 142 para 76 acertos agregados e 2 blocos de 142 para 108.
+
+A conclusão é que o Transformer pequeno consegue alguma extrapolação de padrões/copiar tokens, mas **não demonstrou um algoritmo de soma**. Por isso a capacidade do sistema é tratada separadamente da capacidade neural: o benchmark neural-only continua sem atalhos, enquanto o runtime completo agora reconhece formas naturais como `Add: 40 + 41`, `Some: 40 + 41`, `What is the sum of 42 and 47?` e `Quanto vale a soma de 42 e 47?` e as envia para a `Calculator` determinística. Texto não matemático continua indo para o backend neural.
+
+Evidências: `results/v014/`, `results/v015/`, `data/instructions_v015/manifest.json` e testes nativos do roteador.
+
 ## Verificação v0.12
 
 A verificação final da branch executa Release, suíte Python, paridade Python/C++, build sem SIMD, ASan+UBSan e auditoria dos modelos legados. O resultado reproduzível fica em `results/v012/verification.json`.
