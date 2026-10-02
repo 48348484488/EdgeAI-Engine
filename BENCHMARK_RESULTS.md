@@ -67,23 +67,47 @@ No agregado exato, o baseline ficou em **147/582** e 2 blocos em **138/582**. A 
 
 Assim, “2 blocos perdeu apenas porque completou menos steps em 60 s” não explica o resultado. O próximo diagnóstico relevante é de dinâmica de otimização por bloco (gradientes, mudança funcional, warm-up/congelamento), não apenas mais orçamento.
 
+## Dinâmica do segundo bloco e estabilização
+
+O diagnóstico de 128 updates mostrou que a inicialização identidade evita mudança funcional no instante zero, mas o miolo aleatório do segundo bloco sofre drift relativo muito maior logo no início. Aos 128 updates, o drift do bloco herdado ficou em aproximadamente **11–12%** de sua norma, contra **48–55%** para `Q/K/V/up` do bloco novo.
+
+Três intervenções foram testadas com a mesma exposição de treino:
+
+| Variante | Geração native `correct` | Resultado |
+|---|---:|---|
+| random-identity equal-update | 138/582 | não recupera o baseline |
+| warm-up 1024 updates só no bloco novo | 157/582 | melhora agregado, mas seed 33 cai para 39 |
+| copy-inner, LR normal | 145/582 | reduz o gap |
+| **copy-inner, LR interno 0,25×** | **163/582** | melhor agregado observado |
+
+No candidato final da rodada, `Q/K/V/up` do segundo bloco são copiados do bloco 0 e treinados a 0,25× do learning rate principal; `project/down` continuam zerados na inicialização para que a função inicial permaneça idêntica ao modelo de um bloco. No teste original ele obteve **163/582 exatos/corretos**, contra **147/582 exatos** e **149/582 `correct`** para o baseline de um bloco.
+
+A melhora do teste original ainda é heterogênea por seed: 50 vs. 53, 57 vs. 37 e 56 vs. 59 pela métrica `correct`. Uma tentativa de selecionar checkpoint usando geração de validação na seed 33 recuperou apenas **+2** respostas (46→48), portanto seleção por NLL não explica sozinha a diferença.
+
+## Holdout fresco com modelos congelados
+
+Para evitar continuar ajustando diretamente ao teste original, foi criado um holdout pós-hoc usando faixas que não aparecem em nenhum split congelado do v0.7: strings de tamanho 5, somas 20–29 e coeficientes de expressão 30–39. Os modelos foram **congelados**; não houve retreino após construir o holdout.
+
+| Seed | 1 bloco | 2 blocos copy-inner + LR 0,25× |
+|---:|---:|---:|
+| 11 | 7/128 | **10/128** |
+| 22 | 4/128 | **41/128** |
+| 33 | 4/128 | **9/128** |
+| **Total** | **15/384** | **60/384** |
+
+O candidato venceu em **3/3 seeds**. No mesmo run, a mediana interna ficou ~18–21% maior para 2 blocos. Como esse holdout foi construído depois de observar os resultados anteriores, ele é evidência de replicação dentro do currículo sintético, não um benchmark pré-registrado nem evidência de inteligência geral.
+
+## Decisão atual
+
+**1 bloco permanece o padrão de runtime** por custo e robustez. O melhor candidato neural experimental passa a ser **2 blocos com copy-inner + LR interno 0,25×**, porque superou o baseline no agregado do teste original e no holdout fresco 3/3 seeds. A promoção para padrão exige uma rodada futura pré-registrada e/ou tarefas mais amplas.
+
 ## Diagnóstico curto anterior
 
 O ensaio de 12 s registrado em `results/v012/blocks.json`, com avaliação teacher-forced, favoreceu 2 blocos em NLL e acurácia de tokens. Esse sinal continua útil, mas não é a decisão final: no protocolo principal de 60 s com geração nativa livre, 2 blocos não melhorou de forma consistente.
 
-## Decisão
-
-**1 bloco permanece o padrão.** O suporte multi-bloco continua disponível como infraestrutura de pesquisa, porque funciona e passa paridade, mas 2 blocos não justificou o custo extra neste protocolo.
-
 ## Verificação final
 
-- Release CTest: **15/15**.
-- Python: **138/138**.
-- Sem SIMD: **15/15 CTest**.
-- ASan + UBSan: **15/15 CTest**.
-- 142 modelos/checkpoints legados permaneceram sem alteração.
-- 24 novos arquivos de modelo/checkpoint v0.12 foram preservados.
-- Energia e pico de RSS não foram medidos: `null`.
+A verificação final reproduzível é executada pela workflow dedicada e registrada em `results/v012/verification.json`: Release CTest, suíte Python, paridade final, no-SIMD, ASan+UBSan e auditoria dos modelos. Energia e pico de RSS permanecem não medidos (`null`).
 
 Limite: o dataset é sintético e pequeno. Estes números medem este protocolo; não demonstram inteligência geral, desempenho em PC fraco real, Windows/ARM ou superioridade sobre grandes LLMs.
 
