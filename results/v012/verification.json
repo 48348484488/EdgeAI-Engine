@@ -1,42 +1,43 @@
 {
   "version": "0.12.0",
-  "verified_commit": "cfe177a8ab69e8d70d48fecbb52b94539aa7e7f3",
-  "workflow_run_id": 36995087103,
-  "verification_summary": "All substantive verification steps passed; the workflow failed only while parsing the already-successful Python step into verification.json.",
+  "commit": "936cbc230c55e649bbb47760f91a45f910778859",
+  "workflow_run_id": 37000089965,
   "release_ctest_passed": 15,
-  "python_tests_passed": 130,
   "nosimd_ctest_passed": 15,
   "asan_ubsan_ctest_passed": 15,
+  "python_tests_passed": 154,
   "parity_all_passed": true,
-  "parity_cases": 4,
-  "parity_max_abs_error": 3.5762786865234375e-7,
-  "parity_atol": 0.00006,
-  "parity_rtol": 0.00006,
+  "parity_max_abs_error": 3.5762786865234375e-07,
+  "parity_atol": 6e-05,
+  "parity_rtol": 6e-05,
   "legacy_model_files_unchanged": true,
   "legacy_model_file_count": 142,
   "v012_model_file_count": 24,
   "one_block_inspect": {
     "format": "EDGEAI7",
+    "vocab_size": "515",
     "parameters": 71827,
     "resident_numeric_weights_bytes": 152168,
     "sequence_state_payload_bytes": 24576,
     "numeric_working_bytes": 29420,
-    "window": 64
+    "window": 64,
+    "output_precision": "int8_w8a32"
   },
   "two_block_inspect": {
     "format": "EDGEAI8",
+    "vocab_size": "515",
     "parameters": 93699,
     "resident_numeric_weights_bytes": 176616,
     "sequence_state_payload_bytes": 49152,
     "numeric_working_bytes": 56300,
-    "window": 64
+    "window": 64,
+    "output_precision": "int8_w8a32"
   },
   "sha256": {
     "training_json": "664de07031a4c49d26cdde145bb73258aa5c775d2fe01005d2fb8e35a6414f72",
     "evaluation_json": "151209bd9e43710ffeaccef0af5e1254f1e2b47825f7a69ae16836be2d35c507",
-    "multiblock_parity_json": "89fecbc7f23aae62ba9bdba00c4e2291e79a8963ca5da2ccadaec697334b5c17"
+    "parity_final_json": "89fecbc7f23aae62ba9bdba00c4e2291e79a8963ca5da2ccadaec697334b5c17"
   },
   "rss_peak_bytes": null,
-  "energy_joules": null,
-  "post_verification_note": "After the verified commit, only verification workflow/trigger files, evidence JSON, documentation and test-harness path handling changed; no runtime/model implementation code or model payload changed."
+  "energy_joules": null
 }
