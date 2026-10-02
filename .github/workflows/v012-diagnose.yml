@@ -1,0 +1,36 @@
+name: Diagnose v0.12 depth
+
+on:
+  push:
+    branches: [v0.12-multiblock]
+    paths:
+      - benchmarks/analyze_v012_depth.py
+      - results/v012/training.json
+      - results/v012/evaluation.json
+      - .github/workflows/v012-diagnose.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: edgeai-v012-depth-diagnosis
+  cancel-in-progress: true
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Analyze imported benchmark evidence
+        run: python3 benchmarks/analyze_v012_depth.py
+      - name: Commit diagnosis
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/v012/depth_diagnosis.json
+          git diff --cached --quiet && exit 0
+          git commit -m "bench: record v0.12 depth diagnosis"
+          git fetch origin v0.12-multiblock
+          git rebase origin/v0.12-multiblock
+          git push origin HEAD:v0.12-multiblock
