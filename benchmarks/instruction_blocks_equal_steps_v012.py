@@ -32,7 +32,9 @@ def build_identity(seed,blocks,target_steps,threads,dataset_sha256,tokenizer_fin
 
 def assert_fair_pair(one,two):
     if one.get('blocks')!=1 or two.get('blocks')!=2: raise ValueError('need blocks 1 and 2')
-    changed=[k for k in _CONTROL_KEYS if one.get(k)!=two.get(k)]
+    missing=[k for k in _CONTROL_KEYS if k not in one or k not in two]
+    if missing: raise ValueError('missing equal-update controls: '+','.join(missing))
+    changed=[k for k in _CONTROL_KEYS if one[k]!=two[k]]
     if changed: raise ValueError('unfair equal-update pair: '+','.join(changed))
     return True
 
@@ -45,7 +47,8 @@ def baseline_plan(report,seed):
     return dict(seed=seed,target_steps=int(row['steps']),validation_steps=marks,
                 batch_ids_sha256=row['batch_ids_sha256'],examples_seen=row['examples_seen'],
                 source_checkpoint_sha256=row['source_checkpoint_sha256'],
-                selected_step=row['selected_step'],selected_validation_nll=row['selected_validation_nll'])
+                selected_step=row['selected_step'],selected_validation_nll=row['selected_validation_nll'],
+                train_cpu_seconds=row['train_cpu_seconds'],train_wall_seconds=row['train_wall_seconds'])
 
 def save(path,obj):
     path=repo_path(path);path.parent.mkdir(parents=True,exist_ok=True)
@@ -103,6 +106,8 @@ def train(seed,plan,threads,data,groups,dataset_digest,model_dir):
                 model_sha256=sha(edge.read_bytes()),pt_path=str(pt.relative_to(ROOT)),
                 pt_sha256=sha(pt.read_bytes()),baseline_one_selected_step=plan['selected_step'],
                 baseline_one_selected_validation_nll=plan['selected_validation_nll'],
+                baseline_one_train_cpu_seconds=plan['train_cpu_seconds'],
+                baseline_one_train_wall_seconds=plan['train_wall_seconds'],
                 fairness_identity_one=one_identity,fairness_identity_two=two_identity)
 
 def main():
