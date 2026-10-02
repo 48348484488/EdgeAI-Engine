@@ -65,6 +65,13 @@ def promote_blocks(base,blocks,seed):
     promoted.emb.load_state_dict(base.emb.state_dict())
     promoted.out.load_state_dict(base.out.state_dict())
     promoted.blocks[0].load_state_dict(base.blocks[0].state_dict())
+    with torch.no_grad():
+        for block in promoted.blocks[1:]:
+            for name in ('project','down'):
+                layer=getattr(block,name)
+                layer.weight.zero_()
+                if layer.bias is not None:
+                    layer.bias.zero_()
     promoted.train(base.training)
     return promoted
 
