@@ -65,5 +65,19 @@ class EqualStepsV012Tests(unittest.TestCase):
         with self.assertRaises(ValueError):
             eq.promote_for_init(base,11,'nope')
 
+
+    def test_new_block_inner_lr_can_be_scaled(self):
+        base=TinyTransformer(dim=8,hidden=12,window=4,precision='fp32',vocab_size=256,blocks=1)
+        two=eq.promote_for_init(base,77,'copy_inner_identity')
+        opt=eq.make_optimizer(two,.25)
+        lrs=sorted({group['lr'] for group in opt.param_groups})
+        self.assertEqual(lrs,[.00025,.001])
+
+    def test_new_block_inner_lr_scale_rejects_zero(self):
+        base=TinyTransformer(dim=8,hidden=12,window=4,precision='fp32',vocab_size=256,blocks=1)
+        two=eq.promote_for_init(base,77,'copy_inner_identity')
+        with self.assertRaises(ValueError):
+            eq.make_optimizer(two,0)
+
 if __name__=='__main__':
     unittest.main()
