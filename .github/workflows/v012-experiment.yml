@@ -1,6 +1,8 @@
 name: EdgeAI v0.12 1x2 Experiment
 
 on:
+  push:
+    branches: [v0.12-multiblock]
   workflow_dispatch:
     inputs:
       cpu_seconds:
