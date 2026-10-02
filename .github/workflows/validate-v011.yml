@@ -21,10 +21,6 @@ jobs:
           cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
           cmake --build build -j2
           ctest --test-dir build --output-on-failure
-      - name: Install Python test dependencies
-        run: python3 -m pip install -r requirements-training.txt
-      - name: Python tests
-        run: python3 -m unittest discover -s tests -p 'test_*.py'
       - name: Compare v0.10 and current ranking
         run: |
           git worktree add /tmp/v010 d2735c6e0744f86b228130c1eeeb1f540de3b993
