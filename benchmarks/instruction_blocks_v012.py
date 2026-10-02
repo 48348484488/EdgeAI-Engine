@@ -84,7 +84,7 @@ def build_identity(seed,blocks,cpu_budget,threads,dataset_sha256,tokenizer_finge
     if any(key not in config for key in required):
         raise ValueError('incomplete Transformer config')
     return dict(
-        protocol='edge-sft-v012-blocks-1',
+        protocol='edge-sft-v012-blocks-identity-v2',
         seed=int(seed),
         cpu_budget=float(cpu_budget),
         threads=int(threads),
