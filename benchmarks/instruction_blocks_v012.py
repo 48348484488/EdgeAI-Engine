@@ -98,12 +98,16 @@ def build_identity(seed,blocks,cpu_budget,threads,dataset_sha256,tokenizer_finge
     )
 
 
-def repo_output_dir(path):
+def repo_path(path):
     path=Path(path)
     resolved=(ROOT/path).resolve() if not path.is_absolute() else path.resolve()
     if not resolved.is_relative_to(ROOT):
-        raise ValueError('output directory must stay inside repository')
+        raise ValueError('path must stay inside repository')
     return resolved
+
+
+def repo_output_dir(path):
+    return repo_path(path)
 
 
 def save(path,obj):
