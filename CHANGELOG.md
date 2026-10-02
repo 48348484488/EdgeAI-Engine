@@ -3,14 +3,15 @@
 - Novo formato `EDGEAI8`; `EDGEAI5/6/7` continuam compatíveis e carregam como um bloco.
 - Cache KV independente por bloco, reset completo e contabilização de memória multi-bloco.
 - Exportação Python EDGEAI8 e paridade Python/C++ em kernels scalar/auto.
-- `edgeai_inspect` e banner do chat atualizados para EDGEAI8/v0.12.
-- Experimento principal: 3 seeds, 60 s de CPU por arquitetura/seed, mesma configuração exceto número de blocos.
-- Geração nativa exata agregada: 1 bloco 147/582 (25,26%); 2 blocos 138/582 (23,71%).
-- 2 blocos aumentou parâmetros em 30,45%, estado KV em 100% e working memory numérica em 91,37%.
-- Blocos adicionais agora começam como identidade residual; o protocolo foi versionado para separar essa inicialização dos resultados históricos.
-- Ablação equal-update: mesmo stream e número de updates do baseline; `correct` ficou 149/582 (1 bloco) vs. 138/582 (2 blocos), com 1,197× CPU de treino e 1,048× latência mediana para 2 blocos.
-- Decisão: 1 bloco permanece padrão; multi-bloco fica disponível para pesquisa.
-- Verificação: Release 15/15, Python 138/138, no-SIMD 15/15, ASan+UBSan 15/15; 142 artefatos legados intactos.
+- Experimento principal de 60 s/seed: 1 bloco 147/582 exatos (149 `correct`) vs. 2 blocos random-identity 138/582.
+- Ablação equal-update confirmou que a diferença não vinha apenas do menor número de optimizer updates de 2 blocos.
+- Probe de dinâmica encontrou drift relativo muito maior no miolo aleatório do bloco novo (~48–55% vs. ~11–12% no bloco herdado após 128 updates).
+- Inicialização copy-inner (`Q/K/V/up` copiados, `project/down` zerados) elevou o 2-blocos equal-update para 145/582.
+- Com LR interno do bloco novo em 0,25×, o candidato chegou a **163/582** no teste original.
+- Holdout pós-hoc em faixas não usadas, com modelos congelados: 2 blocos 60/384 vs. 1 bloco 15/384, vencendo em 3/3 seeds.
+- Warm-up isolado e seleção de checkpoint por geração foram testados e ajudaram parcialmente, mas ficaram menos estáveis que copy-inner + LR 0,25×.
+- 1 bloco permanece o padrão de runtime; copy-inner + LR interno 0,25× é o candidato neural experimental preferido.
+- Limites preservados: tarefas sintéticas estreitas, sem alegação de inteligência geral; energia/RSS de pico não medidos.
 
 ## v0.11
 - Code search ranking now prioritizes common definition forms over comments, strings and calls.
