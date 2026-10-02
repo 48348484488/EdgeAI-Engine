@@ -13,6 +13,40 @@ sys.path.insert(0,str(ROOT/'tools'))
 from instruction_data import score
 
 
+
+CONTROL_KEYS=('protocol','seed','target_steps','threads','dataset_sha256','tokenizer_fingerprint',
+              'dim','hidden','window','precision','batch','lr','weight_decay','clip_norm',
+              'max_length','selection')
+
+
+def build_identity(seed,blocks,target_steps,threads,dataset_sha256,tokenizer_fingerprint,config):
+    if blocks not in (1,2) or int(target_steps)<4 or int(threads)!=1:
+        raise ValueError('invalid generation-selection identity')
+    required=('dim','hidden','window','precision')
+    if any(k not in config for k in required):
+        raise ValueError('incomplete Transformer config')
+    return dict(
+        protocol='edge-sft-v012-greedy-validation-select-1',
+        seed=int(seed),target_steps=int(target_steps),threads=int(threads),
+        dataset_sha256=str(dataset_sha256),tokenizer_fingerprint=str(tokenizer_fingerprint),
+        dim=int(config['dim']),hidden=int(config['hidden']),window=int(config['window']),
+        precision=str(config['precision']),vocab_size=int(config.get('vocab_size',256)),
+        batch=16,lr=.001,weight_decay=.01,clip_norm=1.0,max_length=128,
+        selection='greedy validation correct; exact, NLL, then earlier-step tiebreaks',
+        blocks=int(blocks))
+
+
+def assert_fair_pair(one,two):
+    if one.get('blocks')!=1 or two.get('blocks')!=2:
+        raise ValueError('need blocks 1 and 2')
+    missing=[k for k in CONTROL_KEYS if k not in one or k not in two]
+    if missing:
+        raise ValueError('missing generation-selection controls: '+','.join(missing))
+    changed=[k for k in CONTROL_KEYS if one[k]!=two[k]]
+    if changed:
+        raise ValueError('unfair generation-selection pair: '+','.join(changed))
+    return True
+
 def selection_key(row):
     required=('step','greedy_correct','greedy_exact','validation_nll')
     if any(k not in row for k in required):
