@@ -110,6 +110,17 @@ class V012ExperimentContractTests(unittest.TestCase):
         self.assertEqual(row['selection'],'minimum response validation NLL at 25/50/75/100 percent')
 
 
+
+    def test_repo_output_dir_resolves_relative_path_inside_repository(self):
+        resolved=exp.repo_output_dir(Path('models/v012'))
+        self.assertTrue(resolved.is_absolute())
+        self.assertEqual(resolved,ROOT/'models/v012')
+
+    def test_repo_output_dir_rejects_path_outside_repository(self):
+        with self.assertRaises(ValueError):
+            exp.repo_output_dir(Path('/tmp/edgeai-v012-out'))
+
+
     def test_eval_summary_counts_exact_correct_and_eos(self):
         rows=[
             dict(exact=True,correct=True,stopped_on_eos=True,generated_tokens=2,total_seconds=.01),
