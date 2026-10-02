@@ -34,6 +34,13 @@ int main(){
   CHECK(idx.search("render menu",3,0).hits[0].path=="web/app.js");
   CHECK(idx.search("CarregarConta",3,0).hits[0].path=="script/login.pwn");
   CHECK(idx.search("`ola`",3,1).hits[0].text.find("ação")!=std::string::npos);
+  put(root/"src/ranking.cpp", "// RankTarget() is documented here\nconst char* note = \"RankTarget()\";\nvoid call_rank() { RankTarget(); }\nvoid RankTarget() { }\nvoid use_rank() { RankTarget(); }\n");
+  edgeai::CodeIndex ranked(root.string());
+  auto ranked_hits=ranked.search("RankTarget",5,0);
+  CHECK(ranked_hits.hits.size()>=3);
+  CHECK(ranked_hits.hits[0].path=="src/ranking.cpp");
+  CHECK(ranked_hits.hits[0].match_line==4);
+  CHECK(ranked_hits.hits[1].path=="src/ranking.cpp");
   put(root/"ranking/sample.py", "# RankTarget mentioned in comment\nmessage = \"RankTarget()\"\nRankTarget()\ndef RankTarget():\n    return 1\n");
   edgeai::CodeIndex ranked(root.string());auto ranked_hits=ranked.search("RankTarget",4,0);
   CHECK(ranked_hits.hits.size()>=2);CHECK(ranked_hits.hits[0].path=="ranking/sample.py");CHECK(ranked_hits.hits[0].match_line==4);
