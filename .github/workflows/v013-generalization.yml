@@ -2,11 +2,9 @@ name: EdgeAI v0.13 Generalization Ablation
 
 on:
   push:
-    branches: [v0.12-multiblock]
+    branches: [v0.13-curriculum]
     paths:
-      - .github/workflows/v013-generalization.yml
-      - tools/instruction_data_v013.py
-      - tests/test_v013_curriculum.py
+      - .github/v013-generalization-trigger
   workflow_dispatch:
 
 permissions:
@@ -102,5 +100,5 @@ jobs:
           git add results/v013/ data/instructions_v013/
           git commit -m "bench: record v0.13 generalization ablation" || exit 0
           git fetch origin v0.12-multiblock
-          git rebase origin/v0.12-multiblock
-          git push origin HEAD:v0.12-multiblock
+          git rebase origin/v0.13-curriculum
+          git push origin HEAD:v0.13-curriculum
