@@ -98,6 +98,14 @@ def build_identity(seed,blocks,cpu_budget,threads,dataset_sha256,tokenizer_finge
     )
 
 
+def repo_output_dir(path):
+    path=Path(path)
+    resolved=(ROOT/path).resolve() if not path.is_absolute() else path.resolve()
+    if not resolved.is_relative_to(ROOT):
+        raise ValueError('output directory must stay inside repository')
+    return resolved
+
+
 def save(path,obj):
     path=Path(path);path.parent.mkdir(parents=True,exist_ok=True)
     tmp=path.with_suffix(path.suffix+'.tmp')
@@ -224,6 +232,7 @@ def main():
     train=data['train'];groups={}
     for row in train:
         groups.setdefault(row['task'],[]).append(row)
+    args.model_dir=repo_output_dir(args.model_dir)
     args.model_dir.mkdir(parents=True,exist_ok=True)
     dataset_digest=sha((args.data/'manifest.json').read_bytes())
 
