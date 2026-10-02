@@ -150,6 +150,24 @@ CodeSearchResult CodeIndex::search(const std::string& query,std::size_t limit,st
  if(query.size()>512||!utf8_text(query))throw std::invalid_argument("query must be UTF-8 text of at most 512 bytes");
  if(limit<1||limit>20||context>10)throw std::invalid_argument("limit 1..20 and context 0..10 required");
  auto result=stats_;auto terms=query_tokens(query);if(terms.empty())return result;
+ auto classify=[&](const std::string& line,const std::string& term){
+  const auto low=lower(line);const auto first=low.find_first_not_of(" \t");
+  if(first==std::string::npos)return -20.0;
+  if(low.compare(first,2,"//")==0||low[first]=='#'||low.compare(first,2,"/*")==0||low[first]=='*')return -30.0;
+  const auto pos=low.find(term);if(pos==std::string::npos)return 0.0;
+  bool quoted=false;char quote=0;
+  for(std::size_t i=0;i<pos;++i){char c=line[i];if((c=='\''||c=='"')&&(i==0||line[i-1]!='\\')){if(!quoted){quoted=true;quote=c;}else if(quote==c)quoted=false;}}
+  if(quoted)return -25.0;
+  const auto paren=low.find('(',pos+term.size());
+  if(paren==std::string::npos)return 0.0;
+  const auto before=low.substr(first,pos-first);
+  if(before.find("def ")!=std::string::npos||before.find("function ")!=std::string::npos||before.find("func ")!=std::string::npos||before.find("fn ")!=std::string::npos||before.find("stock ")!=std::string::npos||before.find("forward ")!=std::string::npos)return 40.0;
+  if(pos>first){
+   const auto prefix=low.substr(first,pos-first);
+   if(prefix.find('=')==std::string::npos&&prefix.find("return ")==std::string::npos&&prefix.find("if ")==std::string::npos&&prefix.find("while ")==std::string::npos&&prefix.find("for ")==std::string::npos&&prefix.find("switch ")==std::string::npos&&prefix.find("case ")==std::string::npos&&prefix.find(".")==std::string::npos)return 32.0;
+  }
+  return -4.0;
+ };
  for(const auto& ptr:sources_){
   const auto& src=*ptr;const std::vector<std::size_t>* rarest=nullptr;bool impossible=false;
   for(const auto&term:terms){
@@ -164,7 +182,6 @@ CodeSearchResult CodeIndex::search(const std::string& query,std::size_t limit,st
    for(const auto&term:terms){auto f=src.postings.find(term);if(f!=src.postings.end())from_paths.insert(from_paths.end(),f->second.begin(),f->second.end());}
    std::sort(from_paths.begin(),from_paths.end());from_paths.erase(std::unique(from_paths.begin(),from_paths.end()),from_paths.end());rarest=&from_paths;
   }
-  CodeHit best;
   for(auto i:*rarest){
    ++result.candidate_lines;bool all=true;std::size_t matched_row=0;
    for(const auto&term:terms){auto f=src.postings.find(term);
@@ -174,20 +191,18 @@ CodeSearchResult CodeIndex::search(const std::string& query,std::size_t limit,st
    if(!all||!matched_row)continue;
    double score=double(matched_row)*10.0;const auto line_lower=lower(src.lines[i]);
    auto paren=line_lower.find('(');
-   for(const auto&term:terms){auto pos=line_lower.find(term);if(pos!=std::string::npos&&paren!=std::string::npos&&pos<paren)score+=2;}
+   for(const auto&term:terms){auto pos=line_lower.find(term);if(pos!=std::string::npos&&paren!=std::string::npos&&pos<paren)score+=2;score+=classify(src.lines[i],term);}
    if(line_lower.find('{')!=std::string::npos)score+=1;
-   const auto first=line_lower.find_first_not_of(" \t");
-   if(first!=std::string::npos&&(line_lower.compare(first,2,"//")==0||line_lower[first]=='#'))score-=3;
-   if(best.match_line&&score<=best.score)continue;
-   best.path=src.path;best.match_line=i+1;best.start_line=(i>context?i-context:0)+1;best.end_line=std::min(src.lines.size(),i+context+1);best.score=score;best.text.clear();
-   for(std::size_t n=best.start_line-1;n<best.end_line;++n){if(n>best.start_line-1)best.text+='\n';best.text+=src.lines[n];}
+   CodeHit hit;hit.path=src.path;hit.match_line=i+1;hit.start_line=(i>context?i-context:0)+1;hit.end_line=std::min(src.lines.size(),i+context+1);hit.score=score;
+   for(std::size_t x=hit.start_line-1;x<hit.end_line;++x){if(x>hit.start_line-1)hit.text+='\n';hit.text+=src.lines[x];}
+   result.hits.push_back(std::move(hit));
   }
-  if(best.match_line)result.hits.push_back(std::move(best));
  }
  std::sort(result.hits.begin(),result.hits.end(),[](const CodeHit&a,const CodeHit&b){if(a.score!=b.score)return a.score>b.score;if(a.path!=b.path)return a.path<b.path;return a.match_line<b.match_line;});
  if(result.hits.size()>limit)result.hits.resize(limit);
  return result;
 }
+
 std::string format_code_result(const CodeSearchResult&r){
  std::ostringstream o;if(r.hits.empty())o<<"Nenhum trecho encontrado nos arquivos inspecionados. Isso nao prova que a funcao nao existe.\n";
  for(const auto& h:r.hits){o<<h.path<<":"<<h.match_line<<" (trecho "<<h.start_line<<"-"<<h.end_line<<")\n";std::istringstream s(h.text);std::string line;auto n=h.start_line;while(std::getline(s,line))o<<n++<<" | "<<line<<'\n';}
