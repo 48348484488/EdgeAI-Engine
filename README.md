@@ -1,6 +1,6 @@
-# EdgeAI Engine v0.10 — consulta de código com índice reutilizável
+# EdgeAI Engine v0.11 — ranking de definições sobre usos e documentação
 
-Base: **v0.9**, preservada. Sem novo treinamento. Binários Linux x86-64 incluídos; Windows não testado.
+Base: **v0.10**, preservada. Sem novo treinamento neural. A v0.11 altera somente a busca lexical/ranking de código.
 
 ## Usar a melhoria
 
@@ -27,6 +27,17 @@ Ciclo de verificação sem treinamento:
 ```bash
 python tools/run_goals.py --profile indexed
 ```
+
+## Resultado medido da v0.11
+
+No mesmo corpus CPython já usado na v0.10 (27 definições positivas + 8 nomes ausentes), em GitHub Actions Linux x86-64 e cinco sessões por variante:
+
+- top-1 da definição: **16/27 → 24/27**;
+- top-5: **18/27 → 27/27**;
+- nomes ausentes: **8/8 → 8/8**;
+- mediana da sessão: **41,976 ms → 45,597 ms** no runner desta verificação (~8,6% mais lenta).
+
+Esse corpus não é teste cego novo: foi reutilizado para medir a mudança de ranking. Veja `BENCHMARK_RESULTS.md`.
 
 ## O que funciona agora
 
@@ -96,7 +107,7 @@ não é um sandbox contra trocas concorrentes de caminhos.
 `partial=true` informa limite/erro de leitura. Exclusões normais são contadas à parte,
 mesmo com `partial=false`. Resultado vazio significa apenas: nenhum trecho nos
 arquivos inspecionados. Não prova que a função inexiste ou que a implementação é segura.
-A saída inclui a melhor linha por arquivo; múltiplos arquivos podem ter ocorrências. Na API C++, `search()` consulta o snapshot corrente: chame `refresh()` antes para ver alterações. Engine e CLI em lote já fazem isso. Não há thread-safety garantida nem snapshot transacional da árvore.
+A saída pode incluir múltiplas linhas relevantes por arquivo; múltiplos arquivos podem ter ocorrências. Na API C++, `search()` consulta o snapshot corrente: chame `refresh()` antes para ver alterações. Engine e CLI em lote já fazem isso. Não há thread-safety garantida nem snapshot transacional da árvore.
 
 ## Workbench opcional: Python padrão, sem PyTorch
 

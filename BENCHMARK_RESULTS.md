@@ -1,3 +1,33 @@
+# EdgeAI Engine v0.11 — ranking de definições
+
+Base efetiva: **v0.10**. Sem novo treinamento neural, sem LLM externo real e sem medição de energia.
+
+## Comparação de aceitação v0.10 × v0.11
+
+Execução no mesmo GitHub Actions Linux x86-64, cinco sessões por variante, usando o mesmo corpus CPython já distribuído e as mesmas 35 consultas da v0.10. A referência v0.10 foi o binário preservado em `bin/linux-x86_64/edgeai_code_search`; a v0.11 foi recompilada do commit testado.
+
+| Métrica | v0.10 | v0.11 |
+|---|---:|---:|
+| Definição esperada top-1 | 16/27 | **24/27** |
+| Definição esperada top-5 | 18/27 | **27/27** |
+| Nomes ausentes vazios | 8/8 | **8/8** |
+| Mediana da sessão | 41,976 ms | 45,597 ms |
+
+A mediana ficou ~8,6% mais lenta nesse runner, mas permaneceu muito abaixo do limite de aceitação de 2×. O ganho medido é de **ranking lexical**, não inteligência neural ou compreensão semântica.
+
+A mudança adiciona projeção de código para reduzir peso de comentários, strings e docstrings Python, bônus para formas de definição/declaracão e preservação de até três ocorrências relevantes por arquivo antes da ordenação global.
+
+## Verificação v0.11
+
+- Ciclo TDD registrado no histórico da branch: o teste novo falhou antes do código de produção em `ranked.hits.size()>=2`.
+- CTest Release: **13/13**.
+- Python unittest com dependências CPU: **108/108**.
+- Benchmark de aceitação: passou top-1 >= 22, sem regressão top-5, 8/8 negativos e latência < 2×.
+- O corpus CPython é reutilizado e portanto **não deve ser apresentado como teste cego novo**.
+- Nenhum peso `.edge`/`.pt` foi modificado pela implementação v0.11.
+
+---
+
 # EdgeAI Engine v0.10 — busca reutilizável com conferência de conteúdo
 
 Base efetiva: ZIP v0.9. **Sem novo treinamento, sem LLM externo real, sem medição de energia.**
