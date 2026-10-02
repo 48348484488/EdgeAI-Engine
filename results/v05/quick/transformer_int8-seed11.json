@@ -1,0 +1,77 @@
+{
+  "signature": "6a82273daa7837d86f0e705c13a3ad192fdb3b4be2fa6df9cc1da695222c7d58",
+  "kind": "transformer_int8",
+  "seed": 11,
+  "parameters": 62112,
+  "initial_state_sha256": "d01eb996e5bdc592fb6a4585020ec27ca74c9dd7501811291b858efe10b57d00",
+  "training_batches_sha256": "d11fb6f160ab3a756b354e7ef2d17d21b4329d0e126592a097f7d0930717cdd2",
+  "training_tokens": 15360,
+  "steps": 30,
+  "selected_step": 30,
+  "selected_validation_bpb": 5.139834354796314,
+  "first_training_nll": 5.700811862945557,
+  "train_seconds": 0.1688007729999299,
+  "train_cpu_seconds": 0.1687112369999988,
+  "validation_seconds": 0.04819677299997238,
+  "trial_seconds": 0.4232919230000789,
+  "metrics": {
+    "code": {
+      "targets": 15356,
+      "correct": 2304,
+      "accuracy": 0.15003907267517583,
+      "nll_sum": 54157.7194737132,
+      "bits_per_byte": 5.088113656589065
+    },
+    "text": {
+      "targets": 1228,
+      "correct": 111,
+      "accuracy": 0.09039087947882736,
+      "nll_sum": 4386.842490746914,
+      "bits_per_byte": 5.153807741499643
+    }
+  },
+  "overall": {
+    "nll_sum": 58544.56196446012,
+    "targets": 16584,
+    "correct": 2415,
+    "bits_per_byte": 5.092978124526245,
+    "accuracy": 0.14562228654124457
+  },
+  "native_metrics": {
+    "code": {
+      "blocks": 242,
+      "targets": 15356,
+      "correct": 2304,
+      "nll_sum": 54157.71947756,
+      "bits_per_byte": 5.0881136569505,
+      "accuracy": 0.15003907267518,
+      "seconds": 0.119570237,
+      "reset_between_blocks": true
+    },
+    "text": {
+      "blocks": 20,
+      "targets": 1228,
+      "correct": 111,
+      "nll_sum": 4386.8424766188,
+      "bits_per_byte": 5.1538077249015,
+      "accuracy": 0.090390879478827,
+      "seconds": 0.009614476,
+      "reset_between_blocks": true
+    }
+  },
+  "curve": [
+    {
+      "step": 30,
+      "training_nll": 3.6202805042266846,
+      "validation_bpb": 5.139834354796314
+    }
+  ],
+  "numeric_weight_bytes": 115968,
+  "edge_file_bytes": 116148,
+  "energy_joules": null,
+  "model_path": "models/quick_v05/transformer_int8-seed11.edge",
+  "artifacts": {
+    "models/quick_v05/transformer_int8-seed11.pt": "094c5f52201009fe133f419174b3500f99b55e6b7ab4252e7c72716a8e8d173e",
+    "models/quick_v05/transformer_int8-seed11.edge": "dcc59231cde3e1129b02dc2e62377a217f2d7a75c3f745a671c75f95ffae92f0"
+  }
+}

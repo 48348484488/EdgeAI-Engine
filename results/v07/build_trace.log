@@ -1,0 +1,32 @@
+-- Configuring done (11.0s)
+-- Generating done (0.1s)
+-- Build files have been written to: /mnt/data/EdgeAI-Engine-v0.7/build
+[ 31%] Built target edgeai
+[ 34%] Built target edgeai_make_demo
+[ 37%] Built target edgeai_chat
+[ 40%] Built target edgeai_logits
+[ 43%] Built target edgeai_evaluate
+[ 46%] Built target edgeai_tokenize
+[ 48%] Building CXX object CMakeFiles/edgeai_inspect.dir/tools/inspect_model.cpp.o
+[ 51%] Built target edgeai_text_eval
+[ 54%] Built target edgeai_generate
+[ 56%] Building CXX object CMakeFiles/edgeai_token_logits.dir/tools/token_logits.cpp.o
+[ 57%] Linking CXX executable edgeai_inspect
+[ 59%] Linking CXX executable edgeai_token_logits
+[ 59%] Built target edgeai_inspect
+[ 62%] Built target edgeai_tests
+[ 62%] Built target edgeai_token_logits
+[ 65%] Built target edgeai_regressions
+[ 68%] Built target edgeai_test_memory
+[ 71%] Built target edgeai_test_kernels
+[ 75%] Built target edgeai_test_hybrid
+[ 78%] Built target edgeai_test_tools
+[ 81%] Built target edgeai_test_precision
+[ 84%] Built target edgeai_test_transformer
+[ 87%] Built target edgeai_test_bpe
+[ 89%] Building CXX object CMakeFiles/edgeai_test_instruction.dir/tests/test_instruction.cpp.o
+[ 92%] Built target edgeai_benchmark
+[ 95%] Built target edgeai_runtime_benchmark
+[ 98%] Built target edgeai_matrix_benchmark
+[100%] Linking CXX executable edgeai_test_instruction
+[100%] Built target edgeai_test_instruction

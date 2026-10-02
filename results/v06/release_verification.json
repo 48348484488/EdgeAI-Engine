@@ -1,0 +1,26 @@
+{
+  "status": "passed",
+  "timestamp_utc": "2026-09-25T20:24:09.111458+00:00",
+  "extracted_archive_sha256": "0cdd8cfcf88524ed7799f38026cff27b46ba6d015d1a7078b2b430a18c9b912e",
+  "archive_note": "Final archive additionally includes this verification record and updated documentation; code, binaries, data and model bytes match the extracted tested archive. SHA256SUMS.txt is regenerated for the final package.",
+  "source_and_payload_files_unchanged": 317,
+  "ctest_suites": 10,
+  "python_tests": 57,
+  "bpe_parity_cases": 24,
+  "full_goal_stages_passed": 12,
+  "quick_goal_stages_passed": 12,
+  "builds": [
+    "Release",
+    "portable Release without specialized SIMD",
+    "Clang ASan+UBSan Debug",
+    "fresh archive Release rebuild"
+  ],
+  "binary_smoke": {
+    "calculator": "181907\n[neural=0 loops=0 token_score=1]\n",
+    "model_inspect": "format=EDGEAI6\nvocab_size=513\nparameters=71633\nresident_numeric_weights_bytes=151672\nsequence_state_payload_bytes=24576\nnumeric_working_bytes=29220\nwindow=64\noutput_precision=int8_w8a32\n"
+  },
+  "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+  "windows_tested": false,
+  "weak_pc_tested": false,
+  "energy_measured": false
+}

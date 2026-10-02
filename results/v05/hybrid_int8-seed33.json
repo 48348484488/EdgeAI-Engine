@@ -1,0 +1,92 @@
+{
+  "signature": "654b7b3f2f55e77e013cbe8968987e6a977b2ecf6029a5ee4d5864a7f243f1a4",
+  "kind": "hybrid_int8",
+  "seed": 33,
+  "parameters": 62278,
+  "initial_state_sha256": "dbad119249b554a96a1c264c4b071a298fe858f606a66f4917ac38565c2dcb5d",
+  "training_batches_sha256": "7042e4b99541c9e7301ceca0e9d7c82c00456ea31a00a9efc95853f2ecffd7d7",
+  "training_tokens": 204800,
+  "steps": 400,
+  "selected_step": 400,
+  "selected_validation_bpb": 3.567284796496571,
+  "first_training_nll": 5.704310417175293,
+  "train_seconds": 12.281416680000802,
+  "train_cpu_seconds": 12.273262360999894,
+  "validation_seconds": 0.4619280219999382,
+  "trial_seconds": 13.089451435,
+  "metrics": {
+    "code": {
+      "targets": 15356,
+      "correct": 6250,
+      "accuracy": 0.40700703308153163,
+      "nll_sum": 36040.21455771688,
+      "bits_per_byte": 3.3859754372878594
+    },
+    "text": {
+      "targets": 1228,
+      "correct": 294,
+      "accuracy": 0.23941368078175895,
+      "nll_sum": 3504.3796343128843,
+      "bits_per_byte": 4.117061172488174
+    }
+  },
+  "overall": {
+    "nll_sum": 39544.59419202976,
+    "targets": 16584,
+    "correct": 6544,
+    "bits_per_byte": 3.4401103433916935,
+    "accuracy": 0.39459720212252775
+  },
+  "native_metrics": {
+    "code": {
+      "blocks": 242,
+      "targets": 15356,
+      "correct": 6250,
+      "nll_sum": 36040.214417476,
+      "bits_per_byte": 3.3859754241122,
+      "accuracy": 0.40700703308153,
+      "seconds": 0.13165838,
+      "reset_between_blocks": true
+    },
+    "text": {
+      "blocks": 20,
+      "targets": 1228,
+      "correct": 294,
+      "nll_sum": 3504.3796385249,
+      "bits_per_byte": 4.1170611774366,
+      "accuracy": 0.23941368078176,
+      "seconds": 0.010092177,
+      "reset_between_blocks": true
+    }
+  },
+  "curve": [
+    {
+      "step": 100,
+      "training_nll": 3.0791239738464355,
+      "validation_bpb": 4.328809286625063
+    },
+    {
+      "step": 200,
+      "training_nll": 2.793363094329834,
+      "validation_bpb": 3.956224374068238
+    },
+    {
+      "step": 300,
+      "training_nll": 2.5051541328430176,
+      "validation_bpb": 3.7229664872139145
+    },
+    {
+      "step": 400,
+      "training_nll": 2.439373254776001,
+      "validation_bpb": 3.567284796496571
+    }
+  ],
+  "numeric_weight_bytes": 116504,
+  "edge_file_bytes": 116696,
+  "energy_joules": null,
+  "model_path": "models/language_v05/hybrid_int8-seed33.edge",
+  "artifacts": {
+    "models/language_v05/hybrid_int8-seed33.pt": "f28cc2e55bb1cbaf355806dfe7db5d27118223873b0bad3dbd9e6e43b2d0d541",
+    "models/language_v05/hybrid_int8-seed33.edge": "4729403e4155ae16ae419345c48e38f48ecd4057688e4ef0e39fe494ca2736a6"
+  }
+}

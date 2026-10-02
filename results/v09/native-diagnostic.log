@@ -1,0 +1,15 @@
+{
+  "native": {
+    "status": "executed",
+    "correct": 2,
+    "evaluated": 12,
+    "accuracy": 0.16666666666666666
+  },
+  "reference": {
+    "status": "not_requested",
+    "accuracy": null,
+    "correct": null,
+    "evaluated": 0
+  },
+  "report": "results/v09/native_diagnostic.json"
+}

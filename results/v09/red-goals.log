@@ -1,0 +1,29 @@
+EE
+======================================================================
+ERROR: test_profile_commands_are_no_shell_lists (test_goals_v09.GoalsV09.test_profile_commands_are_no_shell_lists)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/edgeai_work/EdgeAI-Engine-v0.9/tests/test_goals_v09.py", line 14, in test_profile_commands_are_no_shell_lists
+    for name,cmd in stage_commands('useful',ROOT/'build',1):
+                    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/edgeai_work/EdgeAI-Engine-v0.9/tools/run_goals.py", line 24, in stage_commands
+    if profile not in ('quick','research') or threads<1:raise ValueError('invalid profile/threads')
+                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: invalid profile/threads
+
+======================================================================
+ERROR: test_useful_profile_does_not_train_download_or_require_server (test_goals_v09.GoalsV09.test_useful_profile_does_not_train_download_or_require_server)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/edgeai_work/EdgeAI-Engine-v0.9/tests/test_goals_v09.py", line 8, in test_useful_profile_does_not_train_download_or_require_server
+    stages=dict(stage_commands('useful',ROOT/'build',1))
+                ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/edgeai_work/EdgeAI-Engine-v0.9/tools/run_goals.py", line 24, in stage_commands
+    if profile not in ('quick','research') or threads<1:raise ValueError('invalid profile/threads')
+                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: invalid profile/threads
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.002s
+
+FAILED (errors=2)

@@ -1,0 +1,44 @@
+{
+  "fp32": {
+    "weight_bytes": 72856,
+    "edge_file_bytes": 73000,
+    "by_length": {
+      "32": {
+        "baseline_mean_accuracy": 0.4850260416666667,
+        "quantized_mean_accuracy": 0.484375
+      },
+      "64": {
+        "baseline_mean_accuracy": 0.4990234375,
+        "quantized_mean_accuracy": 0.4977213541666667
+      }
+    }
+  },
+  "memory_int8": {
+    "weight_bytes": 49048,
+    "edge_file_bytes": 49240,
+    "by_length": {
+      "32": {
+        "baseline_mean_accuracy": 0.4534505208333333,
+        "quantized_mean_accuracy": 0.4534505208333333
+      },
+      "64": {
+        "baseline_mean_accuracy": 0.4814453125,
+        "quantized_mean_accuracy": 0.4820963541666667
+      }
+    }
+  },
+  "int8": {
+    "weight_bytes": 52120,
+    "edge_file_bytes": 52312,
+    "by_length": {
+      "32": {
+        "baseline_mean_accuracy": 0.4811197916666667,
+        "quantized_mean_accuracy": 0.4807942708333333
+      },
+      "64": {
+        "baseline_mean_accuracy": 0.4970703125,
+        "quantized_mean_accuracy": 0.4967447916666667
+      }
+    }
+  }
+}

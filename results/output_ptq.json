@@ -1,0 +1,383 @@
+{
+  "experiment": "INT8 output head applied after primary fixed training; no retraining",
+  "caveat": "Same held-out examples re-used for a declared separate ablation; not new confirmation of language/general intelligence",
+  "summary": {
+    "fp32": {
+      "weight_bytes": 72856,
+      "edge_file_bytes": 73000,
+      "by_length": {
+        "32": {
+          "baseline_mean_accuracy": 0.4850260416666667,
+          "quantized_mean_accuracy": 0.484375
+        },
+        "64": {
+          "baseline_mean_accuracy": 0.4990234375,
+          "quantized_mean_accuracy": 0.4977213541666667
+        }
+      }
+    },
+    "memory_int8": {
+      "weight_bytes": 49048,
+      "edge_file_bytes": 49240,
+      "by_length": {
+        "32": {
+          "baseline_mean_accuracy": 0.4534505208333333,
+          "quantized_mean_accuracy": 0.4534505208333333
+        },
+        "64": {
+          "baseline_mean_accuracy": 0.4814453125,
+          "quantized_mean_accuracy": 0.4820963541666667
+        }
+      }
+    },
+    "int8": {
+      "weight_bytes": 52120,
+      "edge_file_bytes": 52312,
+      "by_length": {
+        "32": {
+          "baseline_mean_accuracy": 0.4811197916666667,
+          "quantized_mean_accuracy": 0.4807942708333333
+        },
+        "64": {
+          "baseline_mean_accuracy": 0.4970703125,
+          "quantized_mean_accuracy": 0.4967447916666667
+        }
+      }
+    }
+  },
+  "runs": [
+    {
+      "policy": "int8",
+      "seed": 11,
+      "baseline_metrics": {
+        "32": {
+          "accuracy": 0.607421875,
+          "correct": 622,
+          "total": 1024,
+          "nll": 1.3082333616912365
+        },
+        "64": {
+          "accuracy": 0.6328125,
+          "correct": 648,
+          "total": 1024,
+          "nll": 1.279323760420084
+        }
+      },
+      "quantized_metrics": {
+        "32": {
+          "accuracy": 0.6064453125,
+          "correct": 621,
+          "total": 1024,
+          "nll": 1.3082167021930218
+        },
+        "64": {
+          "accuracy": 0.6328125,
+          "correct": 648,
+          "total": 1024,
+          "nll": 1.2794500850141048
+        }
+      },
+      "baseline_weight_bytes": 75672,
+      "weight_bytes": 52120,
+      "edge_file_bytes": 52312,
+      "source": "models/recall/int8-seed11.pt",
+      "model": "models/head_ptq/int8-head-int8-seed11.edge"
+    },
+    {
+      "policy": "memory_int8",
+      "seed": 11,
+      "baseline_metrics": {
+        "32": {
+          "accuracy": 0.5927734375,
+          "correct": 607,
+          "total": 1024,
+          "nll": 1.3430536910891533
+        },
+        "64": {
+          "accuracy": 0.609375,
+          "correct": 624,
+          "total": 1024,
+          "nll": 1.3368153534829617
+        }
+      },
+      "quantized_metrics": {
+        "32": {
+          "accuracy": 0.59375,
+          "correct": 608,
+          "total": 1024,
+          "nll": 1.3428767248988152
+        },
+        "64": {
+          "accuracy": 0.609375,
+          "correct": 624,
+          "total": 1024,
+          "nll": 1.3365100175142288
+        }
+      },
+      "baseline_weight_bytes": 72600,
+      "weight_bytes": 49048,
+      "edge_file_bytes": 49240,
+      "source": "models/recall/memory_int8-seed11.pt",
+      "model": "models/head_ptq/memory_int8-head-int8-seed11.edge"
+    },
+    {
+      "policy": "fp32",
+      "seed": 11,
+      "baseline_metrics": {
+        "32": {
+          "accuracy": 0.59765625,
+          "correct": 612,
+          "total": 1024,
+          "nll": 1.3144447021186352
+        },
+        "64": {
+          "accuracy": 0.619140625,
+          "correct": 634,
+          "total": 1024,
+          "nll": 1.3064531050622463
+        }
+      },
+      "quantized_metrics": {
+        "32": {
+          "accuracy": 0.59765625,
+          "correct": 612,
+          "total": 1024,
+          "nll": 1.314445424824953
+        },
+        "64": {
+          "accuracy": 0.6162109375,
+          "correct": 631,
+          "total": 1024,
+          "nll": 1.3065363019704819
+        }
+      },
+      "baseline_weight_bytes": 96408,
+      "weight_bytes": 72856,
+      "edge_file_bytes": 73000,
+      "source": "models/recall/fp32-seed11.pt",
+      "model": "models/head_ptq/fp32-head-int8-seed11.edge"
+    },
+    {
+      "policy": "fp32",
+      "seed": 22,
+      "baseline_metrics": {
+        "32": {
+          "accuracy": 0.57421875,
+          "correct": 588,
+          "total": 1024,
+          "nll": 1.3015791215002537
+        },
+        "64": {
+          "accuracy": 0.6123046875,
+          "correct": 627,
+          "total": 1024,
+          "nll": 1.2609800528734922
+        }
+      },
+      "quantized_metrics": {
+        "32": {
+          "accuracy": 0.5732421875,
+          "correct": 587,
+          "total": 1024,
+          "nll": 1.3015244230628014
+        },
+        "64": {
+          "accuracy": 0.611328125,
+          "correct": 626,
+          "total": 1024,
+          "nll": 1.2610378917306662
+        }
+      },
+      "baseline_weight_bytes": 96408,
+      "weight_bytes": 72856,
+      "edge_file_bytes": 73000,
+      "source": "models/recall/fp32-seed22.pt",
+      "model": "models/head_ptq/fp32-head-int8-seed22.edge"
+    },
+    {
+      "policy": "memory_int8",
+      "seed": 22,
+      "baseline_metrics": {
+        "32": {
+          "accuracy": 0.49609375,
+          "correct": 508,
+          "total": 1024,
+          "nll": 1.3972660265862942
+        },
+        "64": {
+          "accuracy": 0.5576171875,
+          "correct": 571,
+          "total": 1024,
+          "nll": 1.3608796820044518
+        }
+      },
+      "quantized_metrics": {
+        "32": {
+          "accuracy": 0.4951171875,
+          "correct": 507,
+          "total": 1024,
+          "nll": 1.3966599181294441
+        },
+        "64": {
+          "accuracy": 0.556640625,
+          "correct": 570,
+          "total": 1024,
+          "nll": 1.3604481406509876
+        }
+      },
+      "baseline_weight_bytes": 72600,
+      "weight_bytes": 49048,
+      "edge_file_bytes": 49240,
+      "source": "models/recall/memory_int8-seed22.pt",
+      "model": "models/head_ptq/memory_int8-head-int8-seed22.edge"
+    },
+    {
+      "policy": "int8",
+      "seed": 22,
+      "baseline_metrics": {
+        "32": {
+          "accuracy": 0.533203125,
+          "correct": 546,
+          "total": 1024,
+          "nll": 1.3932608999311924
+        },
+        "64": {
+          "accuracy": 0.568359375,
+          "correct": 582,
+          "total": 1024,
+          "nll": 1.360947672277689
+        }
+      },
+      "quantized_metrics": {
+        "32": {
+          "accuracy": 0.533203125,
+          "correct": 546,
+          "total": 1024,
+          "nll": 1.3935773074626923
+        },
+        "64": {
+          "accuracy": 0.568359375,
+          "correct": 582,
+          "total": 1024,
+          "nll": 1.3613225631415844
+        }
+      },
+      "baseline_weight_bytes": 75672,
+      "weight_bytes": 52120,
+      "edge_file_bytes": 52312,
+      "source": "models/recall/int8-seed22.pt",
+      "model": "models/head_ptq/int8-head-int8-seed22.edge"
+    },
+    {
+      "policy": "fp32",
+      "seed": 33,
+      "baseline_metrics": {
+        "32": {
+          "accuracy": 0.283203125,
+          "correct": 290,
+          "total": 1024,
+          "nll": 1.8233614899218082
+        },
+        "64": {
+          "accuracy": 0.265625,
+          "correct": 272,
+          "total": 1024,
+          "nll": 1.8507507257163525
+        }
+      },
+      "quantized_metrics": {
+        "32": {
+          "accuracy": 0.2822265625,
+          "correct": 289,
+          "total": 1024,
+          "nll": 1.8232359141111374
+        },
+        "64": {
+          "accuracy": 0.265625,
+          "correct": 272,
+          "total": 1024,
+          "nll": 1.8504712358117104
+        }
+      },
+      "baseline_weight_bytes": 96408,
+      "weight_bytes": 72856,
+      "edge_file_bytes": 73000,
+      "source": "models/recall/fp32-seed33.pt",
+      "model": "models/head_ptq/fp32-head-int8-seed33.edge"
+    },
+    {
+      "policy": "int8",
+      "seed": 33,
+      "baseline_metrics": {
+        "32": {
+          "accuracy": 0.302734375,
+          "correct": 310,
+          "total": 1024,
+          "nll": 1.79878731071949
+        },
+        "64": {
+          "accuracy": 0.2900390625,
+          "correct": 297,
+          "total": 1024,
+          "nll": 1.8192245364189148
+        }
+      },
+      "quantized_metrics": {
+        "32": {
+          "accuracy": 0.302734375,
+          "correct": 310,
+          "total": 1024,
+          "nll": 1.798885878175497
+        },
+        "64": {
+          "accuracy": 0.2890625,
+          "correct": 296,
+          "total": 1024,
+          "nll": 1.819194983690977
+        }
+      },
+      "baseline_weight_bytes": 75672,
+      "weight_bytes": 52120,
+      "edge_file_bytes": 52312,
+      "source": "models/recall/int8-seed33.pt",
+      "model": "models/head_ptq/int8-head-int8-seed33.edge"
+    },
+    {
+      "policy": "memory_int8",
+      "seed": 33,
+      "baseline_metrics": {
+        "32": {
+          "accuracy": 0.271484375,
+          "correct": 278,
+          "total": 1024,
+          "nll": 1.8501975499093533
+        },
+        "64": {
+          "accuracy": 0.27734375,
+          "correct": 284,
+          "total": 1024,
+          "nll": 1.8630873747169971
+        }
+      },
+      "quantized_metrics": {
+        "32": {
+          "accuracy": 0.271484375,
+          "correct": 278,
+          "total": 1024,
+          "nll": 1.849756594747305
+        },
+        "64": {
+          "accuracy": 0.2802734375,
+          "correct": 287,
+          "total": 1024,
+          "nll": 1.862524889409542
+        }
+      },
+      "baseline_weight_bytes": 72600,
+      "weight_bytes": 49048,
+      "edge_file_bytes": 49240,
+      "source": "models/recall/memory_int8-seed33.pt",
+      "model": "models/head_ptq/memory_int8-head-int8-seed33.edge"
+    }
+  ]
+}

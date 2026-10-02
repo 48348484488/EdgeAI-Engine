@@ -1,0 +1,9 @@
+EdgeAI Engine v0.3 | threads=5 sse2=1 avx=1 avx2=1 | backend=echo-reasoner-dev
+Modelo experimental: nao e um assistente conversacional avancado.
+Score do token nao representa chance de a resposta estar correta.
+Digite 'sair' para fechar.
+> Memória salva.
+[neural=0 loops=0 token_score=1]
+> teste de kernels
+[neural=0 loops=0 token_score=1]
+> 

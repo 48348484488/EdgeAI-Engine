@@ -1,0 +1,59 @@
+FFFFFF
+======================================================================
+FAIL: test_causal_and_all_parameters_train (__main__.PrecisionContract.test_causal_and_all_parameters_train)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/EdgeAI-Engine-v0.4/tests/test_precision_contract.py", line 17, in setUp
+    self.assertIsNotNone(MixedHybrid, 'mixed precision implementation is missing')
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unexpectedly None : mixed precision implementation is missing
+
+======================================================================
+FAIL: test_export_validates_and_is_atomic (__main__.PrecisionContract.test_export_validates_and_is_atomic)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/EdgeAI-Engine-v0.4/tests/test_precision_contract.py", line 17, in setUp
+    self.assertIsNotNone(MixedHybrid, 'mixed precision implementation is missing')
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unexpectedly None : mixed precision implementation is missing
+
+======================================================================
+FAIL: test_fp32_is_unchanged_reference (__main__.PrecisionContract.test_fp32_is_unchanged_reference)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/EdgeAI-Engine-v0.4/tests/test_precision_contract.py", line 17, in setUp
+    self.assertIsNotNone(MixedHybrid, 'mixed precision implementation is missing')
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unexpectedly None : mixed precision implementation is missing
+
+======================================================================
+FAIL: test_int8_grid_and_zero_rows (__main__.PrecisionContract.test_int8_grid_and_zero_rows)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/EdgeAI-Engine-v0.4/tests/test_precision_contract.py", line 17, in setUp
+    self.assertIsNotNone(MixedHybrid, 'mixed precision implementation is missing')
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unexpectedly None : mixed precision implementation is missing
+
+======================================================================
+FAIL: test_invalid_policy_rejected (__main__.PrecisionContract.test_invalid_policy_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/EdgeAI-Engine-v0.4/tests/test_precision_contract.py", line 17, in setUp
+    self.assertIsNotNone(MixedHybrid, 'mixed precision implementation is missing')
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unexpectedly None : mixed precision implementation is missing
+
+======================================================================
+FAIL: test_policies_keep_same_master_parameters (__main__.PrecisionContract.test_policies_keep_same_master_parameters)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/EdgeAI-Engine-v0.4/tests/test_precision_contract.py", line 17, in setUp
+    self.assertIsNotNone(MixedHybrid, 'mixed precision implementation is missing')
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unexpectedly None : mixed precision implementation is missing
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.001s
+
+FAILED (failures=6)

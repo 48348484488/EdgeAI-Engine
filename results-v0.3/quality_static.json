@@ -1,0 +1,319 @@
+{
+  "task": "symbolic associative recall; 6 joint key/value records, 8 candidate values, query at position 32",
+  "caveat": "joint symbols simplify binding; not natural language; no claim about general intelligence",
+  "chance_among_8_values": 0.125,
+  "sequence_length": 32,
+  "local_window": 16,
+  "steps": 400,
+  "batch_size": 32,
+  "test_seed": 99371,
+  "test_size": 1024,
+  "torch_version": "2.10.0+cpu",
+  "threads": 1,
+  "optimizer": "AdamW lr=0.002 clip_norm=1",
+  "checkpoint_selection": "final fixed step; no test-set tuning",
+  "summary": {
+    "hybrid_fp32": {
+      "mean_accuracy": 0.17513020833333334,
+      "min_accuracy": 0.1455078125,
+      "max_accuracy": 0.1923828125,
+      "mean_train_seconds": 7.188160614666685,
+      "parameters": 24003
+    },
+    "hybrid_ternary": {
+      "mean_accuracy": 0.12662760416666666,
+      "min_accuracy": 0.115234375,
+      "max_accuracy": 0.1376953125,
+      "mean_train_seconds": 8.11907672766669,
+      "parameters": 24003
+    },
+    "transformer_fp32": {
+      "mean_accuracy": 0.662109375,
+      "min_accuracy": 0.5703125,
+      "max_accuracy": 0.806640625,
+      "mean_train_seconds": 1.947958129333377,
+      "parameters": 27296
+    }
+  },
+  "runs": [
+    {
+      "kind": "hybrid_fp32",
+      "seed": 11,
+      "parameters": 24003,
+      "steps": 400,
+      "training_examples": 12800,
+      "accuracy": 0.1455078125,
+      "correct": 149,
+      "total": 1024,
+      "train_seconds": 6.964882157000034,
+      "train_cpu_seconds": 6.964582126,
+      "energy_joules": null,
+      "curve": [
+        {
+          "step": 100,
+          "loss": 2.1668312549591064
+        },
+        {
+          "step": 200,
+          "loss": 2.095348834991455
+        },
+        {
+          "step": 300,
+          "loss": 2.081172466278076
+        },
+        {
+          "step": 400,
+          "loss": 2.0638301372528076
+        }
+      ]
+    },
+    {
+      "kind": "hybrid_ternary",
+      "seed": 11,
+      "parameters": 24003,
+      "steps": 400,
+      "training_examples": 12800,
+      "accuracy": 0.1376953125,
+      "correct": 141,
+      "total": 1024,
+      "train_seconds": 9.736695282000028,
+      "train_cpu_seconds": 9.734258533000002,
+      "energy_joules": null,
+      "curve": [
+        {
+          "step": 100,
+          "loss": 2.145528793334961
+        },
+        {
+          "step": 200,
+          "loss": 2.091362476348877
+        },
+        {
+          "step": 300,
+          "loss": 2.079287528991699
+        },
+        {
+          "step": 400,
+          "loss": 2.076555013656616
+        }
+      ]
+    },
+    {
+      "kind": "transformer_fp32",
+      "seed": 11,
+      "parameters": 27296,
+      "steps": 400,
+      "training_examples": 12800,
+      "accuracy": 0.5703125,
+      "correct": 584,
+      "total": 1024,
+      "train_seconds": 2.0200355550000495,
+      "train_cpu_seconds": 2.0199899980000033,
+      "energy_joules": null,
+      "curve": [
+        {
+          "step": 100,
+          "loss": 2.1725804805755615
+        },
+        {
+          "step": 200,
+          "loss": 2.054990768432617
+        },
+        {
+          "step": 300,
+          "loss": 1.977804183959961
+        },
+        {
+          "step": 400,
+          "loss": 1.1379159688949585
+        }
+      ]
+    },
+    {
+      "kind": "hybrid_fp32",
+      "seed": 22,
+      "parameters": 24003,
+      "steps": 400,
+      "training_examples": 12800,
+      "accuracy": 0.1923828125,
+      "correct": 197,
+      "total": 1024,
+      "train_seconds": 7.439866574999996,
+      "train_cpu_seconds": 7.439670687,
+      "energy_joules": null,
+      "curve": [
+        {
+          "step": 100,
+          "loss": 2.0856072902679443
+        },
+        {
+          "step": 200,
+          "loss": 2.1529064178466797
+        },
+        {
+          "step": 300,
+          "loss": 2.0726799964904785
+        },
+        {
+          "step": 400,
+          "loss": 2.144514322280884
+        }
+      ]
+    },
+    {
+      "kind": "hybrid_ternary",
+      "seed": 22,
+      "parameters": 24003,
+      "steps": 400,
+      "training_examples": 12800,
+      "accuracy": 0.126953125,
+      "correct": 130,
+      "total": 1024,
+      "train_seconds": 7.346859622000011,
+      "train_cpu_seconds": 7.346572647999999,
+      "energy_joules": null,
+      "curve": [
+        {
+          "step": 100,
+          "loss": 2.086677074432373
+        },
+        {
+          "step": 200,
+          "loss": 2.15403413772583
+        },
+        {
+          "step": 300,
+          "loss": 2.0714519023895264
+        },
+        {
+          "step": 400,
+          "loss": 2.1569786071777344
+        }
+      ]
+    },
+    {
+      "kind": "transformer_fp32",
+      "seed": 22,
+      "parameters": 27296,
+      "steps": 400,
+      "training_examples": 12800,
+      "accuracy": 0.806640625,
+      "correct": 826,
+      "total": 1024,
+      "train_seconds": 1.9227003250000507,
+      "train_cpu_seconds": 1.9226059620000058,
+      "energy_joules": null,
+      "curve": [
+        {
+          "step": 100,
+          "loss": 2.0607705116271973
+        },
+        {
+          "step": 200,
+          "loss": 2.1586172580718994
+        },
+        {
+          "step": 300,
+          "loss": 1.5118060111999512
+        },
+        {
+          "step": 400,
+          "loss": 0.7163101434707642
+        }
+      ]
+    },
+    {
+      "kind": "hybrid_fp32",
+      "seed": 33,
+      "parameters": 24003,
+      "steps": 400,
+      "training_examples": 12800,
+      "accuracy": 0.1875,
+      "correct": 192,
+      "total": 1024,
+      "train_seconds": 7.159733112000026,
+      "train_cpu_seconds": 7.158578712999997,
+      "energy_joules": null,
+      "curve": [
+        {
+          "step": 100,
+          "loss": 2.1152002811431885
+        },
+        {
+          "step": 200,
+          "loss": 2.0908796787261963
+        },
+        {
+          "step": 300,
+          "loss": 2.0809502601623535
+        },
+        {
+          "step": 400,
+          "loss": 2.0018391609191895
+        }
+      ]
+    },
+    {
+      "kind": "hybrid_ternary",
+      "seed": 33,
+      "parameters": 24003,
+      "steps": 400,
+      "training_examples": 12800,
+      "accuracy": 0.115234375,
+      "correct": 118,
+      "total": 1024,
+      "train_seconds": 7.273675279000031,
+      "train_cpu_seconds": 7.273483013000003,
+      "energy_joules": null,
+      "curve": [
+        {
+          "step": 100,
+          "loss": 2.108412265777588
+        },
+        {
+          "step": 200,
+          "loss": 2.1002047061920166
+        },
+        {
+          "step": 300,
+          "loss": 2.082735300064087
+        },
+        {
+          "step": 400,
+          "loss": 2.052391529083252
+        }
+      ]
+    },
+    {
+      "kind": "transformer_fp32",
+      "seed": 33,
+      "parameters": 27296,
+      "steps": 400,
+      "training_examples": 12800,
+      "accuracy": 0.609375,
+      "correct": 624,
+      "total": 1024,
+      "train_seconds": 1.901138508000031,
+      "train_cpu_seconds": 1.901092999999996,
+      "energy_joules": null,
+      "curve": [
+        {
+          "step": 100,
+          "loss": 2.118317127227783
+        },
+        {
+          "step": 200,
+          "loss": 2.051732301712036
+        },
+        {
+          "step": 300,
+          "loss": 1.876124382019043
+        },
+        {
+          "step": 400,
+          "loss": 1.2792245149612427
+        }
+      ]
+    }
+  ]
+}

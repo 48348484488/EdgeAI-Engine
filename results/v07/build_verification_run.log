@@ -1,0 +1,10 @@
+quick_goals
+portable_configure
+portable_build
+portable_ctest
+portable_python
+sanitize_configure
+sanitize_build
+sanitize_ctest
+sanitize_python
+ALL BUILD CONFIGURATIONS PASSED

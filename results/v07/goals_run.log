@@ -1,0 +1,25 @@
+[configure] started
+[configure] passed
+[build] started
+[build] passed
+[cpp_tests] started
+[cpp_tests] passed
+[python_tests] started
+[python_tests] passed
+[frozen_synthetic_data] started
+[frozen_synthetic_data] passed
+[legacy_bpe_parity] started
+[legacy_bpe_parity] passed
+[response_only_training] started
+[response_only_training] passed
+[unassisted_native_evaluation] started
+[unassisted_native_evaluation] passed
+[legacy_transfer_diagnostic] started
+[legacy_transfer_diagnostic] passed
+[trained_eos_parity] started
+[trained_eos_parity] passed
+[energy_probe] started
+[energy_probe] passed
+[validate_evidence] started
+[validate_evidence] passed
+Metas desta execução concluídas. Status: /mnt/data/EdgeAI-Engine-v0.7/results/v07/goals-instructions/status.json

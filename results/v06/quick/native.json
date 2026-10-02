@@ -1,0 +1,101 @@
+{
+  "parity": [
+    {
+      "kind": "byte257",
+      "seed": 11,
+      "tokens": 337,
+      "max_abs_error": 2.86102294921875e-06,
+      "passed": true
+    },
+    {
+      "kind": "bpe513",
+      "seed": 11,
+      "tokens": 301,
+      "max_abs_error": 2.384185791015625e-06,
+      "passed": true
+    }
+  ],
+  "repeats": 1,
+  "cpu_affinity": 0,
+  "rows": [
+    {
+      "blocks": 116,
+      "raw_bytes": 29480,
+      "target_tokens": 15633,
+      "nll_sum": 63106.940990478,
+      "bits_per_byte": 3.08833347397,
+      "token_accuracy": 0.2398132156336,
+      "load_seconds": 0.000257477,
+      "tokenization_seconds": 0.001503354,
+      "forward_and_scoring_seconds": 0.172744459,
+      "total_seconds": 0.174779961,
+      "cpu_seconds": 0.174512,
+      "weights_bytes": 151672,
+      "state_bytes": 24576,
+      "working_bytes": 29220,
+      "bos_scored_as_byte": false,
+      "energy_joules": null,
+      "kind": "bpe513",
+      "seed": 11,
+      "repetition": 0,
+      "rss_peak_kib": 2180
+    },
+    {
+      "blocks": 116,
+      "raw_bytes": 29480,
+      "target_tokens": 29480,
+      "nll_sum": 71774.063006429,
+      "bits_per_byte": 3.5124859146482,
+      "token_accuracy": 0.3634328358209,
+      "load_seconds": 0.000311419,
+      "tokenization_seconds": 4.1068e-05,
+      "forward_and_scoring_seconds": 0.29510901,
+      "total_seconds": 0.296837989,
+      "cpu_seconds": 0.296574,
+      "weights_bytes": 126088,
+      "state_bytes": 32768,
+      "working_bytes": 37156,
+      "bos_scored_as_byte": false,
+      "energy_joules": null,
+      "kind": "byte257",
+      "seed": 11,
+      "repetition": 0,
+      "rss_peak_kib": 2052
+    }
+  ],
+  "generation": [
+    {
+      "prompt_bytes": 33,
+      "prefill_tokens_including_bos": 34,
+      "generated_tokens": 64,
+      "generated_bytes": 64,
+      "load_seconds": 0.000205279,
+      "tokenization_seconds": 6.61e-07,
+      "prefill_seconds": 0.000266942,
+      "generation_seconds": 0.00053754,
+      "total_seconds": 0.001109691,
+      "cpu_seconds": 0.001108,
+      "energy_joules": null,
+      "kind": "byte257",
+      "seed": 11,
+      "output_hex": "20202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020"
+    },
+    {
+      "prompt_bytes": 33,
+      "prefill_tokens_including_bos": 17,
+      "generated_tokens": 64,
+      "generated_bytes": 64,
+      "load_seconds": 0.000276967,
+      "tokenization_seconds": 4.056e-06,
+      "prefill_seconds": 0.000105138,
+      "generation_seconds": 0.000461976,
+      "total_seconds": 0.000915658,
+      "cpu_seconds": 0.000913,
+      "energy_joules": null,
+      "kind": "bpe513",
+      "seed": 11,
+      "output_hex": "3d203d203d203d203d203d203d203d203d203d203d203d203d203d203d203d203d203d203d203d203d203d203d203d203d203d203d203d203d203d203d203d20"
+    }
+  ],
+  "note": "all rows score the same 29480 raw test bytes; tokenization and model load separately measured; output tokens/sec is not compared as equal work; host is not a weak PC"
+}

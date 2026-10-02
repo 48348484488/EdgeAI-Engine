@@ -1,0 +1,10 @@
+#pragma once
+#include <cstddef>
+#include <string>
+namespace edgeai {
+enum class Mode { Eco, Balanced, Max };
+enum class RouteKind { Calculator, MemoryAdd, MemorySearch, Neural, CodeSearch };
+struct Route { RouteKind kind; std::string payload; double confidence; };
+struct Budget { std::size_t max_loops; std::size_t max_context_chars; std::size_t max_memory_hits; unsigned threads; };
+struct Response { std::string text; RouteKind route; bool neural_used; std::size_t loops_used; double confidence; };
+}

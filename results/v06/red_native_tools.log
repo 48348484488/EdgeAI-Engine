@@ -1,0 +1,23 @@
+FF
+======================================================================
+FAIL: test_native_text_evaluator_source_exists (test_v06_workflow.NativeToolGate.test_native_text_evaluator_source_exists)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/EdgeAI-Engine-v0.6/tests/test_v06_workflow.py", line 6, in test_native_text_evaluator_source_exists
+    self.assertTrue((ROOT/'tools/text_eval.cpp').is_file(),'native same-byte evaluation missing')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : native same-byte evaluation missing
+
+======================================================================
+FAIL: test_native_tokenizer_source_exists (test_v06_workflow.NativeToolGate.test_native_tokenizer_source_exists)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/EdgeAI-Engine-v0.6/tests/test_v06_workflow.py", line 8, in test_native_tokenizer_source_exists
+    self.assertTrue((ROOT/'tools/tokenize.cpp').is_file(),'native token trace missing')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : native token trace missing
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.001s
+
+FAILED (failures=2)

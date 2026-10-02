@@ -1,0 +1,20 @@
+{
+  "real_reference_model_executed": false,
+  "real_llama_server_executed": false,
+  "http_fixture_tests": 9,
+  "fixture_is_neural_model": false,
+  "quality_comparison_available": false,
+  "reason": "No llama-server binary or GGUF model present. Runtime DNS requests to official download hosts failed. The web tool could read official API docs, but it did not supply executable/model artifacts.",
+  "runtime_dns": [
+    {
+      "host": "api.github.com",
+      "dns": "failed",
+      "error": "[Errno -3] Temporary failure in name resolution"
+    },
+    {
+      "host": "huggingface.co",
+      "dns": "failed",
+      "error": "[Errno -3] Temporary failure in name resolution"
+    }
+  ]
+}

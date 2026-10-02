@@ -1,0 +1,11 @@
+{
+  "available": false,
+  "package_energy_joules": null,
+  "elapsed_seconds": 0.3018505009999899,
+  "exit_code": 0,
+  "domains": [],
+  "stdout": "{\"tokens\":100000,\"seconds\":0.298292624,\"cpu_seconds\":0.297691,\"requested_kernel\":\"auto\",\"byte_steps_per_second\":335241.276365,\"weights_bytes\":52120,\"state_payload_bytes\":5120,\"numeric_working_bytes\":7884,\"checksum\":-171619.579803,\"energy_joules\":null,\"note\":\"teacher-forced byte steps, not useful answers per second; model load and warmup excluded from step timer\"}\n",
+  "stderr": "",
+  "limitations": "Package energy, not process-isolated or whole-wall energy. At most one wrap can be corrected. No extrapolation from latency.",
+  "reason": "No readable package RAPL counters in this environment"
+}

@@ -1,0 +1,23 @@
+[ 31%] Built target edgeai
+[ 34%] Built target edgeai_chat
+[ 37%] Built target edgeai_make_demo
+[ 43%] Built target edgeai_logits
+[ 43%] Built target edgeai_evaluate
+[ 46%] Built target edgeai_tokenize
+[ 50%] Built target edgeai_inspect
+[ 53%] Built target edgeai_generate
+[ 56%] Built target edgeai_text_eval
+[ 59%] Built target edgeai_token_logits
+[ 62%] Built target edgeai_regressions
+[ 65%] Built target edgeai_tests
+[ 68%] Built target edgeai_test_memory
+[ 71%] Built target edgeai_test_hybrid
+[ 75%] Built target edgeai_test_kernels
+[ 78%] Built target edgeai_test_tools
+[ 81%] Built target edgeai_test_precision
+[ 84%] Built target edgeai_test_bpe
+[ 87%] Built target edgeai_test_transformer
+[ 92%] Built target edgeai_benchmark
+[ 93%] Built target edgeai_test_instruction
+[ 96%] Built target edgeai_matrix_benchmark
+[100%] Built target edgeai_runtime_benchmark

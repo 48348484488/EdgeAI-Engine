@@ -1,0 +1,2 @@
+{"seed": 11, "phase": "before", "summary": {"count": 194, "exact": 0, "correct": 0, "eos": 0, "correct_and_eos": 0, "median_generated_tokens": 32.0, "median_internal_seconds": 0.003358728}}
+{"seed": 11, "phase": "after", "summary": {"count": 194, "exact": 0, "correct": 0, "eos": 170, "correct_and_eos": 0, "median_generated_tokens": 4.0, "median_internal_seconds": 0.0029271315}}

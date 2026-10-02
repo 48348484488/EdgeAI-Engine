@@ -1,0 +1,20 @@
+[ 37%] Built target edgeai
+[ 44%] Built target edgeai_chat
+[ 44%] Built target edgeai_make_demo
+[ 51%] Built target edgeai_evaluate
+[ 51%] Built target edgeai_logits
+[ 59%] Built target edgeai_inspect
+[ 59%] Built target edgeai_tests
+[ 66%] Built target edgeai_test_memory
+[ 66%] Built target edgeai_regressions
+[ 70%] Built target edgeai_test_hybrid
+[ 74%] Built target edgeai_test_kernels
+[ 81%] Built target edgeai_test_precision
+[ 81%] Built target edgeai_test_tools
+[ 83%] Building CXX object CMakeFiles/edgeai_test_bpe.dir/tests/test_bpe.cpp.o
+[ 87%] Built target edgeai_test_transformer
+[ 90%] Built target edgeai_benchmark
+[ 94%] Built target edgeai_runtime_benchmark
+[ 98%] Built target edgeai_matrix_benchmark
+[100%] Linking CXX executable edgeai_test_bpe
+[100%] Built target edgeai_test_bpe

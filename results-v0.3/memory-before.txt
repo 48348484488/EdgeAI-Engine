@@ -1,0 +1,4 @@
+tests/test_memory.cpp:1:10: fatal error: edgeai/HybridMemory.hpp: No such file or directory
+    1 | #include "edgeai/HybridMemory.hpp"
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~~
+compilation terminated.

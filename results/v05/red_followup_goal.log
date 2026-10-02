@@ -1,0 +1,19 @@
+test_cache_checks_identity_and_artifact_content (test_v05_workflow.WorkflowTests.test_cache_checks_identity_and_artifact_content) ... ok
+test_goal_definitions_and_no_shell (test_v05_workflow.WorkflowTests.test_goal_definitions_and_no_shell) ... ok
+test_native_evaluator_count_and_reset (test_v05_workflow.WorkflowTests.test_native_evaluator_count_and_reset) ... ok
+test_native_evaluator_rejects_malformed_blocks (test_v05_workflow.WorkflowTests.test_native_evaluator_rejects_malformed_blocks) ... ok
+test_research_goals_include_equal_cpu_followup_and_final_parity (test_v05_workflow.WorkflowTests.test_research_goals_include_equal_cpu_followup_and_final_parity) ... FAIL
+
+======================================================================
+FAIL: test_research_goals_include_equal_cpu_followup_and_final_parity (test_v05_workflow.WorkflowTests.test_research_goals_include_equal_cpu_followup_and_final_parity)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/EdgeAI-Engine-v0.5/tests/test_v05_workflow.py", line 25, in test_research_goals_include_equal_cpu_followup_and_final_parity
+    self.assertIn('equal_cpu_training',stages)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'equal_cpu_training' not found in {'configure': ['cmake', '-S', '/mnt/data/EdgeAI-Engine-v0.5', '-B', '/mnt/data/EdgeAI-Engine-v0.5/build', '-DCMAKE_BUILD_TYPE=Release'], 'build': ['cmake', '--build', '/mnt/data/EdgeAI-Engine-v0.5/build', '--config', 'Release', '-j', '2'], 'cpp_tests': ['ctest', '--test-dir', '/mnt/data/EdgeAI-Engine-v0.5/build', '-C', 'Release', '--output-on-failure'], 'python_tests': ['/opt/pyvenv/bin/python', '-m', 'unittest', 'discover', '-s', '/mnt/data/EdgeAI-Engine-v0.5/tests', '-p', 'test_*.py', '-v'], 'transformer_parity': ['/opt/pyvenv/bin/python', '/mnt/data/EdgeAI-Engine-v0.5/tools/verify_language.py', '--build', '/mnt/data/EdgeAI-Engine-v0.5/build', '--out', '/mnt/data/EdgeAI-Engine-v0.5/results/v05/parity-research.json'], 'train_and_evaluate': ['/opt/pyvenv/bin/python', '/mnt/data/EdgeAI-Engine-v0.5/benchmarks/language_v05.py', '--steps', '400', '--seeds', '11', '22', '33', '--threads', '1', '--build', '/mnt/data/EdgeAI-Engine-v0.5/build', '--out', '/mnt/data/EdgeAI-Engine-v0.5/results/v05/language.json', '--model-dir', '/mnt/data/EdgeAI-Engine-v0.5/models/language_v05', '--resume'], 'native_benchmark': ['/opt/pyvenv/bin/python', '/mnt/data/EdgeAI-Engine-v0.5/benchmarks/native_v05.py', '--build', '/mnt/data/EdgeAI-Engine-v0.5/build', '--report', '/mnt/data/EdgeAI-Engine-v0.5/results/v05/language.json', '--repeats', '5', '--tokens', '10000', '--out', '/mnt/data/EdgeAI-Engine-v0.5/results/v05/native.json']}
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.861s
+
+FAILED (failures=1)

@@ -1,0 +1,87 @@
+Trained parity cases: 15 max_abs_error: 4.291534423828125e-06
+Trained parity cases: 6 max_abs_error: 6.9141387939453125e-06
+{
+  "hybrid_fp32": {
+    "median_us_per_byte": 7.0312056,
+    "median_cpu_us_per_byte": 7.0261,
+    "min_us_per_byte": 6.749458199999999,
+    "max_us_per_byte": 9.147956299999999,
+    "median_rss_kib": 2180,
+    "weights_bytes": 249112,
+    "state_payload_bytes": 32768,
+    "numeric_working_bytes": 37388
+  },
+  "hybrid_int8": {
+    "median_us_per_byte": 7.4795057,
+    "median_cpu_us_per_byte": 7.4771,
+    "min_us_per_byte": 7.202411100000001,
+    "max_us_per_byte": 8.0590512,
+    "median_rss_kib": 2052,
+    "weights_bytes": 116504,
+    "state_payload_bytes": 32768,
+    "numeric_working_bytes": 37388
+  },
+  "hybrid_mixed": {
+    "median_us_per_byte": 8.6951812,
+    "median_cpu_us_per_byte": 8.6828,
+    "min_us_per_byte": 8.424934700000001,
+    "max_us_per_byte": 9.6070327,
+    "median_rss_kib": 2052,
+    "weights_bytes": 104216,
+    "state_payload_bytes": 32768,
+    "numeric_working_bytes": 37388
+  },
+  "transformer_fp32": {
+    "median_us_per_byte": 7.200498199999999,
+    "median_cpu_us_per_byte": 7.1951,
+    "min_us_per_byte": 7.001218400000001,
+    "max_us_per_byte": 8.250583500000001,
+    "median_rss_kib": 2180,
+    "weights_bytes": 248448,
+    "state_payload_bytes": 32768,
+    "numeric_working_bytes": 36864
+  },
+  "transformer_int8": {
+    "median_us_per_byte": 7.842917600000001,
+    "median_cpu_us_per_byte": 7.8411,
+    "min_us_per_byte": 7.5441720000000005,
+    "max_us_per_byte": 8.421856199999999,
+    "median_rss_kib": 2052,
+    "weights_bytes": 115968,
+    "state_payload_bytes": 32768,
+    "numeric_working_bytes": 36864
+  }
+}
+{
+  "hybrid_int8": {
+    "median_us_per_byte": 7.626850999999999,
+    "median_cpu_us_per_byte": 7.625,
+    "min_us_per_byte": 7.3815231,
+    "max_us_per_byte": 8.0808738,
+    "median_rss_kib": 2052,
+    "weights_bytes": 116504,
+    "state_payload_bytes": 32768,
+    "numeric_working_bytes": 37388
+  },
+  "transformer_int8": {
+    "median_us_per_byte": 7.9852362999999995,
+    "median_cpu_us_per_byte": 7.9815,
+    "min_us_per_byte": 7.785211400000001,
+    "max_us_per_byte": 8.4005699,
+    "median_rss_kib": 2052,
+    "weights_bytes": 115968,
+    "state_payload_bytes": 32768,
+    "numeric_working_bytes": 36864
+  }
+}
+{
+  "available": false,
+  "package_energy_joules": null,
+  "elapsed_seconds": 0.7880487439999797,
+  "exit_code": 0,
+  "domains": [],
+  "stdout": "{\"tokens\":100000,\"seconds\":0.784721507,\"cpu_seconds\":0.784703,\"requested_kernel\":\"auto\",\"byte_steps_per_second\":127433.744466,\"weights_bytes\":115968,\"state_payload_bytes\":32768,\"numeric_working_bytes\":36864,\"checksum\":-242862.711687,\"energy_joules\":null,\"note\":\"teacher-forced byte steps, not useful answers per second; model load and warmup excluded from step timer\"}\n",
+  "stderr": "",
+  "limitations": "Package energy, not process-isolated or whole-wall energy. At most one wrap can be corrected. No extrapolation from latency.",
+  "reason": "No readable package RAPL counters in this environment"
+}

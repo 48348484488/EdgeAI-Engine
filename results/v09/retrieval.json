@@ -1,0 +1,1287 @@
+{
+  "schema": 1,
+  "method": "deterministic lexical retrieval; no model",
+  "host": "Linux-6.18.44-x86_64-with-glibc2.41",
+  "cases": 18,
+  "positive_cases": 14,
+  "negative_cases": 4,
+  "positive_top1": 14,
+  "positive_top3": 14,
+  "negative_empty": 4,
+  "median_seconds_including_process": 0.0026525365000225065,
+  "all_snippets_match_source": true,
+  "rows": [
+    {
+      "case": {
+        "id": "spawn",
+        "query": "Onde fica a função SpawnPlayer?",
+        "path": "src/player.cpp",
+        "line": 3
+      },
+      "top1_correct": true,
+      "top3_correct": true,
+      "runs": [
+        {
+          "method": "lexical-source-lines",
+          "neural_used": false,
+          "partial": false,
+          "scanned_files": 7,
+          "scanned_bytes": 1220,
+          "skipped_files": 1,
+          "hits": [
+            {
+              "path": "src/player.cpp",
+              "match_line": 3,
+              "start_line": 1,
+              "end_line": 5,
+              "score": 37,
+              "text": "#include \"player.h\"\n\nvoid SpawnPlayer(int id) {\n    SetPlayerHealth(id, 100);\n    ResetInventory(id);"
+            },
+            {
+              "path": "include/player.h",
+              "match_line": 4,
+              "start_line": 2,
+              "end_line": 6,
+              "score": 36,
+              "text": "struct Player { int health; int item_count; };\nextern Player players[100];\nvoid SpawnPlayer(int id);\nvoid SetPlayerHealth(int id, int health);\nvoid ResetInventory(int id);"
+            }
+          ],
+          "wall_seconds_including_process": 0.003060270999981185
+        },
+        {
+          "method": "lexical-source-lines",
+          "neural_used": false,
+          "partial": false,
+          "scanned_files": 7,
+          "scanned_bytes": 1220,
+          "skipped_files": 1,
+          "hits": [
+            {
+              "path": "src/player.cpp",
+              "match_line": 3,
+              "start_line": 1,
+              "end_line": 5,
+              "score": 37,
+              "text": "#include \"player.h\"\n\nvoid SpawnPlayer(int id) {\n    SetPlayerHealth(id, 100);\n    ResetInventory(id);"
+            },
+            {
+              "path": "include/player.h",
+              "match_line": 4,
+              "start_line": 2,
+              "end_line": 6,
+              "score": 36,
+              "text": "struct Player { int health; int item_count; };\nextern Player players[100];\nvoid SpawnPlayer(int id);\nvoid SetPlayerHealth(int id, int health);\nvoid ResetInventory(int id);"
+            }
+          ],
+          "wall_seconds_including_process": 0.00286068500008696
+        },
+        {
+          "method": "lexical-source-lines",
+          "neural_used": false,
+          "partial": false,
+          "scanned_files": 7,
+          "scanned_bytes": 1220,
+          "skipped_files": 1,
+          "hits": [
+            {
+              "path": "src/player.cpp",
+              "match_line": 3,
+              "start_line": 1,
+              "end_line": 5,
+              "score": 37,
+              "text": "#include \"player.h\"\n\nvoid SpawnPlayer(int id) {\n    SetPlayerHealth(id, 100);\n    ResetInventory(id);"
+            },
+            {
+              "path": "include/player.h",
+              "match_line": 4,
+              "start_line": 2,
+              "end_line": 6,
+              "score": 36,
+              "text": "struct Player { int health; int item_count; };\nextern Player players[100];\nvoid SpawnPlayer(int id);\nvoid SetPlayerHealth(int id, int health);\nvoid ResetInventory(int id);"
+            }
+          ],
+          "wall_seconds_including_process": 0.002761265000003732
+        }
+      ]
+    },
+    {
+      "case": {
+        "id": "health",
+        "query": "SetPlayerHealth",
+        "path": "src/player.cpp",
+        "line": 8
+      },
+      "top1_correct": true,
+      "top3_correct": true,
+      "runs": [
+        {
+          "method": "lexical-source-lines",
+          "neural_used": false,
+          "partial": false,
+          "scanned_files": 7,
+          "scanned_bytes": 1220,
+          "skipped_files": 1,
+          "hits": [
+            {
+              "path": "src/player.cpp",
+              "match_line": 8,
+              "start_line": 6,
+              "end_line": 10,
+              "score": 49,
+              "text": "}\n\nvoid SetPlayerHealth(int id, int health) {\n    players[id].health = health;\n}"
+            },
+            {
+              "path": "include/player.h",
+              "match_line": 5,
+              "start_line": 3,
+              "end_line": 6,
+              "score": 48,
+              "text": "extern Player players[100];\nvoid SpawnPlayer(int id);\nvoid SetPlayerHealth(int id, int health);\nvoid ResetInventory(int id);"
+            }
+          ],
+          "wall_seconds_including_process": 0.002777969000021585
+        },
+        {
+          "method": "lexical-source-lines",
+          "neural_used": false,
+          "partial": false,
+          "scanned_files": 7,
+          "scanned_bytes": 1220,
+          "skipped_files": 1,
+          "hits": [
+            {
+              "path": "src/player.cpp",
+              "match_line": 8,
+              "start_line": 6,
+              "end_line": 10,
+              "score": 49,
+              "text": "}\n\nvoid SetPlayerHealth(int id, int health) {\n    players[id].health = health;\n}"
+            },
+            {
+              "path": "include/player.h",
+              "match_line": 5,
+              "start_line": 3,
+              "end_line": 6,
+              "score": 48,
+              "text": "extern Player players[100];\nvoid SpawnPlayer(int id);\nvoid SetPlayerHealth(int id, int health);\nvoid ResetInventory(int id);"
+            }
+          ],
+          "wall_seconds_including_process": 0.002613391999943815
+        },
+        {
+          "method": "lexical-source-lines",
+          "neural_used": false,
+          "partial": false,
+          "scanned_files": 7,
+          "scanned_bytes": 1220,
+          "skipped_files": 1,
+          "hits": [
+            {
+              "path": "src/player.cpp",
+              "match_line": 8,
+              "start_line": 6,
+              "end_line": 10,
+              "score": 49,
+              "text": "}\n\nvoid SetPlayerHealth(int id, int health) {\n    players[id].health = health;\n}"
+            },
+            {
+              "path": "include/player.h",
+              "match_line": 5,
+              "start_line": 3,
+              "end_line": 6,
+              "score": 48,
+              "text": "extern Player players[100];\nvoid SpawnPlayer(int id);\nvoid SetPlayerHealth(int id, int health);\nvoid ResetInventory(int id);"
+            }
+          ],
+          "wall_seconds_including_process": 0.003151922000029117
+        }
+      ]
+    },
+    {
+      "case": {
+        "id": "reset",
+        "query": "ResetInventory",
+        "path": "src/player.cpp",
+        "line": 12
+      },
+      "top1_correct": true,
+      "top3_correct": true,
+      "runs": [
+        {
+          "method": "lexical-source-lines",
+          "neural_used": false,
+          "partial": false,
+          "scanned_files": 7,
+          "scanned_bytes": 1220,
+          "skipped_files": 1,
+          "hits": [
+            {
+              "path": "src/player.cpp",
+              "match_line": 12,
+              "start_line": 10,
+              "end_line": 14,
+              "score": 37,
+              "text": "}\n\nvoid ResetInventory(int id) {\n    players[id].item_count = 0;\n}"
+            },
+            {
+              "path": "include/player.h",
+              "match_line": 6,
+              "start_line": 4,
+              "end_line": 6,
+              "score": 36,
+              "text": "void SpawnPlayer(int id);\nvoid SetPlayerHealth(int id, int health);\nvoid ResetInventory(int id);"
+            }
+          ],
+          "wall_seconds_including_process": 0.002776155999981711
+        },
+        {
+          "method": "lexical-source-lines",
+          "neural_used": false,
+          "partial": false,
+          "scanned_files": 7,
+          "scanned_bytes": 1220,
+          "skipped_files": 1,
+          "hits": [
+            {
+              "path": "src/player.cpp",
+              "match_line": 12,
+              "start_line": 10,
+              "end_line": 14,
+              "score": 37,
+              "text": "}\n\nvoid ResetInventory(int id) {\n    players[id].item_count = 0;\n}"
+            },
+            {
+              "path": "include/player.h",
+              "match_line": 6,
+              "start_line": 4,
+              "end_line": 6,
+              "score": 36,
+              "text": "void SpawnPlayer(int id);\nvoid SetPlayerHealth(int id, int health);\nvoid ResetInventory(int id);"
+            }
+          ],
+          "wall_seconds_including_process": 0.002876888999935545
+        },
+        {
+          "method": "lexical-source-lines",
+          "neural_used": false,
+          "partial": false,
+          "scanned_files": 7,
+          "scanned_bytes": 1220,
+          "skipped_files": 1,
+          "hits": [
+            {
+              "path": "src/player.cpp",
+              "match_line": 12,
+              "start_line": 10,
+              "end_line": 14,
+              "score": 37,
+              "text": "}\n\nvoid ResetInventory(int id) {\n    players[id].item_count = 0;\n}"
+            },
+            {
+              "path": "include/player.h",
+              "match_line": 6,
+              "start_line": 4,
+              "end_line": 6,
+              "score": 36,
+              "text": "void SpawnPlayer(int id);\nvoid SetPlayerHealth(int id, int health);\nvoid ResetInventory(int id);"
+            }
+          ],
+          "wall_seconds_including_process": 0.0025197250000701388
+        }
+      ]
+    },
+    {
+      "case": {
+        "id": "add",
+        "query": "AddInventoryItem",
+        "path": "src/inventory.cpp",
+        "line": 3
+      },
+      "top1_correct": true,
+      "top3_correct": true,
+      "runs": [
+        {
+          "method": "lexical-source-lines",
+          "neural_used": false,
+          "partial": false,
+          "scanned_files": 7,
+          "scanned_bytes": 1220,
+          "skipped_files": 1,
+          "hits": [
+            {
+              "path": "src/inventory.cpp",
+              "match_line": 3,
+              "start_line": 1,
+              "end_line": 5,
+              "score": 49,
+              "text": "#include \"player.h\"\n\nint AddInventoryItem(int id) {\n    return ++players[id].item_count;\n}"
+            }
+          ],
+          "wall_seconds_including_process": 0.002739451999900666
+        },
+        {
+          "method": "lexical-source-lines",
+          "neural_used": false,
+          "partial": false,
+          "scanned_files": 7,
+          "scanned_bytes": 1220,
+          "skipped_files": 1,
+          "hits": [
+            {
+              "path": "src/inventory.cpp",
+              "match_line": 3,
+              "start_line": 1,
+              "end_line": 5,
+              "score": 49,
+              "text": "#include \"player.h\"\n\nint AddInventoryItem(int id) {\n    return ++players[id].item_count;\n}"
+            }
+          ],
+          "wall_seconds_including_process": 0.0028306359999987762
+        },
+        {
+          "method": "lexical-source-lines",
+          "neural_used": false,
+          "partial": false,
+          "scanned_files": 7,
+          "scanned_bytes": 1220,
+          "skipped_files": 1,
+          "hits": [
+            {
+              "path": "src/inventory.cpp",
+              "match_line": 3,
+              "start_line": 1,
+              "end_line": 5,
+              "score": 49,
+              "text": "#include \"player.h\"\n\nint AddInventoryItem(int id) {\n    return ++players[id].item_count;\n}"
+            }
+          ],
+          "wall_seconds_including_process": 0.002734430000032262
+        }
+      ]
+    },
+    {
+      "case": {
+        "id": "has",
+        "query": "HasItems",
+        "path": "src/inventory.cpp",
+        "line": 7
+      },
+      "top1_correct": true,
+      "top3_correct": true,
+      "runs": [
+        {
+          "method": "lexical-source-lines",
+          "neural_used": false,
+          "partial": false,
+          "scanned_files": 7,
+          "scanned_bytes": 1220,
+          "skipped_files": 1,
+          "hits": [
+            {
+              "path": "src/inventory.cpp",
+              "match_line": 7,
+              "start_line": 5,
+              "end_line": 9,
+              "score": 37,
+              "text": "}\n\nbool HasItems(int id) {\n    return players[id].item_count > 0;\n}"
+            }
+          ],
+          "wall_seconds_including_process": 0.0030387570000129926
+        },
+        {
+          "method": "lexical-source-lines",
+          "neural_used": false,
+          "partial": false,
+          "scanned_files": 7,
+          "scanned_bytes": 1220,
+          "skipped_files": 1,
+          "hits": [
+            {
+              "path": "src/inventory.cpp",
+              "match_line": 7,
+              "start_line": 5,
+              "end_line": 9,
+              "score": 37,
+              "text": "}\n\nbool HasItems(int id) {\n    return players[id].item_count > 0;\n}"
+            }
+          ],
+          "wall_seconds_including_process": 0.002804491999995662
+        },
+        {
+          "method": "lexical-source-lines",
+          "neural_used": false,
+          "partial": false,
+          "scanned_files": 7,
+          "scanned_bytes": 1220,
+          "skipped_files": 1,
+          "hits": [
+            {
+              "path": "src/inventory.cpp",
+              "match_line": 7,
+              "start_line": 5,
+              "end_line": 9,
+              "score": 37,
+              "text": "}\n\nbool HasItems(int id) {\n    return players[id].item_count > 0;\n}"
+            }
+          ],
+          "wall_seconds_including_process": 0.0025994400000399764
+        }
+      ]
+    },
+    {
+      "case": {
+        "id": "pawn_load",
+        "query": "CarregarConta",
+        "path": "scripts/accounts.pwn",
+        "line": 1
+      },
+      "top1_correct": true,
+      "top3_correct": true,
+      "runs": [
+        {
+          "method": "lexical-source-lines",
+          "neural_used": false,
+          "partial": false,
+          "scanned_files": 7,
+          "scanned_bytes": 1220,
+          "skipped_files": 1,
+          "hits": [
+            {
+              "path": "scripts/accounts.pwn",
+              "match_line": 1,
+              "start_line": 1,
+              "end_line": 3,
+              "score": 36,
+              "text": "stock CarregarConta(playerid)\n{\n    return 1;"
+            }
+          ],
+          "wall_seconds_including_process": 0.0026104340000756565
+        },
+        {
+          "method": "lexical-source-lines",
+          "neural_used": false,
+          "partial": false,
+          "scanned_files": 7,
+          "scanned_bytes": 1220,
+          "skipped_files": 1,
+          "hits": [
+            {
+              "path": "scripts/accounts.pwn",
+              "match_line": 1,
+              "start_line": 1,
+              "end_line": 3,
+              "score": 36,
+              "text": "stock CarregarConta(playerid)\n{\n    return 1;"
+            }
+          ],
+          "wall_seconds_including_process": 0.0026585299999624112
+        },
+        {
+          "method": "lexical-source-lines",
+          "neural_used": false,
+          "partial": false,
+          "scanned_files": 7,
+          "scanned_bytes": 1220,
+          "skipped_files": 1,
+          "hits": [
+            {
+              "path": "scripts/accounts.pwn",
+              "match_line": 1,
+              "start_line": 1,
+              "end_line": 3,
+              "score": 36,
+              "text": "stock CarregarConta(playerid)\n{\n    return 1;"
+            }
+          ],
+          "wall_seconds_including_process": 0.003118532999906165
+        }
+      ]
+    },
+    {
+      "case": {
+        "id": "pawn_save",
+        "query": "SalvarConta",
+        "path": "scripts/accounts.pwn",
+        "line": 6
+      },
+      "top1_correct": true,
+      "top3_correct": true,
+      "runs": [
+        {
+          "method": "lexical-source-lines",
+          "neural_used": false,
+          "partial": false,
+          "scanned_files": 7,
+          "scanned_bytes": 1220,
+          "skipped_files": 1,
+          "hits": [
+            {
+              "path": "scripts/accounts.pwn",
+              "match_line": 6,
+              "start_line": 4,
+              "end_line": 8,
+              "score": 36,
+              "text": "}\n\nstock SalvarConta(playerid)\n{\n    return 1;"
+            }
+          ],
+          "wall_seconds_including_process": 0.0032000979999793344
+        },
+        {
+          "method": "lexical-source-lines",
+          "neural_used": false,
+          "partial": false,
+          "scanned_files": 7,
+          "scanned_bytes": 1220,
+          "skipped_files": 1,
+          "hits": [
+            {
+              "path": "scripts/accounts.pwn",
+              "match_line": 6,
+              "start_line": 4,
+              "end_line": 8,
+              "score": 36,
+              "text": "}\n\nstock SalvarConta(playerid)\n{\n    return 1;"
+            }
+          ],
+          "wall_seconds_including_process": 0.0024589990000549733
+        },
+        {
+          "method": "lexical-source-lines",
+          "neural_used": false,
+          "partial": false,
+          "scanned_files": 7,
+          "scanned_bytes": 1220,
+          "skipped_files": 1,
+          "hits": [
+            {
+              "path": "scripts/accounts.pwn",
+              "match_line": 6,
+              "start_line": 4,
+              "end_line": 8,
+              "score": 36,
+              "text": "}\n\nstock SalvarConta(playerid)\n{\n    return 1;"
+            }
+          ],
+          "wall_seconds_including_process": 0.002749784999991789
+        }
+      ]
+    },
+    {
+      "case": {
+        "id": "python_load",
+        "query": "load_config",
+        "path": "scripts/config.py",
+        "line": 1
+      },
+      "top1_correct": true,
+      "top3_correct": true,
+      "runs": [
+        {
+          "method": "lexical-source-lines",
+          "neural_used": false,
+          "partial": false,
+          "scanned_files": 7,
+          "scanned_bytes": 1220,
+          "skipped_files": 1,
+          "hits": [
+            {
+              "path": "scripts/config.py",
+              "match_line": 1,
+              "start_line": 1,
+              "end_line": 3,
+              "score": 36,
+              "text": "def load_config(path):\n    with open(path, encoding=\"utf-8\") as stream:\n        return stream.read()"
+            }
+          ],
+          "wall_seconds_including_process": 0.002510652000069058
+        },
+        {
+          "method": "lexical-source-lines",
+          "neural_used": false,
+          "partial": false,
+          "scanned_files": 7,
+          "scanned_bytes": 1220,
+          "skipped_files": 1,
+          "hits": [
+            {
+              "path": "scripts/config.py",
+              "match_line": 1,
+              "start_line": 1,
+              "end_line": 3,
+              "score": 36,
+              "text": "def load_config(path):\n    with open(path, encoding=\"utf-8\") as stream:\n        return stream.read()"
+            }
+          ],
+          "wall_seconds_including_process": 0.0025317450000557074
+        },
+        {
+          "method": "lexical-source-lines",
+          "neural_used": false,
+          "partial": false,
+          "scanned_files": 7,
+          "scanned_bytes": 1220,
+          "skipped_files": 1,
+          "hits": [
+            {
+              "path": "scripts/config.py",
+              "match_line": 1,
+              "start_line": 1,
+              "end_line": 3,
+              "score": 36,
+              "text": "def load_config(path):\n    with open(path, encoding=\"utf-8\") as stream:\n        return stream.read()"
+            }
+          ],
+          "wall_seconds_including_process": 0.0027150080001092647
+        }
+      ]
+    },
+    {
+      "case": {
+        "id": "python_validate",
+        "query": "validate_config",
+        "path": "scripts/config.py",
+        "line": 6
+      },
+      "top1_correct": true,
+      "top3_correct": true,
+      "runs": [
+        {
+          "method": "lexical-source-lines",
+          "neural_used": false,
+          "partial": false,
+          "scanned_files": 7,
+          "scanned_bytes": 1220,
+          "skipped_files": 1,
+          "hits": [
+            {
+              "path": "scripts/config.py",
+              "match_line": 6,
+              "start_line": 4,
+              "end_line": 7,
+              "score": 36,
+              "text": "\n\ndef validate_config(data):\n    return bool(data.strip())"
+            }
+          ],
+          "wall_seconds_including_process": 0.0028568689999701746
+        },
+        {
+          "method": "lexical-source-lines",
+          "neural_used": false,
+          "partial": false,
+          "scanned_files": 7,
+          "scanned_bytes": 1220,
+          "skipped_files": 1,
+          "hits": [
+            {
+              "path": "scripts/config.py",
+              "match_line": 6,
+              "start_line": 4,
+              "end_line": 7,
+              "score": 36,
+              "text": "\n\ndef validate_config(data):\n    return bool(data.strip())"
+            }
+          ],
+          "wall_seconds_including_process": 0.0023915539999279645
+        },
+        {
+          "method": "lexical-source-lines",
+          "neural_used": false,
+          "partial": false,
+          "scanned_files": 7,
+          "scanned_bytes": 1220,
+          "skipped_files": 1,
+          "hits": [
+            {
+              "path": "scripts/config.py",
+              "match_line": 6,
+              "start_line": 4,
+              "end_line": 7,
+              "score": 36,
+              "text": "\n\ndef validate_config(data):\n    return bool(data.strip())"
+            }
+          ],
+          "wall_seconds_including_process": 0.005165667000028407
+        }
+      ]
+    },
+    {
+      "case": {
+        "id": "js_render",
+        "query": "renderMenu",
+        "path": "web/menu.js",
+        "line": 1
+      },
+      "top1_correct": true,
+      "top3_correct": true,
+      "runs": [
+        {
+          "method": "lexical-source-lines",
+          "neural_used": false,
+          "partial": false,
+          "scanned_files": 7,
+          "scanned_bytes": 1220,
+          "skipped_files": 1,
+          "hits": [
+            {
+              "path": "web/menu.js",
+              "match_line": 1,
+              "start_line": 1,
+              "end_line": 3,
+              "score": 37,
+              "text": "export function renderMenu(title) {\n    return `<h1>${title}</h1>`;\n}"
+            }
+          ],
+          "wall_seconds_including_process": 0.0025908699999490636
+        },
+        {
+          "method": "lexical-source-lines",
+          "neural_used": false,
+          "partial": false,
+          "scanned_files": 7,
+          "scanned_bytes": 1220,
+          "skipped_files": 1,
+          "hits": [
+            {
+              "path": "web/menu.js",
+              "match_line": 1,
+              "start_line": 1,
+              "end_line": 3,
+              "score": 37,
+              "text": "export function renderMenu(title) {\n    return `<h1>${title}</h1>`;\n}"
+            }
+          ],
+          "wall_seconds_including_process": 0.002646543000082602
+        },
+        {
+          "method": "lexical-source-lines",
+          "neural_used": false,
+          "partial": false,
+          "scanned_files": 7,
+          "scanned_bytes": 1220,
+          "skipped_files": 1,
+          "hits": [
+            {
+              "path": "web/menu.js",
+              "match_line": 1,
+              "start_line": 1,
+              "end_line": 3,
+              "score": 37,
+              "text": "export function renderMenu(title) {\n    return `<h1>${title}</h1>`;\n}"
+            }
+          ],
+          "wall_seconds_including_process": 0.0024252800000112984
+        }
+      ]
+    },
+    {
+      "case": {
+        "id": "js_hide",
+        "query": "hideMenu",
+        "path": "web/menu.js",
+        "line": 5
+      },
+      "top1_correct": true,
+      "top3_correct": true,
+      "runs": [
+        {
+          "method": "lexical-source-lines",
+          "neural_used": false,
+          "partial": false,
+          "scanned_files": 7,
+          "scanned_bytes": 1220,
+          "skipped_files": 1,
+          "hits": [
+            {
+              "path": "web/menu.js",
+              "match_line": 5,
+              "start_line": 3,
+              "end_line": 7,
+              "score": 37,
+              "text": "}\n\nexport function hideMenu(element) {\n    element.hidden = true;\n}"
+            }
+          ],
+          "wall_seconds_including_process": 0.002493866000008893
+        },
+        {
+          "method": "lexical-source-lines",
+          "neural_used": false,
+          "partial": false,
+          "scanned_files": 7,
+          "scanned_bytes": 1220,
+          "skipped_files": 1,
+          "hits": [
+            {
+              "path": "web/menu.js",
+              "match_line": 5,
+              "start_line": 3,
+              "end_line": 7,
+              "score": 37,
+              "text": "}\n\nexport function hideMenu(element) {\n    element.hidden = true;\n}"
+            }
+          ],
+          "wall_seconds_including_process": 0.002661471999999776
+        },
+        {
+          "method": "lexical-source-lines",
+          "neural_used": false,
+          "partial": false,
+          "scanned_files": 7,
+          "scanned_bytes": 1220,
+          "skipped_files": 1,
+          "hits": [
+            {
+              "path": "web/menu.js",
+              "match_line": 5,
+              "start_line": 3,
+              "end_line": 7,
+              "score": 37,
+              "text": "}\n\nexport function hideMenu(element) {\n    element.hidden = true;\n}"
+            }
+          ],
+          "wall_seconds_including_process": 0.002587263999998868
+        }
+      ]
+    },
+    {
+      "case": {
+        "id": "camel",
+        "query": "render menu",
+        "path": "web/menu.js",
+        "line": 1
+      },
+      "top1_correct": true,
+      "top3_correct": true,
+      "runs": [
+        {
+          "method": "lexical-source-lines",
+          "neural_used": false,
+          "partial": false,
+          "scanned_files": 7,
+          "scanned_bytes": 1220,
+          "skipped_files": 1,
+          "hits": [
+            {
+              "path": "web/menu.js",
+              "match_line": 1,
+              "start_line": 1,
+              "end_line": 3,
+              "score": 25,
+              "text": "export function renderMenu(title) {\n    return `<h1>${title}</h1>`;\n}"
+            }
+          ],
+          "wall_seconds_including_process": 0.002591076000044268
+        },
+        {
+          "method": "lexical-source-lines",
+          "neural_used": false,
+          "partial": false,
+          "scanned_files": 7,
+          "scanned_bytes": 1220,
+          "skipped_files": 1,
+          "hits": [
+            {
+              "path": "web/menu.js",
+              "match_line": 1,
+              "start_line": 1,
+              "end_line": 3,
+              "score": 25,
+              "text": "export function renderMenu(title) {\n    return `<h1>${title}</h1>`;\n}"
+            }
+          ],
+          "wall_seconds_including_process": 0.0054575899999917965
+        },
+        {
+          "method": "lexical-source-lines",
+          "neural_used": false,
+          "partial": false,
+          "scanned_files": 7,
+          "scanned_bytes": 1220,
+          "skipped_files": 1,
+          "hits": [
+            {
+              "path": "web/menu.js",
+              "match_line": 1,
+              "start_line": 1,
+              "end_line": 3,
+              "score": 25,
+              "text": "export function renderMenu(title) {\n    return `<h1>${title}</h1>`;\n}"
+            }
+          ],
+          "wall_seconds_including_process": 0.0025665779999144434
+        }
+      ]
+    },
+    {
+      "case": {
+        "id": "snake",
+        "query": "load config",
+        "path": "scripts/config.py",
+        "line": 1
+      },
+      "top1_correct": true,
+      "top3_correct": true,
+      "runs": [
+        {
+          "method": "lexical-source-lines",
+          "neural_used": false,
+          "partial": false,
+          "scanned_files": 7,
+          "scanned_bytes": 1220,
+          "skipped_files": 1,
+          "hits": [
+            {
+              "path": "scripts/config.py",
+              "match_line": 1,
+              "start_line": 1,
+              "end_line": 3,
+              "score": 24,
+              "text": "def load_config(path):\n    with open(path, encoding=\"utf-8\") as stream:\n        return stream.read()"
+            }
+          ],
+          "wall_seconds_including_process": 0.0025898959999040017
+        },
+        {
+          "method": "lexical-source-lines",
+          "neural_used": false,
+          "partial": false,
+          "scanned_files": 7,
+          "scanned_bytes": 1220,
+          "skipped_files": 1,
+          "hits": [
+            {
+              "path": "scripts/config.py",
+              "match_line": 1,
+              "start_line": 1,
+              "end_line": 3,
+              "score": 24,
+              "text": "def load_config(path):\n    with open(path, encoding=\"utf-8\") as stream:\n        return stream.read()"
+            }
+          ],
+          "wall_seconds_including_process": 0.002599884000005659
+        },
+        {
+          "method": "lexical-source-lines",
+          "neural_used": false,
+          "partial": false,
+          "scanned_files": 7,
+          "scanned_bytes": 1220,
+          "skipped_files": 1,
+          "hits": [
+            {
+              "path": "scripts/config.py",
+              "match_line": 1,
+              "start_line": 1,
+              "end_line": 3,
+              "score": 24,
+              "text": "def load_config(path):\n    with open(path, encoding=\"utf-8\") as stream:\n        return stream.read()"
+            }
+          ],
+          "wall_seconds_including_process": 0.0024076009999589587
+        }
+      ]
+    },
+    {
+      "case": {
+        "id": "explicit",
+        "query": "Mostre `SpawnPlayer`",
+        "path": "src/player.cpp",
+        "line": 3
+      },
+      "top1_correct": true,
+      "top3_correct": true,
+      "runs": [
+        {
+          "method": "lexical-source-lines",
+          "neural_used": false,
+          "partial": false,
+          "scanned_files": 7,
+          "scanned_bytes": 1220,
+          "skipped_files": 1,
+          "hits": [
+            {
+              "path": "src/player.cpp",
+              "match_line": 3,
+              "start_line": 1,
+              "end_line": 5,
+              "score": 37,
+              "text": "#include \"player.h\"\n\nvoid SpawnPlayer(int id) {\n    SetPlayerHealth(id, 100);\n    ResetInventory(id);"
+            },
+            {
+              "path": "include/player.h",
+              "match_line": 4,
+              "start_line": 2,
+              "end_line": 6,
+              "score": 36,
+              "text": "struct Player { int health; int item_count; };\nextern Player players[100];\nvoid SpawnPlayer(int id);\nvoid SetPlayerHealth(int id, int health);\nvoid ResetInventory(int id);"
+            }
+          ],
+          "wall_seconds_including_process": 0.002591773000062858
+        },
+        {
+          "method": "lexical-source-lines",
+          "neural_used": false,
+          "partial": false,
+          "scanned_files": 7,
+          "scanned_bytes": 1220,
+          "skipped_files": 1,
+          "hits": [
+            {
+              "path": "src/player.cpp",
+              "match_line": 3,
+              "start_line": 1,
+              "end_line": 5,
+              "score": 37,
+              "text": "#include \"player.h\"\n\nvoid SpawnPlayer(int id) {\n    SetPlayerHealth(id, 100);\n    ResetInventory(id);"
+            },
+            {
+              "path": "include/player.h",
+              "match_line": 4,
+              "start_line": 2,
+              "end_line": 6,
+              "score": 36,
+              "text": "struct Player { int health; int item_count; };\nextern Player players[100];\nvoid SpawnPlayer(int id);\nvoid SetPlayerHealth(int id, int health);\nvoid ResetInventory(int id);"
+            }
+          ],
+          "wall_seconds_including_process": 0.002367531000004419
+        },
+        {
+          "method": "lexical-source-lines",
+          "neural_used": false,
+          "partial": false,
+          "scanned_files": 7,
+          "scanned_bytes": 1220,
+          "skipped_files": 1,
+          "hits": [
+            {
+              "path": "src/player.cpp",
+              "match_line": 3,
+              "start_line": 1,
+              "end_line": 5,
+              "score": 37,
+              "text": "#include \"player.h\"\n\nvoid SpawnPlayer(int id) {\n    SetPlayerHealth(id, 100);\n    ResetInventory(id);"
+            },
+            {
+              "path": "include/player.h",
+              "match_line": 4,
+              "start_line": 2,
+              "end_line": 6,
+              "score": 36,
+              "text": "struct Player { int health; int item_count; };\nextern Player players[100];\nvoid SpawnPlayer(int id);\nvoid SetPlayerHealth(int id, int health);\nvoid ResetInventory(int id);"
+            }
+          ],
+          "wall_seconds_including_process": 0.002454643999953987
+        }
+      ]
+    },
+    {
+      "case": {
+        "id": "missing",
+        "query": "ActivateJetpack",
+        "path": null,
+        "line": null
+      },
+      "top1_correct": true,
+      "top3_correct": true,
+      "runs": [
+        {
+          "method": "lexical-source-lines",
+          "neural_used": false,
+          "partial": false,
+          "scanned_files": 7,
+          "scanned_bytes": 1220,
+          "skipped_files": 1,
+          "hits": [],
+          "wall_seconds_including_process": 0.00464727500002482
+        },
+        {
+          "method": "lexical-source-lines",
+          "neural_used": false,
+          "partial": false,
+          "scanned_files": 7,
+          "scanned_bytes": 1220,
+          "skipped_files": 1,
+          "hits": [],
+          "wall_seconds_including_process": 0.00403417300003639
+        },
+        {
+          "method": "lexical-source-lines",
+          "neural_used": false,
+          "partial": false,
+          "scanned_files": 7,
+          "scanned_bytes": 1220,
+          "skipped_files": 1,
+          "hits": [],
+          "wall_seconds_including_process": 0.0032855670000344617
+        }
+      ]
+    },
+    {
+      "case": {
+        "id": "prefix",
+        "query": "`SpawnPlay`",
+        "path": null,
+        "line": null
+      },
+      "top1_correct": true,
+      "top3_correct": true,
+      "runs": [
+        {
+          "method": "lexical-source-lines",
+          "neural_used": false,
+          "partial": false,
+          "scanned_files": 7,
+          "scanned_bytes": 1220,
+          "skipped_files": 1,
+          "hits": [],
+          "wall_seconds_including_process": 0.0028061380000963254
+        },
+        {
+          "method": "lexical-source-lines",
+          "neural_used": false,
+          "partial": false,
+          "scanned_files": 7,
+          "scanned_bytes": 1220,
+          "skipped_files": 1,
+          "hits": [],
+          "wall_seconds_including_process": 0.002436601999988852
+        },
+        {
+          "method": "lexical-source-lines",
+          "neural_used": false,
+          "partial": false,
+          "scanned_files": 7,
+          "scanned_bytes": 1220,
+          "skipped_files": 1,
+          "hits": [],
+          "wall_seconds_including_process": 0.0027032060000919955
+        }
+      ]
+    },
+    {
+      "case": {
+        "id": "concept",
+        "query": "onde fica a função",
+        "path": null,
+        "line": null
+      },
+      "top1_correct": true,
+      "top3_correct": true,
+      "runs": [
+        {
+          "method": "lexical-source-lines",
+          "neural_used": false,
+          "partial": false,
+          "scanned_files": 7,
+          "scanned_bytes": 1220,
+          "skipped_files": 1,
+          "hits": [],
+          "wall_seconds_including_process": 0.0026922240000430975
+        },
+        {
+          "method": "lexical-source-lines",
+          "neural_used": false,
+          "partial": false,
+          "scanned_files": 7,
+          "scanned_bytes": 1220,
+          "skipped_files": 1,
+          "hits": [],
+          "wall_seconds_including_process": 0.002600145999963388
+        },
+        {
+          "method": "lexical-source-lines",
+          "neural_used": false,
+          "partial": false,
+          "scanned_files": 7,
+          "scanned_bytes": 1220,
+          "skipped_files": 1,
+          "hits": [],
+          "wall_seconds_including_process": 0.0026161130000446065
+        }
+      ]
+    },
+    {
+      "case": {
+        "id": "unknown",
+        "query": "MultiplayerAuthenticate",
+        "path": null,
+        "line": null
+      },
+      "top1_correct": true,
+      "top3_correct": true,
+      "runs": [
+        {
+          "method": "lexical-source-lines",
+          "neural_used": false,
+          "partial": false,
+          "scanned_files": 7,
+          "scanned_bytes": 1220,
+          "skipped_files": 1,
+          "hits": [],
+          "wall_seconds_including_process": 0.002380986999924062
+        },
+        {
+          "method": "lexical-source-lines",
+          "neural_used": false,
+          "partial": false,
+          "scanned_files": 7,
+          "scanned_bytes": 1220,
+          "skipped_files": 1,
+          "hits": [],
+          "wall_seconds_including_process": 0.0025513980000368974
+        },
+        {
+          "method": "lexical-source-lines",
+          "neural_used": false,
+          "partial": false,
+          "scanned_files": 7,
+          "scanned_bytes": 1220,
+          "skipped_files": 1,
+          "hits": [],
+          "wall_seconds_including_process": 0.0025631160000330055
+        }
+      ]
+    }
+  ],
+  "self_project_probe": {
+    "method": "lexical-source-lines",
+    "neural_used": false,
+    "partial": false,
+    "scanned_files": 187,
+    "scanned_bytes": 613730,
+    "skipped_files": 41,
+    "hits": [
+      {
+        "path": "src/TransformerBackend.cpp",
+        "match_line": 45,
+        "start_line": 43,
+        "end_line": 47,
+        "score": 37,
+        "text": "    std::size_t n=0;for(const auto*p:{&emb_,&norm_,&q_,&k_,&v_,&near_,&projected_,&h_,&up_,&down_,&logits_,&keys_,&values_,&scores_,&freq_})n+=p->size();return n*sizeof(float)+workspace_.bytes();\n}\nstd::uint32_t TransformerBackend::greedy_token()const{\n    const auto&tok=model_.tokenizer;std::uint32_t best=0;\n    for(std::uint32_t id=1;id<logits_.size();++id){"
+      },
+      {
+        "path": "include/edgeai/TransformerBackend.hpp",
+        "match_line": 14,
+        "start_line": 12,
+        "end_line": 16,
+        "score": 36,
+        "text": "    const std::vector<float>& step(std::uint32_t token);\n    void reset();\n    std::uint32_t greedy_token()const;\n    const TransformerModel& model()const{return model_;}\n    std::size_t tokens_seen()const{return tokens_seen_;}"
+      },
+      {
+        "path": "tools/generate.cpp",
+        "match_line": 19,
+        "start_line": 17,
+        "end_line": 21,
+        "score": 31,
+        "text": "    t=Clock::now();std::vector<float> z;for(auto id:ids)z=b.step(id);double prefill=seconds(t);\n    t=Clock::now();std::string raw;bool stopped=false;std::size_t generated=0;count=std::min(count,static_cast<unsigned long>(b.model().config.max_generate));\n    for(std::size_t i=0;i<count;++i){auto id=b.greedy_token();++generated;if(tok.has_eos()&&id==tok.eos_id()){stopped=true;break;}raw+=tok.piece(id);if(i+1<count)z=b.step(id);}\n    double generation=seconds(t);std::ofstream out(argv[3],std::ios::binary);if(!out)throw std::runtime_error(\"cannot open generation output\");out.write(raw.data(),raw.size());if(!out)throw std::runtime_error(\"generation output write failed\");\n    std::cout<<std::setprecision(14)<<\"{\\\"prompt_bytes\\\":\"<<prompt.size()<<\",\\\"prefill_tokens_including_bos\\\":\"<<ids.size()<<\",\\\"generated_tokens\\\":\"<<generated<<\",\\\"stopped_on_eos\\\":\"<<(stopped?\"true\":\"false\")<<\",\\\"stop_reason\\\":\\\"\"<<(stopped?\"eos\":\"length\")<<\"\\\",\\\"generated_bytes\\\":\"<<raw.size()<<\",\\\"load_seconds\\\":\"<<load<<\",\\\"tokenization_seconds\\\":\"<<tokenization<<\",\\\"prefill_seconds\\\":\"<<prefill<<\",\\\"generation_seconds\\\":\"<<generation<<\",\\\"total_seconds\\\":\"<<seconds(all)<<\",\\\"cpu_seconds\\\":\"<<double(std::clock()-cpu)/CLOCKS_PER_SEC<<\",\\\"energy_joules\\\":null}\\n\";"
+      }
+    ],
+    "wall_seconds_including_process": 0.02811938000002101
+  },
+  "energy_joules": null,
+  "limitations": [
+    "small authored fixture, not independent benchmark",
+    "same symbols in question and source; lexical retrieval only",
+    "source is rescanned per process",
+    "absence in inspected scope is not absence in entire project"
+  ]
+}

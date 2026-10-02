@@ -1,0 +1,23 @@
+FF
+======================================================================
+FAIL: test_cpu_metric_and_kernel (__main__.RuntimeCLI.test_cpu_metric_and_kernel)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/EdgeAI-Engine-v0.4/tests/test_runtime_cli.py", line 11, in test_cpu_metric_and_kernel
+    self.assertIn('cpu_seconds',data)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'cpu_seconds' not found in {'tokens': 100, 'seconds': 0.000335886, 'byte_steps_per_second': 297720, 'weights_bytes': 70296, 'state_payload_bytes': 5120, 'numeric_working_bytes': 7884, 'checksum': -185.821, 'energy_joules': None, 'note': 'teacher-forced byte steps, includes all projections and readout, not useful answers per second'}
+
+======================================================================
+FAIL: test_rejects_bad_arguments (__main__.RuntimeCLI.test_rejects_bad_arguments)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/EdgeAI-Engine-v0.4/tests/test_runtime_cli.py", line 20, in test_rejects_bad_arguments
+    self.assertNotEqual(run.returncode,0,(n,k))
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 == 0 : ('20oops', 'auto')
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.009s
+
+FAILED (failures=2)

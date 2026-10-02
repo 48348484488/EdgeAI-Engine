@@ -1,0 +1,33 @@
+FFF
+======================================================================
+FAIL: test_batch_edit_same_length_and_timestamp (test_v010_session.SearchSessionTests.test_batch_edit_same_length_and_timestamp)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/EdgeAI-Engine-v0.10/tests/test_v010_session.py", line 23, in test_batch_edit_same_length_and_timestamp
+    first=json.loads(p.stdout.readline());self.assertTrue(first['hits'])
+                                          ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+AssertionError: [] is not true
+
+======================================================================
+FAIL: test_batch_returns_one_verified_result_per_query (test_v010_session.SearchSessionTests.test_batch_returns_one_verified_result_per_query)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/EdgeAI-Engine-v0.10/tests/test_v010_session.py", line 12, in test_batch_returns_one_verified_result_per_query
+    rows=p.stdout.splitlines();self.assertEqual(len(rows),2,p.stdout)
+                               ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 1 != 2 : {"method":"lexical-source-lines","neural_used":false,"partial":false,"scanned_files":1,"scanned_bytes":31,"skipped_files":0,"hits":[]}
+
+
+======================================================================
+FAIL: test_invalid_query_yields_explicit_batch_error (test_v010_session.SearchSessionTests.test_invalid_query_yields_explicit_batch_error)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/EdgeAI-Engine-v0.10/tests/test_v010_session.py", line 34, in test_invalid_query_yields_explicit_batch_error
+    self.assertEqual(p.returncode,1)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+AssertionError: 0 != 1
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.010s
+
+FAILED (failures=3)

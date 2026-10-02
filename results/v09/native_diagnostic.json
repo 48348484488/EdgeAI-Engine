@@ -1,0 +1,409 @@
+{
+  "schema": 1,
+  "cases_sha256": "291764ddc98454d7a29a692fc0ca2591e2b347f93717a65669f745b026ffcb42",
+  "scoring": "exact UTF-8 bytes; no trimming; synthetic diagnostic, not general intelligence",
+  "native": {
+    "status": "executed",
+    "correct": 2,
+    "evaluated": 12,
+    "accuracy": 0.16666666666666666
+  },
+  "reference": {
+    "status": "not_requested",
+    "accuracy": null,
+    "correct": null,
+    "evaluated": 0
+  },
+  "rows": [
+    {
+      "id": "copy1",
+      "prompt": "Copie exatamente: aaeb",
+      "expected": "aaeb",
+      "native": {
+        "backend": "edge-native",
+        "model": "default.edge",
+        "model_sha256": "3282e3f07da68146bf1519ff39cd6d522764b79b3aa5c946fbe88d63feb75811",
+        "text": "aaeb",
+        "output_hex": "61616562",
+        "native_metrics": {
+          "prompt_bytes": 22,
+          "prefill_tokens_including_bos": 18,
+          "generated_tokens": 5,
+          "stopped_on_eos": true,
+          "stop_reason": "eos",
+          "generated_bytes": 4,
+          "load_seconds": 0.000341283,
+          "tokenization_seconds": 4.78e-06,
+          "prefill_seconds": 0.000142263,
+          "generation_seconds": 4.2446e-05,
+          "total_seconds": 0.000717484,
+          "cpu_seconds": 0.000715,
+          "energy_joules": null
+        },
+        "wall_seconds": 0.004584438999927443,
+        "model_loaded_per_prompt": true,
+        "energy_joules": null,
+        "max_tokens_requested": 32
+      },
+      "native_correct": true
+    },
+    {
+      "id": "copy2",
+      "prompt": "Copie exatamente: xyz9",
+      "expected": "xyz9",
+      "native": {
+        "backend": "edge-native",
+        "model": "default.edge",
+        "model_sha256": "3282e3f07da68146bf1519ff39cd6d522764b79b3aa5c946fbe88d63feb75811",
+        "text": "ecae",
+        "output_hex": "65636165",
+        "native_metrics": {
+          "prompt_bytes": 22,
+          "prefill_tokens_including_bos": 18,
+          "generated_tokens": 5,
+          "stopped_on_eos": true,
+          "stop_reason": "eos",
+          "generated_bytes": 4,
+          "load_seconds": 0.000322315,
+          "tokenization_seconds": 4.376e-06,
+          "prefill_seconds": 0.000139653,
+          "generation_seconds": 4.1862e-05,
+          "total_seconds": 0.000659468,
+          "cpu_seconds": 0.000657,
+          "energy_joules": null
+        },
+        "wall_seconds": 0.0037892579999834197,
+        "model_loaded_per_prompt": true,
+        "energy_joules": null,
+        "max_tokens_requested": 32
+      },
+      "native_correct": false
+    },
+    {
+      "id": "upper1",
+      "prompt": "Maiusculas: edd",
+      "expected": "EDD",
+      "native": {
+        "backend": "edge-native",
+        "model": "default.edge",
+        "model_sha256": "3282e3f07da68146bf1519ff39cd6d522764b79b3aa5c946fbe88d63feb75811",
+        "text": "EDD",
+        "output_hex": "454444",
+        "native_metrics": {
+          "prompt_bytes": 15,
+          "prefill_tokens_including_bos": 13,
+          "generated_tokens": 4,
+          "stopped_on_eos": true,
+          "stop_reason": "eos",
+          "generated_bytes": 3,
+          "load_seconds": 0.000328275,
+          "tokenization_seconds": 3.354e-06,
+          "prefill_seconds": 0.000139133,
+          "generation_seconds": 3.175e-05,
+          "total_seconds": 0.000647439,
+          "cpu_seconds": 0.000645,
+          "energy_joules": null
+        },
+        "wall_seconds": 0.0052077290000625,
+        "model_loaded_per_prompt": true,
+        "energy_joules": null,
+        "max_tokens_requested": 32
+      },
+      "native_correct": true
+    },
+    {
+      "id": "upper2",
+      "prompt": "Maiusculas: player",
+      "expected": "PLAYER",
+      "native": {
+        "backend": "edge-native",
+        "model": "default.edge",
+        "model_sha256": "3282e3f07da68146bf1519ff39cd6d522764b79b3aa5c946fbe88d63feb75811",
+        "text": "ECE",
+        "output_hex": "454345",
+        "native_metrics": {
+          "prompt_bytes": 18,
+          "prefill_tokens_including_bos": 15,
+          "generated_tokens": 4,
+          "stopped_on_eos": true,
+          "stop_reason": "eos",
+          "generated_bytes": 3,
+          "load_seconds": 0.000782067,
+          "tokenization_seconds": 4.248e-06,
+          "prefill_seconds": 0.000117686,
+          "generation_seconds": 3.1615e-05,
+          "total_seconds": 0.001070731,
+          "cpu_seconds": 0.001071,
+          "energy_joules": null
+        },
+        "wall_seconds": 0.0042689160000009,
+        "model_loaded_per_prompt": true,
+        "energy_joules": null,
+        "max_tokens_requested": 32
+      },
+      "native_correct": false
+    },
+    {
+      "id": "add1",
+      "prompt": "Quanto é 2 + 3? Responda apenas o número.",
+      "expected": "5",
+      "native": {
+        "backend": "edge-native",
+        "model": "default.edge",
+        "model_sha256": "3282e3f07da68146bf1519ff39cd6d522764b79b3aa5c946fbe88d63feb75811",
+        "text": "u",
+        "output_hex": "75",
+        "native_metrics": {
+          "prompt_bytes": 43,
+          "prefill_tokens_including_bos": 37,
+          "generated_tokens": 2,
+          "stopped_on_eos": true,
+          "stop_reason": "eos",
+          "generated_bytes": 1,
+          "load_seconds": 0.000342428,
+          "tokenization_seconds": 4.702e-06,
+          "prefill_seconds": 0.00028847,
+          "generation_seconds": 1.2489e-05,
+          "total_seconds": 0.001085694,
+          "cpu_seconds": 0.001085,
+          "energy_joules": null
+        },
+        "wall_seconds": 0.004209134000006998,
+        "model_loaded_per_prompt": true,
+        "energy_joules": null,
+        "max_tokens_requested": 32
+      },
+      "native_correct": false
+    },
+    {
+      "id": "add2",
+      "prompt": "Quanto é 17 + 8? Responda apenas o número.",
+      "expected": "25",
+      "native": {
+        "backend": "edge-native",
+        "model": "default.edge",
+        "model_sha256": "3282e3f07da68146bf1519ff39cd6d522764b79b3aa5c946fbe88d63feb75811",
+        "text": "u",
+        "output_hex": "75",
+        "native_metrics": {
+          "prompt_bytes": 44,
+          "prefill_tokens_including_bos": 38,
+          "generated_tokens": 2,
+          "stopped_on_eos": true,
+          "stop_reason": "eos",
+          "generated_bytes": 1,
+          "load_seconds": 0.000331563,
+          "tokenization_seconds": 4.867e-06,
+          "prefill_seconds": 0.000296001,
+          "generation_seconds": 1.2524e-05,
+          "total_seconds": 0.000771006,
+          "cpu_seconds": 0.00077,
+          "energy_joules": null
+        },
+        "wall_seconds": 0.0037398219999431603,
+        "model_loaded_per_prompt": true,
+        "energy_joules": null,
+        "max_tokens_requested": 32
+      },
+      "native_correct": false
+    },
+    {
+      "id": "multiply",
+      "prompt": "Quanto é 7 * 6? Responda apenas o número.",
+      "expected": "42",
+      "native": {
+        "backend": "edge-native",
+        "model": "default.edge",
+        "model_sha256": "3282e3f07da68146bf1519ff39cd6d522764b79b3aa5c946fbe88d63feb75811",
+        "text": "u",
+        "output_hex": "75",
+        "native_metrics": {
+          "prompt_bytes": 43,
+          "prefill_tokens_including_bos": 37,
+          "generated_tokens": 2,
+          "stopped_on_eos": true,
+          "stop_reason": "eos",
+          "generated_bytes": 1,
+          "load_seconds": 0.000309662,
+          "tokenization_seconds": 4.704e-06,
+          "prefill_seconds": 0.000313881,
+          "generation_seconds": 1.2531e-05,
+          "total_seconds": 0.000776368,
+          "cpu_seconds": 0.000775,
+          "energy_joules": null
+        },
+        "wall_seconds": 0.003485233999981574,
+        "model_loaded_per_prompt": true,
+        "energy_joules": null,
+        "max_tokens_requested": 32
+      },
+      "native_correct": false
+    },
+    {
+      "id": "reverse",
+      "prompt": "Inverta: abc",
+      "expected": "cba",
+      "native": {
+        "backend": "edge-native",
+        "model": "default.edge",
+        "model_sha256": "3282e3f07da68146bf1519ff39cd6d522764b79b3aa5c946fbe88d63feb75811",
+        "text": "babc",
+        "output_hex": "62616263",
+        "native_metrics": {
+          "prompt_bytes": 12,
+          "prefill_tokens_including_bos": 10,
+          "generated_tokens": 4,
+          "stopped_on_eos": true,
+          "stop_reason": "eos",
+          "generated_bytes": 4,
+          "load_seconds": 0.000349561,
+          "tokenization_seconds": 2.703e-06,
+          "prefill_seconds": 8.0182e-05,
+          "generation_seconds": 3.1465e-05,
+          "total_seconds": 0.000589376,
+          "cpu_seconds": 0.000588,
+          "energy_joules": null
+        },
+        "wall_seconds": 0.0034171979999655377,
+        "model_loaded_per_prompt": true,
+        "energy_joules": null,
+        "max_tokens_requested": 32
+      },
+      "native_correct": false
+    },
+    {
+      "id": "code_add",
+      "prompt": "Escreva apenas a expressão Python que soma 3 a x.",
+      "expected": "x+3",
+      "native": {
+        "backend": "edge-native",
+        "model": "default.edge",
+        "model_sha256": "3282e3f07da68146bf1519ff39cd6d522764b79b3aa5c946fbe88d63feb75811",
+        "text": "aaa",
+        "output_hex": "616161",
+        "native_metrics": {
+          "prompt_bytes": 50,
+          "prefill_tokens_including_bos": 40,
+          "generated_tokens": 4,
+          "stopped_on_eos": true,
+          "stop_reason": "eos",
+          "generated_bytes": 3,
+          "load_seconds": 0.000312671,
+          "tokenization_seconds": 5.17e-06,
+          "prefill_seconds": 0.000331326,
+          "generation_seconds": 5.788e-05,
+          "total_seconds": 0.00083407,
+          "cpu_seconds": 0.000833,
+          "energy_joules": null
+        },
+        "wall_seconds": 0.0035631089999696997,
+        "model_loaded_per_prompt": true,
+        "energy_joules": null,
+        "max_tokens_requested": 32
+      },
+      "native_correct": false
+    },
+    {
+      "id": "copylong",
+      "prompt": "Copie exatamente: abcdefghijk",
+      "expected": "abcdefghijk",
+      "native": {
+        "backend": "edge-native",
+        "model": "default.edge",
+        "model_sha256": "3282e3f07da68146bf1519ff39cd6d522764b79b3aa5c946fbe88d63feb75811",
+        "text": "DAB",
+        "output_hex": "444142",
+        "native_metrics": {
+          "prompt_bytes": 29,
+          "prefill_tokens_including_bos": 22,
+          "generated_tokens": 4,
+          "stopped_on_eos": true,
+          "stop_reason": "eos",
+          "generated_bytes": 3,
+          "load_seconds": 0.000428282,
+          "tokenization_seconds": 5.598e-06,
+          "prefill_seconds": 0.000216832,
+          "generation_seconds": 3.2727e-05,
+          "total_seconds": 0.000817811,
+          "cpu_seconds": 0.000812,
+          "energy_joules": null
+        },
+        "wall_seconds": 0.003980908000016825,
+        "model_loaded_per_prompt": true,
+        "energy_joules": null,
+        "max_tokens_requested": 32
+      },
+      "native_correct": false
+    },
+    {
+      "id": "unicode",
+      "prompt": "Copie exatamente: ação",
+      "expected": "ação",
+      "native": {
+        "backend": "edge-native",
+        "model": "default.edge",
+        "model_sha256": "3282e3f07da68146bf1519ff39cd6d522764b79b3aa5c946fbe88d63feb75811",
+        "text": "aaad",
+        "output_hex": "61616164",
+        "native_metrics": {
+          "prompt_bytes": 24,
+          "prefill_tokens_including_bos": 20,
+          "generated_tokens": 4,
+          "stopped_on_eos": true,
+          "stop_reason": "eos",
+          "generated_bytes": 4,
+          "load_seconds": 0.00060012,
+          "tokenization_seconds": 4.466e-06,
+          "prefill_seconds": 0.000282305,
+          "generation_seconds": 3.7653e-05,
+          "total_seconds": 0.001062908,
+          "cpu_seconds": 0.001056,
+          "energy_joules": null
+        },
+        "wall_seconds": 0.003934517000061533,
+        "model_loaded_per_prompt": true,
+        "energy_joules": null,
+        "max_tokens_requested": 32
+      },
+      "native_correct": false
+    },
+    {
+      "id": "newinstruction",
+      "prompt": "Retorne somente o texto entre colchetes: [blue]",
+      "expected": "blue",
+      "native": {
+        "backend": "edge-native",
+        "model": "default.edge",
+        "model_sha256": "3282e3f07da68146bf1519ff39cd6d522764b79b3aa5c946fbe88d63feb75811",
+        "text": "b2",
+        "output_hex": "6232",
+        "native_metrics": {
+          "prompt_bytes": 47,
+          "prefill_tokens_including_bos": 34,
+          "generated_tokens": 3,
+          "stopped_on_eos": true,
+          "stop_reason": "eos",
+          "generated_bytes": 2,
+          "load_seconds": 0.000308731,
+          "tokenization_seconds": 6.031e-06,
+          "prefill_seconds": 0.000297904,
+          "generation_seconds": 5.0524e-05,
+          "total_seconds": 0.000794739,
+          "cpu_seconds": 0.000794,
+          "energy_joules": null
+        },
+        "wall_seconds": 0.0038561210000125357,
+        "model_loaded_per_prompt": true,
+        "energy_joules": null,
+        "max_tokens_requested": 32
+      },
+      "native_correct": false
+    }
+  ],
+  "energy_joules": null,
+  "limits": [
+    "different pretraining and parameter budgets; not an architecture ablation",
+    "different tokenizers; equal token limits do not imply equal work",
+    "native reloads each prompt; reference server already running; wall latencies are not equivalent inference costs"
+  ]
+}

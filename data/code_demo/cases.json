@@ -1,0 +1,110 @@
+[
+  {
+    "id": "spawn",
+    "query": "Onde fica a função SpawnPlayer?",
+    "path": "src/player.cpp",
+    "line": 3
+  },
+  {
+    "id": "health",
+    "query": "SetPlayerHealth",
+    "path": "src/player.cpp",
+    "line": 8
+  },
+  {
+    "id": "reset",
+    "query": "ResetInventory",
+    "path": "src/player.cpp",
+    "line": 12
+  },
+  {
+    "id": "add",
+    "query": "AddInventoryItem",
+    "path": "src/inventory.cpp",
+    "line": 3
+  },
+  {
+    "id": "has",
+    "query": "HasItems",
+    "path": "src/inventory.cpp",
+    "line": 7
+  },
+  {
+    "id": "pawn_load",
+    "query": "CarregarConta",
+    "path": "scripts/accounts.pwn",
+    "line": 1
+  },
+  {
+    "id": "pawn_save",
+    "query": "SalvarConta",
+    "path": "scripts/accounts.pwn",
+    "line": 6
+  },
+  {
+    "id": "python_load",
+    "query": "load_config",
+    "path": "scripts/config.py",
+    "line": 1
+  },
+  {
+    "id": "python_validate",
+    "query": "validate_config",
+    "path": "scripts/config.py",
+    "line": 6
+  },
+  {
+    "id": "js_render",
+    "query": "renderMenu",
+    "path": "web/menu.js",
+    "line": 1
+  },
+  {
+    "id": "js_hide",
+    "query": "hideMenu",
+    "path": "web/menu.js",
+    "line": 5
+  },
+  {
+    "id": "camel",
+    "query": "render menu",
+    "path": "web/menu.js",
+    "line": 1
+  },
+  {
+    "id": "snake",
+    "query": "load config",
+    "path": "scripts/config.py",
+    "line": 1
+  },
+  {
+    "id": "explicit",
+    "query": "Mostre `SpawnPlayer`",
+    "path": "src/player.cpp",
+    "line": 3
+  },
+  {
+    "id": "missing",
+    "query": "ActivateJetpack",
+    "path": null,
+    "line": null
+  },
+  {
+    "id": "prefix",
+    "query": "`SpawnPlay`",
+    "path": null,
+    "line": null
+  },
+  {
+    "id": "concept",
+    "query": "onde fica a função",
+    "path": null,
+    "line": null
+  },
+  {
+    "id": "unknown",
+    "query": "MultiplayerAuthenticate",
+    "path": null,
+    "line": null
+  }
+]

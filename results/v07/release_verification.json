@@ -1,0 +1,147 @@
+{
+  "completed": true,
+  "records": [
+    {
+      "step": "release_rebuild",
+      "command": [
+        "cmake",
+        "--build",
+        "build",
+        "-j",
+        "2"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 9.427828166999916,
+      "log": "results/v07/release/release_rebuild.log"
+    },
+    {
+      "step": "release_ctest",
+      "command": [
+        "ctest",
+        "--test-dir",
+        "build",
+        "--output-on-failure"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 2.021844331000011,
+      "log": "results/v07/release/release_ctest.log"
+    },
+    {
+      "step": "release_python",
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_*.py"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 6.220189937999976,
+      "log": "results/v07/release/release_python.log"
+    },
+    {
+      "step": "portable_refresh",
+      "command": [
+        "cmake",
+        "--build",
+        "build-portable",
+        "-j",
+        "2"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 9.419390346,
+      "log": "results/v07/release/portable_refresh.log"
+    },
+    {
+      "step": "portable_refreshed_ctest",
+      "command": [
+        "ctest",
+        "--test-dir",
+        "build-portable",
+        "--output-on-failure"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 2.3121710350001194,
+      "log": "results/v07/release/portable_refreshed_ctest.log"
+    },
+    {
+      "step": "fresh_configure",
+      "command": [
+        "cmake",
+        "-S",
+        ".",
+        "-B",
+        "build",
+        "-DCMAKE_BUILD_TYPE=Release"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 11.194610736999948,
+      "log": "results/v07/release/fresh_configure.log"
+    },
+    {
+      "step": "fresh_build",
+      "command": [
+        "cmake",
+        "--build",
+        "build",
+        "-j",
+        "2"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 46.65105896199998,
+      "log": "results/v07/release/fresh_build.log"
+    },
+    {
+      "step": "fresh_ctest",
+      "command": [
+        "ctest",
+        "--test-dir",
+        "build",
+        "--output-on-failure"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 2.2431251470000007,
+      "log": "results/v07/release/fresh_ctest.log"
+    },
+    {
+      "step": "fresh_python",
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_*.py"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 6.107201993000217,
+      "log": "results/v07/release/fresh_python.log"
+    },
+    {
+      "step": "shipped_chat",
+      "command": [
+        "./bin/linux-x86_64/edgeai_chat",
+        "models/instructions_v07/default.edge"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.017233515000043553,
+      "log": "results/v07/release/shipped_chat.log"
+    }
+  ],
+  "source_extracted_rebuilt": true,
+  "shipped_binary_checks": true,
+  "same_session_alternate_builds_passed": true,
+  "platforms_tested": [
+    "Linux x86-64 Release",
+    "Linux x86-64 EDGEAI_DISABLE_SIMD",
+    "Linux x86-64 Clang ASan+UBSan"
+  ],
+  "windows_tested": false,
+  "actual_weak_pc_tested": false,
+  "finished": "2026-09-25T20:58:16.196317+00:00"
+}

@@ -1,0 +1,21 @@
+{
+  "package": "0.7.1",
+  "baseline": "0.7",
+  "base_zip_sha256": "de9d28113c2363a800de5e70e78339ff6bd14e4bec26c7ac23107e80d80a926b",
+  "training_executed": false,
+  "model_improvement_claimed": false,
+  "unavailable_version_08_recovered": false,
+  "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+  "machine": "x86_64",
+  "python": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]",
+  "baseline_cpp_suites": 11,
+  "baseline_python_tests": 69,
+  "final_cpp_suites": 11,
+  "final_python_tests": 83,
+  "new_packaging_tests": 14,
+  "model_directory_files_unchanged": 146,
+  "energy_joules": null,
+  "windows_executed": false,
+  "old_pc_executed": false,
+  "independent_external_code_review": false
+}

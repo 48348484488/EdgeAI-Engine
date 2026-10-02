@@ -1,0 +1,110 @@
+{
+  "fp32": {
+    "median_seconds": 0.12888379,
+    "median_cpu_seconds": 0.128811,
+    "min_seconds": 0.125897713,
+    "max_seconds": 0.139976857,
+    "median_us_per_byte_step": 2.5776757999999997,
+    "weights_bytes": 96408,
+    "file_bytes": 96544,
+    "median_peak_rss_kib": 1924,
+    "state_payload_bytes": 5120,
+    "numeric_working_bytes": 7884
+  },
+  "ternary": {
+    "median_seconds": 0.161410959,
+    "median_cpu_seconds": 0.161129,
+    "min_seconds": 0.158205378,
+    "max_seconds": 0.17332463,
+    "median_us_per_byte_step": 3.22821918,
+    "weights_bytes": 70296,
+    "file_bytes": 70480,
+    "median_peak_rss_kib": 1924,
+    "state_payload_bytes": 5120,
+    "numeric_working_bytes": 7884
+  },
+  "qk_fp32": {
+    "median_seconds": 0.156561404,
+    "median_cpu_seconds": 0.156551,
+    "min_seconds": 0.153027486,
+    "max_seconds": 0.159005,
+    "median_us_per_byte_step": 3.1312280799999996,
+    "weights_bytes": 74008,
+    "file_bytes": 74176,
+    "median_peak_rss_kib": 1924,
+    "state_payload_bytes": 5120,
+    "numeric_working_bytes": 7884
+  },
+  "memory_fp32": {
+    "median_seconds": 0.146819325,
+    "median_cpu_seconds": 0.146417,
+    "min_seconds": 0.144544605,
+    "max_seconds": 0.167611307,
+    "median_us_per_byte_step": 2.9363865000000002,
+    "weights_bytes": 81432,
+    "file_bytes": 81584,
+    "median_peak_rss_kib": 1924,
+    "state_payload_bytes": 5120,
+    "numeric_working_bytes": 7884
+  },
+  "memory_int8": {
+    "median_seconds": 0.154428052,
+    "median_cpu_seconds": 0.154422,
+    "min_seconds": 0.146081604,
+    "max_seconds": 0.166690782,
+    "median_us_per_byte_step": 3.08856104,
+    "weights_bytes": 72600,
+    "file_bytes": 72784,
+    "median_peak_rss_kib": 1924,
+    "state_payload_bytes": 5120,
+    "numeric_working_bytes": 7884
+  },
+  "int8": {
+    "median_seconds": 0.134664021,
+    "median_cpu_seconds": 0.134651,
+    "min_seconds": 0.131243856,
+    "max_seconds": 0.145530339,
+    "median_us_per_byte_step": 2.6932804200000002,
+    "weights_bytes": 75672,
+    "file_bytes": 75856,
+    "median_peak_rss_kib": 1924,
+    "state_payload_bytes": 5120,
+    "numeric_working_bytes": 7884
+  },
+  "memory_int8_head_int8": {
+    "median_seconds": 0.153575924,
+    "median_cpu_seconds": 0.153503,
+    "min_seconds": 0.147394381,
+    "max_seconds": 0.168310183,
+    "median_us_per_byte_step": 3.07151848,
+    "weights_bytes": 49048,
+    "file_bytes": 49240,
+    "median_peak_rss_kib": 1924,
+    "state_payload_bytes": 5120,
+    "numeric_working_bytes": 7884
+  },
+  "int8_head_int8": {
+    "median_seconds": 0.134813174,
+    "median_cpu_seconds": 0.13481,
+    "min_seconds": 0.130899194,
+    "max_seconds": 0.136284243,
+    "median_us_per_byte_step": 2.69626348,
+    "weights_bytes": 52120,
+    "file_bytes": 52312,
+    "median_peak_rss_kib": 1924,
+    "state_payload_bytes": 5120,
+    "numeric_working_bytes": 7884
+  },
+  "fp32_head_int8": {
+    "median_seconds": 0.130570663,
+    "median_cpu_seconds": 0.130561,
+    "min_seconds": 0.12717631,
+    "max_seconds": 0.141580413,
+    "median_us_per_byte_step": 2.61141326,
+    "weights_bytes": 72856,
+    "file_bytes": 73000,
+    "median_peak_rss_kib": 1924,
+    "state_payload_bytes": 5120,
+    "numeric_working_bytes": 7884
+  }
+}

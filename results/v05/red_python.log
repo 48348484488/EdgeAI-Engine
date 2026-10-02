@@ -1,0 +1,105 @@
+test_blocks_dont_cross_documents_and_metric_counts (test_language.LanguageTests.test_blocks_dont_cross_documents_and_metric_counts) ... FAIL
+test_causal_prefix_no_future_leakage (test_language.LanguageTests.test_causal_prefix_no_future_leakage) ... FAIL
+test_export_rejects_nonfinite_and_preserves_file (test_language.LanguageTests.test_export_rejects_nonfinite_and_preserves_file) ... FAIL
+test_gradients_reach_all_parameters (test_language.LanguageTests.test_gradients_reach_all_parameters) ... FAIL
+test_invalid_config (test_language.LanguageTests.test_invalid_config) ... FAIL
+test_overlap_filter (test_language.LanguageTests.test_overlap_filter) ... FAIL
+test_same_master_initialization (test_language.LanguageTests.test_same_master_initialization) ... FAIL
+test_sampling_reproducible (test_language.LanguageTests.test_sampling_reproducible) ... FAIL
+
+======================================================================
+FAIL: test_blocks_dont_cross_documents_and_metric_counts (test_language.LanguageTests.test_blocks_dont_cross_documents_and_metric_counts)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/EdgeAI-Engine-v0.5/tests/test_language.py", line 45, in test_blocks_dont_cross_documents_and_metric_counts
+    mod=self.module('language_data')
+  File "/mnt/data/EdgeAI-Engine-v0.5/tests/test_language.py", line 13, in module
+    self.assertIsNotNone(importlib.util.find_spec(name),f'{name} must be implemented')
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unexpectedly None : language_data must be implemented
+
+======================================================================
+FAIL: test_causal_prefix_no_future_leakage (test_language.LanguageTests.test_causal_prefix_no_future_leakage)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/EdgeAI-Engine-v0.5/tests/test_language.py", line 16, in test_causal_prefix_no_future_leakage
+    M=self.module('transformer_model').TinyTransformer
+      ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/EdgeAI-Engine-v0.5/tests/test_language.py", line 13, in module
+    self.assertIsNotNone(importlib.util.find_spec(name),f'{name} must be implemented')
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unexpectedly None : transformer_model must be implemented
+
+======================================================================
+FAIL: test_export_rejects_nonfinite_and_preserves_file (test_language.LanguageTests.test_export_rejects_nonfinite_and_preserves_file)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/EdgeAI-Engine-v0.5/tests/test_language.py", line 38, in test_export_rejects_nonfinite_and_preserves_file
+    mod=self.module('transformer_model');m=mod.TinyTransformer(dim=8,hidden=9)
+  File "/mnt/data/EdgeAI-Engine-v0.5/tests/test_language.py", line 13, in module
+    self.assertIsNotNone(importlib.util.find_spec(name),f'{name} must be implemented')
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unexpectedly None : transformer_model must be implemented
+
+======================================================================
+FAIL: test_gradients_reach_all_parameters (test_language.LanguageTests.test_gradients_reach_all_parameters)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/EdgeAI-Engine-v0.5/tests/test_language.py", line 32, in test_gradients_reach_all_parameters
+    M=self.module('transformer_model').TinyTransformer
+      ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/EdgeAI-Engine-v0.5/tests/test_language.py", line 13, in module
+    self.assertIsNotNone(importlib.util.find_spec(name),f'{name} must be implemented')
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unexpectedly None : transformer_model must be implemented
+
+======================================================================
+FAIL: test_invalid_config (test_language.LanguageTests.test_invalid_config)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/EdgeAI-Engine-v0.5/tests/test_language.py", line 23, in test_invalid_config
+    M=self.module('transformer_model').TinyTransformer
+      ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/EdgeAI-Engine-v0.5/tests/test_language.py", line 13, in module
+    self.assertIsNotNone(importlib.util.find_spec(name),f'{name} must be implemented')
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unexpectedly None : transformer_model must be implemented
+
+======================================================================
+FAIL: test_overlap_filter (test_language.LanguageTests.test_overlap_filter)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/EdgeAI-Engine-v0.5/tests/test_language.py", line 60, in test_overlap_filter
+    mod=self.module('language_data')
+  File "/mnt/data/EdgeAI-Engine-v0.5/tests/test_language.py", line 13, in module
+    self.assertIsNotNone(importlib.util.find_spec(name),f'{name} must be implemented')
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unexpectedly None : language_data must be implemented
+
+======================================================================
+FAIL: test_same_master_initialization (test_language.LanguageTests.test_same_master_initialization)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/EdgeAI-Engine-v0.5/tests/test_language.py", line 27, in test_same_master_initialization
+    M=self.module('transformer_model').TinyTransformer
+      ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/EdgeAI-Engine-v0.5/tests/test_language.py", line 13, in module
+    self.assertIsNotNone(importlib.util.find_spec(name),f'{name} must be implemented')
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unexpectedly None : transformer_model must be implemented
+
+======================================================================
+FAIL: test_sampling_reproducible (test_language.LanguageTests.test_sampling_reproducible)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/EdgeAI-Engine-v0.5/tests/test_language.py", line 54, in test_sampling_reproducible
+    mod=self.module('language_data');docs=[bytes(range(70)),bytes(range(40,150))]
+  File "/mnt/data/EdgeAI-Engine-v0.5/tests/test_language.py", line 13, in module
+    self.assertIsNotNone(importlib.util.find_spec(name),f'{name} must be implemented')
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unexpectedly None : language_data must be implemented
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.109s
+
+FAILED (failures=8)

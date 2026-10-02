@@ -1,0 +1,14 @@
+F
+======================================================================
+FAIL: test_external_tokenization_comparison_present (test_external_training.TrainingGate.test_external_tokenization_comparison_present)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/EdgeAI-Engine-v0.6/tests/test_external_training.py", line 6, in test_external_tokenization_comparison_present
+    self.assertIsNotNone(importlib.util.find_spec('tokenization_v06'))
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unexpectedly None
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)

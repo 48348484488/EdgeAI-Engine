@@ -1,0 +1,77 @@
+{
+  "signature": "dd733be3d816ca3c4b7dea605ba35127ad49287d0adfce5f9d505002c8485ad2",
+  "kind": "hybrid_int8",
+  "seed": 11,
+  "parameters": 62278,
+  "initial_state_sha256": "061efb7870f596422b46fd6ccc8ed8d18c7c32ee43326558ee31ba6d490e3f66",
+  "training_batches_sha256": "d11fb6f160ab3a756b354e7ef2d17d21b4329d0e126592a097f7d0930717cdd2",
+  "training_tokens": 15360,
+  "steps": 30,
+  "selected_step": 30,
+  "selected_validation_bpb": 5.029566986643288,
+  "first_training_nll": 5.75872278213501,
+  "train_seconds": 0.9596512359996723,
+  "train_cpu_seconds": 0.9594554820000019,
+  "validation_seconds": 0.11933268699999644,
+  "trial_seconds": 1.379727356000103,
+  "metrics": {
+    "code": {
+      "targets": 15356,
+      "correct": 2741,
+      "accuracy": 0.17849700442823652,
+      "nll_sum": 52691.39845738714,
+      "bits_per_byte": 4.950352907786977
+    },
+    "text": {
+      "targets": 1228,
+      "correct": 186,
+      "accuracy": 0.15146579804560262,
+      "nll_sum": 4281.925652346435,
+      "bits_per_byte": 5.030547967504431
+    }
+  },
+  "overall": {
+    "nll_sum": 56973.32410973358,
+    "targets": 16584,
+    "correct": 2927,
+    "bits_per_byte": 4.956291133385929,
+    "accuracy": 0.1764954172696575
+  },
+  "native_metrics": {
+    "code": {
+      "blocks": 242,
+      "targets": 15356,
+      "correct": 2741,
+      "nll_sum": 52691.39832632,
+      "bits_per_byte": 4.9503528954732,
+      "accuracy": 0.17849700442824,
+      "seconds": 0.1312311,
+      "reset_between_blocks": true
+    },
+    "text": {
+      "blocks": 20,
+      "targets": 1228,
+      "correct": 186,
+      "nll_sum": 4281.9256498277,
+      "bits_per_byte": 5.0305479645454,
+      "accuracy": 0.1514657980456,
+      "seconds": 0.010633248,
+      "reset_between_blocks": true
+    }
+  },
+  "curve": [
+    {
+      "step": 30,
+      "training_nll": 3.5191915035247803,
+      "validation_bpb": 5.029566986643288
+    }
+  ],
+  "numeric_weight_bytes": 116504,
+  "edge_file_bytes": 116696,
+  "energy_joules": null,
+  "model_path": "models/quick_v05/hybrid_int8-seed11.edge",
+  "artifacts": {
+    "models/quick_v05/hybrid_int8-seed11.pt": "ded6afbbadbf8c712decd9adc65c137cf7ada31ee66eb1c246070ee0697c1e7d",
+    "models/quick_v05/hybrid_int8-seed11.edge": "33ed8a068faaa08be308da5108f4e5b6cee0a5461689f403d05aa9f446385491"
+  }
+}

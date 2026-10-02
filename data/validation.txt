@@ -1,0 +1,8 @@
+usuario: como funciona um programa?
+assistente: um programa contem instrucoes que o processador executa.
+usuario: a memoria e infinita?
+assistente: nao. o tamanho da memoria e limitado pelo computador e pela arquitetura.
+usuario: os testes garantem inteligencia geral?
+assistente: nao. cada teste avalia somente determinadas propriedades do programa.
+usuario: por que comparar resultados?
+assistente: precisamos medir erros, tempo e uso de recursos antes de tirar conclusoes.

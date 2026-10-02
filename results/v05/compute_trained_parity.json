@@ -1,0 +1,190 @@
+{
+  "cases": [
+    {
+      "kind": "hybrid_int8",
+      "seed": 11,
+      "trace_bytes": 289,
+      "max_abs_error": 4.291534423828125e-06,
+      "logits_allclose": true,
+      "predictions_agree": true,
+      "native_metrics": {
+        "code": {
+          "blocks": 242,
+          "targets": 15356,
+          "correct": 6068,
+          "nll_sum": 36584.304522248,
+          "bits_per_byte": 3.4370926483862,
+          "accuracy": 0.3951549882782,
+          "seconds": 0.126458012,
+          "reset_between_blocks": true
+        },
+        "text": {
+          "blocks": 20,
+          "targets": 1228,
+          "correct": 315,
+          "nll_sum": 3577.8000807827,
+          "bits_per_byte": 4.2033179428642,
+          "accuracy": 0.25651465798046,
+          "seconds": 0.0105387,
+          "reset_between_blocks": true
+        }
+      }
+    },
+    {
+      "kind": "transformer_int8",
+      "seed": 11,
+      "trace_bytes": 289,
+      "max_abs_error": 7.152557373046875e-06,
+      "logits_allclose": true,
+      "predictions_agree": true,
+      "native_metrics": {
+        "code": {
+          "blocks": 242,
+          "targets": 15356,
+          "correct": 7753,
+          "nll_sum": 29870.274716767,
+          "bits_per_byte": 2.8063100549538,
+          "accuracy": 0.50488408439698,
+          "seconds": 0.125070526,
+          "reset_between_blocks": true
+        },
+        "text": {
+          "blocks": 20,
+          "targets": 1228,
+          "correct": 328,
+          "nll_sum": 3351.6170056696,
+          "bits_per_byte": 3.9375905806503,
+          "accuracy": 0.2671009771987,
+          "seconds": 0.01036283,
+          "reset_between_blocks": true
+        }
+      }
+    },
+    {
+      "kind": "hybrid_int8",
+      "seed": 22,
+      "trace_bytes": 289,
+      "max_abs_error": 3.337860107421875e-06,
+      "logits_allclose": true,
+      "predictions_agree": true,
+      "native_metrics": {
+        "code": {
+          "blocks": 242,
+          "targets": 15356,
+          "correct": 5742,
+          "nll_sum": 37015.088206892,
+          "bits_per_byte": 3.4775647430419,
+          "accuracy": 0.37392550143266,
+          "seconds": 0.129334554,
+          "reset_between_blocks": true
+        },
+        "text": {
+          "blocks": 20,
+          "targets": 1228,
+          "correct": 234,
+          "nll_sum": 3678.8722494712,
+          "bits_per_byte": 4.3220608716418,
+          "accuracy": 0.19055374592834,
+          "seconds": 0.010424192,
+          "reset_between_blocks": true
+        }
+      }
+    },
+    {
+      "kind": "transformer_int8",
+      "seed": 22,
+      "trace_bytes": 289,
+      "max_abs_error": 6.67572021484375e-06,
+      "logits_allclose": true,
+      "predictions_agree": true,
+      "native_metrics": {
+        "code": {
+          "blocks": 242,
+          "targets": 15356,
+          "correct": 8252,
+          "nll_sum": 28363.301422509,
+          "bits_per_byte": 2.6647300277085,
+          "accuracy": 0.53737952591821,
+          "seconds": 0.123265815,
+          "reset_between_blocks": true
+        },
+        "text": {
+          "blocks": 20,
+          "targets": 1228,
+          "correct": 374,
+          "nll_sum": 3337.5937003783,
+          "bits_per_byte": 3.9211155374902,
+          "accuracy": 0.30456026058632,
+          "seconds": 0.010130588,
+          "reset_between_blocks": true
+        }
+      }
+    },
+    {
+      "kind": "hybrid_int8",
+      "seed": 33,
+      "trace_bytes": 289,
+      "max_abs_error": 3.814697265625e-06,
+      "logits_allclose": true,
+      "predictions_agree": true,
+      "native_metrics": {
+        "code": {
+          "blocks": 242,
+          "targets": 15356,
+          "correct": 6190,
+          "nll_sum": 36166.37223954,
+          "bits_per_byte": 3.3978279419724,
+          "accuracy": 0.40309976556395,
+          "seconds": 0.130363732,
+          "reset_between_blocks": true
+        },
+        "text": {
+          "blocks": 20,
+          "targets": 1228,
+          "correct": 298,
+          "nll_sum": 3538.7263152201,
+          "bits_per_byte": 4.1574127899277,
+          "accuracy": 0.24267100977199,
+          "seconds": 0.010738845,
+          "reset_between_blocks": true
+        }
+      }
+    },
+    {
+      "kind": "transformer_int8",
+      "seed": 33,
+      "trace_bytes": 289,
+      "max_abs_error": 5.841255187988281e-06,
+      "logits_allclose": true,
+      "predictions_agree": true,
+      "native_metrics": {
+        "code": {
+          "blocks": 242,
+          "targets": 15356,
+          "correct": 8190,
+          "nll_sum": 28125.043365143,
+          "bits_per_byte": 2.6423457012034,
+          "accuracy": 0.53334201615004,
+          "seconds": 0.123850938,
+          "reset_between_blocks": true
+        },
+        "text": {
+          "blocks": 20,
+          "targets": 1228,
+          "correct": 363,
+          "nll_sum": 3337.9110705227,
+          "bits_per_byte": 3.9214883944394,
+          "accuracy": 0.29560260586319,
+          "seconds": 0.010876388,
+          "reset_between_blocks": true
+        }
+      }
+    }
+  ],
+  "max_abs_error": 7.152557373046875e-06,
+  "trace_sha256": "b3edf80cd05b4467d2b91cbdc5d8bdb69cd49a1b627af70fc89cce580fe6bf43",
+  "atol": 6e-05,
+  "rtol": 6e-05,
+  "final_logits_binary_sha256": "acbdedd704d5c0fd9542d1db640d5ac324c1fdbb6a10d89bc530231f2d1a4209",
+  "final_evaluate_binary_sha256": "f1bce91d8858f5b8ee5b1889d70dfffb3b71371f1a2034319f5cdc185a656f48"
+}

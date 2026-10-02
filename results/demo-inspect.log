@@ -1,0 +1,15 @@
+format=EDGEAI4
+parameters=24102
+resident_numeric_weights_bytes=52120
+sequence_state_payload_bytes=5120
+numeric_working_bytes=7884
+window=16
+trained_loops=1
+avx2_kernel_available=1
+query_precision=int8_w8a32
+key_precision=int8_w8a32
+value_precision=int8_w8a32
+project_precision=int8_w8a32
+up_precision=int8_w8a32
+down_precision=int8_w8a32
+output_precision=int8_w8a32

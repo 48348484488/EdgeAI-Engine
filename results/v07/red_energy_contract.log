@@ -1,0 +1,14 @@
+F..
+======================================================================
+FAIL: test_energy_workload_accepts_instruction_models (test_sft_workflow_v07.WorkflowV07.test_energy_workload_accepts_instruction_models)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/EdgeAI-Engine-v0.7/tests/test_sft_workflow_v07.py", line 21, in test_energy_workload_accepts_instruction_models
+    self.assertIn(str(ROOT/'build'/'edgeai_generate'),stages['energy_probe'])
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: '/mnt/data/EdgeAI-Engine-v0.7/build/edgeai_generate' not found in ['/opt/pyvenv/bin/python', '/mnt/data/EdgeAI-Engine-v0.7/benchmarks/measure_energy.py', '--out', '/mnt/data/EdgeAI-Engine-v0.7/results/v07/energy.json', '--', '/mnt/data/EdgeAI-Engine-v0.7/build/edgeai_runtime_benchmark', '/mnt/data/EdgeAI-Engine-v0.7/models/instructions_v07/seed11-after.edge', '10000']
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.004s
+
+FAILED (failures=1)

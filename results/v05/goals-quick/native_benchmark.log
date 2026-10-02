@@ -1,0 +1,22 @@
+{
+  "hybrid_int8": {
+    "median_us_per_byte": 7.328946,
+    "median_cpu_us_per_byte": 7.322,
+    "min_us_per_byte": 7.214247,
+    "max_us_per_byte": 7.443644999999999,
+    "median_rss_kib": 2052.0,
+    "weights_bytes": 116504,
+    "state_payload_bytes": 32768,
+    "numeric_working_bytes": 37388
+  },
+  "transformer_int8": {
+    "median_us_per_byte": 7.710208,
+    "median_cpu_us_per_byte": 7.702500000000001,
+    "min_us_per_byte": 7.44359,
+    "max_us_per_byte": 7.976825999999999,
+    "median_rss_kib": 2052.0,
+    "weights_bytes": 115968,
+    "state_payload_bytes": 32768,
+    "numeric_working_bytes": 36864
+  }
+}

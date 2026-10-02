@@ -1,0 +1,10 @@
+test_cache_checks_identity_and_artifact_content (test_v05_workflow.WorkflowTests.test_cache_checks_identity_and_artifact_content) ... ok
+test_goal_definitions_and_no_shell (test_v05_workflow.WorkflowTests.test_goal_definitions_and_no_shell) ... ok
+test_native_evaluator_count_and_reset (test_v05_workflow.WorkflowTests.test_native_evaluator_count_and_reset) ... ok
+test_native_evaluator_rejects_malformed_blocks (test_v05_workflow.WorkflowTests.test_native_evaluator_rejects_malformed_blocks) ... ok
+test_research_goals_include_equal_cpu_followup_and_final_parity (test_v05_workflow.WorkflowTests.test_research_goals_include_equal_cpu_followup_and_final_parity) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.833s
+
+OK

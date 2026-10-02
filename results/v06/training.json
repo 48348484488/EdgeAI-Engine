@@ -1,0 +1,639 @@
+{
+  "protocol": "same training process-CPU seconds; excludes initialization/evaluation/export/tokenization; includes batch sampling, gradient and optimizer work",
+  "config": {
+    "byte257": {
+      "dim": 64,
+      "hidden": 168,
+      "window": 64,
+      "precision": "int8",
+      "vocab_size": 257
+    },
+    "bpe513": {
+      "dim": 48,
+      "hidden": 128,
+      "window": 64,
+      "precision": "int8",
+      "vocab_size": 513
+    }
+  },
+  "cpu_budget_seconds": 20.0,
+  "threads": 1,
+  "seeds": [
+    11,
+    22,
+    33
+  ],
+  "expected": 6,
+  "runs": [
+    {
+      "kind": "byte257",
+      "seed": 11,
+      "identity": {
+        "protocol": "v06-cpu-tokenization-1",
+        "kind": "byte257",
+        "seed": 11,
+        "cpu_budget": 20.0,
+        "threads": 1,
+        "config": {
+          "dim": 64,
+          "hidden": 168,
+          "window": 64,
+          "precision": "int8",
+          "vocab_size": 257
+        },
+        "snapshot_sha256": "68d001ec093a83c6b9ea3f91d41d9dfa9fadde66cc78f4c92c21a45fc03b7c1b",
+        "tokenizer": "9e0a5fae0639a42793c8e7a12b76864ec9c0e49d72e69f7315518335a7565d59",
+        "torch": "2.10.0+cpu",
+        "host": {
+          "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+          "python": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]",
+          "cpu": "AMD EPYC 9V74 80-Core Processor"
+        },
+        "code": {
+          "benchmarks/tokenization_v06.py": "61adad9f8cc3fd66159e5259623b49a26c1ddde9936769086a30db15c256901d",
+          "tools/transformer_model.py": "d84d79edf279c7c2c0646abc6ed9afba46db8ec6f09ff01e1f1e6c2d226fd401",
+          "tools/byte_bpe.py": "5f1796d7fe739228f2ca27f0bb7d869b128b6ac38e03034e6712c4292d5a5ac7",
+          "tools/mixed_model.py": "1c5240e454271986d311a6db857b192373ff665b9242b6f315bb9fc408f69f9a",
+          "tools/external_data.py": "e7da2245227c7290bd61315a3ff02c6ce7e39de78f4cccab86e866a074221c10",
+          "tools/hybrid_model.py": "37187a5fe67d743b79398ba9816e8becc2b1535b042cff789ae996f2781471e0",
+          "tools/train_tiny.py": "2a7a2564f913b93740fda9141acbc676b9f8934d7b692cc121d92bcdd622c667"
+        }
+      },
+      "parameters": 71529,
+      "steps": 3402,
+      "selected_step": 3402,
+      "selected_validation_bpb": 3.1130032914632526,
+      "train_cpu_seconds": 20.004321091999987,
+      "train_wall_seconds": 20.01406208900289,
+      "total_trial_wall_seconds": 22.703735053999935,
+      "training_tokens": 1741824,
+      "training_raw_bytes": 1741824,
+      "training_batches_sha256": "fcf9b0c0807de0042b9e372796451ad1a5ff4f5da7d251f02dfbcb1b0366af95",
+      "metrics": {
+        "bits_per_byte": 2.718300156155326,
+        "nll_sum": 55545.68798828125,
+        "raw_bytes": 29480,
+        "target_tokens": 29480,
+        "token_accuracy": 0.523270013568521
+      },
+      "native_metrics": {
+        "blocks": 116,
+        "raw_bytes": 29480,
+        "target_tokens": 29480,
+        "nll_sum": 55545.686157916,
+        "bits_per_byte": 2.7183000665807,
+        "token_accuracy": 0.52327001356852,
+        "load_seconds": 0.000222596,
+        "tokenization_seconds": 4.3323e-05,
+        "forward_and_scoring_seconds": 0.305032099,
+        "total_seconds": 0.305584097,
+        "cpu_seconds": 0.305507,
+        "weights_bytes": 126088,
+        "state_bytes": 32768,
+        "working_bytes": 37156,
+        "bos_scored_as_byte": false,
+        "energy_joules": null
+      },
+      "validation_curve": [
+        {
+          "step": 859,
+          "cpu_seconds": 5.00199517900001,
+          "validation_bpb": 3.5164644337072937
+        },
+        {
+          "step": 1711,
+          "cpu_seconds": 10.001038439000022,
+          "validation_bpb": 3.2968221591907465
+        },
+        {
+          "step": 2541,
+          "cpu_seconds": 15.000837727000004,
+          "validation_bpb": 3.1715264825935217
+        },
+        {
+          "step": 3402,
+          "cpu_seconds": 20.004321091999987,
+          "validation_bpb": 3.1130032914632526
+        }
+      ],
+      "model_path": "models/external_v06/byte257-seed11.edge",
+      "file_bytes": 126272,
+      "artifacts": {
+        "models/external_v06/byte257-seed11.edge": "5c7c6a507d94a6bf3995be8e21852b8fec58d38de533994aa1e0ea852a2dc33a",
+        "models/external_v06/byte257-seed11.pt": "d401d8c08618aa52fadf6b63bf421ef2884f847513c8ffbb77017ae3a79b8bff"
+      }
+    },
+    {
+      "kind": "bpe513",
+      "seed": 11,
+      "identity": {
+        "protocol": "v06-cpu-tokenization-1",
+        "kind": "bpe513",
+        "seed": 11,
+        "cpu_budget": 20.0,
+        "threads": 1,
+        "config": {
+          "dim": 48,
+          "hidden": 128,
+          "window": 64,
+          "precision": "int8",
+          "vocab_size": 513
+        },
+        "snapshot_sha256": "68d001ec093a83c6b9ea3f91d41d9dfa9fadde66cc78f4c92c21a45fc03b7c1b",
+        "tokenizer": "1d75f0afc1e7746085a5e40655ab9e880833b53f5058c61f7f495d86ae18373e",
+        "torch": "2.10.0+cpu",
+        "host": {
+          "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+          "python": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]",
+          "cpu": "AMD EPYC 9V74 80-Core Processor"
+        },
+        "code": {
+          "benchmarks/tokenization_v06.py": "61adad9f8cc3fd66159e5259623b49a26c1ddde9936769086a30db15c256901d",
+          "tools/transformer_model.py": "d84d79edf279c7c2c0646abc6ed9afba46db8ec6f09ff01e1f1e6c2d226fd401",
+          "tools/byte_bpe.py": "5f1796d7fe739228f2ca27f0bb7d869b128b6ac38e03034e6712c4292d5a5ac7",
+          "tools/mixed_model.py": "1c5240e454271986d311a6db857b192373ff665b9242b6f315bb9fc408f69f9a",
+          "tools/external_data.py": "e7da2245227c7290bd61315a3ff02c6ce7e39de78f4cccab86e866a074221c10",
+          "tools/hybrid_model.py": "37187a5fe67d743b79398ba9816e8becc2b1535b042cff789ae996f2781471e0",
+          "tools/train_tiny.py": "2a7a2564f913b93740fda9141acbc676b9f8934d7b692cc121d92bcdd622c667"
+        }
+      },
+      "parameters": 71633,
+      "steps": 3451,
+      "selected_step": 3451,
+      "selected_validation_bpb": 2.8950875202360904,
+      "train_cpu_seconds": 20.005647292999914,
+      "train_wall_seconds": 20.028679363000606,
+      "total_trial_wall_seconds": 21.85778424900002,
+      "training_tokens": 1766912,
+      "training_raw_bytes": 3737089,
+      "training_batches_sha256": "b579f5dc3d7de66f7e8f68dfaaf3c18d349f7d1831e8d2ab99c736c965fbbdd0",
+      "metrics": {
+        "bits_per_byte": 2.429060147999405,
+        "nll_sum": 49635.36376953125,
+        "raw_bytes": 29480,
+        "target_tokens": 15633,
+        "token_accuracy": 0.3570012153777266
+      },
+      "native_metrics": {
+        "blocks": 116,
+        "raw_bytes": 29480,
+        "target_tokens": 15633,
+        "nll_sum": 49635.36407583,
+        "bits_per_byte": 2.4290601629891,
+        "token_accuracy": 0.35700121537773,
+        "load_seconds": 0.000312591,
+        "tokenization_seconds": 0.001110827,
+        "forward_and_scoring_seconds": 0.153869167,
+        "total_seconds": 0.155511517,
+        "cpu_seconds": 0.155494,
+        "weights_bytes": 151672,
+        "state_bytes": 24576,
+        "working_bytes": 29220,
+        "bos_scored_as_byte": false,
+        "energy_joules": null
+      },
+      "validation_curve": [
+        {
+          "step": 899,
+          "cpu_seconds": 5.000125167999972,
+          "validation_bpb": 3.118412565149255
+        },
+        {
+          "step": 1762,
+          "cpu_seconds": 10.001214847999858,
+          "validation_bpb": 2.964167440951547
+        },
+        {
+          "step": 2626,
+          "cpu_seconds": 15.000497369999952,
+          "validation_bpb": 2.92331287224135
+        },
+        {
+          "step": 3451,
+          "cpu_seconds": 20.005647292999914,
+          "validation_bpb": 2.8950875202360904
+        }
+      ],
+      "model_path": "models/external_v06/bpe513-seed11.edge",
+      "file_bytes": 153904,
+      "artifacts": {
+        "models/external_v06/bpe513-seed11.edge": "61226bd925edfe56758d5540ccd4f6206d4f5f45e9ed26c5f9c8f6f338ea913c",
+        "models/external_v06/bpe513-seed11.pt": "e4b131bc64f45c463e0915ccb45f87720c74c64bc8e55b77dbdf879c14bad259"
+      }
+    },
+    {
+      "kind": "byte257",
+      "seed": 22,
+      "identity": {
+        "protocol": "v06-cpu-tokenization-1",
+        "kind": "byte257",
+        "seed": 22,
+        "cpu_budget": 20.0,
+        "threads": 1,
+        "config": {
+          "dim": 64,
+          "hidden": 168,
+          "window": 64,
+          "precision": "int8",
+          "vocab_size": 257
+        },
+        "snapshot_sha256": "68d001ec093a83c6b9ea3f91d41d9dfa9fadde66cc78f4c92c21a45fc03b7c1b",
+        "tokenizer": "9e0a5fae0639a42793c8e7a12b76864ec9c0e49d72e69f7315518335a7565d59",
+        "torch": "2.10.0+cpu",
+        "host": {
+          "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+          "python": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]",
+          "cpu": "AMD EPYC 9V74 80-Core Processor"
+        },
+        "code": {
+          "benchmarks/tokenization_v06.py": "61adad9f8cc3fd66159e5259623b49a26c1ddde9936769086a30db15c256901d",
+          "tools/transformer_model.py": "d84d79edf279c7c2c0646abc6ed9afba46db8ec6f09ff01e1f1e6c2d226fd401",
+          "tools/byte_bpe.py": "5f1796d7fe739228f2ca27f0bb7d869b128b6ac38e03034e6712c4292d5a5ac7",
+          "tools/mixed_model.py": "1c5240e454271986d311a6db857b192373ff665b9242b6f315bb9fc408f69f9a",
+          "tools/external_data.py": "e7da2245227c7290bd61315a3ff02c6ce7e39de78f4cccab86e866a074221c10",
+          "tools/hybrid_model.py": "37187a5fe67d743b79398ba9816e8becc2b1535b042cff789ae996f2781471e0",
+          "tools/train_tiny.py": "2a7a2564f913b93740fda9141acbc676b9f8934d7b692cc121d92bcdd622c667"
+        }
+      },
+      "parameters": 71529,
+      "steps": 3367,
+      "selected_step": 3367,
+      "selected_validation_bpb": 3.109187947948909,
+      "train_cpu_seconds": 20.00100787200008,
+      "train_wall_seconds": 20.020266945997946,
+      "total_trial_wall_seconds": 22.77047813899992,
+      "training_tokens": 1723904,
+      "training_raw_bytes": 1723904,
+      "training_batches_sha256": "9ed2797f57792ab1bd267009a1319b8ece5118c82592674cb674f983f8c7f8c2",
+      "metrics": {
+        "bits_per_byte": 2.7455634362649612,
+        "nll_sum": 56102.78527832031,
+        "raw_bytes": 29480,
+        "target_tokens": 29480,
+        "token_accuracy": 0.5133989145183175
+      },
+      "native_metrics": {
+        "blocks": 116,
+        "raw_bytes": 29480,
+        "target_tokens": 29480,
+        "nll_sum": 56102.786476733,
+        "bits_per_byte": 2.745563494913,
+        "token_accuracy": 0.51339891451832,
+        "load_seconds": 0.00033187,
+        "tokenization_seconds": 4.4399e-05,
+        "forward_and_scoring_seconds": 0.313925104,
+        "total_seconds": 0.314593971,
+        "cpu_seconds": 0.314543,
+        "weights_bytes": 126088,
+        "state_bytes": 32768,
+        "working_bytes": 37156,
+        "bos_scored_as_byte": false,
+        "energy_joules": null
+      },
+      "validation_curve": [
+        {
+          "step": 848,
+          "cpu_seconds": 5.001816098000013,
+          "validation_bpb": 3.4166987112388396
+        },
+        {
+          "step": 1698,
+          "cpu_seconds": 10.001241519000025,
+          "validation_bpb": 3.2452458774293182
+        },
+        {
+          "step": 2535,
+          "cpu_seconds": 15.002881762999898,
+          "validation_bpb": 3.1658123969781404
+        },
+        {
+          "step": 3367,
+          "cpu_seconds": 20.00100787200008,
+          "validation_bpb": 3.109187947948909
+        }
+      ],
+      "model_path": "models/external_v06/byte257-seed22.edge",
+      "file_bytes": 126272,
+      "artifacts": {
+        "models/external_v06/byte257-seed22.edge": "bea7574ac7da0ed7d33405a4b936ff6e2cdbed862e7102618f10fd55a17461d4",
+        "models/external_v06/byte257-seed22.pt": "29c939519d3d7105c7e5c46178d04c98cf9f459a04e74beb77a3d650ead0013f"
+      }
+    },
+    {
+      "kind": "bpe513",
+      "seed": 22,
+      "identity": {
+        "protocol": "v06-cpu-tokenization-1",
+        "kind": "bpe513",
+        "seed": 22,
+        "cpu_budget": 20.0,
+        "threads": 1,
+        "config": {
+          "dim": 48,
+          "hidden": 128,
+          "window": 64,
+          "precision": "int8",
+          "vocab_size": 513
+        },
+        "snapshot_sha256": "68d001ec093a83c6b9ea3f91d41d9dfa9fadde66cc78f4c92c21a45fc03b7c1b",
+        "tokenizer": "1d75f0afc1e7746085a5e40655ab9e880833b53f5058c61f7f495d86ae18373e",
+        "torch": "2.10.0+cpu",
+        "host": {
+          "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+          "python": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]",
+          "cpu": "AMD EPYC 9V74 80-Core Processor"
+        },
+        "code": {
+          "benchmarks/tokenization_v06.py": "61adad9f8cc3fd66159e5259623b49a26c1ddde9936769086a30db15c256901d",
+          "tools/transformer_model.py": "d84d79edf279c7c2c0646abc6ed9afba46db8ec6f09ff01e1f1e6c2d226fd401",
+          "tools/byte_bpe.py": "5f1796d7fe739228f2ca27f0bb7d869b128b6ac38e03034e6712c4292d5a5ac7",
+          "tools/mixed_model.py": "1c5240e454271986d311a6db857b192373ff665b9242b6f315bb9fc408f69f9a",
+          "tools/external_data.py": "e7da2245227c7290bd61315a3ff02c6ce7e39de78f4cccab86e866a074221c10",
+          "tools/hybrid_model.py": "37187a5fe67d743b79398ba9816e8becc2b1535b042cff789ae996f2781471e0",
+          "tools/train_tiny.py": "2a7a2564f913b93740fda9141acbc676b9f8934d7b692cc121d92bcdd622c667"
+        }
+      },
+      "parameters": 71633,
+      "steps": 3487,
+      "selected_step": 3487,
+      "selected_validation_bpb": 2.8678741443742983,
+      "train_cpu_seconds": 20.00266370400037,
+      "train_wall_seconds": 20.03795042199249,
+      "total_trial_wall_seconds": 21.775763403999918,
+      "training_tokens": 1785344,
+      "training_raw_bytes": 3769515,
+      "training_batches_sha256": "117046a99b40eab84cbb2f7bb527ffce9bede3d604f6e2d2ecfc3982b97e33ec",
+      "metrics": {
+        "bits_per_byte": 2.4026364561083935,
+        "nll_sum": 49095.422607421875,
+        "raw_bytes": 29480,
+        "target_tokens": 15633,
+        "token_accuracy": 0.36058338130876993
+      },
+      "native_metrics": {
+        "blocks": 116,
+        "raw_bytes": 29480,
+        "target_tokens": 15633,
+        "nll_sum": 49095.422217595,
+        "bits_per_byte": 2.402636437031,
+        "token_accuracy": 0.36058338130877,
+        "load_seconds": 0.000311809,
+        "tokenization_seconds": 0.001232292,
+        "forward_and_scoring_seconds": 0.155792147,
+        "total_seconds": 0.157876014,
+        "cpu_seconds": 0.157864,
+        "weights_bytes": 151672,
+        "state_bytes": 24576,
+        "working_bytes": 29220,
+        "bos_scored_as_byte": false,
+        "energy_joules": null
+      },
+      "validation_curve": [
+        {
+          "step": 891,
+          "cpu_seconds": 5.004533352000166,
+          "validation_bpb": 3.0578848948375956
+        },
+        {
+          "step": 1735,
+          "cpu_seconds": 10.000249924000158,
+          "validation_bpb": 2.9451601097666122
+        },
+        {
+          "step": 2610,
+          "cpu_seconds": 15.000425647000313,
+          "validation_bpb": 2.880279924675862
+        },
+        {
+          "step": 3487,
+          "cpu_seconds": 20.00266370400037,
+          "validation_bpb": 2.8678741443742983
+        }
+      ],
+      "model_path": "models/external_v06/bpe513-seed22.edge",
+      "file_bytes": 153904,
+      "artifacts": {
+        "models/external_v06/bpe513-seed22.edge": "551b8b386cc5fe6a2ea191e892520e1fda97281fa06780404fb03a34d828c047",
+        "models/external_v06/bpe513-seed22.pt": "7fbe9609e65e2d54d149708f48a47700e241acab406c231b96b509fd7693f3f9"
+      }
+    },
+    {
+      "kind": "bpe513",
+      "seed": 33,
+      "identity": {
+        "protocol": "v06-cpu-tokenization-1",
+        "kind": "bpe513",
+        "seed": 33,
+        "cpu_budget": 20.0,
+        "threads": 1,
+        "config": {
+          "dim": 48,
+          "hidden": 128,
+          "window": 64,
+          "precision": "int8",
+          "vocab_size": 513
+        },
+        "snapshot_sha256": "68d001ec093a83c6b9ea3f91d41d9dfa9fadde66cc78f4c92c21a45fc03b7c1b",
+        "tokenizer": "1d75f0afc1e7746085a5e40655ab9e880833b53f5058c61f7f495d86ae18373e",
+        "torch": "2.10.0+cpu",
+        "host": {
+          "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+          "python": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]",
+          "cpu": "AMD EPYC 9V74 80-Core Processor"
+        },
+        "code": {
+          "benchmarks/tokenization_v06.py": "61adad9f8cc3fd66159e5259623b49a26c1ddde9936769086a30db15c256901d",
+          "tools/transformer_model.py": "d84d79edf279c7c2c0646abc6ed9afba46db8ec6f09ff01e1f1e6c2d226fd401",
+          "tools/byte_bpe.py": "5f1796d7fe739228f2ca27f0bb7d869b128b6ac38e03034e6712c4292d5a5ac7",
+          "tools/mixed_model.py": "1c5240e454271986d311a6db857b192373ff665b9242b6f315bb9fc408f69f9a",
+          "tools/external_data.py": "e7da2245227c7290bd61315a3ff02c6ce7e39de78f4cccab86e866a074221c10",
+          "tools/hybrid_model.py": "37187a5fe67d743b79398ba9816e8becc2b1535b042cff789ae996f2781471e0",
+          "tools/train_tiny.py": "2a7a2564f913b93740fda9141acbc676b9f8934d7b692cc121d92bcdd622c667"
+        }
+      },
+      "parameters": 71633,
+      "steps": 3421,
+      "selected_step": 3421,
+      "selected_validation_bpb": 2.897956743820955,
+      "train_cpu_seconds": 20.003288174999767,
+      "train_wall_seconds": 20.033062861009967,
+      "total_trial_wall_seconds": 21.79587959000014,
+      "training_tokens": 1751552,
+      "training_raw_bytes": 3709704,
+      "training_batches_sha256": "3d6d8c61642c8a8abf88797a705cc23276c514c7039d6c3740a2951c6f7904ed",
+      "metrics": {
+        "bits_per_byte": 2.4533494650933605,
+        "nll_sum": 50131.691162109375,
+        "raw_bytes": 29480,
+        "target_tokens": 15633,
+        "token_accuracy": 0.3564255101388089
+      },
+      "native_metrics": {
+        "blocks": 116,
+        "raw_bytes": 29480,
+        "target_tokens": 15633,
+        "nll_sum": 50131.690274066,
+        "bits_per_byte": 2.4533494216342,
+        "token_accuracy": 0.35642551013881,
+        "load_seconds": 0.000284408,
+        "tokenization_seconds": 0.001150977,
+        "forward_and_scoring_seconds": 0.154249015,
+        "total_seconds": 0.155913152,
+        "cpu_seconds": 0.155892,
+        "weights_bytes": 151672,
+        "state_bytes": 24576,
+        "working_bytes": 29220,
+        "bos_scored_as_byte": false,
+        "energy_joules": null
+      },
+      "validation_curve": [
+        {
+          "step": 891,
+          "cpu_seconds": 5.002066475000163,
+          "validation_bpb": 3.1015824091987927
+        },
+        {
+          "step": 1760,
+          "cpu_seconds": 10.001896282999937,
+          "validation_bpb": 2.9827253508811844
+        },
+        {
+          "step": 2564,
+          "cpu_seconds": 15.005296861999994,
+          "validation_bpb": 2.935810282380368
+        },
+        {
+          "step": 3421,
+          "cpu_seconds": 20.003288174999767,
+          "validation_bpb": 2.897956743820955
+        }
+      ],
+      "model_path": "models/external_v06/bpe513-seed33.edge",
+      "file_bytes": 153904,
+      "artifacts": {
+        "models/external_v06/bpe513-seed33.edge": "dab5a7397bd820682c6d66534ebced83ee955552604cf7ebde057e4010279fc2",
+        "models/external_v06/bpe513-seed33.pt": "091d7b1159f59b83788e2c1bec325192c6b9cbfa57b4a01d2f8959eb0bff7c91"
+      }
+    },
+    {
+      "kind": "byte257",
+      "seed": 33,
+      "identity": {
+        "protocol": "v06-cpu-tokenization-1",
+        "kind": "byte257",
+        "seed": 33,
+        "cpu_budget": 20.0,
+        "threads": 1,
+        "config": {
+          "dim": 64,
+          "hidden": 168,
+          "window": 64,
+          "precision": "int8",
+          "vocab_size": 257
+        },
+        "snapshot_sha256": "68d001ec093a83c6b9ea3f91d41d9dfa9fadde66cc78f4c92c21a45fc03b7c1b",
+        "tokenizer": "9e0a5fae0639a42793c8e7a12b76864ec9c0e49d72e69f7315518335a7565d59",
+        "torch": "2.10.0+cpu",
+        "host": {
+          "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+          "python": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]",
+          "cpu": "AMD EPYC 9V74 80-Core Processor"
+        },
+        "code": {
+          "benchmarks/tokenization_v06.py": "61adad9f8cc3fd66159e5259623b49a26c1ddde9936769086a30db15c256901d",
+          "tools/transformer_model.py": "d84d79edf279c7c2c0646abc6ed9afba46db8ec6f09ff01e1f1e6c2d226fd401",
+          "tools/byte_bpe.py": "5f1796d7fe739228f2ca27f0bb7d869b128b6ac38e03034e6712c4292d5a5ac7",
+          "tools/mixed_model.py": "1c5240e454271986d311a6db857b192373ff665b9242b6f315bb9fc408f69f9a",
+          "tools/external_data.py": "e7da2245227c7290bd61315a3ff02c6ce7e39de78f4cccab86e866a074221c10",
+          "tools/hybrid_model.py": "37187a5fe67d743b79398ba9816e8becc2b1535b042cff789ae996f2781471e0",
+          "tools/train_tiny.py": "2a7a2564f913b93740fda9141acbc676b9f8934d7b692cc121d92bcdd622c667"
+        }
+      },
+      "parameters": 71529,
+      "steps": 3263,
+      "selected_step": 3263,
+      "selected_validation_bpb": 3.1470771715121657,
+      "train_cpu_seconds": 20.004868676000612,
+      "train_wall_seconds": 20.021557073002896,
+      "total_trial_wall_seconds": 22.880739278000192,
+      "training_tokens": 1670656,
+      "training_raw_bytes": 1670656,
+      "training_batches_sha256": "a607a57043d70d3bba9369826b9702137184df0998470bf67807ab03ed1f733e",
+      "metrics": {
+        "bits_per_byte": 2.7543339350283396,
+        "nll_sum": 56282.00146484375,
+        "raw_bytes": 29480,
+        "target_tokens": 29480,
+        "token_accuracy": 0.5108887381275441
+      },
+      "native_metrics": {
+        "blocks": 116,
+        "raw_bytes": 29480,
+        "target_tokens": 29480,
+        "nll_sum": 56282.004622025,
+        "bits_per_byte": 2.7543340895348,
+        "token_accuracy": 0.51088873812754,
+        "load_seconds": 0.000235344,
+        "tokenization_seconds": 3.8794e-05,
+        "forward_and_scoring_seconds": 0.298340588,
+        "total_seconds": 0.298874118,
+        "cpu_seconds": 0.298832,
+        "weights_bytes": 126088,
+        "state_bytes": 32768,
+        "working_bytes": 37156,
+        "bos_scored_as_byte": false,
+        "energy_joules": null
+      },
+      "validation_curve": [
+        {
+          "step": 852,
+          "cpu_seconds": 5.005105960000407,
+          "validation_bpb": 3.3911135788282643
+        },
+        {
+          "step": 1622,
+          "cpu_seconds": 10.004678457000296,
+          "validation_bpb": 3.258503209374314
+        },
+        {
+          "step": 2423,
+          "cpu_seconds": 15.00032860700044,
+          "validation_bpb": 3.182361988243215
+        },
+        {
+          "step": 3263,
+          "cpu_seconds": 20.004868676000612,
+          "validation_bpb": 3.1470771715121657
+        }
+      ],
+      "model_path": "models/external_v06/byte257-seed33.edge",
+      "file_bytes": 126272,
+      "artifacts": {
+        "models/external_v06/byte257-seed33.edge": "d4c79ad77c63304977ea4848af66d5ae1c50e234eed49d227904422016fe9c48",
+        "models/external_v06/byte257-seed33.pt": "80848bf6dcea0f8069247652097dbe7f882b84af6fb98aaecdc0b8e320b860fa"
+      }
+    }
+  ],
+  "dataset_manifest_sha256": "68d001ec093a83c6b9ea3f91d41d9dfa9fadde66cc78f4c92c21a45fc03b7c1b",
+  "pretokenization_cpu_seconds": 0.07902426299999998,
+  "train_raw_bytes": 357941,
+  "test_raw_bytes": 29480,
+  "valid_raw_bytes": 104763,
+  "hardware": {
+    "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+    "processor": "",
+    "cpu_model": "AMD EPYC 9V74 80-Core Processor"
+  },
+  "baseline_bigram": {
+    "bits_per_byte": 3.557375938696749,
+    "method": "byte bigram add-0.1; first-byte distribution trained; reset per raw block"
+  },
+  "metric_caveats": [
+    "canonical token sequence code length, not marginalized probability of raw strings",
+    "BPE sees more bytes per 64-token window and per batch",
+    "different hidden dimensions to match parameter counts",
+    "one independently authored project, not independent repositories or multiple natural languages"
+  ],
+  "completed": 6,
+  "invocation_wall_seconds": 133.90196242299987
+}

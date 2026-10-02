@@ -1,0 +1,102 @@
+{
+  "logit_cases": [
+    {
+      "model": "hybrid_odd.edge",
+      "kernel": "scalar",
+      "tokens": 63,
+      "compared_values": 16128,
+      "max_absolute_error": 5.960464477539062e-07,
+      "passed": true
+    },
+    {
+      "model": "hybrid_odd.edge",
+      "kernel": "lookup2",
+      "tokens": 63,
+      "compared_values": 16128,
+      "max_absolute_error": 5.960464477539062e-07,
+      "passed": true
+    },
+    {
+      "model": "hybrid_odd.edge",
+      "kernel": "auto",
+      "tokens": 63,
+      "compared_values": 16128,
+      "max_absolute_error": 4.76837158203125e-07,
+      "passed": true
+    },
+    {
+      "model": "hybrid_all_bytes.edge",
+      "kernel": "scalar",
+      "tokens": 273,
+      "compared_values": 69888,
+      "max_absolute_error": 8.344650268554688e-07,
+      "passed": true
+    },
+    {
+      "model": "hybrid_all_bytes.edge",
+      "kernel": "lookup2",
+      "tokens": 273,
+      "compared_values": 69888,
+      "max_absolute_error": 8.344650268554688e-07,
+      "passed": true
+    },
+    {
+      "model": "hybrid_all_bytes.edge",
+      "kernel": "auto",
+      "tokens": 273,
+      "compared_values": 69888,
+      "max_absolute_error": 7.152557373046875e-07,
+      "passed": true
+    },
+    {
+      "model": "legacy.edge",
+      "kernel": "scalar",
+      "tokens": 25,
+      "compared_values": 6400,
+      "max_absolute_error": 1.7881393432617188e-07,
+      "passed": true
+    },
+    {
+      "model": "legacy.edge",
+      "kernel": "lookup2",
+      "tokens": 25,
+      "compared_values": 6400,
+      "max_absolute_error": 2.384185791015625e-07,
+      "passed": true
+    },
+    {
+      "model": "legacy.edge",
+      "kernel": "auto",
+      "tokens": 25,
+      "compared_values": 6400,
+      "max_absolute_error": 2.384185791015625e-07,
+      "passed": true
+    },
+    {
+      "model": "trained.edge",
+      "kernel": "scalar",
+      "tokens": 47,
+      "compared_values": 12032,
+      "max_absolute_error": 1.9073486328125e-06,
+      "passed": true
+    },
+    {
+      "model": "trained.edge",
+      "kernel": "lookup2",
+      "tokens": 47,
+      "compared_values": 12032,
+      "max_absolute_error": 1.9073486328125e-06,
+      "passed": true
+    },
+    {
+      "model": "trained.edge",
+      "kernel": "auto",
+      "tokens": 47,
+      "compared_values": 12032,
+      "max_absolute_error": 1.9073486328125e-06,
+      "passed": true
+    }
+  ],
+  "causality_passed": true,
+  "all_parameters_receive_gradients": true
+}

@@ -1,0 +1,28 @@
+Internal ctest changing into directory: /mnt/data/EdgeAI-Engine-v0.7/build
+Test project /mnt/data/EdgeAI-Engine-v0.7/build
+      Start  1: edgeai_tests
+ 1/11 Test  #1: edgeai_tests .....................   Passed    0.03 sec
+      Start  2: edgeai_regressions
+ 2/11 Test  #2: edgeai_regressions ...............   Passed    0.03 sec
+      Start  3: edgeai_memory
+ 3/11 Test  #3: edgeai_memory ....................   Passed    0.02 sec
+      Start  4: edgeai_kernels
+ 4/11 Test  #4: edgeai_kernels ...................   Passed    0.03 sec
+      Start  5: edgeai_hybrid
+ 5/11 Test  #5: edgeai_hybrid ....................   Passed    0.03 sec
+      Start  6: edgeai_tools
+ 6/11 Test  #6: edgeai_tools .....................   Passed    0.02 sec
+      Start  7: edgeai_precision
+ 7/11 Test  #7: edgeai_precision .................   Passed    0.03 sec
+      Start  8: edgeai_transformer
+ 8/11 Test  #8: edgeai_transformer ...............   Passed    0.05 sec
+      Start  9: edgeai_bpe
+ 9/11 Test  #9: edgeai_bpe .......................   Passed    0.02 sec
+      Start 10: edgeai_instruction
+10/11 Test #10: edgeai_instruction ...............   Passed    0.03 sec
+      Start 11: edgeai_runtime_cli
+11/11 Test #11: edgeai_runtime_cli ...............   Passed    2.09 sec
+
+100% tests passed, 0 tests failed out of 11
+
+Total Test time (real) =   2.39 sec

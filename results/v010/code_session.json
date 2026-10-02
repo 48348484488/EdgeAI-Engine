@@ -1,0 +1,2007 @@
+{
+  "schema": 1,
+  "task": "lexical CPython source search, not model quality",
+  "sources": {
+    "test/graphlib.py": "2a29e0adee584dc76251afef1236d7bedf250aca27911f91a4d442133ce81117",
+    "test/queue.py": "15d3d5e1acaa7cb3a2f836ff2c9001f6a9272107e73b9c6f4e71fee62cb654a1",
+    "test/sched.py": "56588f00a68ef953014f41baf36e0dbb7ed7793f8aa883ebcb1a8bd3787c06a6",
+    "train/abc.py": "e558702a95cdce3febd289da021715d2b92bc43995b8a1bc58dfa1c3d8010287",
+    "train/collections/__init__.py": "2347f647577b6c11b82fc48fa4a1744f7af1af87f15942f92b7cc4410f0a817b",
+    "train/contextlib.py": "c1e0d67b2007de11ae93cd36cf6faf38d9ab32656a832d592a49325eec579f96",
+    "train/copy.py": "d6b858961b91b48a4bf5a115b0420c890d677bdf058ab2323a8a75298eed47db",
+    "train/enum.py": "419c011ac6db4efd60e737db7cbba83eb67110ed20d91781f7c60cdeed61e0b6",
+    "train/functools.py": "7aa8725afbe9b9fc47a825b4e7c0330fa374432f481d7be8202b96f56eeac9a0",
+    "train/heapq.py": "6d43277e5c76fc0f073cd388fcff852d14d068f6bb6d4886c340f8b75a1229a9",
+    "train/pprint.py": "1585c8d74d7f485590db2af46680ae0a73737ca9fb66022b2bcbbc4c4925e203",
+    "train/random.py": "39f53b25d84a27e1be0b9116d74497c9466d749660692a25a0d14687175a6db0",
+    "train/string.py": "24aeae1f0526250f442022022bf98df9a823b1cb330543ee79e70e44907462e9",
+    "train/textwrap.py": "26836f5c17cdb4ffdeaff1a5146ed61a262aa410bdf3ad204e2bd0792f010d5e",
+    "train/weakref.py": "56f8d313fb74019e53eb9287400702fbce788b7fe30e097b0b6e06296f3f080c",
+    "valid/bisect.py": "f1cf7b85fc36b5da249813fc5ab97d9464f8cc1bc817f7146206fa2713e35999",
+    "valid/fractions.py": "58f7750133f2e23999ba3f634d1b14edfec6dc48bf8bb00a9911262cd7198f63",
+    "valid/statistics.py": "0f618d7c13e99f5289d5e2a20ba8b7340be27ab424f2bffb739ab3be291fe261"
+  },
+  "cases": [
+    {
+      "query": "`abstractmethod`",
+      "expected_path": "train/abc.py",
+      "expected_line": 7
+    },
+    {
+      "query": "`update_abstractmethods`",
+      "expected_path": "train/abc.py",
+      "expected_line": 146
+    },
+    {
+      "query": "`namedtuple`",
+      "expected_path": "train/collections/__init__.py",
+      "expected_line": 358
+    },
+    {
+      "query": "`_count_elements`",
+      "expected_path": "train/collections/__init__.py",
+      "expected_line": 537
+    },
+    {
+      "query": "`contextmanager`",
+      "expected_path": "train/contextlib.py",
+      "expected_line": 276
+    },
+    {
+      "query": "`asynccontextmanager`",
+      "expected_path": "train/contextlib.py",
+      "expected_line": 309
+    },
+    {
+      "query": "`copy`",
+      "expected_path": "train/copy.py",
+      "expected_line": 62
+    },
+    {
+      "query": "`_copy_immutable`",
+      "expected_path": "train/copy.py",
+      "expected_line": 103
+    },
+    {
+      "query": "`_is_descriptor`",
+      "expected_path": "train/enum.py",
+      "expected_line": 37
+    },
+    {
+      "query": "`_is_dunder`",
+      "expected_path": "train/enum.py",
+      "expected_line": 47
+    },
+    {
+      "query": "`update_wrapper`",
+      "expected_path": "train/functools.py",
+      "expected_line": 36
+    },
+    {
+      "query": "`wraps`",
+      "expected_path": "train/functools.py",
+      "expected_line": 66
+    },
+    {
+      "query": "`heappush`",
+      "expected_path": "train/heapq.py",
+      "expected_line": 132
+    },
+    {
+      "query": "`heappop`",
+      "expected_path": "train/heapq.py",
+      "expected_line": 137
+    },
+    {
+      "query": "`pprint`",
+      "expected_path": "train/pprint.py",
+      "expected_line": 48
+    },
+    {
+      "query": "`pformat`",
+      "expected_path": "train/pprint.py",
+      "expected_line": 57
+    },
+    {
+      "query": "`_test_generator`",
+      "expected_path": "train/random.py",
+      "expected_line": 954
+    },
+    {
+      "query": "`_test`",
+      "expected_path": "train/random.py",
+      "expected_line": 971
+    },
+    {
+      "query": "`capwords`",
+      "expected_path": "train/string.py",
+      "expected_line": 37
+    },
+    {
+      "query": "`wrap`",
+      "expected_path": "train/textwrap.py",
+      "expected_line": 373
+    },
+    {
+      "query": "`fill`",
+      "expected_path": "train/textwrap.py",
+      "expected_line": 386
+    },
+    {
+      "query": "`insort_right`",
+      "expected_path": "valid/bisect.py",
+      "expected_line": 4
+    },
+    {
+      "query": "`bisect_right`",
+      "expected_path": "valid/bisect.py",
+      "expected_line": 21
+    },
+    {
+      "query": "`_hash_algorithm`",
+      "expected_path": "valid/fractions.py",
+      "expected_line": 25
+    },
+    {
+      "query": "`_round_to_exponent`",
+      "expected_path": "valid/fractions.py",
+      "expected_line": 74
+    },
+    {
+      "query": "`_sum`",
+      "expected_path": "valid/statistics.py",
+      "expected_line": 158
+    },
+    {
+      "query": "`_ss`",
+      "expected_path": "valid/statistics.py",
+      "expected_line": 212
+    },
+    {
+      "query": "NoSuchEdgeAIRegressionSymbolV010_0",
+      "expected_path": null
+    },
+    {
+      "query": "NoSuchEdgeAIRegressionSymbolV010_1",
+      "expected_path": null
+    },
+    {
+      "query": "NoSuchEdgeAIRegressionSymbolV010_2",
+      "expected_path": null
+    },
+    {
+      "query": "NoSuchEdgeAIRegressionSymbolV010_3",
+      "expected_path": null
+    },
+    {
+      "query": "NoSuchEdgeAIRegressionSymbolV010_4",
+      "expected_path": null
+    },
+    {
+      "query": "NoSuchEdgeAIRegressionSymbolV010_5",
+      "expected_path": null
+    },
+    {
+      "query": "NoSuchEdgeAIRegressionSymbolV010_6",
+      "expected_path": null
+    },
+    {
+      "query": "NoSuchEdgeAIRegressionSymbolV010_7",
+      "expected_path": null
+    }
+  ],
+  "results": {
+    "v09": [
+      {
+        "method": "lexical-source-lines",
+        "neural_used": false,
+        "partial": false,
+        "scanned_files": 18,
+        "scanned_bytes": 492696,
+        "skipped_files": 0,
+        "hits": [
+          {
+            "path": "train/abc.py",
+            "match_line": 7,
+            "start_line": 5,
+            "end_line": 9,
+            "score": 12,
+            "text": "\n\ndef abstractmethod(funcobj):\n    \"\"\"A decorator indicating abstract methods.\n"
+          },
+          {
+            "path": "train/contextlib.py",
+            "match_line": 29,
+            "start_line": 27,
+            "end_line": 31,
+            "score": 10,
+            "text": "        return self\n\n    @abc.abstractmethod\n    def __exit__(self, exc_type, exc_value, traceback):\n        \"\"\"Raise any exception triggered within the runtime context.\"\"\""
+          }
+        ]
+      },
+      {
+        "method": "lexical-source-lines",
+        "neural_used": false,
+        "partial": false,
+        "scanned_files": 18,
+        "scanned_bytes": 492696,
+        "skipped_files": 0,
+        "hits": [
+          {
+            "path": "train/abc.py",
+            "match_line": 146,
+            "start_line": 144,
+            "end_line": 148,
+            "score": 36,
+            "text": "\n\ndef update_abstractmethods(cls):\n    \"\"\"Recalculate the set of abstract methods of an abstract class.\n"
+          }
+        ]
+      },
+      {
+        "method": "lexical-source-lines",
+        "neural_used": false,
+        "partial": false,
+        "scanned_files": 18,
+        "scanned_bytes": 492696,
+        "skipped_files": 0,
+        "hits": [
+          {
+            "path": "test/sched.py",
+            "match_line": 35,
+            "start_line": 33,
+            "end_line": 37,
+            "score": 12,
+            "text": "__all__ = [\"scheduler\"]\n\nEvent = namedtuple('Event', 'time, priority, sequence, action, argument, kwargs')\nEvent.time.__doc__ = ('''Numeric type compatible with the return value of the\ntimefunc function passed to the constructor.''')"
+          },
+          {
+            "path": "train/collections/__init__.py",
+            "match_line": 358,
+            "start_line": 356,
+            "end_line": 360,
+            "score": 12,
+            "text": "    _tuplegetter = lambda index, doc: property(_itemgetter(index), doc=doc)\n\ndef namedtuple(typename, field_names, *, rename=False, defaults=None, module=None):\n    \"\"\"Returns a new subclass of tuple with named fields.\n"
+          },
+          {
+            "path": "train/functools.py",
+            "match_line": 455,
+            "start_line": 453,
+            "end_line": 457,
+            "score": 12,
+            "text": "################################################################################\n\n_CacheInfo = namedtuple(\"CacheInfo\", [\"hits\", \"misses\", \"maxsize\", \"currsize\"])\n\nclass _HashedSeq(list):"
+          },
+          {
+            "path": "valid/statistics.py",
+            "match_line": 1349,
+            "start_line": 1347,
+            "end_line": 1351,
+            "score": 12,
+            "text": "\n\nLinearRegression = namedtuple('LinearRegression', ('slope', 'intercept'))\n\n"
+          }
+        ]
+      },
+      {
+        "method": "lexical-source-lines",
+        "neural_used": false,
+        "partial": false,
+        "scanned_files": 18,
+        "scanned_bytes": 492696,
+        "skipped_files": 0,
+        "hits": [
+          {
+            "path": "train/collections/__init__.py",
+            "match_line": 537,
+            "start_line": 535,
+            "end_line": 539,
+            "score": 36,
+            "text": "########################################################################\n\ndef _count_elements(mapping, iterable):\n    'Tally elements from the iterable.'\n    mapping_get = mapping.get"
+          }
+        ]
+      },
+      {
+        "method": "lexical-source-lines",
+        "neural_used": false,
+        "partial": false,
+        "scanned_files": 18,
+        "scanned_bytes": 492696,
+        "skipped_files": 0,
+        "hits": [
+          {
+            "path": "train/contextlib.py",
+            "match_line": 276,
+            "start_line": 274,
+            "end_line": 278,
+            "score": 12,
+            "text": "\n\ndef contextmanager(func):\n    \"\"\"@contextmanager decorator.\n"
+          }
+        ]
+      },
+      {
+        "method": "lexical-source-lines",
+        "neural_used": false,
+        "partial": false,
+        "scanned_files": 18,
+        "scanned_bytes": 492696,
+        "skipped_files": 0,
+        "hits": [
+          {
+            "path": "train/contextlib.py",
+            "match_line": 309,
+            "start_line": 307,
+            "end_line": 311,
+            "score": 12,
+            "text": "\n\ndef asynccontextmanager(func):\n    \"\"\"@asynccontextmanager decorator.\n"
+          }
+        ]
+      },
+      {
+        "method": "lexical-source-lines",
+        "neural_used": false,
+        "partial": false,
+        "scanned_files": 18,
+        "scanned_bytes": 492696,
+        "skipped_files": 0,
+        "hits": [
+          {
+            "path": "train/collections/__init__.py",
+            "match_line": 290,
+            "start_line": 288,
+            "end_line": 292,
+            "score": 12,
+            "text": "            else:\n                slots = {}\n            state = state.copy()\n            slots = slots.copy()\n            for k in vars(OrderedDict()):"
+          },
+          {
+            "path": "train/copy.py",
+            "match_line": 7,
+            "start_line": 5,
+            "end_line": 9,
+            "score": 12,
+            "text": "        import copy\n\n        x = copy.copy(y)                # make a shallow copy of y\n        x = copy.deepcopy(y)            # make a deep copy of y\n        x = copy.replace(y, a=1, b=2)   # new object with fields replaced, as defined by `__replace__`"
+          },
+          {
+            "path": "train/enum.py",
+            "match_line": 1321,
+            "start_line": 1319,
+            "end_line": 1323,
+            "score": 12,
+            "text": "        return self\n\n    def __copy__(self):\n        return self\n"
+          },
+          {
+            "path": "train/weakref.py",
+            "match_line": 169,
+            "start_line": 167,
+            "end_line": 171,
+            "score": 12,
+            "text": "        self.data[key] = KeyedRef(value, self._remove, key)\n\n    def copy(self):\n        if self._pending_removals:\n            self._commit_removals()"
+          },
+          {
+            "path": "valid/fractions.py",
+            "match_line": 1032,
+            "start_line": 1030,
+            "end_line": 1034,
+            "score": 12,
+            "text": "        return (self.__class__, (self._numerator, self._denominator))\n\n    def __copy__(self):\n        if type(self) == Fraction:\n            return self     # I'm immutable; therefore I am my own clone"
+          }
+        ]
+      },
+      {
+        "method": "lexical-source-lines",
+        "neural_used": false,
+        "partial": false,
+        "scanned_files": 18,
+        "scanned_bytes": 492696,
+        "skipped_files": 0,
+        "hits": [
+          {
+            "path": "train/copy.py",
+            "match_line": 76,
+            "start_line": 74,
+            "end_line": 78,
+            "score": 36,
+            "text": "    if issubclass(cls, type):\n        # treat it as a regular class:\n        return _copy_immutable(x)\n\n    copier = getattr(cls, \"__copy__\", None)"
+          }
+        ]
+      },
+      {
+        "method": "lexical-source-lines",
+        "neural_used": false,
+        "partial": false,
+        "scanned_files": 18,
+        "scanned_bytes": 492696,
+        "skipped_files": 0,
+        "hits": [
+          {
+            "path": "train/enum.py",
+            "match_line": 37,
+            "start_line": 35,
+            "end_line": 39,
+            "score": 36,
+            "text": "        self.value = value\n\ndef _is_descriptor(obj):\n    \"\"\"\n    Returns True if obj is a descriptor, False otherwise."
+          }
+        ]
+      },
+      {
+        "method": "lexical-source-lines",
+        "neural_used": false,
+        "partial": false,
+        "scanned_files": 18,
+        "scanned_bytes": 492696,
+        "skipped_files": 0,
+        "hits": [
+          {
+            "path": "train/enum.py",
+            "match_line": 47,
+            "start_line": 45,
+            "end_line": 49,
+            "score": 36,
+            "text": "            )\n\ndef _is_dunder(name):\n    \"\"\"\n    Returns True if a __dunder__ name, False otherwise."
+          }
+        ]
+      },
+      {
+        "method": "lexical-source-lines",
+        "neural_used": false,
+        "partial": false,
+        "scanned_files": 18,
+        "scanned_bytes": 492696,
+        "skipped_files": 0,
+        "hits": [
+          {
+            "path": "train/functools.py",
+            "match_line": 36,
+            "start_line": 34,
+            "end_line": 38,
+            "score": 36,
+            "text": "                       '__annotations__', '__type_params__')\nWRAPPER_UPDATES = ('__dict__',)\ndef update_wrapper(wrapper,\n                   wrapped,\n                   assigned = WRAPPER_ASSIGNMENTS,"
+          }
+        ]
+      },
+      {
+        "method": "lexical-source-lines",
+        "neural_used": false,
+        "partial": false,
+        "scanned_files": 18,
+        "scanned_bytes": 492696,
+        "skipped_files": 0,
+        "hits": [
+          {
+            "path": "train/contextlib.py",
+            "match_line": 82,
+            "start_line": 80,
+            "end_line": 84,
+            "score": 12,
+            "text": "\n    def __call__(self, func):\n        @wraps(func)\n        def inner(*args, **kwds):\n            with self._recreate_cm():"
+          },
+          {
+            "path": "train/functools.py",
+            "match_line": 66,
+            "start_line": 64,
+            "end_line": 68,
+            "score": 12,
+            "text": "    return wrapper\n\ndef wraps(wrapped,\n          assigned = WRAPPER_ASSIGNMENTS,\n          updated = WRAPPER_UPDATES):"
+          }
+        ]
+      },
+      {
+        "method": "lexical-source-lines",
+        "neural_used": false,
+        "partial": false,
+        "scanned_files": 18,
+        "scanned_bytes": 492696,
+        "skipped_files": 0,
+        "hits": [
+          {
+            "path": "test/queue.py",
+            "match_line": 294,
+            "start_line": 292,
+            "end_line": 296,
+            "score": 12,
+            "text": "\n    def _put(self, item):\n        heappush(self.queue, item)\n\n    def _get(self):"
+          },
+          {
+            "path": "test/sched.py",
+            "match_line": 75,
+            "start_line": 73,
+            "end_line": 77,
+            "score": 12,
+            "text": "            event = Event(time, priority, next(self._sequence_generator),\n                          action, argument, kwargs)\n            heapq.heappush(self._queue, event)\n        return event # The ID\n"
+          },
+          {
+            "path": "train/heapq.py",
+            "match_line": 11,
+            "start_line": 9,
+            "end_line": 13,
+            "score": 12,
+            "text": "\nheap = []            # creates an empty heap\nheappush(heap, item) # pushes a new item on the heap\nitem = heappop(heap) # pops the smallest item from the heap\nitem = heap[0]       # smallest item on the heap without popping it"
+          }
+        ]
+      },
+      {
+        "method": "lexical-source-lines",
+        "neural_used": false,
+        "partial": false,
+        "scanned_files": 18,
+        "scanned_bytes": 492696,
+        "skipped_files": 0,
+        "hits": [
+          {
+            "path": "test/queue.py",
+            "match_line": 297,
+            "start_line": 295,
+            "end_line": 299,
+            "score": 12,
+            "text": "\n    def _get(self):\n        return heappop(self.queue)\n\n"
+          },
+          {
+            "path": "train/heapq.py",
+            "match_line": 12,
+            "start_line": 10,
+            "end_line": 14,
+            "score": 12,
+            "text": "heap = []            # creates an empty heap\nheappush(heap, item) # pushes a new item on the heap\nitem = heappop(heap) # pops the smallest item from the heap\nitem = heap[0]       # smallest item on the heap without popping it\nheapify(x)           # transforms list into a heap, in-place, in linear time"
+          },
+          {
+            "path": "test/sched.py",
+            "match_line": 133,
+            "start_line": 131,
+            "end_line": 135,
+            "score": 10,
+            "text": "        delayfunc = self.delayfunc\n        timefunc = self.timefunc\n        pop = heapq.heappop\n        while True:\n            with lock:"
+          }
+        ]
+      },
+      {
+        "method": "lexical-source-lines",
+        "neural_used": false,
+        "partial": false,
+        "scanned_files": 18,
+        "scanned_bytes": 492696,
+        "skipped_files": 0,
+        "hits": [
+          {
+            "path": "train/pprint.py",
+            "match_line": 28,
+            "start_line": 26,
+            "end_line": 30,
+            "score": 12,
+            "text": "    Format a Python object into a pretty-printed representation.\n\npprint()\n    Pretty-print a Python object to a stream [default is sys.stdout].\n"
+          }
+        ]
+      },
+      {
+        "method": "lexical-source-lines",
+        "neural_used": false,
+        "partial": false,
+        "scanned_files": 18,
+        "scanned_bytes": 492696,
+        "skipped_files": 0,
+        "hits": [
+          {
+            "path": "train/pprint.py",
+            "match_line": 25,
+            "start_line": 23,
+            "end_line": 27,
+            "score": 12,
+            "text": "---------\n\npformat()\n    Format a Python object into a pretty-printed representation.\n"
+          }
+        ]
+      },
+      {
+        "method": "lexical-source-lines",
+        "neural_used": false,
+        "partial": false,
+        "scanned_files": 18,
+        "scanned_bytes": 492696,
+        "skipped_files": 0,
+        "hits": [
+          {
+            "path": "train/random.py",
+            "match_line": 954,
+            "start_line": 952,
+            "end_line": 956,
+            "score": 36,
+            "text": "## ----------------- test program -----------------------\n\ndef _test_generator(n, func, args):\n    from statistics import stdev, fmean as mean\n    from time import perf_counter"
+          }
+        ]
+      },
+      {
+        "method": "lexical-source-lines",
+        "neural_used": false,
+        "partial": false,
+        "scanned_files": 18,
+        "scanned_bytes": 492696,
+        "skipped_files": 0,
+        "hits": [
+          {
+            "path": "train/random.py",
+            "match_line": 971,
+            "start_line": 969,
+            "end_line": 973,
+            "score": 24,
+            "text": "\n\ndef _test(N=10_000):\n    _test_generator(N, random, ())\n    _test_generator(N, normalvariate, (0.0, 1.0))"
+          }
+        ]
+      },
+      {
+        "method": "lexical-source-lines",
+        "neural_used": false,
+        "partial": false,
+        "scanned_files": 18,
+        "scanned_bytes": 492696,
+        "skipped_files": 0,
+        "hits": [
+          {
+            "path": "train/string.py",
+            "match_line": 37,
+            "start_line": 35,
+            "end_line": 39,
+            "score": 12,
+            "text": "\n# Capitalize the words in a string, e.g. \" aBc  dEf \" -> \"Abc Def\".\ndef capwords(s, sep=None):\n    \"\"\"capwords(s [,sep]) -> string\n"
+          }
+        ]
+      },
+      {
+        "method": "lexical-source-lines",
+        "neural_used": false,
+        "partial": false,
+        "scanned_files": 18,
+        "scanned_bytes": 492696,
+        "skipped_files": 0,
+        "hits": [
+          {
+            "path": "train/functools.py",
+            "match_line": 321,
+            "start_line": 319,
+            "end_line": 323,
+            "score": 12,
+            "text": "        import warnings\n        warnings.warn('functools.partial will be a method descriptor in '\n                      'future Python versions; wrap it in staticmethod() '\n                      'if you want to preserve the old behavior',\n                      FutureWarning, 2)"
+          },
+          {
+            "path": "train/pprint.py",
+            "match_line": 338,
+            "start_line": 336,
+            "end_line": 340,
+            "score": 12,
+            "text": "            write('(')\n        delim = ''\n        for rep in _wrap_bytes_repr(object, self._width - indent, allowance):\n            write(delim)\n            write(rep)"
+          },
+          {
+            "path": "train/textwrap.py",
+            "match_line": 20,
+            "start_line": 18,
+            "end_line": 22,
+            "score": 12,
+            "text": "    \"\"\"\n    Object for wrapping/filling text.  The public interface consists of\n    the wrap() and fill() methods; the other methods are just there for\n    subclasses to override in order to tweak the default behaviour.\n    If you want to completely replace the main wrapping algorithm,"
+          },
+          {
+            "path": "train/enum.py",
+            "match_line": 264,
+            "start_line": 262,
+            "end_line": 266,
+            "score": 10,
+            "text": "            args = value\n        if enum_class._member_type_ is tuple:   # special case for tuple enums\n            args = (args, )     # wrap it one more time\n        if not enum_class._use_args_:\n            enum_member = enum_class._new_member_(enum_class)"
+          },
+          {
+            "path": "train/weakref.py",
+            "match_line": 101,
+            "start_line": 99,
+            "end_line": 103,
+            "score": 7,
+            "text": "    # dictionary; since it uses our .update() method, we get the right\n    # checks (if the other dictionary is a WeakValueDictionary,\n    # objects are unwrapped on the way out, and we always wrap on the\n    # way in).\n"
+          }
+        ]
+      },
+      {
+        "method": "lexical-source-lines",
+        "neural_used": false,
+        "partial": false,
+        "scanned_files": 18,
+        "scanned_bytes": 492696,
+        "skipped_files": 0,
+        "hits": [
+          {
+            "path": "train/textwrap.py",
+            "match_line": 361,
+            "start_line": 359,
+            "end_line": 363,
+            "score": 12,
+            "text": "        return self._wrap_chunks(chunks)\n\n    def fill(self, text):\n        \"\"\"fill(text : string) -> string\n"
+          },
+          {
+            "path": "valid/fractions.py",
+            "match_line": 457,
+            "start_line": 455,
+            "end_line": 459,
+            "score": 12,
+            "text": "\n        # Pad with fill character if necessary and return.\n        padding = fill * (minimumwidth - len(sign) - len(body))\n        if align == \">\":\n            return padding + sign + body"
+          }
+        ]
+      },
+      {
+        "method": "lexical-source-lines",
+        "neural_used": false,
+        "partial": false,
+        "scanned_files": 18,
+        "scanned_bytes": 492696,
+        "skipped_files": 0,
+        "hits": [
+          {
+            "path": "valid/bisect.py",
+            "match_line": 4,
+            "start_line": 2,
+            "end_line": 6,
+            "score": 36,
+            "text": "\n\ndef insort_right(a, x, lo=0, hi=None, *, key=None):\n    \"\"\"Insert item x in list a, and keep it sorted assuming a is sorted.\n"
+          }
+        ]
+      },
+      {
+        "method": "lexical-source-lines",
+        "neural_used": false,
+        "partial": false,
+        "scanned_files": 18,
+        "scanned_bytes": 492696,
+        "skipped_files": 0,
+        "hits": [
+          {
+            "path": "valid/bisect.py",
+            "match_line": 15,
+            "start_line": 13,
+            "end_line": 17,
+            "score": 36,
+            "text": "    \"\"\"\n    if key is None:\n        lo = bisect_right(a, x, lo, hi)\n    else:\n        lo = bisect_right(a, key(x), lo, hi, key=key)"
+          },
+          {
+            "path": "valid/statistics.py",
+            "match_line": 741,
+            "start_line": 739,
+            "end_line": 743,
+            "score": 36,
+            "text": "    # All x will lie within data[i:j].\n    i = bisect_left(data, x)\n    j = bisect_right(data, x, lo=i)\n\n    # Coerce to floats, raising a TypeError if not possible"
+          }
+        ]
+      },
+      {
+        "method": "lexical-source-lines",
+        "neural_used": false,
+        "partial": false,
+        "scanned_files": 18,
+        "scanned_bytes": 492696,
+        "skipped_files": 0,
+        "hits": [
+          {
+            "path": "valid/fractions.py",
+            "match_line": 25,
+            "start_line": 23,
+            "end_line": 27,
+            "score": 36,
+            "text": "\n@functools.lru_cache(maxsize = 1 << 14)\ndef _hash_algorithm(numerator, denominator):\n\n    # To make sure that the hash of a Fraction agrees with the hash"
+          }
+        ]
+      },
+      {
+        "method": "lexical-source-lines",
+        "neural_used": false,
+        "partial": false,
+        "scanned_files": 18,
+        "scanned_bytes": 492696,
+        "skipped_files": 0,
+        "hits": [
+          {
+            "path": "valid/fractions.py",
+            "match_line": 74,
+            "start_line": 72,
+            "end_line": 76,
+            "score": 48,
+            "text": "# Helpers for formatting\n\ndef _round_to_exponent(n, d, exponent, no_neg_zero=False):\n    \"\"\"Round a rational number to the nearest multiple of a given power of 10.\n"
+          }
+        ]
+      },
+      {
+        "method": "lexical-source-lines",
+        "neural_used": false,
+        "partial": false,
+        "scanned_files": 18,
+        "scanned_bytes": 492696,
+        "skipped_files": 0,
+        "hits": [
+          {
+            "path": "valid/statistics.py",
+            "match_line": 158,
+            "start_line": 156,
+            "end_line": 160,
+            "score": 24,
+            "text": "# === Private utilities ===\n\ndef _sum(data):\n    \"\"\"_sum(data) -> (type, sum, count)\n"
+          }
+        ]
+      },
+      {
+        "method": "lexical-source-lines",
+        "neural_used": false,
+        "partial": false,
+        "scanned_files": 18,
+        "scanned_bytes": 492696,
+        "skipped_files": 0,
+        "hits": [
+          {
+            "path": "valid/statistics.py",
+            "match_line": 212,
+            "start_line": 210,
+            "end_line": 214,
+            "score": 24,
+            "text": "\n\ndef _ss(data, c=None):\n    \"\"\"Return the exact mean and sum of square deviations of sequence data.\n"
+          }
+        ]
+      },
+      {
+        "method": "lexical-source-lines",
+        "neural_used": false,
+        "partial": false,
+        "scanned_files": 18,
+        "scanned_bytes": 492696,
+        "skipped_files": 0,
+        "hits": []
+      },
+      {
+        "method": "lexical-source-lines",
+        "neural_used": false,
+        "partial": false,
+        "scanned_files": 18,
+        "scanned_bytes": 492696,
+        "skipped_files": 0,
+        "hits": []
+      },
+      {
+        "method": "lexical-source-lines",
+        "neural_used": false,
+        "partial": false,
+        "scanned_files": 18,
+        "scanned_bytes": 492696,
+        "skipped_files": 0,
+        "hits": []
+      },
+      {
+        "method": "lexical-source-lines",
+        "neural_used": false,
+        "partial": false,
+        "scanned_files": 18,
+        "scanned_bytes": 492696,
+        "skipped_files": 0,
+        "hits": []
+      },
+      {
+        "method": "lexical-source-lines",
+        "neural_used": false,
+        "partial": false,
+        "scanned_files": 18,
+        "scanned_bytes": 492696,
+        "skipped_files": 0,
+        "hits": []
+      },
+      {
+        "method": "lexical-source-lines",
+        "neural_used": false,
+        "partial": false,
+        "scanned_files": 18,
+        "scanned_bytes": 492696,
+        "skipped_files": 0,
+        "hits": []
+      },
+      {
+        "method": "lexical-source-lines",
+        "neural_used": false,
+        "partial": false,
+        "scanned_files": 18,
+        "scanned_bytes": 492696,
+        "skipped_files": 0,
+        "hits": []
+      },
+      {
+        "method": "lexical-source-lines",
+        "neural_used": false,
+        "partial": false,
+        "scanned_files": 18,
+        "scanned_bytes": 492696,
+        "skipped_files": 0,
+        "hits": []
+      }
+    ],
+    "v010": [
+      {
+        "method": "lexical-source-lines",
+        "neural_used": false,
+        "partial": false,
+        "scanned_files": 18,
+        "scanned_bytes": 492696,
+        "skipped_files": 0,
+        "content_bytes_read": 492696,
+        "reused_files": 18,
+        "reindexed_files": 0,
+        "candidate_lines": 11,
+        "total_lines": 13699,
+        "index_entries": 62671,
+        "revision": 1,
+        "hits": [
+          {
+            "path": "train/abc.py",
+            "match_line": 7,
+            "start_line": 5,
+            "end_line": 9,
+            "score": 12,
+            "text": "\n\ndef abstractmethod(funcobj):\n    \"\"\"A decorator indicating abstract methods.\n"
+          },
+          {
+            "path": "train/contextlib.py",
+            "match_line": 29,
+            "start_line": 27,
+            "end_line": 31,
+            "score": 10,
+            "text": "        return self\n\n    @abc.abstractmethod\n    def __exit__(self, exc_type, exc_value, traceback):\n        \"\"\"Raise any exception triggered within the runtime context.\"\"\""
+          }
+        ]
+      },
+      {
+        "method": "lexical-source-lines",
+        "neural_used": false,
+        "partial": false,
+        "scanned_files": 18,
+        "scanned_bytes": 492696,
+        "skipped_files": 0,
+        "content_bytes_read": 492696,
+        "reused_files": 18,
+        "reindexed_files": 0,
+        "candidate_lines": 1,
+        "total_lines": 13699,
+        "index_entries": 62671,
+        "revision": 1,
+        "hits": [
+          {
+            "path": "train/abc.py",
+            "match_line": 146,
+            "start_line": 144,
+            "end_line": 148,
+            "score": 36,
+            "text": "\n\ndef update_abstractmethods(cls):\n    \"\"\"Recalculate the set of abstract methods of an abstract class.\n"
+          }
+        ]
+      },
+      {
+        "method": "lexical-source-lines",
+        "neural_used": false,
+        "partial": false,
+        "scanned_files": 18,
+        "scanned_bytes": 492696,
+        "skipped_files": 0,
+        "content_bytes_read": 492696,
+        "reused_files": 18,
+        "reindexed_files": 0,
+        "candidate_lines": 12,
+        "total_lines": 13699,
+        "index_entries": 62671,
+        "revision": 1,
+        "hits": [
+          {
+            "path": "test/sched.py",
+            "match_line": 35,
+            "start_line": 33,
+            "end_line": 37,
+            "score": 12,
+            "text": "__all__ = [\"scheduler\"]\n\nEvent = namedtuple('Event', 'time, priority, sequence, action, argument, kwargs')\nEvent.time.__doc__ = ('''Numeric type compatible with the return value of the\ntimefunc function passed to the constructor.''')"
+          },
+          {
+            "path": "train/collections/__init__.py",
+            "match_line": 358,
+            "start_line": 356,
+            "end_line": 360,
+            "score": 12,
+            "text": "    _tuplegetter = lambda index, doc: property(_itemgetter(index), doc=doc)\n\ndef namedtuple(typename, field_names, *, rename=False, defaults=None, module=None):\n    \"\"\"Returns a new subclass of tuple with named fields.\n"
+          },
+          {
+            "path": "train/functools.py",
+            "match_line": 455,
+            "start_line": 453,
+            "end_line": 457,
+            "score": 12,
+            "text": "################################################################################\n\n_CacheInfo = namedtuple(\"CacheInfo\", [\"hits\", \"misses\", \"maxsize\", \"currsize\"])\n\nclass _HashedSeq(list):"
+          },
+          {
+            "path": "valid/statistics.py",
+            "match_line": 1349,
+            "start_line": 1347,
+            "end_line": 1351,
+            "score": 12,
+            "text": "\n\nLinearRegression = namedtuple('LinearRegression', ('slope', 'intercept'))\n\n"
+          }
+        ]
+      },
+      {
+        "method": "lexical-source-lines",
+        "neural_used": false,
+        "partial": false,
+        "scanned_files": 18,
+        "scanned_bytes": 492696,
+        "skipped_files": 0,
+        "content_bytes_read": 492696,
+        "reused_files": 18,
+        "reindexed_files": 0,
+        "candidate_lines": 3,
+        "total_lines": 13699,
+        "index_entries": 62671,
+        "revision": 1,
+        "hits": [
+          {
+            "path": "train/collections/__init__.py",
+            "match_line": 537,
+            "start_line": 535,
+            "end_line": 539,
+            "score": 36,
+            "text": "########################################################################\n\ndef _count_elements(mapping, iterable):\n    'Tally elements from the iterable.'\n    mapping_get = mapping.get"
+          }
+        ]
+      },
+      {
+        "method": "lexical-source-lines",
+        "neural_used": false,
+        "partial": false,
+        "scanned_files": 18,
+        "scanned_bytes": 492696,
+        "skipped_files": 0,
+        "content_bytes_read": 492696,
+        "reused_files": 18,
+        "reindexed_files": 0,
+        "candidate_lines": 6,
+        "total_lines": 13699,
+        "index_entries": 62671,
+        "revision": 1,
+        "hits": [
+          {
+            "path": "train/contextlib.py",
+            "match_line": 276,
+            "start_line": 274,
+            "end_line": 278,
+            "score": 12,
+            "text": "\n\ndef contextmanager(func):\n    \"\"\"@contextmanager decorator.\n"
+          }
+        ]
+      },
+      {
+        "method": "lexical-source-lines",
+        "neural_used": false,
+        "partial": false,
+        "scanned_files": 18,
+        "scanned_bytes": 492696,
+        "skipped_files": 0,
+        "content_bytes_read": 492696,
+        "reused_files": 18,
+        "reindexed_files": 0,
+        "candidate_lines": 6,
+        "total_lines": 13699,
+        "index_entries": 62671,
+        "revision": 1,
+        "hits": [
+          {
+            "path": "train/contextlib.py",
+            "match_line": 309,
+            "start_line": 307,
+            "end_line": 311,
+            "score": 12,
+            "text": "\n\ndef asynccontextmanager(func):\n    \"\"\"@asynccontextmanager decorator.\n"
+          }
+        ]
+      },
+      {
+        "method": "lexical-source-lines",
+        "neural_used": false,
+        "partial": false,
+        "scanned_files": 18,
+        "scanned_bytes": 492696,
+        "skipped_files": 0,
+        "content_bytes_read": 492696,
+        "reused_files": 18,
+        "reindexed_files": 0,
+        "candidate_lines": 67,
+        "total_lines": 13699,
+        "index_entries": 62671,
+        "revision": 1,
+        "hits": [
+          {
+            "path": "train/collections/__init__.py",
+            "match_line": 290,
+            "start_line": 288,
+            "end_line": 292,
+            "score": 12,
+            "text": "            else:\n                slots = {}\n            state = state.copy()\n            slots = slots.copy()\n            for k in vars(OrderedDict()):"
+          },
+          {
+            "path": "train/copy.py",
+            "match_line": 7,
+            "start_line": 5,
+            "end_line": 9,
+            "score": 12,
+            "text": "        import copy\n\n        x = copy.copy(y)                # make a shallow copy of y\n        x = copy.deepcopy(y)            # make a deep copy of y\n        x = copy.replace(y, a=1, b=2)   # new object with fields replaced, as defined by `__replace__`"
+          },
+          {
+            "path": "train/enum.py",
+            "match_line": 1321,
+            "start_line": 1319,
+            "end_line": 1323,
+            "score": 12,
+            "text": "        return self\n\n    def __copy__(self):\n        return self\n"
+          },
+          {
+            "path": "train/weakref.py",
+            "match_line": 169,
+            "start_line": 167,
+            "end_line": 171,
+            "score": 12,
+            "text": "        self.data[key] = KeyedRef(value, self._remove, key)\n\n    def copy(self):\n        if self._pending_removals:\n            self._commit_removals()"
+          },
+          {
+            "path": "valid/fractions.py",
+            "match_line": 1032,
+            "start_line": 1030,
+            "end_line": 1034,
+            "score": 12,
+            "text": "        return (self.__class__, (self._numerator, self._denominator))\n\n    def __copy__(self):\n        if type(self) == Fraction:\n            return self     # I'm immutable; therefore I am my own clone"
+          }
+        ]
+      },
+      {
+        "method": "lexical-source-lines",
+        "neural_used": false,
+        "partial": false,
+        "scanned_files": 18,
+        "scanned_bytes": 492696,
+        "skipped_files": 0,
+        "content_bytes_read": 492696,
+        "reused_files": 18,
+        "reindexed_files": 0,
+        "candidate_lines": 3,
+        "total_lines": 13699,
+        "index_entries": 62671,
+        "revision": 1,
+        "hits": [
+          {
+            "path": "train/copy.py",
+            "match_line": 76,
+            "start_line": 74,
+            "end_line": 78,
+            "score": 36,
+            "text": "    if issubclass(cls, type):\n        # treat it as a regular class:\n        return _copy_immutable(x)\n\n    copier = getattr(cls, \"__copy__\", None)"
+          }
+        ]
+      },
+      {
+        "method": "lexical-source-lines",
+        "neural_used": false,
+        "partial": false,
+        "scanned_files": 18,
+        "scanned_bytes": 492696,
+        "skipped_files": 0,
+        "content_bytes_read": 492696,
+        "reused_files": 18,
+        "reindexed_files": 0,
+        "candidate_lines": 4,
+        "total_lines": 13699,
+        "index_entries": 62671,
+        "revision": 1,
+        "hits": [
+          {
+            "path": "train/enum.py",
+            "match_line": 37,
+            "start_line": 35,
+            "end_line": 39,
+            "score": 36,
+            "text": "        self.value = value\n\ndef _is_descriptor(obj):\n    \"\"\"\n    Returns True if obj is a descriptor, False otherwise."
+          }
+        ]
+      },
+      {
+        "method": "lexical-source-lines",
+        "neural_used": false,
+        "partial": false,
+        "scanned_files": 18,
+        "scanned_bytes": 492696,
+        "skipped_files": 0,
+        "content_bytes_read": 492696,
+        "reused_files": 18,
+        "reindexed_files": 0,
+        "candidate_lines": 3,
+        "total_lines": 13699,
+        "index_entries": 62671,
+        "revision": 1,
+        "hits": [
+          {
+            "path": "train/enum.py",
+            "match_line": 47,
+            "start_line": 45,
+            "end_line": 49,
+            "score": 36,
+            "text": "            )\n\ndef _is_dunder(name):\n    \"\"\"\n    Returns True if a __dunder__ name, False otherwise."
+          }
+        ]
+      },
+      {
+        "method": "lexical-source-lines",
+        "neural_used": false,
+        "partial": false,
+        "scanned_files": 18,
+        "scanned_bytes": 492696,
+        "skipped_files": 0,
+        "content_bytes_read": 492696,
+        "reused_files": 18,
+        "reindexed_files": 0,
+        "candidate_lines": 13,
+        "total_lines": 13699,
+        "index_entries": 62671,
+        "revision": 1,
+        "hits": [
+          {
+            "path": "train/functools.py",
+            "match_line": 36,
+            "start_line": 34,
+            "end_line": 38,
+            "score": 36,
+            "text": "                       '__annotations__', '__type_params__')\nWRAPPER_UPDATES = ('__dict__',)\ndef update_wrapper(wrapper,\n                   wrapped,\n                   assigned = WRAPPER_ASSIGNMENTS,"
+          }
+        ]
+      },
+      {
+        "method": "lexical-source-lines",
+        "neural_used": false,
+        "partial": false,
+        "scanned_files": 18,
+        "scanned_bytes": 492696,
+        "skipped_files": 0,
+        "content_bytes_read": 492696,
+        "reused_files": 18,
+        "reindexed_files": 0,
+        "candidate_lines": 12,
+        "total_lines": 13699,
+        "index_entries": 62671,
+        "revision": 1,
+        "hits": [
+          {
+            "path": "train/contextlib.py",
+            "match_line": 82,
+            "start_line": 80,
+            "end_line": 84,
+            "score": 12,
+            "text": "\n    def __call__(self, func):\n        @wraps(func)\n        def inner(*args, **kwds):\n            with self._recreate_cm():"
+          },
+          {
+            "path": "train/functools.py",
+            "match_line": 66,
+            "start_line": 64,
+            "end_line": 68,
+            "score": 12,
+            "text": "    return wrapper\n\ndef wraps(wrapped,\n          assigned = WRAPPER_ASSIGNMENTS,\n          updated = WRAPPER_UPDATES):"
+          }
+        ]
+      },
+      {
+        "method": "lexical-source-lines",
+        "neural_used": false,
+        "partial": false,
+        "scanned_files": 18,
+        "scanned_bytes": 492696,
+        "skipped_files": 0,
+        "content_bytes_read": 492696,
+        "reused_files": 18,
+        "reindexed_files": 0,
+        "candidate_lines": 10,
+        "total_lines": 13699,
+        "index_entries": 62671,
+        "revision": 1,
+        "hits": [
+          {
+            "path": "test/queue.py",
+            "match_line": 294,
+            "start_line": 292,
+            "end_line": 296,
+            "score": 12,
+            "text": "\n    def _put(self, item):\n        heappush(self.queue, item)\n\n    def _get(self):"
+          },
+          {
+            "path": "test/sched.py",
+            "match_line": 75,
+            "start_line": 73,
+            "end_line": 77,
+            "score": 12,
+            "text": "            event = Event(time, priority, next(self._sequence_generator),\n                          action, argument, kwargs)\n            heapq.heappush(self._queue, event)\n        return event # The ID\n"
+          },
+          {
+            "path": "train/heapq.py",
+            "match_line": 11,
+            "start_line": 9,
+            "end_line": 13,
+            "score": 12,
+            "text": "\nheap = []            # creates an empty heap\nheappush(heap, item) # pushes a new item on the heap\nitem = heappop(heap) # pops the smallest item from the heap\nitem = heap[0]       # smallest item on the heap without popping it"
+          }
+        ]
+      },
+      {
+        "method": "lexical-source-lines",
+        "neural_used": false,
+        "partial": false,
+        "scanned_files": 18,
+        "scanned_bytes": 492696,
+        "skipped_files": 0,
+        "content_bytes_read": 492696,
+        "reused_files": 18,
+        "reindexed_files": 0,
+        "candidate_lines": 20,
+        "total_lines": 13699,
+        "index_entries": 62671,
+        "revision": 1,
+        "hits": [
+          {
+            "path": "test/queue.py",
+            "match_line": 297,
+            "start_line": 295,
+            "end_line": 299,
+            "score": 12,
+            "text": "\n    def _get(self):\n        return heappop(self.queue)\n\n"
+          },
+          {
+            "path": "train/heapq.py",
+            "match_line": 12,
+            "start_line": 10,
+            "end_line": 14,
+            "score": 12,
+            "text": "heap = []            # creates an empty heap\nheappush(heap, item) # pushes a new item on the heap\nitem = heappop(heap) # pops the smallest item from the heap\nitem = heap[0]       # smallest item on the heap without popping it\nheapify(x)           # transforms list into a heap, in-place, in linear time"
+          },
+          {
+            "path": "test/sched.py",
+            "match_line": 133,
+            "start_line": 131,
+            "end_line": 135,
+            "score": 10,
+            "text": "        delayfunc = self.delayfunc\n        timefunc = self.timefunc\n        pop = heapq.heappop\n        while True:\n            with lock:"
+          }
+        ]
+      },
+      {
+        "method": "lexical-source-lines",
+        "neural_used": false,
+        "partial": false,
+        "scanned_files": 18,
+        "scanned_bytes": 492696,
+        "skipped_files": 0,
+        "content_bytes_read": 492696,
+        "reused_files": 18,
+        "reindexed_files": 0,
+        "candidate_lines": 45,
+        "total_lines": 13699,
+        "index_entries": 62671,
+        "revision": 1,
+        "hits": [
+          {
+            "path": "train/pprint.py",
+            "match_line": 28,
+            "start_line": 26,
+            "end_line": 30,
+            "score": 12,
+            "text": "    Format a Python object into a pretty-printed representation.\n\npprint()\n    Pretty-print a Python object to a stream [default is sys.stdout].\n"
+          }
+        ]
+      },
+      {
+        "method": "lexical-source-lines",
+        "neural_used": false,
+        "partial": false,
+        "scanned_files": 18,
+        "scanned_bytes": 492696,
+        "skipped_files": 0,
+        "content_bytes_read": 492696,
+        "reused_files": 18,
+        "reindexed_files": 0,
+        "candidate_lines": 5,
+        "total_lines": 13699,
+        "index_entries": 62671,
+        "revision": 1,
+        "hits": [
+          {
+            "path": "train/pprint.py",
+            "match_line": 25,
+            "start_line": 23,
+            "end_line": 27,
+            "score": 12,
+            "text": "---------\n\npformat()\n    Format a Python object into a pretty-printed representation.\n"
+          }
+        ]
+      },
+      {
+        "method": "lexical-source-lines",
+        "neural_used": false,
+        "partial": false,
+        "scanned_files": 18,
+        "scanned_bytes": 492696,
+        "skipped_files": 0,
+        "content_bytes_read": 492696,
+        "reused_files": 18,
+        "reindexed_files": 0,
+        "candidate_lines": 19,
+        "total_lines": 13699,
+        "index_entries": 62671,
+        "revision": 1,
+        "hits": [
+          {
+            "path": "train/random.py",
+            "match_line": 954,
+            "start_line": 952,
+            "end_line": 956,
+            "score": 36,
+            "text": "## ----------------- test program -----------------------\n\ndef _test_generator(n, func, args):\n    from statistics import stdev, fmean as mean\n    from time import perf_counter"
+          }
+        ]
+      },
+      {
+        "method": "lexical-source-lines",
+        "neural_used": false,
+        "partial": false,
+        "scanned_files": 18,
+        "scanned_bytes": 492696,
+        "skipped_files": 0,
+        "content_bytes_read": 492696,
+        "reused_files": 18,
+        "reindexed_files": 0,
+        "candidate_lines": 2,
+        "total_lines": 13699,
+        "index_entries": 62671,
+        "revision": 1,
+        "hits": [
+          {
+            "path": "train/random.py",
+            "match_line": 971,
+            "start_line": 969,
+            "end_line": 973,
+            "score": 24,
+            "text": "\n\ndef _test(N=10_000):\n    _test_generator(N, random, ())\n    _test_generator(N, normalvariate, (0.0, 1.0))"
+          }
+        ]
+      },
+      {
+        "method": "lexical-source-lines",
+        "neural_used": false,
+        "partial": false,
+        "scanned_files": 18,
+        "scanned_bytes": 492696,
+        "skipped_files": 0,
+        "content_bytes_read": 492696,
+        "reused_files": 18,
+        "reindexed_files": 0,
+        "candidate_lines": 3,
+        "total_lines": 13699,
+        "index_entries": 62671,
+        "revision": 1,
+        "hits": [
+          {
+            "path": "train/string.py",
+            "match_line": 37,
+            "start_line": 35,
+            "end_line": 39,
+            "score": 12,
+            "text": "\n# Capitalize the words in a string, e.g. \" aBc  dEf \" -> \"Abc Def\".\ndef capwords(s, sep=None):\n    \"\"\"capwords(s [,sep]) -> string\n"
+          }
+        ]
+      },
+      {
+        "method": "lexical-source-lines",
+        "neural_used": false,
+        "partial": false,
+        "scanned_files": 18,
+        "scanned_bytes": 492696,
+        "skipped_files": 0,
+        "content_bytes_read": 492696,
+        "reused_files": 18,
+        "reindexed_files": 0,
+        "candidate_lines": 23,
+        "total_lines": 13699,
+        "index_entries": 62671,
+        "revision": 1,
+        "hits": [
+          {
+            "path": "train/functools.py",
+            "match_line": 321,
+            "start_line": 319,
+            "end_line": 323,
+            "score": 12,
+            "text": "        import warnings\n        warnings.warn('functools.partial will be a method descriptor in '\n                      'future Python versions; wrap it in staticmethod() '\n                      'if you want to preserve the old behavior',\n                      FutureWarning, 2)"
+          },
+          {
+            "path": "train/pprint.py",
+            "match_line": 338,
+            "start_line": 336,
+            "end_line": 340,
+            "score": 12,
+            "text": "            write('(')\n        delim = ''\n        for rep in _wrap_bytes_repr(object, self._width - indent, allowance):\n            write(delim)\n            write(rep)"
+          },
+          {
+            "path": "train/textwrap.py",
+            "match_line": 20,
+            "start_line": 18,
+            "end_line": 22,
+            "score": 12,
+            "text": "    \"\"\"\n    Object for wrapping/filling text.  The public interface consists of\n    the wrap() and fill() methods; the other methods are just there for\n    subclasses to override in order to tweak the default behaviour.\n    If you want to completely replace the main wrapping algorithm,"
+          },
+          {
+            "path": "train/enum.py",
+            "match_line": 264,
+            "start_line": 262,
+            "end_line": 266,
+            "score": 10,
+            "text": "            args = value\n        if enum_class._member_type_ is tuple:   # special case for tuple enums\n            args = (args, )     # wrap it one more time\n        if not enum_class._use_args_:\n            enum_member = enum_class._new_member_(enum_class)"
+          },
+          {
+            "path": "train/weakref.py",
+            "match_line": 101,
+            "start_line": 99,
+            "end_line": 103,
+            "score": 7,
+            "text": "    # dictionary; since it uses our .update() method, we get the right\n    # checks (if the other dictionary is a WeakValueDictionary,\n    # objects are unwrapped on the way out, and we always wrap on the\n    # way in).\n"
+          }
+        ]
+      },
+      {
+        "method": "lexical-source-lines",
+        "neural_used": false,
+        "partial": false,
+        "scanned_files": 18,
+        "scanned_bytes": 492696,
+        "skipped_files": 0,
+        "content_bytes_read": 492696,
+        "reused_files": 18,
+        "reindexed_files": 0,
+        "candidate_lines": 17,
+        "total_lines": 13699,
+        "index_entries": 62671,
+        "revision": 1,
+        "hits": [
+          {
+            "path": "train/textwrap.py",
+            "match_line": 361,
+            "start_line": 359,
+            "end_line": 363,
+            "score": 12,
+            "text": "        return self._wrap_chunks(chunks)\n\n    def fill(self, text):\n        \"\"\"fill(text : string) -> string\n"
+          },
+          {
+            "path": "valid/fractions.py",
+            "match_line": 457,
+            "start_line": 455,
+            "end_line": 459,
+            "score": 12,
+            "text": "\n        # Pad with fill character if necessary and return.\n        padding = fill * (minimumwidth - len(sign) - len(body))\n        if align == \">\":\n            return padding + sign + body"
+          }
+        ]
+      },
+      {
+        "method": "lexical-source-lines",
+        "neural_used": false,
+        "partial": false,
+        "scanned_files": 18,
+        "scanned_bytes": 492696,
+        "skipped_files": 0,
+        "content_bytes_read": 492696,
+        "reused_files": 18,
+        "reindexed_files": 0,
+        "candidate_lines": 2,
+        "total_lines": 13699,
+        "index_entries": 62671,
+        "revision": 1,
+        "hits": [
+          {
+            "path": "valid/bisect.py",
+            "match_line": 4,
+            "start_line": 2,
+            "end_line": 6,
+            "score": 36,
+            "text": "\n\ndef insort_right(a, x, lo=0, hi=None, *, key=None):\n    \"\"\"Insert item x in list a, and keep it sorted assuming a is sorted.\n"
+          }
+        ]
+      },
+      {
+        "method": "lexical-source-lines",
+        "neural_used": false,
+        "partial": false,
+        "scanned_files": 18,
+        "scanned_bytes": 492696,
+        "skipped_files": 0,
+        "content_bytes_read": 492696,
+        "reused_files": 18,
+        "reindexed_files": 0,
+        "candidate_lines": 8,
+        "total_lines": 13699,
+        "index_entries": 62671,
+        "revision": 1,
+        "hits": [
+          {
+            "path": "valid/bisect.py",
+            "match_line": 15,
+            "start_line": 13,
+            "end_line": 17,
+            "score": 36,
+            "text": "    \"\"\"\n    if key is None:\n        lo = bisect_right(a, x, lo, hi)\n    else:\n        lo = bisect_right(a, key(x), lo, hi, key=key)"
+          },
+          {
+            "path": "valid/statistics.py",
+            "match_line": 741,
+            "start_line": 739,
+            "end_line": 743,
+            "score": 36,
+            "text": "    # All x will lie within data[i:j].\n    i = bisect_left(data, x)\n    j = bisect_right(data, x, lo=i)\n\n    # Coerce to floats, raising a TypeError if not possible"
+          }
+        ]
+      },
+      {
+        "method": "lexical-source-lines",
+        "neural_used": false,
+        "partial": false,
+        "scanned_files": 18,
+        "scanned_bytes": 492696,
+        "skipped_files": 0,
+        "content_bytes_read": 492696,
+        "reused_files": 18,
+        "reindexed_files": 0,
+        "candidate_lines": 2,
+        "total_lines": 13699,
+        "index_entries": 62671,
+        "revision": 1,
+        "hits": [
+          {
+            "path": "valid/fractions.py",
+            "match_line": 25,
+            "start_line": 23,
+            "end_line": 27,
+            "score": 36,
+            "text": "\n@functools.lru_cache(maxsize = 1 << 14)\ndef _hash_algorithm(numerator, denominator):\n\n    # To make sure that the hash of a Fraction agrees with the hash"
+          }
+        ]
+      },
+      {
+        "method": "lexical-source-lines",
+        "neural_used": false,
+        "partial": false,
+        "scanned_files": 18,
+        "scanned_bytes": 492696,
+        "skipped_files": 0,
+        "content_bytes_read": 492696,
+        "reused_files": 18,
+        "reindexed_files": 0,
+        "candidate_lines": 3,
+        "total_lines": 13699,
+        "index_entries": 62671,
+        "revision": 1,
+        "hits": [
+          {
+            "path": "valid/fractions.py",
+            "match_line": 74,
+            "start_line": 72,
+            "end_line": 76,
+            "score": 48,
+            "text": "# Helpers for formatting\n\ndef _round_to_exponent(n, d, exponent, no_neg_zero=False):\n    \"\"\"Round a rational number to the nearest multiple of a given power of 10.\n"
+          }
+        ]
+      },
+      {
+        "method": "lexical-source-lines",
+        "neural_used": false,
+        "partial": false,
+        "scanned_files": 18,
+        "scanned_bytes": 492696,
+        "skipped_files": 0,
+        "content_bytes_read": 492696,
+        "reused_files": 18,
+        "reindexed_files": 0,
+        "candidate_lines": 10,
+        "total_lines": 13699,
+        "index_entries": 62671,
+        "revision": 1,
+        "hits": [
+          {
+            "path": "valid/statistics.py",
+            "match_line": 158,
+            "start_line": 156,
+            "end_line": 160,
+            "score": 24,
+            "text": "# === Private utilities ===\n\ndef _sum(data):\n    \"\"\"_sum(data) -> (type, sum, count)\n"
+          }
+        ]
+      },
+      {
+        "method": "lexical-source-lines",
+        "neural_used": false,
+        "partial": false,
+        "scanned_files": 18,
+        "scanned_bytes": 492696,
+        "skipped_files": 0,
+        "content_bytes_read": 492696,
+        "reused_files": 18,
+        "reindexed_files": 0,
+        "candidate_lines": 6,
+        "total_lines": 13699,
+        "index_entries": 62671,
+        "revision": 1,
+        "hits": [
+          {
+            "path": "valid/statistics.py",
+            "match_line": 212,
+            "start_line": 210,
+            "end_line": 214,
+            "score": 24,
+            "text": "\n\ndef _ss(data, c=None):\n    \"\"\"Return the exact mean and sum of square deviations of sequence data.\n"
+          }
+        ]
+      },
+      {
+        "method": "lexical-source-lines",
+        "neural_used": false,
+        "partial": false,
+        "scanned_files": 18,
+        "scanned_bytes": 492696,
+        "skipped_files": 0,
+        "content_bytes_read": 492696,
+        "reused_files": 18,
+        "reindexed_files": 0,
+        "candidate_lines": 0,
+        "total_lines": 13699,
+        "index_entries": 62671,
+        "revision": 1,
+        "hits": []
+      },
+      {
+        "method": "lexical-source-lines",
+        "neural_used": false,
+        "partial": false,
+        "scanned_files": 18,
+        "scanned_bytes": 492696,
+        "skipped_files": 0,
+        "content_bytes_read": 492696,
+        "reused_files": 18,
+        "reindexed_files": 0,
+        "candidate_lines": 0,
+        "total_lines": 13699,
+        "index_entries": 62671,
+        "revision": 1,
+        "hits": []
+      },
+      {
+        "method": "lexical-source-lines",
+        "neural_used": false,
+        "partial": false,
+        "scanned_files": 18,
+        "scanned_bytes": 492696,
+        "skipped_files": 0,
+        "content_bytes_read": 492696,
+        "reused_files": 18,
+        "reindexed_files": 0,
+        "candidate_lines": 0,
+        "total_lines": 13699,
+        "index_entries": 62671,
+        "revision": 1,
+        "hits": []
+      },
+      {
+        "method": "lexical-source-lines",
+        "neural_used": false,
+        "partial": false,
+        "scanned_files": 18,
+        "scanned_bytes": 492696,
+        "skipped_files": 0,
+        "content_bytes_read": 492696,
+        "reused_files": 18,
+        "reindexed_files": 0,
+        "candidate_lines": 0,
+        "total_lines": 13699,
+        "index_entries": 62671,
+        "revision": 1,
+        "hits": []
+      },
+      {
+        "method": "lexical-source-lines",
+        "neural_used": false,
+        "partial": false,
+        "scanned_files": 18,
+        "scanned_bytes": 492696,
+        "skipped_files": 0,
+        "content_bytes_read": 492696,
+        "reused_files": 18,
+        "reindexed_files": 0,
+        "candidate_lines": 0,
+        "total_lines": 13699,
+        "index_entries": 62671,
+        "revision": 1,
+        "hits": []
+      },
+      {
+        "method": "lexical-source-lines",
+        "neural_used": false,
+        "partial": false,
+        "scanned_files": 18,
+        "scanned_bytes": 492696,
+        "skipped_files": 0,
+        "content_bytes_read": 492696,
+        "reused_files": 18,
+        "reindexed_files": 0,
+        "candidate_lines": 0,
+        "total_lines": 13699,
+        "index_entries": 62671,
+        "revision": 1,
+        "hits": []
+      },
+      {
+        "method": "lexical-source-lines",
+        "neural_used": false,
+        "partial": false,
+        "scanned_files": 18,
+        "scanned_bytes": 492696,
+        "skipped_files": 0,
+        "content_bytes_read": 492696,
+        "reused_files": 18,
+        "reindexed_files": 0,
+        "candidate_lines": 0,
+        "total_lines": 13699,
+        "index_entries": 62671,
+        "revision": 1,
+        "hits": []
+      },
+      {
+        "method": "lexical-source-lines",
+        "neural_used": false,
+        "partial": false,
+        "scanned_files": 18,
+        "scanned_bytes": 492696,
+        "skipped_files": 0,
+        "content_bytes_read": 492696,
+        "reused_files": 18,
+        "reindexed_files": 0,
+        "candidate_lines": 0,
+        "total_lines": 13699,
+        "index_entries": 62671,
+        "revision": 1,
+        "hits": []
+      }
+    ]
+  },
+  "runs": [
+    {
+      "variant": "v09",
+      "repeat": 0,
+      "milliseconds": 348.96469499994964
+    },
+    {
+      "variant": "v010",
+      "repeat": 0,
+      "milliseconds": 24.908690000074785
+    },
+    {
+      "variant": "v010",
+      "repeat": 1,
+      "milliseconds": 24.605928000028143
+    },
+    {
+      "variant": "v09",
+      "repeat": 1,
+      "milliseconds": 348.9847700000155
+    },
+    {
+      "variant": "v010",
+      "repeat": 2,
+      "milliseconds": 25.966095000057976
+    },
+    {
+      "variant": "v09",
+      "repeat": 2,
+      "milliseconds": 376.83007700002236
+    },
+    {
+      "variant": "v09",
+      "repeat": 3,
+      "milliseconds": 356.70088799997757
+    },
+    {
+      "variant": "v010",
+      "repeat": 3,
+      "milliseconds": 25.034750999907374
+    },
+    {
+      "variant": "v09",
+      "repeat": 4,
+      "milliseconds": 339.55856600005063
+    },
+    {
+      "variant": "v010",
+      "repeat": 4,
+      "milliseconds": 27.9754129999219
+    }
+  ],
+  "cold_runs": [
+    {
+      "variant": "v010",
+      "repeat": 0,
+      "milliseconds": 17.277229999990595
+    },
+    {
+      "variant": "v09",
+      "repeat": 0,
+      "milliseconds": 12.190944999929343
+    },
+    {
+      "variant": "v010",
+      "repeat": 1,
+      "milliseconds": 17.96456700003546
+    },
+    {
+      "variant": "v09",
+      "repeat": 1,
+      "milliseconds": 12.020247999998901
+    },
+    {
+      "variant": "v010",
+      "repeat": 2,
+      "milliseconds": 18.454296000072645
+    },
+    {
+      "variant": "v09",
+      "repeat": 2,
+      "milliseconds": 11.783205000028829
+    },
+    {
+      "variant": "v010",
+      "repeat": 3,
+      "milliseconds": 17.554498999970747
+    },
+    {
+      "variant": "v09",
+      "repeat": 3,
+      "milliseconds": 12.511920000065402
+    },
+    {
+      "variant": "v010",
+      "repeat": 4,
+      "milliseconds": 18.695510000043214
+    },
+    {
+      "variant": "v09",
+      "repeat": 4,
+      "milliseconds": 13.253998999971373
+    }
+  ],
+  "source_files": 18,
+  "positive_cases": 27,
+  "negative_cases": 8,
+  "top1": 16,
+  "top5": 18,
+  "correct_empty": 8,
+  "differential_cases": 35,
+  "median_session_ms": {
+    "v09": 348.9847700000155,
+    "v010": 25.034750999907374
+  },
+  "median_cold_ms": {
+    "v09": 12.190944999929343,
+    "v010": 17.96456700003546
+  },
+  "session_speed_ratio": 13.940013623515037,
+  "binaries": {
+    "v09": {
+      "file": "edgeai_code_search_v09_baseline",
+      "sha256": "49829606fcc656754e3aed50153512980f924a1b40b1b17e7f028ffcca92a83d"
+    },
+    "v010": {
+      "file": "edgeai_code_search",
+      "sha256": "9cf7d35c784ef1028ef6e4f0ef2736e7c2e9de52cdc9ee894342952626919fab"
+    }
+  },
+  "host": {
+    "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+    "python": "3.13.5",
+    "cpu_count": 5
+  },
+  "caveats": [
+    "OS filesystem caches not flushed",
+    "one process per session, one thread",
+    "source contents still read on every query",
+    "no neural training or generation",
+    "no comparison with ripgrep or energy measurement",
+    "not a weak-PC measurement"
+  ]
+}

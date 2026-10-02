@@ -1,0 +1,49 @@
+{
+  "runs": [
+    {
+      "variant": "v09",
+      "repeat": 0,
+      "peak_rss_kib": 3348
+    },
+    {
+      "variant": "v09",
+      "repeat": 1,
+      "peak_rss_kib": 3352
+    },
+    {
+      "variant": "v09",
+      "repeat": 2,
+      "peak_rss_kib": 3348
+    },
+    {
+      "variant": "v010",
+      "repeat": 0,
+      "peak_rss_kib": 5648
+    },
+    {
+      "variant": "v010",
+      "repeat": 1,
+      "peak_rss_kib": 5656
+    },
+    {
+      "variant": "v010",
+      "repeat": 2,
+      "peak_rss_kib": 5656
+    }
+  ],
+  "median_peak_rss_kib": {
+    "v09": 3348,
+    "v010": 5656
+  },
+  "note": "Separate GNU time runs of the same 35-query workload. Whole-process RSS, no model loaded.",
+  "binaries": {
+    "v09": {
+      "file": "edgeai_code_search_v09_baseline",
+      "sha256": "49829606fcc656754e3aed50153512980f924a1b40b1b17e7f028ffcca92a83d"
+    },
+    "v010": {
+      "file": "edgeai_code_search",
+      "sha256": "9cf7d35c784ef1028ef6e4f0ef2736e7c2e9de52cdc9ee894342952626919fab"
+    }
+  }
+}

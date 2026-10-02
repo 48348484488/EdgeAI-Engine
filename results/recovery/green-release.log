@@ -1,0 +1,19 @@
+test_archive_cannot_be_inside_source (test_release_bundle.ReleaseBundleTests.test_archive_cannot_be_inside_source) ... ok
+test_executable_bit_preserved (test_release_bundle.ReleaseBundleTests.test_executable_bit_preserved) ... ok
+test_existing_archive_not_overwritten_by_default (test_release_bundle.ReleaseBundleTests.test_existing_archive_not_overwritten_by_default) ... ok
+test_existing_unpack_directory_not_touched (test_release_bundle.ReleaseBundleTests.test_existing_unpack_directory_not_touched) ... ok
+test_failed_verification_preserves_previous_release (test_release_bundle.ReleaseBundleTests.test_failed_verification_preserves_previous_release) ... ok
+test_modification_detected_even_with_valid_zip_crc (test_release_bundle.ReleaseBundleTests.test_modification_detected_even_with_valid_zip_crc) ... ok
+test_real_roundtrip_and_hashes (test_release_bundle.ReleaseBundleTests.test_real_roundtrip_and_hashes) ... ok
+test_repeated_snapshot_is_deterministic (test_release_bundle.ReleaseBundleTests.test_repeated_snapshot_is_deterministic) ... ok
+test_size_limit_enforced (test_release_bundle.ReleaseBundleTests.test_size_limit_enforced) ... ok
+test_successful_replace_and_exclusions (test_release_bundle.ReleaseBundleTests.test_successful_replace_and_exclusions) ... ok
+test_symlinks_are_not_followed (test_release_bundle.ReleaseBundleTests.test_symlinks_are_not_followed) ... ok
+test_truncated_archive_rejected (test_release_bundle.ReleaseBundleTests.test_truncated_archive_rejected) ... ok
+test_unlisted_extra_file_rejected (test_release_bundle.ReleaseBundleTests.test_unlisted_extra_file_rejected) ... ok
+test_zip_traversal_rejected (test_release_bundle.ReleaseBundleTests.test_zip_traversal_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 14 tests in 0.025s
+
+OK

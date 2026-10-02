@@ -1,0 +1,62 @@
+[
+  {
+    "id": "copy1",
+    "prompt": "Copie exatamente: aaeb",
+    "expected": "aaeb"
+  },
+  {
+    "id": "copy2",
+    "prompt": "Copie exatamente: xyz9",
+    "expected": "xyz9"
+  },
+  {
+    "id": "upper1",
+    "prompt": "Maiusculas: edd",
+    "expected": "EDD"
+  },
+  {
+    "id": "upper2",
+    "prompt": "Maiusculas: player",
+    "expected": "PLAYER"
+  },
+  {
+    "id": "add1",
+    "prompt": "Quanto é 2 + 3? Responda apenas o número.",
+    "expected": "5"
+  },
+  {
+    "id": "add2",
+    "prompt": "Quanto é 17 + 8? Responda apenas o número.",
+    "expected": "25"
+  },
+  {
+    "id": "multiply",
+    "prompt": "Quanto é 7 * 6? Responda apenas o número.",
+    "expected": "42"
+  },
+  {
+    "id": "reverse",
+    "prompt": "Inverta: abc",
+    "expected": "cba"
+  },
+  {
+    "id": "code_add",
+    "prompt": "Escreva apenas a expressão Python que soma 3 a x.",
+    "expected": "x+3"
+  },
+  {
+    "id": "copylong",
+    "prompt": "Copie exatamente: abcdefghijk",
+    "expected": "abcdefghijk"
+  },
+  {
+    "id": "unicode",
+    "prompt": "Copie exatamente: ação",
+    "expected": "ação"
+  },
+  {
+    "id": "newinstruction",
+    "prompt": "Retorne somente o texto entre colchetes: [blue]",
+    "expected": "blue"
+  }
+]

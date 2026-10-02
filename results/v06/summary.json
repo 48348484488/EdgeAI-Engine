@@ -1,0 +1,33 @@
+{
+  "quality_relative_reduction_percent": 11.354697366798005,
+  "byte_bpb": 2.739399175816209,
+  "bpe_bpb": 2.4283486897337196,
+  "file_growth_percent": 21.88291941206284,
+  "native_same_text_total_speed_ratio": 1.9298784013040315,
+  "medians": {
+    "byte257": {
+      "total_seconds": 0.299476695,
+      "tokenization_seconds": 4.0902e-05,
+      "forward_and_scoring_seconds": 0.298934119,
+      "load_seconds": 0.000214894,
+      "rss_peak_kib": 2052,
+      "weights_bytes": 126088,
+      "state_bytes": 32768,
+      "working_bytes": 37156
+    },
+    "bpe513": {
+      "total_seconds": 0.155179049,
+      "tokenization_seconds": 0.001143894,
+      "forward_and_scoring_seconds": 0.153529648,
+      "load_seconds": 0.000290658,
+      "rss_peak_kib": 2180,
+      "weights_bytes": 151672,
+      "state_bytes": 24576,
+      "working_bytes": 29220
+    }
+  },
+  "neural_total_passed": 0,
+  "neural_total_cases": 168,
+  "calculator_passed": 12,
+  "max_trained_logit_error": 1.2159347534179688e-05
+}

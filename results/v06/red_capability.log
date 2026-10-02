@@ -1,0 +1,14 @@
+F
+======================================================================
+FAIL: test_safe_task_evaluation_present (test_capability_v06.CapabilityGate.test_safe_task_evaluation_present)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/EdgeAI-Engine-v0.6/tests/test_capability_v06.py", line 6, in test_safe_task_evaluation_present
+    self.assertIsNotNone(importlib.util.find_spec('capability_v06'))
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unexpectedly None
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)

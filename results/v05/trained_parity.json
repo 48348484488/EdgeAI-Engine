@@ -1,0 +1,460 @@
+{
+  "cases": [
+    {
+      "kind": "transformer_int8",
+      "seed": 11,
+      "trace_bytes": 289,
+      "max_abs_error": 3.337860107421875e-06,
+      "logits_allclose": true,
+      "predictions_agree": true,
+      "native_metrics": {
+        "code": {
+          "blocks": 242,
+          "targets": 15356,
+          "correct": 5208,
+          "nll_sum": 39132.114850909,
+          "bits_per_byte": 3.6764592364485,
+          "accuracy": 0.33915082052618,
+          "seconds": 0.12971775,
+          "reset_between_blocks": true
+        },
+        "text": {
+          "blocks": 20,
+          "targets": 1228,
+          "correct": 261,
+          "nll_sum": 3702.7638509358,
+          "bits_per_byte": 4.3501295157394,
+          "accuracy": 0.21254071661238,
+          "seconds": 0.010124024,
+          "reset_between_blocks": true
+        }
+      }
+    },
+    {
+      "kind": "hybrid_mixed",
+      "seed": 11,
+      "trace_bytes": 289,
+      "max_abs_error": 3.814697265625e-06,
+      "logits_allclose": true,
+      "predictions_agree": true,
+      "native_metrics": {
+        "code": {
+          "blocks": 242,
+          "targets": 15356,
+          "correct": 5699,
+          "nll_sum": 37531.617383078,
+          "bits_per_byte": 3.5260926201556,
+          "accuracy": 0.37112529304506,
+          "seconds": 0.158025328,
+          "reset_between_blocks": true
+        },
+        "text": {
+          "blocks": 20,
+          "targets": 1228,
+          "correct": 277,
+          "nll_sum": 3620.6641310431,
+          "bits_per_byte": 4.2536760477039,
+          "accuracy": 0.22557003257329,
+          "seconds": 0.012108549,
+          "reset_between_blocks": true
+        }
+      }
+    },
+    {
+      "kind": "hybrid_fp32",
+      "seed": 11,
+      "trace_bytes": 289,
+      "max_abs_error": 3.337860107421875e-06,
+      "logits_allclose": true,
+      "predictions_agree": true,
+      "native_metrics": {
+        "code": {
+          "blocks": 242,
+          "targets": 15356,
+          "correct": 6058,
+          "nll_sum": 36590.434819919,
+          "bits_per_byte": 3.4376685893896,
+          "accuracy": 0.39450377702527,
+          "seconds": 0.117596571,
+          "reset_between_blocks": true
+        },
+        "text": {
+          "blocks": 20,
+          "targets": 1228,
+          "correct": 317,
+          "nll_sum": 3576.7995996386,
+          "bits_per_byte": 4.202142544505,
+          "accuracy": 0.25814332247557,
+          "seconds": 0.009805634,
+          "reset_between_blocks": true
+        }
+      }
+    },
+    {
+      "kind": "hybrid_int8",
+      "seed": 11,
+      "trace_bytes": 289,
+      "max_abs_error": 4.291534423828125e-06,
+      "logits_allclose": true,
+      "predictions_agree": true,
+      "native_metrics": {
+        "code": {
+          "blocks": 242,
+          "targets": 15356,
+          "correct": 6068,
+          "nll_sum": 36584.304522248,
+          "bits_per_byte": 3.4370926483862,
+          "accuracy": 0.3951549882782,
+          "seconds": 0.124926637,
+          "reset_between_blocks": true
+        },
+        "text": {
+          "blocks": 20,
+          "targets": 1228,
+          "correct": 315,
+          "nll_sum": 3577.8000807827,
+          "bits_per_byte": 4.2033179428642,
+          "accuracy": 0.25651465798046,
+          "seconds": 0.015185806,
+          "reset_between_blocks": true
+        }
+      }
+    },
+    {
+      "kind": "transformer_fp32",
+      "seed": 11,
+      "trace_bytes": 289,
+      "max_abs_error": 3.337860107421875e-06,
+      "logits_allclose": true,
+      "predictions_agree": true,
+      "native_metrics": {
+        "code": {
+          "blocks": 242,
+          "targets": 15356,
+          "correct": 5205,
+          "nll_sum": 39133.492938835,
+          "bits_per_byte": 3.6765887077052,
+          "accuracy": 0.3389554571503,
+          "seconds": 0.121567149,
+          "reset_between_blocks": true
+        },
+        "text": {
+          "blocks": 20,
+          "targets": 1228,
+          "correct": 257,
+          "nll_sum": 3702.7668060314,
+          "bits_per_byte": 4.3501329874835,
+          "accuracy": 0.20928338762215,
+          "seconds": 0.009055999,
+          "reset_between_blocks": true
+        }
+      }
+    },
+    {
+      "kind": "hybrid_int8",
+      "seed": 22,
+      "trace_bytes": 289,
+      "max_abs_error": 3.337860107421875e-06,
+      "logits_allclose": true,
+      "predictions_agree": true,
+      "native_metrics": {
+        "code": {
+          "blocks": 242,
+          "targets": 15356,
+          "correct": 5979,
+          "nll_sum": 37019.086594753,
+          "bits_per_byte": 3.4779403912796,
+          "accuracy": 0.38935920812712,
+          "seconds": 0.125631738,
+          "reset_between_blocks": true
+        },
+        "text": {
+          "blocks": 20,
+          "targets": 1228,
+          "correct": 248,
+          "nll_sum": 3686.3549041733,
+          "bits_per_byte": 4.3308517420257,
+          "accuracy": 0.20195439739414,
+          "seconds": 0.010934379,
+          "reset_between_blocks": true
+        }
+      }
+    },
+    {
+      "kind": "hybrid_fp32",
+      "seed": 22,
+      "trace_bytes": 289,
+      "max_abs_error": 3.337860107421875e-06,
+      "logits_allclose": true,
+      "predictions_agree": true,
+      "native_metrics": {
+        "code": {
+          "blocks": 242,
+          "targets": 15356,
+          "correct": 5978,
+          "nll_sum": 37020.682933443,
+          "bits_per_byte": 3.478090367179,
+          "accuracy": 0.38929408700182,
+          "seconds": 0.117551131,
+          "reset_between_blocks": true
+        },
+        "text": {
+          "blocks": 20,
+          "targets": 1228,
+          "correct": 246,
+          "nll_sum": 3683.587118714,
+          "bits_per_byte": 4.3276000560677,
+          "accuracy": 0.20032573289902,
+          "seconds": 0.009990287,
+          "reset_between_blocks": true
+        }
+      }
+    },
+    {
+      "kind": "transformer_int8",
+      "seed": 22,
+      "trace_bytes": 289,
+      "max_abs_error": 3.814697265625e-06,
+      "logits_allclose": true,
+      "predictions_agree": true,
+      "native_metrics": {
+        "code": {
+          "blocks": 242,
+          "targets": 15356,
+          "correct": 5674,
+          "nll_sum": 37740.226702314,
+          "bits_per_byte": 3.5456914499514,
+          "accuracy": 0.36949726491274,
+          "seconds": 0.126993014,
+          "reset_between_blocks": true
+        },
+        "text": {
+          "blocks": 20,
+          "targets": 1228,
+          "correct": 241,
+          "nll_sum": 3627.2808377893,
+          "bits_per_byte": 4.2614495737706,
+          "accuracy": 0.19625407166124,
+          "seconds": 0.010185795,
+          "reset_between_blocks": true
+        }
+      }
+    },
+    {
+      "kind": "hybrid_mixed",
+      "seed": 22,
+      "trace_bytes": 289,
+      "max_abs_error": 3.337860107421875e-06,
+      "logits_allclose": true,
+      "predictions_agree": true,
+      "native_metrics": {
+        "code": {
+          "blocks": 242,
+          "targets": 15356,
+          "correct": 5743,
+          "nll_sum": 37863.597823734,
+          "bits_per_byte": 3.5572821574964,
+          "accuracy": 0.37399062255796,
+          "seconds": 0.146525404,
+          "reset_between_blocks": true
+        },
+        "text": {
+          "blocks": 20,
+          "targets": 1228,
+          "correct": 244,
+          "nll_sum": 3695.7186659875,
+          "bits_per_byte": 4.3418525993005,
+          "accuracy": 0.19869706840391,
+          "seconds": 0.011634311,
+          "reset_between_blocks": true
+        }
+      }
+    },
+    {
+      "kind": "transformer_fp32",
+      "seed": 22,
+      "trace_bytes": 289,
+      "max_abs_error": 3.814697265625e-06,
+      "logits_allclose": true,
+      "predictions_agree": true,
+      "native_metrics": {
+        "code": {
+          "blocks": 242,
+          "targets": 15356,
+          "correct": 5688,
+          "nll_sum": 37738.472930183,
+          "bits_per_byte": 3.545526683192,
+          "accuracy": 0.37040896066684,
+          "seconds": 0.123164295,
+          "reset_between_blocks": true
+        },
+        "text": {
+          "blocks": 20,
+          "targets": 1228,
+          "correct": 241,
+          "nll_sum": 3628.0667679944,
+          "bits_per_byte": 4.262372910586,
+          "accuracy": 0.19625407166124,
+          "seconds": 0.009357175,
+          "reset_between_blocks": true
+        }
+      }
+    },
+    {
+      "kind": "hybrid_fp32",
+      "seed": 33,
+      "trace_bytes": 289,
+      "max_abs_error": 3.814697265625e-06,
+      "logits_allclose": true,
+      "predictions_agree": true,
+      "native_metrics": {
+        "code": {
+          "blocks": 242,
+          "targets": 15356,
+          "correct": 6252,
+          "nll_sum": 36035.349656256,
+          "bits_per_byte": 3.3855183801628,
+          "accuracy": 0.40713727533212,
+          "seconds": 0.119250326,
+          "reset_between_blocks": true
+        },
+        "text": {
+          "blocks": 20,
+          "targets": 1228,
+          "correct": 296,
+          "nll_sum": 3504.4834898272,
+          "bits_per_byte": 4.1171831853835,
+          "accuracy": 0.24104234527687,
+          "seconds": 0.009996837,
+          "reset_between_blocks": true
+        }
+      }
+    },
+    {
+      "kind": "hybrid_mixed",
+      "seed": 33,
+      "trace_bytes": 289,
+      "max_abs_error": 3.337860107421875e-06,
+      "logits_allclose": true,
+      "predictions_agree": true,
+      "native_metrics": {
+        "code": {
+          "blocks": 242,
+          "targets": 15356,
+          "correct": 5763,
+          "nll_sum": 37387.901066127,
+          "bits_per_byte": 3.512590483026,
+          "accuracy": 0.37529304506382,
+          "seconds": 0.155742061,
+          "reset_between_blocks": true
+        },
+        "text": {
+          "blocks": 20,
+          "targets": 1228,
+          "correct": 263,
+          "nll_sum": 3542.9024271542,
+          "bits_per_byte": 4.1623190244372,
+          "accuracy": 0.21416938110749,
+          "seconds": 0.012204051,
+          "reset_between_blocks": true
+        }
+      }
+    },
+    {
+      "kind": "transformer_int8",
+      "seed": 33,
+      "trace_bytes": 289,
+      "max_abs_error": 3.814697265625e-06,
+      "logits_allclose": true,
+      "predictions_agree": true,
+      "native_metrics": {
+        "code": {
+          "blocks": 242,
+          "targets": 15356,
+          "correct": 5353,
+          "nll_sum": 38144.264299722,
+          "bits_per_byte": 3.5836507517301,
+          "accuracy": 0.34859338369367,
+          "seconds": 0.142548751,
+          "reset_between_blocks": true
+        },
+        "text": {
+          "blocks": 20,
+          "targets": 1228,
+          "correct": 259,
+          "nll_sum": 3608.2497872134,
+          "bits_per_byte": 4.2390912657178,
+          "accuracy": 0.21091205211726,
+          "seconds": 0.010714064,
+          "reset_between_blocks": true
+        }
+      }
+    },
+    {
+      "kind": "hybrid_int8",
+      "seed": 33,
+      "trace_bytes": 289,
+      "max_abs_error": 3.337860107421875e-06,
+      "logits_allclose": true,
+      "predictions_agree": true,
+      "native_metrics": {
+        "code": {
+          "blocks": 242,
+          "targets": 15356,
+          "correct": 6250,
+          "nll_sum": 36040.214417476,
+          "bits_per_byte": 3.3859754241122,
+          "accuracy": 0.40700703308153,
+          "seconds": 0.13813808,
+          "reset_between_blocks": true
+        },
+        "text": {
+          "blocks": 20,
+          "targets": 1228,
+          "correct": 294,
+          "nll_sum": 3504.3796385249,
+          "bits_per_byte": 4.1170611774366,
+          "accuracy": 0.23941368078176,
+          "seconds": 0.01111756,
+          "reset_between_blocks": true
+        }
+      }
+    },
+    {
+      "kind": "transformer_fp32",
+      "seed": 33,
+      "trace_bytes": 289,
+      "max_abs_error": 3.814697265625e-06,
+      "logits_allclose": true,
+      "predictions_agree": true,
+      "native_metrics": {
+        "code": {
+          "blocks": 242,
+          "targets": 15356,
+          "correct": 5356,
+          "nll_sum": 38167.41059983,
+          "bits_per_byte": 3.5858253448781,
+          "accuracy": 0.34878874706955,
+          "seconds": 0.118778269,
+          "reset_between_blocks": true
+        },
+        "text": {
+          "blocks": 20,
+          "targets": 1228,
+          "correct": 256,
+          "nll_sum": 3607.9517586883,
+          "bits_per_byte": 4.2387411319432,
+          "accuracy": 0.20846905537459,
+          "seconds": 0.010305072,
+          "reset_between_blocks": true
+        }
+      }
+    }
+  ],
+  "max_abs_error": 4.291534423828125e-06,
+  "trace_sha256": "b3edf80cd05b4467d2b91cbdc5d8bdb69cd49a1b627af70fc89cce580fe6bf43",
+  "atol": 6e-05,
+  "rtol": 6e-05,
+  "final_logits_binary_sha256": "acbdedd704d5c0fd9542d1db640d5ac324c1fdbb6a10d89bc530231f2d1a4209",
+  "final_evaluate_binary_sha256": "f1bce91d8858f5b8ee5b1889d70dfffb3b71371f1a2034319f5cdc185a656f48"
+}

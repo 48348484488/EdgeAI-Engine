@@ -1,0 +1,5 @@
+{"seed": 11, "step": 41, "train_cpu_seconds": 0.5083245190000003, "validation_nll": 2.7484934912787544}
+{"seed": 11, "step": 80, "train_cpu_seconds": 1.0049479989999988, "validation_nll": 1.849745997676143}
+{"seed": 11, "step": 118, "train_cpu_seconds": 1.5058429669999986, "validation_nll": 1.6834351857503256}
+{"seed": 11, "step": 159, "train_cpu_seconds": 2.006949648000001, "validation_nll": 1.5721935484144423}
+{"completed": 1, "out": "/mnt/data/EdgeAI-Engine-v0.7/results/v07/quick/training.json"}

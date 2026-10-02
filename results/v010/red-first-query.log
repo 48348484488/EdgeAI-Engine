@@ -1,0 +1,14 @@
+..F...
+======================================================================
+FAIL: test_file_edited_while_waiting_for_first_query (test_v010_session.SearchSessionTests.test_file_edited_while_waiting_for_first_query)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/EdgeAI-Engine-v0.10/tests/test_v010_session.py", line 65, in test_file_edited_while_waiting_for_first_query
+    self.assertTrue(json.loads(p.stdout.readline())['hits'])
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: [] is not true
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.168s
+
+FAILED (failures=1)

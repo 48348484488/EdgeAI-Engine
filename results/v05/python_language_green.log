@@ -1,0 +1,13 @@
+test_blocks_dont_cross_documents_and_metric_counts (test_language.LanguageTests.test_blocks_dont_cross_documents_and_metric_counts) ... ok
+test_causal_prefix_no_future_leakage (test_language.LanguageTests.test_causal_prefix_no_future_leakage) ... ok
+test_export_rejects_nonfinite_and_preserves_file (test_language.LanguageTests.test_export_rejects_nonfinite_and_preserves_file) ... ok
+test_gradients_reach_all_parameters (test_language.LanguageTests.test_gradients_reach_all_parameters) ... ok
+test_invalid_config (test_language.LanguageTests.test_invalid_config) ... ok
+test_overlap_filter (test_language.LanguageTests.test_overlap_filter) ... ok
+test_same_master_initialization (test_language.LanguageTests.test_same_master_initialization) ... ok
+test_sampling_reproducible (test_language.LanguageTests.test_sampling_reproducible) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.021s
+
+OK

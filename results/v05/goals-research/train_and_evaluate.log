@@ -1,0 +1,162 @@
+transformer_int8 seed=11 step=100/400 validation_bpb=4.4482
+transformer_int8 seed=11 step=200/400 validation_bpb=4.1072
+transformer_int8 seed=11 step=300/400 validation_bpb=3.9454
+transformer_int8 seed=11 step=400/400 validation_bpb=3.8589
+hybrid_mixed seed=11 step=100/400 validation_bpb=4.4063
+hybrid_mixed seed=11 step=200/400 validation_bpb=4.0409
+hybrid_mixed seed=11 step=300/400 validation_bpb=3.8122
+hybrid_mixed seed=11 step=400/400 validation_bpb=3.7159
+hybrid_fp32 seed=11 step=100/400 validation_bpb=4.3562
+hybrid_fp32 seed=11 step=200/400 validation_bpb=3.9840
+hybrid_fp32 seed=11 step=300/400 validation_bpb=3.7495
+hybrid_fp32 seed=11 step=400/400 validation_bpb=3.6362
+hybrid_int8 seed=11 step=100/400 validation_bpb=4.3565
+hybrid_int8 seed=11 step=200/400 validation_bpb=3.9835
+hybrid_int8 seed=11 step=300/400 validation_bpb=3.7502
+hybrid_int8 seed=11 step=400/400 validation_bpb=3.6357
+transformer_fp32 seed=11 step=100/400 validation_bpb=4.4483
+transformer_fp32 seed=11 step=200/400 validation_bpb=4.1073
+transformer_fp32 seed=11 step=300/400 validation_bpb=3.9456
+transformer_fp32 seed=11 step=400/400 validation_bpb=3.8595
+hybrid_int8 seed=22 step=100/400 validation_bpb=4.3409
+hybrid_int8 seed=22 step=200/400 validation_bpb=3.9766
+hybrid_int8 seed=22 step=300/400 validation_bpb=3.8026
+hybrid_int8 seed=22 step=400/400 validation_bpb=3.6275
+hybrid_fp32 seed=22 step=100/400 validation_bpb=4.3403
+hybrid_fp32 seed=22 step=200/400 validation_bpb=3.9767
+hybrid_fp32 seed=22 step=300/400 validation_bpb=3.8022
+hybrid_fp32 seed=22 step=400/400 validation_bpb=3.6264
+transformer_int8 seed=22 step=100/400 validation_bpb=4.3901
+transformer_int8 seed=22 step=200/400 validation_bpb=4.0277
+transformer_int8 seed=22 step=300/400 validation_bpb=3.8781
+transformer_int8 seed=22 step=400/400 validation_bpb=3.7061
+hybrid_mixed seed=22 step=100/400 validation_bpb=4.4073
+hybrid_mixed seed=22 step=200/400 validation_bpb=4.0571
+hybrid_mixed seed=22 step=300/400 validation_bpb=3.8824
+hybrid_mixed seed=22 step=400/400 validation_bpb=3.7171
+transformer_fp32 seed=22 step=100/400 validation_bpb=4.3900
+transformer_fp32 seed=22 step=200/400 validation_bpb=4.0274
+transformer_fp32 seed=22 step=300/400 validation_bpb=3.8775
+transformer_fp32 seed=22 step=400/400 validation_bpb=3.7067
+hybrid_fp32 seed=33 step=100/400 validation_bpb=4.3290
+hybrid_fp32 seed=33 step=200/400 validation_bpb=3.9564
+hybrid_fp32 seed=33 step=300/400 validation_bpb=3.7227
+hybrid_fp32 seed=33 step=400/400 validation_bpb=3.5666
+hybrid_mixed seed=33 step=100/400 validation_bpb=4.4093
+hybrid_mixed seed=33 step=200/400 validation_bpb=4.0394
+hybrid_mixed seed=33 step=300/400 validation_bpb=3.8295
+hybrid_mixed seed=33 step=400/400 validation_bpb=3.6959
+transformer_int8 seed=33 step=100/400 validation_bpb=4.4714
+transformer_int8 seed=33 step=200/400 validation_bpb=4.1038
+transformer_int8 seed=33 step=300/400 validation_bpb=3.9033
+transformer_int8 seed=33 step=400/400 validation_bpb=3.7739
+hybrid_int8 seed=33 step=100/400 validation_bpb=4.3288
+hybrid_int8 seed=33 step=200/400 validation_bpb=3.9562
+hybrid_int8 seed=33 step=300/400 validation_bpb=3.7230
+hybrid_int8 seed=33 step=400/400 validation_bpb=3.5673
+transformer_fp32 seed=33 step=100/400 validation_bpb=4.4712
+transformer_fp32 seed=33 step=200/400 validation_bpb=4.1037
+transformer_fp32 seed=33 step=300/400 validation_bpb=3.9037
+transformer_fp32 seed=33 step=400/400 validation_bpb=3.7740
+{
+  "hybrid_fp32": {
+    "parameters": 62278,
+    "edge_file_bytes": 249248,
+    "numeric_weight_bytes": 249112,
+    "mean_training_seconds": 11.905794879667875,
+    "mean_bpb": 3.491655406707475,
+    "min_bpb": 3.4396961720395156,
+    "max_bpb": 3.540994250364249,
+    "mean_accuracy": 0.38484885029747545,
+    "by_domain": {
+      "code": {
+        "mean_bpb": 3.4337591154872533,
+        "mean_accuracy": 0.3969783797864027
+      },
+      "text": {
+        "mean_bpb": 4.215641927861977,
+        "mean_accuracy": 0.23317046688382193
+      }
+    }
+  },
+  "hybrid_int8": {
+    "parameters": 62278,
+    "edge_file_bytes": 116696,
+    "numeric_weight_bytes": 116504,
+    "mean_training_seconds": 12.15116911733397,
+    "mean_bpb": 3.4916786823075,
+    "min_bpb": 3.4401103433916935,
+    "max_bpb": 3.5410961651634443,
+    "mean_accuracy": 0.384989548158868,
+    "by_domain": {
+      "code": {
+        "mean_bpb": 3.4336694951955358,
+        "mean_accuracy": 0.3971737431622818
+      },
+      "text": {
+        "mean_bpb": 4.21707695371737,
+        "mean_accuracy": 0.23262757871878392
+      }
+    }
+  },
+  "hybrid_mixed": {
+    "parameters": 62278,
+    "edge_file_bytes": 104408,
+    "numeric_weight_bytes": 104216,
+    "mean_training_seconds": 12.02423930100042,
+    "mean_bpb": 3.5853489281603745,
+    "min_bpb": 3.560701111656418,
+    "max_bpb": 3.615377475980811,
+    "mean_accuracy": 0.3615734040842579,
+    "by_domain": {
+      "code": {
+        "mean_bpb": 3.531988430304761,
+        "mean_accuracy": 0.37346965355561346
+      },
+      "text": {
+        "mean_bpb": 4.252615870400444,
+        "mean_accuracy": 0.21281216069489686
+      }
+    }
+  },
+  "transformer_fp32": {
+    "parameters": 62112,
+    "edge_file_bytes": 248572,
+    "numeric_weight_bytes": 248448,
+    "mean_training_seconds": 1.959222955667239,
+    "mean_bpb": 3.653080669551351,
+    "min_bpb": 3.598607209078924,
+    "max_bpb": 3.726462820281231,
+    "mean_accuracy": 0.3417551053223991,
+    "by_domain": {
+      "code": {
+        "mean_bpb": 3.6026469159752614,
+        "mean_accuracy": 0.3527177216288964
+      },
+      "text": {
+        "mean_bpb": 4.283749008243885,
+        "mean_accuracy": 0.20466883821932683
+      }
+    }
+  },
+  "transformer_int8": {
+    "parameters": 62112,
+    "edge_file_bytes": 116148,
+    "numeric_weight_bytes": 115968,
+    "mean_training_seconds": 2.270952242999556,
+    "mean_bpb": 3.652406141767752,
+    "min_bpb": 3.5986913942439673,
+    "max_bpb": 3.7263426785949143,
+    "mean_accuracy": 0.3416144074610066,
+    "by_domain": {
+      "code": {
+        "mean_bpb": 3.601933817468857,
+        "mean_accuracy": 0.35241382304419555
+      },
+      "text": {
+        "mean_bpb": 4.283556802951659,
+        "mean_accuracy": 0.20656894679695983
+      }
+    }
+  }
+}

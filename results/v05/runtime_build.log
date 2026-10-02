@@ -1,0 +1,20 @@
+[  4%] Building CXX object CMakeFiles/edgeai.dir/src/TransformerBackend.cpp.o
+[  9%] Building CXX object CMakeFiles/edgeai.dir/src/HybridBackend.cpp.o
+[ 14%] Linking CXX static library libedgeai.a
+[ 90%] Built target edgeai
+[ 95%] Building CXX object CMakeFiles/edgeai_test_transformer.dir/tests/test_transformer.cpp.o
+[100%] Linking CXX executable edgeai_test_transformer
+[100%] Built target edgeai_test_transformer
+[ 90%] Built target edgeai
+[ 95%] Building CXX object CMakeFiles/edgeai_runtime_benchmark.dir/benchmarks/runtime.cpp.o
+[100%] Linking CXX executable edgeai_runtime_benchmark
+[100%] Built target edgeai_runtime_benchmark
+[ 90%] Built target edgeai
+[ 95%] Linking CXX executable edgeai_chat
+[100%] Built target edgeai_chat
+[ 90%] Built target edgeai
+[ 95%] Linking CXX executable edgeai_inspect
+[100%] Built target edgeai_inspect
+[ 90%] Built target edgeai
+[ 95%] Linking CXX executable edgeai_logits
+[100%] Built target edgeai_logits

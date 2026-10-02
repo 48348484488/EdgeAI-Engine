@@ -1,0 +1,65 @@
+FFFFF
+======================================================================
+FAIL: test_hash_integrity_and_no_test_rows_in_train (test_sft_v07.SFTContract.test_hash_integrity_and_no_test_rows_in_train)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/EdgeAI-Engine-v0.7/tests/test_sft_v07.py", line 33, in test_hash_integrity_and_no_test_rows_in_train
+    data,_=self.modules()
+           ~~~~~~~~~~~~^^
+  File "/mnt/data/EdgeAI-Engine-v0.7/tests/test_sft_v07.py", line 14, in modules
+    self.assertIsNotNone(importlib.util.find_spec('instruction_data'),'missing frozen synthetic instruction corpus')
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unexpectedly None : missing frozen synthetic instruction corpus
+
+======================================================================
+FAIL: test_no_execution_in_expression_scoring (test_sft_v07.SFTContract.test_no_execution_in_expression_scoring)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/EdgeAI-Engine-v0.7/tests/test_sft_v07.py", line 72, in test_no_execution_in_expression_scoring
+    data,_=self.modules()
+           ~~~~~~~~~~~~^^
+  File "/mnt/data/EdgeAI-Engine-v0.7/tests/test_sft_v07.py", line 14, in modules
+    self.assertIsNotNone(importlib.util.find_spec('instruction_data'),'missing frozen synthetic instruction corpus')
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unexpectedly None : missing frozen synthetic instruction corpus
+
+======================================================================
+FAIL: test_response_targets_shift_once_include_eos_and_ignore_prompt (test_sft_v07.SFTContract.test_response_targets_shift_once_include_eos_and_ignore_prompt)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/EdgeAI-Engine-v0.7/tests/test_sft_v07.py", line 42, in test_response_targets_shift_once_include_eos_and_ignore_prompt
+    _,sft=self.modules()
+          ~~~~~~~~~~~~^^
+  File "/mnt/data/EdgeAI-Engine-v0.7/tests/test_sft_v07.py", line 14, in modules
+    self.assertIsNotNone(importlib.util.find_spec('instruction_data'),'missing frozen synthetic instruction corpus')
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unexpectedly None : missing frozen synthetic instruction corpus
+
+======================================================================
+FAIL: test_splits_deterministic_disjoint_and_heldout (test_sft_v07.SFTContract.test_splits_deterministic_disjoint_and_heldout)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/EdgeAI-Engine-v0.7/tests/test_sft_v07.py", line 21, in test_splits_deterministic_disjoint_and_heldout
+    data,_=self.modules();a=data.build_dataset();b=data.build_dataset()
+           ~~~~~~~~~~~~^^
+  File "/mnt/data/EdgeAI-Engine-v0.7/tests/test_sft_v07.py", line 14, in modules
+    self.assertIsNotNone(importlib.util.find_spec('instruction_data'),'missing frozen synthetic instruction corpus')
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unexpectedly None : missing frozen synthetic instruction corpus
+
+======================================================================
+FAIL: test_warmstart_preserves_old_logits (test_sft_v07.SFTContract.test_warmstart_preserves_old_logits)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/EdgeAI-Engine-v0.7/tests/test_sft_v07.py", line 60, in test_warmstart_preserves_old_logits
+    _,sft=self.modules()
+          ~~~~~~~~~~~~^^
+  File "/mnt/data/EdgeAI-Engine-v0.7/tests/test_sft_v07.py", line 14, in modules
+    self.assertIsNotNone(importlib.util.find_spec('instruction_data'),'missing frozen synthetic instruction corpus')
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unexpectedly None : missing frozen synthetic instruction corpus
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.003s
+
+FAILED (failures=5)

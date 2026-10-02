@@ -1,0 +1,211 @@
+{
+  "profile": "research",
+  "started": "2026-09-25T09:47:51.242527+00:00",
+  "status": "passed",
+  "stages": [
+    {
+      "name": "configure",
+      "command": [
+        "cmake",
+        "-S",
+        "/mnt/data/EdgeAI-Engine-v0.5",
+        "-B",
+        "/mnt/data/EdgeAI-Engine-v0.5/build",
+        "-DCMAKE_BUILD_TYPE=Release"
+      ],
+      "status": "passed",
+      "log": "results/v05/goals-research/configure.log",
+      "exit_code": 0
+    },
+    {
+      "name": "build",
+      "command": [
+        "cmake",
+        "--build",
+        "/mnt/data/EdgeAI-Engine-v0.5/build",
+        "--config",
+        "Release",
+        "-j",
+        "2"
+      ],
+      "status": "passed",
+      "log": "results/v05/goals-research/build.log",
+      "exit_code": 0
+    },
+    {
+      "name": "cpp_tests",
+      "command": [
+        "ctest",
+        "--test-dir",
+        "/mnt/data/EdgeAI-Engine-v0.5/build",
+        "-C",
+        "Release",
+        "--output-on-failure"
+      ],
+      "status": "passed",
+      "log": "results/v05/goals-research/cpp_tests.log",
+      "exit_code": 0
+    },
+    {
+      "name": "python_tests",
+      "command": [
+        "/opt/pyvenv/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "/mnt/data/EdgeAI-Engine-v0.5/tests",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "status": "passed",
+      "log": "results/v05/goals-research/python_tests.log",
+      "exit_code": 0
+    },
+    {
+      "name": "transformer_parity",
+      "command": [
+        "/opt/pyvenv/bin/python",
+        "/mnt/data/EdgeAI-Engine-v0.5/tools/verify_language.py",
+        "--build",
+        "/mnt/data/EdgeAI-Engine-v0.5/build",
+        "--out",
+        "/mnt/data/EdgeAI-Engine-v0.5/results/v05/parity-research.json"
+      ],
+      "status": "passed",
+      "log": "results/v05/goals-research/transformer_parity.log",
+      "exit_code": 0
+    },
+    {
+      "name": "train_and_evaluate",
+      "command": [
+        "/opt/pyvenv/bin/python",
+        "/mnt/data/EdgeAI-Engine-v0.5/benchmarks/language_v05.py",
+        "--steps",
+        "400",
+        "--seeds",
+        "11",
+        "22",
+        "33",
+        "--threads",
+        "1",
+        "--build",
+        "/mnt/data/EdgeAI-Engine-v0.5/build",
+        "--out",
+        "/mnt/data/EdgeAI-Engine-v0.5/results/v05/language.json",
+        "--model-dir",
+        "/mnt/data/EdgeAI-Engine-v0.5/models/language_v05",
+        "--resume"
+      ],
+      "status": "passed",
+      "log": "results/v05/goals-research/train_and_evaluate.log",
+      "exit_code": 0
+    },
+    {
+      "name": "trained_parity",
+      "command": [
+        "/opt/pyvenv/bin/python",
+        "/mnt/data/EdgeAI-Engine-v0.5/tools/verify_trained.py",
+        "--build",
+        "/mnt/data/EdgeAI-Engine-v0.5/build",
+        "--report",
+        "/mnt/data/EdgeAI-Engine-v0.5/results/v05/language.json",
+        "--out",
+        "/mnt/data/EdgeAI-Engine-v0.5/results/v05/trained_parity.json"
+      ],
+      "status": "passed",
+      "log": "results/v05/goals-research/trained_parity.log",
+      "exit_code": 0
+    },
+    {
+      "name": "native_benchmark",
+      "command": [
+        "/opt/pyvenv/bin/python",
+        "/mnt/data/EdgeAI-Engine-v0.5/benchmarks/native_v05.py",
+        "--build",
+        "/mnt/data/EdgeAI-Engine-v0.5/build",
+        "--report",
+        "/mnt/data/EdgeAI-Engine-v0.5/results/v05/language.json",
+        "--repeats",
+        "5",
+        "--tokens",
+        "10000",
+        "--out",
+        "/mnt/data/EdgeAI-Engine-v0.5/results/v05/native.json"
+      ],
+      "status": "passed",
+      "log": "results/v05/goals-research/native_benchmark.log",
+      "exit_code": 0
+    },
+    {
+      "name": "equal_cpu_training",
+      "command": [
+        "/opt/pyvenv/bin/python",
+        "/mnt/data/EdgeAI-Engine-v0.5/benchmarks/compute_budget_v05.py",
+        "--cpu-seconds",
+        "12",
+        "--seeds",
+        "11",
+        "22",
+        "33",
+        "--build",
+        "/mnt/data/EdgeAI-Engine-v0.5/build",
+        "--out",
+        "/mnt/data/EdgeAI-Engine-v0.5/results/v05/compute_budget.json"
+      ],
+      "status": "passed",
+      "log": "results/v05/goals-research/equal_cpu_training.log",
+      "exit_code": 0
+    },
+    {
+      "name": "equal_cpu_parity",
+      "command": [
+        "/opt/pyvenv/bin/python",
+        "/mnt/data/EdgeAI-Engine-v0.5/tools/verify_trained.py",
+        "--build",
+        "/mnt/data/EdgeAI-Engine-v0.5/build",
+        "--report",
+        "/mnt/data/EdgeAI-Engine-v0.5/results/v05/compute_budget.json",
+        "--out",
+        "/mnt/data/EdgeAI-Engine-v0.5/results/v05/compute_trained_parity.json"
+      ],
+      "status": "passed",
+      "log": "results/v05/goals-research/equal_cpu_parity.log",
+      "exit_code": 0
+    },
+    {
+      "name": "equal_cpu_native",
+      "command": [
+        "/opt/pyvenv/bin/python",
+        "/mnt/data/EdgeAI-Engine-v0.5/benchmarks/native_v05.py",
+        "--build",
+        "/mnt/data/EdgeAI-Engine-v0.5/build",
+        "--report",
+        "/mnt/data/EdgeAI-Engine-v0.5/results/v05/compute_budget.json",
+        "--out",
+        "/mnt/data/EdgeAI-Engine-v0.5/results/v05/native_compute.json"
+      ],
+      "status": "passed",
+      "log": "results/v05/goals-research/equal_cpu_native.log",
+      "exit_code": 0
+    },
+    {
+      "name": "energy_probe",
+      "command": [
+        "/opt/pyvenv/bin/python",
+        "/mnt/data/EdgeAI-Engine-v0.5/benchmarks/measure_energy.py",
+        "--out",
+        "/mnt/data/EdgeAI-Engine-v0.5/results/v05/energy.json",
+        "--",
+        "/mnt/data/EdgeAI-Engine-v0.5/build/edgeai_runtime_benchmark",
+        "/mnt/data/EdgeAI-Engine-v0.5/models/compute_v05/transformer_int8-seed11.edge",
+        "100000"
+      ],
+      "status": "passed",
+      "log": "results/v05/goals-research/energy_probe.log",
+      "exit_code": 0
+    }
+  ],
+  "finished": "2026-09-25T09:51:55.326094+00:00"
+}

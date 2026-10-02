@@ -1,0 +1,102 @@
+-- Configuring done (3.6s)
+-- Generating done (0.0s)
+-- Build files have been written to: /mnt/data/EdgeAI-Engine-v0.5/build
+[  2%] Building CXX object CMakeFiles/edgeai.dir/src/TransformerModel.cpp.o
+[  4%] Building CXX object CMakeFiles/edgeai.dir/src/HybridBackend.cpp.o
+/mnt/data/EdgeAI-Engine-v0.5/src/TransformerModel.cpp: In static member function 'static edgeai::TransformerModel edgeai::TransformerModel::load(const std::string&)':
+/mnt/data/EdgeAI-Engine-v0.5/src/TransformerModel.cpp:44:5: warning: this 'if' clause does not guard... [-Wmisleading-indentation]
+   44 |     if(i.peek()!=std::char_traits<char>::eof())throw std::runtime_error("trailing Transformer payload");return m;
+      |     ^~
+/mnt/data/EdgeAI-Engine-v0.5/src/TransformerModel.cpp:44:105: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the 'if'
+   44 |     if(i.peek()!=std::char_traits<char>::eof())throw std::runtime_error("trailing Transformer payload");return m;
+      |                                                                                                         ^~~~~~
+[  6%] Building CXX object CMakeFiles/edgeai.dir/src/TransformerBackend.cpp.o
+/mnt/data/EdgeAI-Engine-v0.5/src/TransformerBackend.cpp: In member function 'const std::vector<float>& edgeai::TransformerBackend::step(uint8_t)':
+/mnt/data/EdgeAI-Engine-v0.5/src/TransformerBackend.cpp:35:5: warning: this 'for' clause does not guard... [-Wmisleading-indentation]
+   35 |     for(std::size_t j=0;j<c.dim;++j)h_[j]+=.5f*down_[j];normalize(h_,norm_);mv(model_.output,norm_,logits_);
+      |     ^~~
+/mnt/data/EdgeAI-Engine-v0.5/src/TransformerBackend.cpp:35:57: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the 'for'
+   35 |     for(std::size_t j=0;j<c.dim;++j)h_[j]+=.5f*down_[j];normalize(h_,norm_);mv(model_.output,norm_,logits_);
+      |                                                         ^~~~~~~~~
+/mnt/data/EdgeAI-Engine-v0.5/src/TransformerBackend.cpp: In member function 'virtual edgeai::Response edgeai::TransformerBackend::infer(const std::string&, const edgeai::Budget&)':
+/mnt/data/EdgeAI-Engine-v0.5/src/TransformerBackend.cpp:42:5: warning: this 'if' clause does not guard... [-Wmisleading-indentation]
+   42 |     if(!b.max_context_chars||!b.max_loops)throw std::invalid_argument("budget cannot run Transformer");reset();
+      |     ^~
+/mnt/data/EdgeAI-Engine-v0.5/src/TransformerBackend.cpp:42:104: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the 'if'
+   42 |     if(!b.max_context_chars||!b.max_loops)throw std::invalid_argument("budget cannot run Transformer");reset();
+      |                                                                                                        ^~~~~
+[  8%] Linking CXX static library libedgeai.a
+[ 38%] Built target edgeai
+[ 40%] Linking CXX executable edgeai_make_demo
+[ 42%] Linking CXX executable edgeai_chat
+[ 44%] Built target edgeai_make_demo
+[ 46%] Built target edgeai_chat
+[ 48%] Building CXX object CMakeFiles/edgeai_logits.dir/tools/logits.cpp.o
+[ 51%] Building CXX object CMakeFiles/edgeai_inspect.dir/tools/inspect_model.cpp.o
+[ 53%] Linking CXX executable edgeai_inspect
+[ 55%] Linking CXX executable edgeai_logits
+[ 55%] Built target edgeai_inspect
+[ 57%] Linking CXX executable edgeai_tests
+[ 57%] Built target edgeai_logits
+[ 59%] Linking CXX executable edgeai_regressions
+[ 61%] Built target edgeai_tests
+[ 63%] Built target edgeai_regressions
+[ 65%] Linking CXX executable edgeai_test_memory
+[ 67%] Linking CXX executable edgeai_test_kernels
+[ 69%] Built target edgeai_test_memory
+[ 71%] Built target edgeai_test_kernels
+[ 73%] Linking CXX executable edgeai_test_hybrid
+[ 75%] Linking CXX executable edgeai_test_tools
+[ 77%] Built target edgeai_test_hybrid
+[ 79%] Built target edgeai_test_tools
+[ 81%] Linking CXX executable edgeai_test_precision
+[ 83%] Building CXX object CMakeFiles/edgeai_test_transformer.dir/tests/test_transformer.cpp.o
+[ 85%] Built target edgeai_test_precision
+[ 87%] Linking CXX executable edgeai_benchmark
+[ 89%] Built target edgeai_benchmark
+[ 91%] Linking CXX executable edgeai_runtime_benchmark
+[ 93%] Built target edgeai_runtime_benchmark
+[ 95%] Linking CXX executable edgeai_matrix_benchmark
+[ 97%] Built target edgeai_matrix_benchmark
+[100%] Linking CXX executable edgeai_test_transformer
+[100%] Built target edgeai_test_transformer
+-- Configuring done (3.6s)
+-- Generating done (0.0s)
+-- Build files have been written to: /mnt/data/EdgeAI-Engine-v0.5/build
+[  1%] Building CXX object CMakeFiles/edgeai.dir/src/TransformerBackend.cpp.o
+[  3%] Building CXX object CMakeFiles/edgeai.dir/src/TransformerModel.cpp.o
+[  5%] Linking CXX static library libedgeai.a
+[ 37%] Built target edgeai
+[ 39%] Linking CXX executable edgeai_make_demo
+[ 41%] Linking CXX executable edgeai_chat
+[ 43%] Built target edgeai_make_demo
+[ 45%] Built target edgeai_chat
+[ 47%] Linking CXX executable edgeai_logits
+[ 49%] Building CXX object CMakeFiles/edgeai_evaluate.dir/tools/evaluate.cpp.o
+[ 50%] Built target edgeai_logits
+[ 52%] Linking CXX executable edgeai_inspect
+[ 54%] Built target edgeai_inspect
+[ 56%] Linking CXX executable edgeai_tests
+[ 58%] Built target edgeai_tests
+[ 60%] Linking CXX executable edgeai_regressions
+[ 62%] Built target edgeai_regressions
+[ 64%] Linking CXX executable edgeai_test_memory
+[ 66%] Built target edgeai_test_memory
+[ 68%] Linking CXX executable edgeai_test_kernels
+[ 70%] Built target edgeai_test_kernels
+[ 72%] Linking CXX executable edgeai_test_hybrid
+[ 74%] Built target edgeai_test_hybrid
+[ 76%] Linking CXX executable edgeai_test_tools
+[ 78%] Built target edgeai_test_tools
+[ 80%] Linking CXX executable edgeai_test_precision
+[ 82%] Built target edgeai_test_precision
+[ 84%] Linking CXX executable edgeai_evaluate
+[ 86%] Linking CXX executable edgeai_test_transformer
+[ 86%] Built target edgeai_evaluate
+[ 88%] Built target edgeai_test_transformer
+[ 90%] Linking CXX executable edgeai_benchmark
+[ 92%] Linking CXX executable edgeai_runtime_benchmark
+[ 94%] Built target edgeai_benchmark
+[ 96%] Built target edgeai_runtime_benchmark
+[ 98%] Linking CXX executable edgeai_matrix_benchmark
+[100%] Built target edgeai_matrix_benchmark

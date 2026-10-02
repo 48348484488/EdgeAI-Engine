@@ -1,0 +1,23 @@
+{
+  "date": "2026-09-25",
+  "native_platform_tested": "Linux x86-64 only",
+  "ctest_suites_per_build": 6,
+  "builds_passed": [
+    "Release GCC",
+    "Release portable GCC",
+    "Debug Clang ASan+UBSan"
+  ],
+  "python_cpp_cases": 12,
+  "parity_max_abs_error": 1.6689300537109375e-06,
+  "gpu_used": false,
+  "energy_measured": false,
+  "windows_executable_included": false,
+  "source_archive_sha256": "a464d95846a46b138864deae5e7e23794c9becd8dd0daeaeb9d90f63be138dfb",
+  "native_executables": [
+    "edgeai_inspect",
+    "edgeai_matrix_benchmark",
+    "edgeai_logits",
+    "edgeai_chat",
+    "edgeai_runtime_benchmark"
+  ]
+}

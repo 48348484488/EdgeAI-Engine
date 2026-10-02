@@ -1,0 +1,92 @@
+{
+  "signature": "a4a9b189a7880cc7e79bc0b72dd0e837cd41aff31767615a2fdaa834cba1c8b2",
+  "kind": "hybrid_mixed",
+  "seed": 22,
+  "parameters": 62278,
+  "initial_state_sha256": "d6b4f169203b751f4bde3b92d9d7a7a117f16ede3be92a5082e4ee9eb73ec7b6",
+  "training_batches_sha256": "fb5fcf197bec2f02728a896dcbceb9a7ff1e308d29f1d0dd0325727cdb887f6a",
+  "training_tokens": 204800,
+  "steps": 400,
+  "selected_step": 400,
+  "selected_validation_bpb": 3.717052807230447,
+  "first_training_nll": 5.747566223144531,
+  "train_seconds": 12.04765812900223,
+  "train_cpu_seconds": 12.032603431999846,
+  "validation_seconds": 0.4353399840001657,
+  "trial_seconds": 12.825541339999972,
+  "metrics": {
+    "code": {
+      "targets": 15356,
+      "correct": 5743,
+      "accuracy": 0.3739906225579578,
+      "nll_sum": 37863.598036432995,
+      "bits_per_byte": 3.5572821774794856
+    },
+    "text": {
+      "targets": 1228,
+      "correct": 244,
+      "accuracy": 0.1986970684039088,
+      "nll_sum": 3695.718632958932,
+      "bits_per_byte": 4.3418525604973865
+    }
+  },
+  "overall": {
+    "nll_sum": 41559.31666939193,
+    "targets": 16584,
+    "correct": 5987,
+    "bits_per_byte": 3.615377475980811,
+    "accuracy": 0.3610106126386879
+  },
+  "native_metrics": {
+    "code": {
+      "blocks": 242,
+      "targets": 15356,
+      "correct": 5743,
+      "nll_sum": 37863.597823734,
+      "bits_per_byte": 3.5572821574964,
+      "accuracy": 0.37399062255796,
+      "seconds": 0.144429011,
+      "reset_between_blocks": true
+    },
+    "text": {
+      "blocks": 20,
+      "targets": 1228,
+      "correct": 244,
+      "nll_sum": 3695.7186659875,
+      "bits_per_byte": 4.3418525993005,
+      "accuracy": 0.19869706840391,
+      "seconds": 0.011467927,
+      "reset_between_blocks": true
+    }
+  },
+  "curve": [
+    {
+      "step": 100,
+      "training_nll": 3.0983335971832275,
+      "validation_bpb": 4.407346457878444
+    },
+    {
+      "step": 200,
+      "training_nll": 3.1808183193206787,
+      "validation_bpb": 4.057087773544437
+    },
+    {
+      "step": 300,
+      "training_nll": 2.5830018520355225,
+      "validation_bpb": 3.8823827762297074
+    },
+    {
+      "step": 400,
+      "training_nll": 2.460352659225464,
+      "validation_bpb": 3.717052807230447
+    }
+  ],
+  "numeric_weight_bytes": 104216,
+  "edge_file_bytes": 104408,
+  "energy_joules": null,
+  "model_path": "models/language_v05/hybrid_mixed-seed22.edge",
+  "artifacts": {
+    "models/language_v05/hybrid_mixed-seed22.pt": "84f55dcfa6443338315e7122ae7ffcd746c4651be1adf1e27ef0eafe2ce3b775",
+    "models/language_v05/hybrid_mixed-seed22.edge": "77086ecb1979e5f2592b9f8d911088576307060e596657124f6676d89428a05c"
+  }
+}

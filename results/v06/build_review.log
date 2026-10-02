@@ -1,0 +1,43 @@
+[  1%] Building CXX object CMakeFiles/edgeai.dir/src/TransformerBackend.cpp.o
+[  3%] Linking CXX static library libedgeai.a
+[ 33%] Built target edgeai
+[ 35%] Linking CXX executable edgeai_make_demo
+[ 36%] Linking CXX executable edgeai_chat
+[ 38%] Built target edgeai_make_demo
+[ 40%] Built target edgeai_chat
+[ 41%] Linking CXX executable edgeai_logits
+[ 43%] Linking CXX executable edgeai_evaluate
+[ 46%] Built target edgeai_logits
+[ 46%] Built target edgeai_evaluate
+[ 50%] Linking CXX executable edgeai_tokenize
+[ 50%] Linking CXX executable edgeai_inspect
+[ 51%] Built target edgeai_inspect
+[ 53%] Built target edgeai_tokenize
+[ 56%] Linking CXX executable edgeai_text_eval
+[ 56%] Linking CXX executable edgeai_generate
+[ 58%] Built target edgeai_generate
+[ 60%] Built target edgeai_text_eval
+[ 61%] Linking CXX executable edgeai_tests
+[ 63%] Linking CXX executable edgeai_regressions
+[ 65%] Built target edgeai_regressions
+[ 66%] Built target edgeai_tests
+[ 70%] Linking CXX executable edgeai_test_memory
+[ 70%] Linking CXX executable edgeai_test_kernels
+[ 71%] Built target edgeai_test_memory
+[ 73%] Built target edgeai_test_kernels
+[ 75%] Linking CXX executable edgeai_test_hybrid
+[ 76%] Linking CXX executable edgeai_test_tools
+[ 80%] Built target edgeai_test_hybrid
+[ 80%] Built target edgeai_test_tools
+[ 81%] Linking CXX executable edgeai_test_precision
+[ 83%] Linking CXX executable edgeai_test_transformer
+[ 85%] Built target edgeai_test_precision
+[ 86%] Built target edgeai_test_transformer
+[ 88%] Linking CXX executable edgeai_benchmark
+[ 90%] Linking CXX executable edgeai_test_bpe
+[ 91%] Built target edgeai_test_bpe
+[ 93%] Built target edgeai_benchmark
+[ 95%] Linking CXX executable edgeai_runtime_benchmark
+[ 96%] Linking CXX executable edgeai_matrix_benchmark
+[ 98%] Built target edgeai_matrix_benchmark
+[100%] Built target edgeai_runtime_benchmark

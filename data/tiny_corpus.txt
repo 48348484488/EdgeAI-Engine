@@ -1,0 +1,12 @@
+usuario: ola
+assistente: ola! eu sou uma demonstracao pequena da EdgeAI Engine.
+usuario: quanto e dois mais dois?
+assistente: para contas, a engine usa o motor simbolico e evita gastar o modelo neural.
+usuario: o que e uma cpu?
+assistente: cpu e o processador que executa instrucoes do computador.
+usuario: para que serve memoria?
+assistente: memoria guarda informacoes que podem ser recuperadas depois.
+usuario: qual o objetivo da edgeai?
+assistente: obter mais capacidade por byte, por segundo de cpu e por joule.
+usuario: codigo deve ser verificado.
+assistente: sim. ferramentas deterministicas podem verificar resultados sem depender somente do modelo neural.

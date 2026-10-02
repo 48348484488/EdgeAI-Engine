@@ -1,0 +1,14 @@
+F
+======================================================================
+FAIL: test_external_snapshot_pipeline_present (test_external_data.ExternalDataGate.test_external_snapshot_pipeline_present)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/EdgeAI-Engine-v0.6/tests/test_external_data.py", line 8, in test_external_snapshot_pipeline_present
+    self.assertIsNotNone(importlib.util.find_spec('external_data'),'independent data pipeline missing')
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unexpectedly None : independent data pipeline missing
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (failures=1)

@@ -1,0 +1,3399 @@
+{
+  "format": "edge-cpython-snapshot-1",
+  "source": "installed CPython standard-library source, unmodified files",
+  "python_version": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]",
+  "upstream_reference": "https://github.com/python/cpython",
+  "upstream_commit_verified": false,
+  "origin_caveat": "Local distribution patches may exist. Reproduction uses these bundled hashes, not a presumed upstream tag.",
+  "license": "PSF-2.0 and included notices; exact license files bundled",
+  "licenses": [
+    {
+      "path": "LICENSE-CPython.txt",
+      "sha256": "78b12c3a81360b357002334f0e70ea0e92eebf7a9b358805c03c48484945f3bb",
+      "bytes": 13809
+    },
+    {
+      "path": "COPYRIGHT-DISTRIBUTION.txt",
+      "sha256": "f1cbf908e1daa8789b389fdcf17811ed36b675d736b39a103591399861350382",
+      "bytes": 49855
+    }
+  ],
+  "documents": [
+    {
+      "path": "documents/train/abc.py",
+      "source_path": "/usr/lib/python3.13/abc.py",
+      "source_module": "abc.py",
+      "family": "abc",
+      "split": "train",
+      "bytes": 6538,
+      "sha256": "e558702a95cdce3febd289da021715d2b92bc43995b8a1bc58dfa1c3d8010287"
+    },
+    {
+      "path": "documents/train/collections/__init__.py",
+      "source_path": "/usr/lib/python3.13/collections/__init__.py",
+      "source_module": "collections/__init__.py",
+      "family": "collections",
+      "split": "train",
+      "bytes": 52500,
+      "sha256": "2347f647577b6c11b82fc48fa4a1744f7af1af87f15942f92b7cc4410f0a817b"
+    },
+    {
+      "path": "documents/train/contextlib.py",
+      "source_path": "/usr/lib/python3.13/contextlib.py",
+      "source_module": "contextlib.py",
+      "family": "contextlib",
+      "split": "train",
+      "bytes": 27801,
+      "sha256": "c1e0d67b2007de11ae93cd36cf6faf38d9ab32656a832d592a49325eec579f96"
+    },
+    {
+      "path": "documents/train/copy.py",
+      "source_path": "/usr/lib/python3.13/copy.py",
+      "source_module": "copy.py",
+      "family": "copy",
+      "split": "train",
+      "bytes": 8975,
+      "sha256": "d6b858961b91b48a4bf5a115b0420c890d677bdf058ab2323a8a75298eed47db"
+    },
+    {
+      "path": "documents/train/enum.py",
+      "source_path": "/usr/lib/python3.13/enum.py",
+      "source_module": "enum.py",
+      "family": "enum",
+      "split": "train",
+      "bytes": 85578,
+      "sha256": "419c011ac6db4efd60e737db7cbba83eb67110ed20d91781f7c60cdeed61e0b6"
+    },
+    {
+      "path": "documents/train/functools.py",
+      "source_path": "/usr/lib/python3.13/functools.py",
+      "source_module": "functools.py",
+      "family": "functools",
+      "split": "train",
+      "bytes": 39123,
+      "sha256": "7aa8725afbe9b9fc47a825b4e7c0330fa374432f481d7be8202b96f56eeac9a0"
+    },
+    {
+      "path": "documents/train/heapq.py",
+      "source_path": "/usr/lib/python3.13/heapq.py",
+      "source_module": "heapq.py",
+      "family": "heapq",
+      "split": "train",
+      "bytes": 23024,
+      "sha256": "6d43277e5c76fc0f073cd388fcff852d14d068f6bb6d4886c340f8b75a1229a9"
+    },
+    {
+      "path": "documents/train/pprint.py",
+      "source_path": "/usr/lib/python3.13/pprint.py",
+      "source_module": "pprint.py",
+      "family": "pprint",
+      "split": "train",
+      "bytes": 24158,
+      "sha256": "1585c8d74d7f485590db2af46680ae0a73737ca9fb66022b2bcbbc4c4925e203"
+    },
+    {
+      "path": "documents/train/random.py",
+      "source_path": "/usr/lib/python3.13/random.py",
+      "source_module": "random.py",
+      "family": "random",
+      "split": "train",
+      "bytes": 37006,
+      "sha256": "39f53b25d84a27e1be0b9116d74497c9466d749660692a25a0d14687175a6db0"
+    },
+    {
+      "path": "documents/train/string.py",
+      "source_path": "/usr/lib/python3.13/string.py",
+      "source_module": "string.py",
+      "family": "string",
+      "split": "train",
+      "bytes": 11786,
+      "sha256": "24aeae1f0526250f442022022bf98df9a823b1cb330543ee79e70e44907462e9"
+    },
+    {
+      "path": "documents/train/textwrap.py",
+      "source_path": "/usr/lib/python3.13/textwrap.py",
+      "source_module": "textwrap.py",
+      "family": "textwrap",
+      "split": "train",
+      "bytes": 19939,
+      "sha256": "26836f5c17cdb4ffdeaff1a5146ed61a262aa410bdf3ad204e2bd0792f010d5e"
+    },
+    {
+      "path": "documents/train/weakref.py",
+      "source_path": "/usr/lib/python3.13/weakref.py",
+      "source_module": "weakref.py",
+      "family": "weakref",
+      "split": "train",
+      "bytes": 21513,
+      "sha256": "56f8d313fb74019e53eb9287400702fbce788b7fe30e097b0b6e06296f3f080c"
+    },
+    {
+      "path": "documents/valid/bisect.py",
+      "source_path": "/usr/lib/python3.13/bisect.py",
+      "source_module": "bisect.py",
+      "family": "bisect",
+      "split": "valid",
+      "bytes": 3423,
+      "sha256": "f1cf7b85fc36b5da249813fc5ab97d9464f8cc1bc817f7146206fa2713e35999"
+    },
+    {
+      "path": "documents/valid/fractions.py",
+      "source_path": "/usr/lib/python3.13/fractions.py",
+      "source_module": "fractions.py",
+      "family": "fractions",
+      "split": "valid",
+      "bytes": 40021,
+      "sha256": "58f7750133f2e23999ba3f634d1b14edfec6dc48bf8bb00a9911262cd7198f63"
+    },
+    {
+      "path": "documents/valid/statistics.py",
+      "source_path": "/usr/lib/python3.13/statistics.py",
+      "source_module": "statistics.py",
+      "family": "statistics",
+      "split": "valid",
+      "bytes": 61831,
+      "sha256": "0f618d7c13e99f5289d5e2a20ba8b7340be27ab424f2bffb739ab3be291fe261"
+    },
+    {
+      "path": "documents/test/graphlib.py",
+      "source_path": "/usr/lib/python3.13/graphlib.py",
+      "source_module": "graphlib.py",
+      "family": "graphlib",
+      "split": "test",
+      "bytes": 9648,
+      "sha256": "2a29e0adee584dc76251afef1236d7bedf250aca27911f91a4d442133ce81117"
+    },
+    {
+      "path": "documents/test/queue.py",
+      "source_path": "/usr/lib/python3.13/queue.py",
+      "source_module": "queue.py",
+      "family": "queue",
+      "split": "test",
+      "bytes": 13481,
+      "sha256": "15d3d5e1acaa7cb3a2f836ff2c9001f6a9272107e73b9c6f4e71fee62cb654a1"
+    },
+    {
+      "path": "documents/test/sched.py",
+      "source_path": "/usr/lib/python3.13/sched.py",
+      "source_module": "sched.py",
+      "family": "sched",
+      "split": "test",
+      "bytes": 6351,
+      "sha256": "56588f00a68ef953014f41baf36e0dbb7ed7793f8aa883ebcb1a8bd3787c06a6"
+    }
+  ],
+  "totals": {
+    "train": 357941,
+    "valid": 105275,
+    "test": 29480
+  },
+  "blocks": {
+    "valid": {
+      "path": "valid.rawblocks",
+      "sha256": "00c108e54ceeee8d30589c6d26ed3a9d45cd488219cc99f6fda25d94c6d64c10",
+      "bytes_scored": 104763,
+      "kept": [
+        {
+          "path": "documents/valid/bisect.py",
+          "offset": 0,
+          "bytes": 256,
+          "sha256": "eecf4743603e4a42a22eab50bbe99eaf4f6eb819adf2ce7de49bbd87d0bbdd34"
+        },
+        {
+          "path": "documents/valid/bisect.py",
+          "offset": 256,
+          "bytes": 256,
+          "sha256": "2ec3c5595f4e302d53be7dd7c0cd445d2f06646314b59e3066ffa82602584797"
+        },
+        {
+          "path": "documents/valid/bisect.py",
+          "offset": 512,
+          "bytes": 256,
+          "sha256": "b3aae87bb0ebac26a6b269ee4ee530a5dab5c43afbd1d520c324d87c1cd9ed43"
+        },
+        {
+          "path": "documents/valid/bisect.py",
+          "offset": 768,
+          "bytes": 256,
+          "sha256": "5852fac37bb34816a7f1da468fc8939c4942286758e449f02ad44a1b4e169d8a"
+        },
+        {
+          "path": "documents/valid/bisect.py",
+          "offset": 1024,
+          "bytes": 256,
+          "sha256": "505a42aad5bfebabdf786e2297674ffb8cd9552cd78339ac1fedd23229afaf1e"
+        },
+        {
+          "path": "documents/valid/bisect.py",
+          "offset": 1280,
+          "bytes": 256,
+          "sha256": "93c815c9e19c609ca1f2d2125ab23d3e2d173b0f05d41abc3941fca6fe4015b9"
+        },
+        {
+          "path": "documents/valid/bisect.py",
+          "offset": 1536,
+          "bytes": 256,
+          "sha256": "c9543df09e4aa7357b6bbe34c2bd3ed837c20392488da60e11bafee4d12b85f0"
+        },
+        {
+          "path": "documents/valid/bisect.py",
+          "offset": 1792,
+          "bytes": 256,
+          "sha256": "adfe0c5e95d7d1badb0dc9d2fa2e0b00cb798d54c88c4e352b31fa6010c8524f"
+        },
+        {
+          "path": "documents/valid/bisect.py",
+          "offset": 2048,
+          "bytes": 256,
+          "sha256": "9c7389c53a16f87495fb81c6d8805dfcd4fe05f90466e219465f4f8ef5658c9f"
+        },
+        {
+          "path": "documents/valid/bisect.py",
+          "offset": 2304,
+          "bytes": 256,
+          "sha256": "974f263d9f58db2615fcdbff56469e12063cabfc7475fc1492427eb80b08b229"
+        },
+        {
+          "path": "documents/valid/bisect.py",
+          "offset": 2560,
+          "bytes": 256,
+          "sha256": "6ccf5deed898c4ea1bc168e654d65765a9b819dffc7061c2257e8781c81d2fc8"
+        },
+        {
+          "path": "documents/valid/bisect.py",
+          "offset": 2816,
+          "bytes": 256,
+          "sha256": "017f5dd928d2471ce6d63a69a2096be7b25fcc65cc1473b342c240b58d951cd8"
+        },
+        {
+          "path": "documents/valid/bisect.py",
+          "offset": 3072,
+          "bytes": 256,
+          "sha256": "edae3db96c6ae0e8af6e5a0bc84b544fb8d49a1e75dfc47cdf8a040f4563abb3"
+        },
+        {
+          "path": "documents/valid/bisect.py",
+          "offset": 3328,
+          "bytes": 95,
+          "sha256": "129d3d26b314728b5a694eef726918303ef4c924234426d34b5b2efa1c9acfed"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 0,
+          "bytes": 256,
+          "sha256": "989c69d9cf361489eac9656a106304c1cfb98b5df9306d47163e632883086e46"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 256,
+          "bytes": 256,
+          "sha256": "ef9778f8edb30bb1099291fb9aaabc2b5208da5ee4bb901a909d49b4d409599f"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 512,
+          "bytes": 256,
+          "sha256": "8406432ba2e19559c82393d1e43656c3512bab616b488f25a593a0723febf9e0"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 768,
+          "bytes": 256,
+          "sha256": "67f1d6065bb0000504ab63a780649824e56093d2a62cfc5564065e0e3dcb4d9c"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 1024,
+          "bytes": 256,
+          "sha256": "ba97361870fd2a71159c195c54b43ed623786a85f15fa67d8aabf011d5bc19a0"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 1280,
+          "bytes": 256,
+          "sha256": "688bf005f0bd7a17b146fb620146cd4ab18864edac5ce00e69c10ef89a96dfd3"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 1536,
+          "bytes": 256,
+          "sha256": "28cf3ec2365dd6d702ec17d8273ed82cafe2816474a2134a3a6dff90a60796fb"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 1792,
+          "bytes": 256,
+          "sha256": "b6eabc523e872938d06da1935b0a277141e99ad42e2ad78adc7ea275ab61028c"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 2048,
+          "bytes": 256,
+          "sha256": "b9ee435f94b2b6b9201496cbd65b1432b8171ef682244c00869ada09fa2596c4"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 2304,
+          "bytes": 256,
+          "sha256": "7089c2968e33f1b399f87e64d0664b20472edce1fe6f3b3addcaef55bc61c471"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 2560,
+          "bytes": 256,
+          "sha256": "bbb402d8c98e97eedee0ab20b3791d9b58af73c84e843cbcb7a4b7d0c3c1d9a6"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 2816,
+          "bytes": 256,
+          "sha256": "15347907b4232ab4c3d528eb44aa81341aa62bdb888ee37655075edde53d0e2d"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 3072,
+          "bytes": 256,
+          "sha256": "5fb203e80c5e5d4bdfdf44a9fb58b07dfca05b1088bbb6d8e1ffc5cd6e397b23"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 3328,
+          "bytes": 256,
+          "sha256": "6ace767732e8a5aa4149370f4481a2a56c47176317220f43d9fc73ddb4d6d04f"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 3584,
+          "bytes": 256,
+          "sha256": "a5af581ce0a84f788c76da8ae3ebb7a3c73b54118d2300e2820c25d7d2193072"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 3840,
+          "bytes": 256,
+          "sha256": "664fcd5c7cb795aa00ee2293cba8bc1c4fb9723af188e7c7015dfbb3f23b6f98"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 4096,
+          "bytes": 256,
+          "sha256": "81f4bd91074189f9eb89da744eec8a3f68e4bd4468baedddbf6ccd2092246078"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 4352,
+          "bytes": 256,
+          "sha256": "f6f74f6c82a4c0ffdc355f916faf81e3bb64017add7a8510ccca4549fa86f941"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 4608,
+          "bytes": 256,
+          "sha256": "78543ade53aa09e9c076ffef9bcc96a278f90e71a1bfdfae46d445394f177054"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 4864,
+          "bytes": 256,
+          "sha256": "af5cff5c2d807d195c72133499dc4f16a730967159e73dee10bee18bf09b31b5"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 5120,
+          "bytes": 256,
+          "sha256": "e8da263460df0da0eca8f6b9a514af1a991326c98826f1e026cd9617a857c9f1"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 5376,
+          "bytes": 256,
+          "sha256": "b6878e16725692654350a9a0b28a70358d188245575825526eb70ea2fc2a6e23"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 5632,
+          "bytes": 256,
+          "sha256": "9376a750b03ad1ad37484607063ca4e8e7252f99d91e112823e4bf26b21108b5"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 5888,
+          "bytes": 256,
+          "sha256": "71a7a1aa5e060891509c9a3114dfd2ed242ea223727df79ac084eb0c57933057"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 6144,
+          "bytes": 256,
+          "sha256": "d38eb39c755deb5a412ef10c14157263c96430adcd51b78ec14b8ee948fd45e0"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 6400,
+          "bytes": 256,
+          "sha256": "b53ea8bbff1eb1f45e7ed90386a98ced917673725e679e1d7601bd2c2641f1fc"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 6656,
+          "bytes": 256,
+          "sha256": "4dcf5f548e82f5965b94e731625a2763fadfc6d3f4b9b6c7ac5bbac6a6dc4942"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 6912,
+          "bytes": 256,
+          "sha256": "840b1a5e1f288a4e7a4508eda7d5be8b8d209d4408b97693368505d901c7636c"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 7168,
+          "bytes": 256,
+          "sha256": "be95c2276bd1f39da1122c09b8613c324055526e7c262ea34203bb40cc4ab018"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 7424,
+          "bytes": 256,
+          "sha256": "97bf1ba1e3f1a2ec3647dfcf765e5d0c6832f7ff56d3d89ad432a419d9fe8414"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 7680,
+          "bytes": 256,
+          "sha256": "73e9f2cf1d4fa2644a596dc979c000df164fe858a92a43523755e52b56aa367b"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 7936,
+          "bytes": 256,
+          "sha256": "67c12d3b4328a64235d132300b385a2fc6aaade2bdb6971b86ab507af2921fcd"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 8192,
+          "bytes": 256,
+          "sha256": "10dd0508aacb4a25a8824ac5bb0e1730f65e939c6ec089263f897d5588635ff0"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 8448,
+          "bytes": 256,
+          "sha256": "4cfd0aba20bbcc3a3ff79a5bd25bd16133e6db6ea8781aac55b0632ba13ab064"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 8704,
+          "bytes": 256,
+          "sha256": "84dc28444b6eb18cd5eed7ee0738d8bdf604aaa0796755aad0109f91a0a7ac43"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 8960,
+          "bytes": 256,
+          "sha256": "36d983bea2fda3d4728c1941bc66d1338d2e3565b78aac225a24f9dc4fcdf9f3"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 9216,
+          "bytes": 256,
+          "sha256": "b127e8386fafce09a0d80b3ccd768a2b65d0089f50c11112428bdbfbd65c6137"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 9472,
+          "bytes": 256,
+          "sha256": "6fffd910b50a417a21442bfdad9324224153634443b094383188d16dd1fff057"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 9728,
+          "bytes": 256,
+          "sha256": "7266a8a466dd073c27f117738989106c68eb76462110717a479ac8ce2495b205"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 9984,
+          "bytes": 256,
+          "sha256": "d3b1440ec4c7ec217d567a292cf9d0d76899eb3b9dd817465e14cbf6c098a7f3"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 10240,
+          "bytes": 256,
+          "sha256": "4e7491849ad6e2569d681528b56a71d94384b0cd3ff4cee12b6988be979a9796"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 10496,
+          "bytes": 256,
+          "sha256": "2ed6fef428f64cebe01dbf727ebbb1fe61f03d1cd370459d7a7b99c649e82c45"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 10752,
+          "bytes": 256,
+          "sha256": "53a8026a5d9565f7839a992acb2ef04bf24ad8e77ca790c218e789803a8ad1c3"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 11008,
+          "bytes": 256,
+          "sha256": "0b3ff49805ad59347dac53da83e3bac0530cad98a273b1faf8b56450dd6c5714"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 11264,
+          "bytes": 256,
+          "sha256": "19d9a9c5ad204856c8fbe77e4c838b9c14edbe1d0487b2796f811e2fdd753e74"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 11520,
+          "bytes": 256,
+          "sha256": "8244fc2bd6b81549c1c8e19446f5889ecd65619a24da5128639bb2c0e3dc4e11"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 11776,
+          "bytes": 256,
+          "sha256": "979be9f087a4ea9905c473ad06fac0f4dafb59ff9d6818a51fb28b97c2406871"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 12032,
+          "bytes": 256,
+          "sha256": "6862e2646d31162ae49a1a1ded66b5b6f4cfcc63fb2cb87765cbf67c7b5cad33"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 12288,
+          "bytes": 256,
+          "sha256": "f7ebf58af08cb54f3141bb83ef2b62e4ac622c366fd63edc7ea53410e6afeec1"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 12544,
+          "bytes": 256,
+          "sha256": "07c248dd793f7b6f1bd60eec90d0f2721a970dc134cbd0f6e8f7be812dc043c8"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 12800,
+          "bytes": 256,
+          "sha256": "fb881580721e03f2953f9d4cedac375ebd8437410225aaafac729061f575d190"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 13056,
+          "bytes": 256,
+          "sha256": "113243049ec6db4420089ddf235b4661ea6bb547b55955abd8adbd51c85c11d5"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 13312,
+          "bytes": 256,
+          "sha256": "d2d488ff2cd2f698b9be3eb81f0f7239078b9197040cc19c70c9c1663f9edb92"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 13568,
+          "bytes": 256,
+          "sha256": "9574452ab55df829bb58f6fefe181a0e01a6c1f95c16eab914d8798ab94ad1cd"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 13824,
+          "bytes": 256,
+          "sha256": "b1036b11690f209d6b168d59323fb6bee18c49b435cd5f555d744bfa8e004b11"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 14080,
+          "bytes": 256,
+          "sha256": "c3f6726de54ce0a87fad6cfa8399859d34d1b0b7dbeac96549dd47d9bfee48cd"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 14336,
+          "bytes": 256,
+          "sha256": "b1ea16f38d54454827f99720883f061b89da81e773180c82267ebbeeb97e00ca"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 14592,
+          "bytes": 256,
+          "sha256": "562a06e8e9463420661b800abbf845b3dabfdf6cdebb13a5d913368fb092991a"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 14848,
+          "bytes": 256,
+          "sha256": "1702f262900db2884e8c1447af60f0ecc065c24d7b4ec1df0123f0eec8b57abd"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 15104,
+          "bytes": 256,
+          "sha256": "d2219b99d90f6835923a1547d691c8d7ed8a053fe226c6f1c2ab4b6d9a749095"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 15360,
+          "bytes": 256,
+          "sha256": "af64ea61202752bbb15cab42b18553fa8866afc9ea0d035057c2f55183df0d56"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 15616,
+          "bytes": 256,
+          "sha256": "dc61353934835d36c8ff54c21388279c88456d9d362d0b7d55475e137d7e847e"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 15872,
+          "bytes": 256,
+          "sha256": "e103c64b451b4a6dfe1864f0ebad42bb49877ec2ac8d72bc43a460ea044f36ca"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 16128,
+          "bytes": 256,
+          "sha256": "c94bc74e98b570305aed6b5361bc6d57865c206543b004d74bbf9d9484ca185c"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 16384,
+          "bytes": 256,
+          "sha256": "3b2df3fea87acb64823a06e618032556fda3a652809dc725b570d34b4a55911b"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 16640,
+          "bytes": 256,
+          "sha256": "de6fc0ff1443cfb024933e50193baae33cd76d08191afdd6b596ef5cf7dad06b"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 16896,
+          "bytes": 256,
+          "sha256": "f4e4e2d27e0e3553e714df39887e609237d1e3cb525e46b6aee12ec7145af6de"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 17152,
+          "bytes": 256,
+          "sha256": "9f987e6c1b0729e784f605e4ed828143d7e84d32801bc910f15aa42dccdb9146"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 17408,
+          "bytes": 256,
+          "sha256": "eb223960ce6b14c0b2d1aff7b43444a336645b24b0e3f207905cb280afef76eb"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 17664,
+          "bytes": 256,
+          "sha256": "740d025182e53c113908c2f8300cf6029e65dc13df5eb87a9690be173476512e"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 17920,
+          "bytes": 256,
+          "sha256": "84fd9ea9946387b13b5632f1d9829ee905c50382f399b00315355a41e3a05ab7"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 18176,
+          "bytes": 256,
+          "sha256": "853142ccab38d3f79e614e9b22787a2e3424d1c4da3971c519032dbfc5c76565"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 18432,
+          "bytes": 256,
+          "sha256": "298a8d03a8f76e968554eb76af89cf3249752e3d04efcd3029d903b9b21bc534"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 18688,
+          "bytes": 256,
+          "sha256": "96f87d797734654496c654069f17fb8ba7e92d275cb64ac0057272c65f565d95"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 18944,
+          "bytes": 256,
+          "sha256": "a8c13608183573730f4cb751b9446c594561e3ed33f3279cba520fc3dffd260e"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 19200,
+          "bytes": 256,
+          "sha256": "00247e0c1c9369edccdf45251141ecdaa6d0b2a4fff1d7e264ba26cf57bacf84"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 19456,
+          "bytes": 256,
+          "sha256": "96858306974928ee9d1618470bf0df7bba0efa9c621e2aee28e7fe10f27c9d2e"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 19712,
+          "bytes": 256,
+          "sha256": "fbc236288c7e483c08951dbd40842b34dc58ec033034655abb5601296ced686a"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 19968,
+          "bytes": 256,
+          "sha256": "cd03efe036850814809999ed396c5817bf5c36614b68406ba6eb2c360dd448e5"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 20224,
+          "bytes": 256,
+          "sha256": "280d86cc05d58b1e006a9f6d85e413204d935161280ac37cacf9c706c04fea0c"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 20480,
+          "bytes": 256,
+          "sha256": "21b8949787796f1e9ce4bbe74029f6a846ddf8740ea2f2679f0383c5fc95ab51"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 20736,
+          "bytes": 256,
+          "sha256": "14cf2a23f0bd4b5879f27184f6cbfad8cbe49e5e407cfac9f87bd2417b5db865"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 20992,
+          "bytes": 256,
+          "sha256": "10a358c9afe1df7a99769af764f89dc639e4214716563aece6a0230f0ab8b354"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 21248,
+          "bytes": 256,
+          "sha256": "b8d9d47343d970f5681f100706abfb5c32e9232915c1f6e0b04b47befa0d2d35"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 21504,
+          "bytes": 256,
+          "sha256": "f05f839520f05f347d11d5acd17dfb5c979c4927ec66b679d7d4cf33e60de9d2"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 21760,
+          "bytes": 256,
+          "sha256": "6c5030074235e6cec842bde3604faeda02d93c680b1f2406ce60c73feef16a75"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 22016,
+          "bytes": 256,
+          "sha256": "c8264038191d1bf875cb1112ba5bf236527bf8ce3f0d8174af743ba47d0fc260"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 22272,
+          "bytes": 256,
+          "sha256": "57c9e9960488967b44b17a0018a8789457fda5a8ec61a5fba6d3ecf9d17bf4f4"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 22528,
+          "bytes": 256,
+          "sha256": "cbcef8850ad8a9732dbdc8d10497b07434a7446079912fc124e7b016281dd332"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 22784,
+          "bytes": 256,
+          "sha256": "86f2f6c12f94432e31f278eeb40a4796db18ca3c102e05a3fbc93e0ec2017367"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 23040,
+          "bytes": 256,
+          "sha256": "3eb3ae29014c06a15de85db18b825203883cce3f7df1bd454a9bedf4193e58c9"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 23296,
+          "bytes": 256,
+          "sha256": "60d0892a89dc4103f626135a766a06128d00008444f7743d880eeeccd78cb1c2"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 23552,
+          "bytes": 256,
+          "sha256": "10bf14ca872aefedcac81d4c967faf43adca078bb4c7b54f4dc45329357bd464"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 23808,
+          "bytes": 256,
+          "sha256": "e6c295ff7b09cfaf4203630c85ade9258751116b29f8f7a39576291b7243db49"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 24064,
+          "bytes": 256,
+          "sha256": "e58290cc74dcfb3384e2b353637cf5287dcc119c6139b4fbae6ae700dee9c8d7"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 24320,
+          "bytes": 256,
+          "sha256": "130a8b1d3b63dbcb91867020da303b78937e302e1315d0e84b8fdab3772878a9"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 24576,
+          "bytes": 256,
+          "sha256": "2dd0281d5f16fda96078dfb2936029c2003c3b597b868a2dca5ca29abcc21c57"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 24832,
+          "bytes": 256,
+          "sha256": "1530a97b75f7033c18bab2e6ba8143f89e950d8853b01a60286ccf0e513a414f"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 25088,
+          "bytes": 256,
+          "sha256": "371680bb82406ddf98d1e65cb6952d58ae60ad775336457018d93b98186b2ea6"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 25344,
+          "bytes": 256,
+          "sha256": "5f0524ecc0c1f01df1078750be636037eb0fca989158599cc19f4f7231f07891"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 25600,
+          "bytes": 256,
+          "sha256": "b7a78c4ec3f131fbe2e68c3d195943c2a472ff88f1245a6a3c9c310084fbda33"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 25856,
+          "bytes": 256,
+          "sha256": "eb15b277933b45f8d75e54044e912dbcefbbd98207eb1276e92795b169a4a68e"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 26112,
+          "bytes": 256,
+          "sha256": "961a092e2144c95a4fcbb16aa2e41ccd9942006d41ddbba93d2ee6ba0e41d91f"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 26368,
+          "bytes": 256,
+          "sha256": "947bd6daac02d09933ebbdf9a17b5c2dbdb90720290d64e43d874dddfec86240"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 26624,
+          "bytes": 256,
+          "sha256": "292e8cacbb817d0614a9ef7883470f899efe90570490714bc0f1874d9f50b7a1"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 26880,
+          "bytes": 256,
+          "sha256": "715214a83456b51ac2cbde1120bbb9e7ab1df71e52cef5e376d0170ef91cfcad"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 27136,
+          "bytes": 256,
+          "sha256": "4ac80b96932740eef33059eb1e916bc25caa39c3d81c16c2e22382f6de28d814"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 27392,
+          "bytes": 256,
+          "sha256": "36cf2e5814d17b308d2eb44e0d9115cbc9d4537310f7e5402bee7996fb33856e"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 27648,
+          "bytes": 256,
+          "sha256": "d423a7d826527056809f3897824c59bfd22259b0a01ffb08b2debb3c6735e4e8"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 27904,
+          "bytes": 256,
+          "sha256": "e9eb3f3f4e11b9422cb5b7c3577b0016338556b21f6edd31d410ed62a83cf692"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 28160,
+          "bytes": 256,
+          "sha256": "104b3878626a984f0f27d204ebf8a7174dc7ceb27227d7b2c4fd798db85a193f"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 28416,
+          "bytes": 256,
+          "sha256": "76e632ec74aad390f4b454a6c7e4703e6c33921a2f49358aa9f680d5bd4c8c55"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 28672,
+          "bytes": 256,
+          "sha256": "04f05164e6de517134aa5e78aefa7382fdbd367074ff790bf717355c81b1ec8b"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 28928,
+          "bytes": 256,
+          "sha256": "422c6dd557ae143cfd367e62d2a0f485663184dc9ae979ca69f95f128512701a"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 29184,
+          "bytes": 256,
+          "sha256": "0ba3d3e57cb092547a9cb2d7444a8c8000a90c5288368fbea4bb422e871e38de"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 29440,
+          "bytes": 256,
+          "sha256": "10c6ef307d48841d54e96b45b667918fba133cae887bb6c93421ed7e01f460c4"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 29696,
+          "bytes": 256,
+          "sha256": "3cb9302eda779830576f52d67b7ec54478137e38ecec03c1031ba0dd6c0867fe"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 29952,
+          "bytes": 256,
+          "sha256": "6cdb10cbdcbb4435476bf05da4dce0607eab609cf1f7485a16832fd69b546910"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 30208,
+          "bytes": 256,
+          "sha256": "e1286a87b83f028d5b0eaa46e41a372a0ed2f95d20150c7023838efd0fb4cab8"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 30464,
+          "bytes": 256,
+          "sha256": "75f3e3a78cb04112be26d314ba2bf19fa4394d0af23fae3c413d5d28cf526217"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 30720,
+          "bytes": 256,
+          "sha256": "8f37a4728751c9fba90a05f4e70b209b28685304b699c46af412ffe2d59773c7"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 30976,
+          "bytes": 256,
+          "sha256": "43a7c54eba7f205fc9aec291bda61fe60bca1de2a3b67645df0141aa8e5e8812"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 31232,
+          "bytes": 256,
+          "sha256": "fc22875cbb98f5e8e2360a72dc994e2a6378084699bd5246b42e544ac9393172"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 31488,
+          "bytes": 256,
+          "sha256": "3544fe6fce3c38721be5c62d8055c4c19882747b328c0ef1f0cd66ceaf57de71"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 31744,
+          "bytes": 256,
+          "sha256": "723bb97f66f398619f6995429b63757422970886a0ae8b49d09b7a410aa4b193"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 32000,
+          "bytes": 256,
+          "sha256": "32025c9f1e8e18210dd3ad7419ff391b868ea0f6e115fbe018dad6fde2ede163"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 32256,
+          "bytes": 256,
+          "sha256": "4e30dc5ff197fc025975dc372ac290cf3af2ae15925bf0d66d930e483568b609"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 32512,
+          "bytes": 256,
+          "sha256": "d8a2deb5f5c12a596ae86c9d4bc70a30907b794892fb8eda2dc593d83c9cd1b8"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 32768,
+          "bytes": 256,
+          "sha256": "efd2cc366cc81a3b45de15d073ce0c35792f0471016b712dcd5fc9dc0f1febfd"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 33024,
+          "bytes": 256,
+          "sha256": "22a4e27c20b1a6f8812a050dd9f8ec5e96d47620f47765ff8a02621720682753"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 33280,
+          "bytes": 256,
+          "sha256": "9db30d1be5a5a4843b82bdf62e4c350b4d69cfb13a7869b34b270a5dbb771dfc"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 33536,
+          "bytes": 256,
+          "sha256": "e54c2f768ee1d0b96edbde2c83e3b13d42248f7fc4002b132bdcee4147824a85"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 33792,
+          "bytes": 256,
+          "sha256": "5db9eeb498952843d2fbe0668f240fce3fb000b57d100a8a55fb391c6ee9b060"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 34048,
+          "bytes": 256,
+          "sha256": "e154ff5ff7888a5a901501832e0280b0efa66c9141312b86ef34734359ab8fef"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 34304,
+          "bytes": 256,
+          "sha256": "9777e8fb52179c6e80141fb26b469bee48f294b293a37de211f24e5fae763a00"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 34560,
+          "bytes": 256,
+          "sha256": "c44eecc1f8baa189f8ab88c38327fc7222b4d401fb6c6b53bc3011035eb29a55"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 34816,
+          "bytes": 256,
+          "sha256": "0c9240c42816917f59bfe6d3439319d717add01b261a3aae25c7f65c72c9287e"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 35072,
+          "bytes": 256,
+          "sha256": "2075eabbf2be6ead283a11713d37feb33d20e3e038182d586d28ee1accb79724"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 35328,
+          "bytes": 256,
+          "sha256": "fe34ccb999379d1577288939796ddf080788edd14b32095ea891c51cef406c11"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 35584,
+          "bytes": 256,
+          "sha256": "34b7dc970cf5cd42c67c4bd525ecf774c8e517bfcb8cd203e287cfcc4420c22a"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 35840,
+          "bytes": 256,
+          "sha256": "d1b71c82baaddae31d8da860b17a9ea2919f038a8e93276d0f56706c093b0844"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 36096,
+          "bytes": 256,
+          "sha256": "c3f4ebe3c4e3f8701678f0b6cd25a985a2314a99d096816f3e80f1401ab2c68c"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 36352,
+          "bytes": 256,
+          "sha256": "9fa731227d4006fa9692b4c5f970b3335c7b3ac8693e9a14c1a9eea8f3352827"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 36608,
+          "bytes": 256,
+          "sha256": "00e15be5aff01d28c6e0055b3dbaeda8cd27f1e37bc397ef7ba758447ba6eb1b"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 36864,
+          "bytes": 256,
+          "sha256": "449a069dfa14c013003115dcf922238e4bb490335ed795078775a7f188e69974"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 37120,
+          "bytes": 256,
+          "sha256": "50794f1d8b649c53dffc7279ae81882319fce72141e5505f0c57195fac23ac52"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 37376,
+          "bytes": 256,
+          "sha256": "60c0c1d860b7c2d61da212b2a068466ec234e56f541a638786332a6d9ec406f5"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 37632,
+          "bytes": 256,
+          "sha256": "b841263ff78bb592f1b819900ff4a3628b1ea10587431dabdb4a8d81fc96dbcd"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 37888,
+          "bytes": 256,
+          "sha256": "e3986a7d6d0e38b38490b5a1db6883aae7c379977dc0598774c954cb0cf8f249"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 38144,
+          "bytes": 256,
+          "sha256": "dbb6e1736e875895464dde2f4775348dfabab23335a4e9ad0969b04e2041bcdf"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 38400,
+          "bytes": 256,
+          "sha256": "dbeb8b700c603bc5c2b84f9e3aa8b9c42aca8365d11238715086607e2239f29b"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 38656,
+          "bytes": 256,
+          "sha256": "c5af06ba38293f256c9f7e4693d0658d44e4449fc58896d84dde568d696fb0a4"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 38912,
+          "bytes": 256,
+          "sha256": "1131062d2bf7c39fba5adbd3859f3c791d3cd91130926db3aeffd69682218417"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 39168,
+          "bytes": 256,
+          "sha256": "d25b3c5f27f3b8a3f8e73824d3612d5b644e45d5f9b67349c9fd094fb054491b"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 39424,
+          "bytes": 256,
+          "sha256": "9ec993a249a8d3de41a11aa0bcac30be8c51a8a78d5cf1ba0f6b8ed1dc74227f"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 39680,
+          "bytes": 256,
+          "sha256": "f1ff8b583159a194745b40484807b60b73125460cad164c031a8002d53664495"
+        },
+        {
+          "path": "documents/valid/fractions.py",
+          "offset": 39936,
+          "bytes": 85,
+          "sha256": "df56ac6da2b85e290cc2b1c7ef9fb6a96d259bce55dea535a2d4a0ad38e7fab3"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 0,
+          "bytes": 256,
+          "sha256": "e70e25f8acd825065eb28e74b25d45e51b700faa69fbf9402761f855f03b7baa"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 256,
+          "bytes": 256,
+          "sha256": "4f431eb9e7319801076994d4dae80dad591dfa7cae5e185e8669822fa5dfec22"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 512,
+          "bytes": 256,
+          "sha256": "979cc56d7452f698d204d8b06057b7416998610f668ca7b7761906d04b9fc409"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 768,
+          "bytes": 256,
+          "sha256": "23d81a0379e8ad3176ada8a1b6554c34e66306300df57b94d46bfc8271ad9cd6"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 1024,
+          "bytes": 256,
+          "sha256": "fc837c367a762bb6f3a8127375a8879f5d596663294d7905e13a725eb864e84e"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 1280,
+          "bytes": 256,
+          "sha256": "c8ab26b36f335834a24f8391acac7bcae2dd17892a8c17c5b85b0524c01ccdd5"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 1536,
+          "bytes": 256,
+          "sha256": "4a56326884059c26d138d3d8e2d3e030bf36b3236e37cbb9e75a2d66ca803727"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 1792,
+          "bytes": 256,
+          "sha256": "ee147369e06b0c193b690e2190e4468185f73e972eb4bcac6f2507978de65357"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 2048,
+          "bytes": 256,
+          "sha256": "4c7bc1ecb9480d53943871137e6658e746984cc15727fb87d94db4fd692a9c01"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 2304,
+          "bytes": 256,
+          "sha256": "8c30a47533ac4e24f99ac7c248c15fc17bb919278359016fde7c529be18c0196"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 2560,
+          "bytes": 256,
+          "sha256": "c975660f5e117f8d6586222798e709376ab6bdf9cf1b1ab218e9b0d0c1330152"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 2816,
+          "bytes": 256,
+          "sha256": "26606b3d3d0386f41a14790d2400f2b1260bd8e61d3e97d1419d413e1fcc98a5"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 3072,
+          "bytes": 256,
+          "sha256": "60c5b83f7d446ce3811866d7ae48048880226bc2b3b11e0e2e408a926337f673"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 3328,
+          "bytes": 256,
+          "sha256": "4b2046f8d2afec1b63d7d3ba9b6bd0b2d83cf23180a0e1788ceaa959afda48e1"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 3584,
+          "bytes": 256,
+          "sha256": "e71c93971f62398c66a9b20a6183b0b293a68492e8eeec6c79e06b436cfdf97b"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 3840,
+          "bytes": 256,
+          "sha256": "723b4db13359778569f8c58b1e1a3e1e462de39ee52adfe42873c2ed8bd70cc3"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 4096,
+          "bytes": 256,
+          "sha256": "76d59b43adeaf146491412cee8f92b3a9a4ae858b24a1a13a51c89cd2678b64e"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 4352,
+          "bytes": 256,
+          "sha256": "eb7b4cbf6141733aeb3b93fa3fc9774c277732e9bfd1ae0c562b03e24ba89b2d"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 4608,
+          "bytes": 256,
+          "sha256": "d78b0fab033d442d2100a9de51e99eb6c4e9b7dbe730040ee41862f83edfc38d"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 4864,
+          "bytes": 256,
+          "sha256": "f3003b8b7d6af17077df15f35771f2a932add5a6708b51ec9077217ce75926a0"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 5120,
+          "bytes": 256,
+          "sha256": "6566fa29a60030b3d504c2f8cd3d77085b945ba7f2d0b5f7b906e9e2a25c0368"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 5376,
+          "bytes": 256,
+          "sha256": "cc7a862834ced87765aaa6707acddbab7cd197c90274fad28c1bcca08f9bf2ca"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 5632,
+          "bytes": 256,
+          "sha256": "36e13ac33cbaa834cbec01bad46ea54c1cdb251d23d8b0d1bcdeb5ff4be2c5b5"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 5888,
+          "bytes": 256,
+          "sha256": "63305ba0bb41fd4757a80620b4fd591a6a6901bd72b13b18065bbc691f4f8d76"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 6144,
+          "bytes": 256,
+          "sha256": "a47a594b3d60f1c63bb5b0b7336986018fec5da36a41d2ad56330271be0a5832"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 6400,
+          "bytes": 256,
+          "sha256": "c7c7dc52049f06817ecb60fddaa080a2eba920c36b43fc4404debbc005a2f795"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 6656,
+          "bytes": 256,
+          "sha256": "f0f2481ab5646ce52eeba96e1f9b87c9252b8f84c0dc15bb4c929379bc269c77"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 6912,
+          "bytes": 256,
+          "sha256": "c4985c640c4331d3f21db3b5774867e8eacbbafa1bc902fa472353982aed511a"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 7168,
+          "bytes": 256,
+          "sha256": "f1961c7d0455a32405763b830d480fdfcf9aff3d2e52d2c14ecc9c23117e827b"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 7424,
+          "bytes": 256,
+          "sha256": "b0a913c4f312b4f1744ff59f3ee034bcbb224f0743bb2db57590a2ae5059c78a"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 7680,
+          "bytes": 256,
+          "sha256": "c83643c0e85b432e80e55bd3d17f777c9cfaaa86ef2904ed1d8c7678e1c857c9"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 7936,
+          "bytes": 256,
+          "sha256": "cba5e707e249cdcfd4793ac10d18203b9e8bb1b950e5f9ee7ae47dace5f47e55"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 8192,
+          "bytes": 256,
+          "sha256": "3631e08ad9ba84e46713754442ed1559709b7c9866911f7622401a396b69d278"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 8448,
+          "bytes": 256,
+          "sha256": "5c6215ed53066e5ccbac29e48afb969f80d42e2735f3a8ecc33da3c2239eafd1"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 8704,
+          "bytes": 256,
+          "sha256": "22b6d9d7a21b3de988cb9a54863c6011499f5feb761be32dff0f70331736459d"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 8960,
+          "bytes": 256,
+          "sha256": "d6f069b04c9495db850de1264daf0115c6018038dc665befc4a53f9c7b242b0d"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 9216,
+          "bytes": 256,
+          "sha256": "8034ec5134af6470d45b1037c09c8c2caa5ed9023831e2ad4902f0fc12b83348"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 9472,
+          "bytes": 256,
+          "sha256": "85bc7cb2542711d82bc42e5b452a6c5418197bd42c508f801d655f47e5e75994"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 9728,
+          "bytes": 256,
+          "sha256": "a8d76e0e370af6dd152c95597bac761a03f8f0e0f399355497331176ff0f413b"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 9984,
+          "bytes": 256,
+          "sha256": "68eb409746d0d6c51c5668fdff40be7285fa2e675230644395eea2f374cec27f"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 10240,
+          "bytes": 256,
+          "sha256": "0731510196479b56480ce6232c35f35ca38f5f9c7eeef4f7c1a741e02fb4d067"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 10496,
+          "bytes": 256,
+          "sha256": "75bcd0b2652b43d3ab90671e03bcc84c0cff3cb626977125743613834f7b0b7a"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 10752,
+          "bytes": 256,
+          "sha256": "53b5185a7c65d2b0dd955b51eabd65d7891b17e05eb95d37c7489e030d175a57"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 11008,
+          "bytes": 256,
+          "sha256": "e86359724eb82f0dbaadf60ed349125e786d8bc728b54c06923cd2051406d48c"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 11264,
+          "bytes": 256,
+          "sha256": "6329d2e3090fe75df59f291dcb61a4f6fbf72864dd0eb09195f36749c441e47d"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 11520,
+          "bytes": 256,
+          "sha256": "264cc0a47533eddc4b74fd504f34f4192a505aafb5ac18b9e36e113c6c988dfa"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 11776,
+          "bytes": 256,
+          "sha256": "f62fd96cfd39aa6f2072bb1cd1cfbdee96d2ae5a564e84422d4d6ca9ac7fd0fb"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 12032,
+          "bytes": 256,
+          "sha256": "145ee5fe670dd02b00eddc720003c0e248e996c164865f6fbd9ee32885a892a4"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 12288,
+          "bytes": 256,
+          "sha256": "840266c34b9cd8e6b704b8805e665ad5ffaab65e0731ab080f311af2c4d4446b"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 12544,
+          "bytes": 256,
+          "sha256": "c49e8632f6548c3eb29968a495efa54c85ca09da3173de3a75770a03ba3aedfc"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 12800,
+          "bytes": 256,
+          "sha256": "c546ed551c75aecd30a6e6230cdf070d1e3cbba9853abc04b344d96cc6700007"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 13056,
+          "bytes": 256,
+          "sha256": "ba29b0e10a9e8badb9c6d05fc680c7fe243db33dd5e261b9fcb62ec8f99faeaa"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 13312,
+          "bytes": 256,
+          "sha256": "982c8bf8b8fbf558aa8d44818006ef4abb2fa686c2b86972edb0cd7c5a6ace52"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 13568,
+          "bytes": 256,
+          "sha256": "c290cd73a60e0a378e154137defac8f437b52d4135f60459a80cf48265c3ce4b"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 13824,
+          "bytes": 256,
+          "sha256": "bcf00b07376e1a1c3f781a698400dcc7a556467d009c4aff674326995f1cf9cd"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 14080,
+          "bytes": 256,
+          "sha256": "7a6303a6d176e3727a88e07c9ccee2c7ab879e4bd9838256653ab64c37121e58"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 14336,
+          "bytes": 256,
+          "sha256": "a024f013374e5b88aafba30d6cf743beebd14795ed85e8bd5691e37505ed243d"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 14592,
+          "bytes": 256,
+          "sha256": "27ba962e009057d950641bde6d2447451291818a0db42d2bc232b2b546f63790"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 14848,
+          "bytes": 256,
+          "sha256": "be7621f2ed76266682b4829d7bf4e64c89a5ae06b32bd9ce554b9c4d8b769245"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 15104,
+          "bytes": 256,
+          "sha256": "3a2aa1a92f45b40ed5db9f739d3980f0fdaaa137279f5a094535a89b94e7bb7a"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 15360,
+          "bytes": 256,
+          "sha256": "dc63aa5b9c37fed381247fc5ca650275ea5b53cb401c171db99bf6bfe9c998f2"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 15616,
+          "bytes": 256,
+          "sha256": "0f9e5c07afe6e707fa95543fbdeb428b009eee4279da584120dee1194759442b"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 15872,
+          "bytes": 256,
+          "sha256": "816c9a93836d3ded7ead4b76b0461c6de030e9e1ea72b866a2d4f08e8d6268e7"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 16128,
+          "bytes": 256,
+          "sha256": "8f903ec9c09c57996b7dd073be87fd089bd69b7707d333969aa1e73cf5a88df5"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 16384,
+          "bytes": 256,
+          "sha256": "a357808202cf2123c9110f51f96e8278c792c96170c1f45c6e5083fd60cf867e"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 16640,
+          "bytes": 256,
+          "sha256": "97cd0debb9be8dac74cb6acb83e17def4029be9420a3549e8c4150e7df293fee"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 16896,
+          "bytes": 256,
+          "sha256": "a8eba7dd1b8cc81eebf3b30078eae5371c6971b284d2fdb2fc8b167f8bf70a28"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 17152,
+          "bytes": 256,
+          "sha256": "a064cce2d3f21622310304bc01b9e17ac0548e47c05243956e3fb1b309c6b38b"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 17408,
+          "bytes": 256,
+          "sha256": "e579806015b48163e72c641e1084ebcafc649f44ed9ccb2cefd05f988c81bd5e"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 17664,
+          "bytes": 256,
+          "sha256": "8df430ea52b7a4a8a2dc681b36c6bcf61bd14dd8c10e465338b3eaf3c9e99f3b"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 17920,
+          "bytes": 256,
+          "sha256": "5e37cefa9ff0b1e1c8a1a8e51ee30f04dbd4e1e379dafcba11947279219a3d85"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 18176,
+          "bytes": 256,
+          "sha256": "88ea4432aa1bcf3820e7f9f979a5fdb9f526d700b01cb00e6ec3ffcf06991041"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 18432,
+          "bytes": 256,
+          "sha256": "62f1ceae50803baa781827af2700f814ce788526786c8ef673eac42ea9ae6edc"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 18688,
+          "bytes": 256,
+          "sha256": "40de1d95d8bf955816f756066256c2c778821ed906a19aa986d0fac7932fb9cb"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 18944,
+          "bytes": 256,
+          "sha256": "447395c6e61fdf55ee3fe708824620744bc068f8d8483d4ee664be8d6f30947d"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 19200,
+          "bytes": 256,
+          "sha256": "e54feaeacd373dfbe7c44345188c7ccc63d2a6c22297dc9992fee05da32fa1f8"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 19456,
+          "bytes": 256,
+          "sha256": "cefca6f564971074823804493c7f2e47bd549aa65c044d541917efdd47716308"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 19712,
+          "bytes": 256,
+          "sha256": "7ccf39b4c86ddaf4103854beb5b6d7cee0aa0689f5de757142bbad33907b473d"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 19968,
+          "bytes": 256,
+          "sha256": "6cb98a8556c5b051e69636aab70bf34fad25a3f156f37d8c20138c6b997c88ea"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 20224,
+          "bytes": 256,
+          "sha256": "f92bfb204f377ed111cb3e41cd759b1d33507049d962444a3881c8b530f05f79"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 20480,
+          "bytes": 256,
+          "sha256": "2e37238d9752bdce232d55e7635f20297f1c1fe8e6dd48e1f4e2f01096732148"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 20736,
+          "bytes": 256,
+          "sha256": "4f58e96812b43de0d31b39778c918aeb266eeefab09afa2dbde4ef801acb010e"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 20992,
+          "bytes": 256,
+          "sha256": "a37cba1a20b9bd384c49138b9144021622dac214254267d952a9417c3354f7f9"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 21248,
+          "bytes": 256,
+          "sha256": "b7ca5da63c70199d321a4a1b4778f26511b7bee5e5850031c21d70e70e925c6f"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 21504,
+          "bytes": 256,
+          "sha256": "195162e689d45b85240bdd704178fe3a5ba143332c31daf03fde65e07fa62c69"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 21760,
+          "bytes": 256,
+          "sha256": "765a74a98f063c589904981339e753d0db7926bcd5b46e3ef7c6d5014e0285e8"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 22016,
+          "bytes": 256,
+          "sha256": "857c19b2bb4b2e780f62e0b3c8ceabdf6c3428e7ad32277c2720400075407ae1"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 22272,
+          "bytes": 256,
+          "sha256": "1218b94c22d46142346e4800468449c196bf14ecb4f6cbe10a72ef1e5dcfa9fa"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 22528,
+          "bytes": 256,
+          "sha256": "928d263e3fccdf236144a7d92c0475814eaf6710e7e67d98409e9d974a5b180a"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 22784,
+          "bytes": 256,
+          "sha256": "2315db71ef95ee45af938ead415205ddc9b550520e05564eb0b993f7ffc6605f"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 23040,
+          "bytes": 256,
+          "sha256": "ec72f71dc6963ea56725c9f4da72a7dd80171bb5b17cbb58749205b35b4a6862"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 23296,
+          "bytes": 256,
+          "sha256": "2189b4f6e0b469bc11cd0255fed1144d89f196de758334d8b65a1f5b5025e81d"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 23552,
+          "bytes": 256,
+          "sha256": "94b392130b5524f8ce39bf0d7b32e6c9af6a4a3131db52ac9b18e92c4238fdb9"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 23808,
+          "bytes": 256,
+          "sha256": "5d5d4c3b430017dd8b72c079a9aaa39468d741be2855f81254e8b69796e8585d"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 24064,
+          "bytes": 256,
+          "sha256": "444763f6f9c0d3f832305e0716ab43ad5cf78c1e9bf038e1b32939d79a4ad13a"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 24320,
+          "bytes": 256,
+          "sha256": "8635739978b0fe3bdfd812d4e601bb275146dce3b3e12c21571e2c267832a5bb"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 24576,
+          "bytes": 256,
+          "sha256": "133c86a4580c5df417dae422f8e8e75db2098d8d3e67c9fb4e7be38639b55eb6"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 24832,
+          "bytes": 256,
+          "sha256": "77a8f219a7a9ae5577bfb3221b2e30a2351440f25ce36a96778becf7cb6a99c2"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 25088,
+          "bytes": 256,
+          "sha256": "f9fbdfd435d9972a9034309d3f51919cf0aaa14b24fe308cc71ee80ae4aa6d4b"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 25344,
+          "bytes": 256,
+          "sha256": "efcd5dbcb7163d8f11f35031d6677df902d053e83872c01e8b908a441ed31f7c"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 25600,
+          "bytes": 256,
+          "sha256": "3f4c5be8562b0f2d72735ed6ce6b10ae2e3b57d502caab576ea22b93c3eb6648"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 25856,
+          "bytes": 256,
+          "sha256": "e68b0b00a4af9c00d54ae0416fd3dd99796ae8e64a0b7950e1aed380913e9de5"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 26112,
+          "bytes": 256,
+          "sha256": "f65f2db34ff5ef229d502de4e2cdf3078645e51a1f0e52c3286df7b5c2af56fe"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 26368,
+          "bytes": 256,
+          "sha256": "82fe381bf56440eb7b5ea71ffbfa724cab531d303730012e43fbd9e6baca81a4"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 26624,
+          "bytes": 256,
+          "sha256": "c722ac60cd3917782e0967fe0a914109c8f9f53957fe4b51869da0f456ff699a"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 26880,
+          "bytes": 256,
+          "sha256": "f25d4c5528a7fcdf261c72eae7aaab992d987705f9af936b6ba3163a19da019b"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 27136,
+          "bytes": 256,
+          "sha256": "ad1659c3a299e83cd1622eb49f5f52c74d82ae31d8ad50478dca2887f36f00f0"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 27392,
+          "bytes": 256,
+          "sha256": "f2be654fda42540eccf42175a01764c0c9acebc0ae56970d9ccb2843ef6f6f34"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 27648,
+          "bytes": 256,
+          "sha256": "5298c286be56a92f5f7a0857c1ba2e7ed97663e96c855cb22a8c91e4dab18b11"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 27904,
+          "bytes": 256,
+          "sha256": "97c102b1eb67bc9bebe4f26f76b0df4586dd6241a968c400dbdd9727ea6731ed"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 28160,
+          "bytes": 256,
+          "sha256": "46f0c6aaebf175211eb0f52b04783147f8daf68cb2ea5192e68cefb70f103b0f"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 28416,
+          "bytes": 256,
+          "sha256": "f4a0efdf0d3ea9c8b7e56c52285184f9139b8d0545917408a269804c95f207d2"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 28672,
+          "bytes": 256,
+          "sha256": "64b98a9de244073d03ff8a72a51a81cfbdc5dd558b0d8c92158acbfb949af424"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 28928,
+          "bytes": 256,
+          "sha256": "8bc82093484eb55a33a2aa342a65cf018792412e5d309b299637bde358d7a403"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 29184,
+          "bytes": 256,
+          "sha256": "578d978ad490955a02ddee3d9be9ea5cde37ab1a43543cf95be57cfddb4fcabc"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 29440,
+          "bytes": 256,
+          "sha256": "41aa44584e9fb38ddb1e7c9fd7141dda472d99b9e846dddcbae6f60947010365"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 29696,
+          "bytes": 256,
+          "sha256": "7a688f19dd972a2ea4fee2899c609767f4c38c0a6192c7e8d125e59e6807a98a"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 29952,
+          "bytes": 256,
+          "sha256": "ca434c1d0034897d580f0f37f8c86020916e4cf01dc2f3a432735b474f52a3d6"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 30208,
+          "bytes": 256,
+          "sha256": "21e98ae8cbd86cd28cb7dd77396f99a47b4388e8488faa329a90072ccd6b6739"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 30464,
+          "bytes": 256,
+          "sha256": "d63687baa2bb6a4ba6727e04f9eff4122c5eeabead410b17fd87e2a4f2082392"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 30720,
+          "bytes": 256,
+          "sha256": "7457f420d6767949dceb0d214de20899a489d47fd43190f73ebbc31fb59b66b9"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 30976,
+          "bytes": 256,
+          "sha256": "091bc2609b4e14df60100b688b9bc7e1d19cc75093b623c73fed690f422bf97d"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 31232,
+          "bytes": 256,
+          "sha256": "8fa132eda3b803114725e41398efc3c9980b3280cd354f6798ca1fc40dd7adec"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 31488,
+          "bytes": 256,
+          "sha256": "281249b0cff694beeaf34de744ba11e0252276cbbfa1b5b81a54b6479fe1f572"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 31744,
+          "bytes": 256,
+          "sha256": "7a7e12d30dfcfd5584a000e12e973da9ec33f6da9bf68242b7788d5142989fb7"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 32000,
+          "bytes": 256,
+          "sha256": "dcd4442f90cd19bb029de185cb57f40028761ea6f87f646b60e9b6174fcd25ff"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 32256,
+          "bytes": 256,
+          "sha256": "0201eea629e7bfa88ba6df4276b072c388c2bc5e45b29758c51de7b05df3116b"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 32512,
+          "bytes": 256,
+          "sha256": "3acb6068382594b1911df3f743abcb5731b676ad1ff23714b1d0f4a9bb8392b3"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 32768,
+          "bytes": 256,
+          "sha256": "f7f39ed9da4755b92ed2c27f8f129a8235913f9a6012e02ced38cf56824fb7f4"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 33024,
+          "bytes": 256,
+          "sha256": "c17a24066c87c8244539543dffc6e2883e481cbdf03246004801c6c2216f9f17"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 33280,
+          "bytes": 256,
+          "sha256": "3568efda38940c4e7dd5f3f5432bc5988479bfd72443e4177c983500e4e76b84"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 33536,
+          "bytes": 256,
+          "sha256": "f2e04f487ac7f7a4c3703ca4f5275465554ed13f932932348d71474763d59b9c"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 33792,
+          "bytes": 256,
+          "sha256": "b9ba80f9b64b8a2b85ba0994d9610511f17fb61add5bc9bf4ce4cb769294b43b"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 34048,
+          "bytes": 256,
+          "sha256": "d34db520244bceb6c40816cbec49454056f4f765533ce091d7df68eb9367d705"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 34304,
+          "bytes": 256,
+          "sha256": "721bdc678a22bd47ae912921c0f961ec722cf2b10ca1cf1afb49b1ae67cd3f11"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 34560,
+          "bytes": 256,
+          "sha256": "67a0ec3edffa50e485e91b4c84497987285fbdca87778a6d8d1b7a3854680eb2"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 34816,
+          "bytes": 256,
+          "sha256": "e8eb9d3a4218b2c03c87c31b64aa821d23c286bdf72e7141820d5abaee78f489"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 35072,
+          "bytes": 256,
+          "sha256": "200fdd7d0554da1f8fd88eab23ee52ed7f674bae4365d2838e4d5894f7659a55"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 35328,
+          "bytes": 256,
+          "sha256": "9d322e2d4ab05eff0f669a26ffe80a40a99a5fac1c15d43c8b57df40b458f1ce"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 35584,
+          "bytes": 256,
+          "sha256": "f7529ea32d2701945ec8270e96bbb02f610ac7fcd5c94c03c992b2b15216b2ec"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 35840,
+          "bytes": 256,
+          "sha256": "bc78770a7a4ac940a59c28cee9583bb07559f970bf22e6d2007a755461554ff3"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 36096,
+          "bytes": 256,
+          "sha256": "b9408fe1019fc1fd6bda7ed561f69692467641a6411556caad96b30254c7bae1"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 36352,
+          "bytes": 256,
+          "sha256": "ac3ddb571dc0075c048d2c662f4d9fc24afdb430b974a491c61ae883f53960e0"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 36608,
+          "bytes": 256,
+          "sha256": "657088554e0eaddd47701dd0c924dbacb4f3dd6db13a4bee7c28b2c3c0a00af0"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 36864,
+          "bytes": 256,
+          "sha256": "c4707e40d4c5e36f1d8d9f0cf01481ea8288204eb9830f0abd4e084579501484"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 37120,
+          "bytes": 256,
+          "sha256": "7864edbaf5353c33f8a1c8e806fe3b3a513352bc381e963b759d06fdb2f4d895"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 37376,
+          "bytes": 256,
+          "sha256": "1551b1879e66ed6da8231330ddf4cd3e7280a81ef54ed9888f9762005f73fa79"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 37632,
+          "bytes": 256,
+          "sha256": "c7794dd9a66b01064f30998de7117e76029c38f1287e623c213122562ff44cab"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 37888,
+          "bytes": 256,
+          "sha256": "77e265dbfeeb8bcee1d1715b5c04fcbf1737867a7c78677bf3b2713642e38de0"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 38144,
+          "bytes": 256,
+          "sha256": "70f30de0665ff0970331f04261f15a9bf61b3084bf76e0092fbeca5bd92d5f9b"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 38400,
+          "bytes": 256,
+          "sha256": "bdf403f9e73a7273496a66cdedcf9df2affa4a55b51c9abcdf74a13d4c7a75fa"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 38656,
+          "bytes": 256,
+          "sha256": "43f8c49561bf3e3b9e24a476b6f0d9b5ff845a5771b625cf58f37cf85eba9382"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 38912,
+          "bytes": 256,
+          "sha256": "9d7a578d50ae521004a4490fdef2baed4808533ede40c7b76ed3980531d89d75"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 39168,
+          "bytes": 256,
+          "sha256": "f88a2610b04cf3234657848f2dc71aabf047f5e50502c6d703197292077c2161"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 39424,
+          "bytes": 256,
+          "sha256": "5a143a40266d631e8043bc706ac9ffdc57f20f2a17791e31ee8493a620a65777"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 39680,
+          "bytes": 256,
+          "sha256": "7a8bc052cb38320bc09a2b39a28a1e67ad9b8646c20ca191f6e7f6977d8a0784"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 39936,
+          "bytes": 256,
+          "sha256": "2cc8e71f2b95ce84fec705a5d5da327548e4927d34dffe86363e2cdc3fca38e0"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 40192,
+          "bytes": 256,
+          "sha256": "70bbf3040bcb920bc61a1f5ca275377697a656fd471168b438eeaf03fffd31ed"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 40448,
+          "bytes": 256,
+          "sha256": "69cb647d59842787f4d302dd2b0a0ed223359777cbe5f16893d2496312bf64ae"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 40704,
+          "bytes": 256,
+          "sha256": "1e0d482b6028d7030f709eecd33102a8b4e2e68c0e55413519cddea77721c695"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 40960,
+          "bytes": 256,
+          "sha256": "338629706a078567de11f7bcd294f4027a7296fd981432578eeee0e685db4ee0"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 41216,
+          "bytes": 256,
+          "sha256": "3819821372addee656ec62449696a6c10ea080adbebe2462f219f97b7c9a103a"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 41472,
+          "bytes": 256,
+          "sha256": "50051ffa8966e767915fe3af3c2dd2ac5ff8d772581e10f28e2ecb7972fba0ab"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 41728,
+          "bytes": 256,
+          "sha256": "6de98793d27848e82d90a0b21b31a71524111424c383cc43b12dc5cc468723d3"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 41984,
+          "bytes": 256,
+          "sha256": "be168fa77e29d34d1707c751c97eaf0f58747050dfc6e31b6ef1b7ae5643f3d5"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 42240,
+          "bytes": 256,
+          "sha256": "668a6dde5c409c3edaac63ae39f3a2bacd639e86686eeede9fe9c45e62e31851"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 42496,
+          "bytes": 256,
+          "sha256": "b4d5866c1b47e5380b37f37ad3f0ec2a4e3052043b2e308fe548c7b6d6ac9082"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 42752,
+          "bytes": 256,
+          "sha256": "9eda7d9e82d1b3a0acbfc62ca4bf3bd709fb3c7c71da9dc0c04ca50d68236335"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 43008,
+          "bytes": 256,
+          "sha256": "5f1c6669683643e7e85d5ed6d545365f868cc92ebc6fe6ebbb49037949ea6179"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 43264,
+          "bytes": 256,
+          "sha256": "546797b62ff1af5b70020b830f8ff038e3cee2c6de2afc409468f0d0d9ea4136"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 43520,
+          "bytes": 256,
+          "sha256": "d6df07df94f8623d4ec327ab03b20aad6cfe044deaecf208f6c8046fa1fd439a"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 43776,
+          "bytes": 256,
+          "sha256": "be6313580d09b43acf08b45838a34c28cd895c39858435ddf650344c6ea53751"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 44032,
+          "bytes": 256,
+          "sha256": "18e42272bc36ec8fa059bfabbd4f89a1f185de1e383a5888a6b99b422ed8859f"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 44288,
+          "bytes": 256,
+          "sha256": "b60df4635045ca14d2c4e39d6bb14d0988d8e828abbd7052a83b2d99ae31f87a"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 44544,
+          "bytes": 256,
+          "sha256": "6e3928b3b1adb6f411fccf2abcf3931c5a0df815c7dffdbb767e7ed70bbf7913"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 44800,
+          "bytes": 256,
+          "sha256": "b3bfdf5e7e09a2201b41a28585e92132b66f660d78ae361d08ecc18f106464ef"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 45056,
+          "bytes": 256,
+          "sha256": "241630784a8705c7c37421a62058826adaa34290a8c06c0bbd08e518d22f3eb9"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 45312,
+          "bytes": 256,
+          "sha256": "03a9785797884935d787b3d51ad3d49971e2ad7a55cb7bade08ceff60fb51df7"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 45568,
+          "bytes": 256,
+          "sha256": "da90f09bef611f0e7767b6673326a959b0d93b6496d92c52e60e8d591b8bed36"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 45824,
+          "bytes": 256,
+          "sha256": "7130f777baa81d5e243ce44f98e600850bc5929c4a7a53d9ae561ae03b2908d2"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 46080,
+          "bytes": 256,
+          "sha256": "a53edd3b4b11bde3e9aba1455645d1b9a0ce66aa3e3202351ae27ab9a34f7d8d"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 46336,
+          "bytes": 256,
+          "sha256": "43d792c505f2f4fe7aeccc25b2ece94ae049d74f2756b8c6ff8acc147a18e437"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 46592,
+          "bytes": 256,
+          "sha256": "0a9554fd0fd92ccbaf76d7f42fc5f33eeb8a6fb0b702fa63eb996c491422ddd3"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 46848,
+          "bytes": 256,
+          "sha256": "e385d0a4c8bcf99faf8610036f7d7c452c9d2f16b07e90f09443a541bfd1953a"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 47104,
+          "bytes": 256,
+          "sha256": "d005888b445c58a5217ebec95fca51e5df5c0aaf399d478c769d304ae45f8116"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 47360,
+          "bytes": 256,
+          "sha256": "06bb9e340166a4d8779fab4a71b26dc637eba2c152d03229a278c3c92c3d4c62"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 47616,
+          "bytes": 256,
+          "sha256": "28924183f58c4c4f42535444ca56ac5373a8364624ff681deff21747e0f1fd9f"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 47872,
+          "bytes": 256,
+          "sha256": "e021beb57d8e2f3f99d2a724b72abf505ae7adb8f23f14be56f66a4f7776452e"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 48128,
+          "bytes": 256,
+          "sha256": "8ecf6efed1ce996740db58cecdea5c20049cebe42e152608a78fde6f330fc8bb"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 48384,
+          "bytes": 256,
+          "sha256": "2241fd7a577d759d4f3440015181b8d01d86adf28e1379bcea9e0f92e56ef5a4"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 48640,
+          "bytes": 256,
+          "sha256": "18087da35e176c63bf70902ab1206961838e6b88589a5b61a3051265ad6b1f34"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 48896,
+          "bytes": 256,
+          "sha256": "0ddc40ae20cb48ec9e17674b1c3ae53aaded723abd3f2ec954713b52a6b469c6"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 49152,
+          "bytes": 256,
+          "sha256": "dac0f182fef30e65657b3d4afdfadd063b644ad40947e3fb769d7ce489fc1907"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 49408,
+          "bytes": 256,
+          "sha256": "00f96cc2c042cdca271c67d8b19ce97c6e9372a1daba40e9ecb573acad7ac0d4"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 49664,
+          "bytes": 256,
+          "sha256": "4a74c9130009b69b247c00cf104d11e752f8f7c835d4e77da722e7c3b614a0e3"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 49920,
+          "bytes": 256,
+          "sha256": "b62668fdee65ebda2f7680ebb2f893e037c0fce806757e46fa1670dfbc50291d"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 50176,
+          "bytes": 256,
+          "sha256": "04074f96125bdf8e344b50cad0df8f7137bd6aa644de814cb3d8a8b63782e912"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 50432,
+          "bytes": 256,
+          "sha256": "f11b24aadddb084c90098ab2205bf86400a76f95df491e188845ed4c0fc631aa"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 50688,
+          "bytes": 256,
+          "sha256": "c6f8ff7be85082a7ce67b023892d175ec26d9199946069c807fb4fa98f622f06"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 50944,
+          "bytes": 256,
+          "sha256": "c9906afe20a0bfcc1b8fda18e773b1db30959ff8b9749973b6d1b8d0892d26a5"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 51200,
+          "bytes": 256,
+          "sha256": "5cbaf43e73e901acb05e2cfe81d5f85f276181f08e23901a206b8e4d9e13e411"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 51456,
+          "bytes": 256,
+          "sha256": "04fdbf869c85d2e60282b13c72afa61cad2bf7d6cec52df8828a5eabef7ae88f"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 51712,
+          "bytes": 256,
+          "sha256": "f87304a325ce986e33e998074f92def143cc02c102813051e8a8998abbd7b66c"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 51968,
+          "bytes": 256,
+          "sha256": "4a283a2b9fea89fb92d0824cd74b43f853c8e6f5b1e731289a585a02373696d6"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 52224,
+          "bytes": 256,
+          "sha256": "1f330ddf0d398b0c26cb959e0c1e961d7e0497e2f315a217dcd50705a61fc1b0"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 52480,
+          "bytes": 256,
+          "sha256": "84c7452cab68f382357ea08828efc321742aefcc724715d56f6b4750ca863ccb"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 52992,
+          "bytes": 256,
+          "sha256": "a46946332f0f3733a04b308e6239c67211dc046627e412075d5da5f759e33d11"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 53248,
+          "bytes": 256,
+          "sha256": "618323dd9a73a96a114130d16658ba93d2f1714af6d546caf289b9cdf991f557"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 53504,
+          "bytes": 256,
+          "sha256": "89095e50c63afe1c18e2f9b631140fe9bcdbadd6390efe54fa41949894b7504e"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 53760,
+          "bytes": 256,
+          "sha256": "a648f6774ad61c4efdc400c4b998735788a69b42043eae250a12fe36cfd04ef2"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 54016,
+          "bytes": 256,
+          "sha256": "bad58167d381f90daeb3295942b8e62eda1c647c23a98db66fab3db2e51e7046"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 54272,
+          "bytes": 256,
+          "sha256": "2f47417cafbba75cdb830d59bf1a207a4798314d854e394e6a344862ec29b74a"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 54528,
+          "bytes": 256,
+          "sha256": "365abdb13da73c231dc40e37a3cd1cbe81d2b8006964129623cb1be93f71e225"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 54784,
+          "bytes": 256,
+          "sha256": "6bec10c25a10bcc769cbc66c0ceed78cfac05877519f7810e487b3d7e18b1507"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 55040,
+          "bytes": 256,
+          "sha256": "4d55bc7f56bc94aa3e774a6477c0bd9e2c7bf34d565cef988d2b8bdbbd17ba88"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 55296,
+          "bytes": 256,
+          "sha256": "153d9202726726c52a83350eb92bae8bcbd37258e0d5ad29c008aedb1088bc12"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 55552,
+          "bytes": 256,
+          "sha256": "0091a5e47423eea04ae8d7b12beced5e9f0b704463e5daca7d19ca4d2dbafcc7"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 55808,
+          "bytes": 256,
+          "sha256": "e604b210e6d29c2f9252d54fb49d04f5d1bcb809c8b57f46e7a15fb3828eec6f"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 56064,
+          "bytes": 256,
+          "sha256": "37d2dc636256f498969303057be7c0c942f2fb2065914b49e1cc1683df23157f"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 56320,
+          "bytes": 256,
+          "sha256": "bd28c32cfd220fe8d5bf427130d02ef9587e869978e6e32bd6d0a5d50b9dfd92"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 56576,
+          "bytes": 256,
+          "sha256": "98fc0cf8268fe3a742c565692e62006270cb43bba8481c19f77c4fb44b901392"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 56832,
+          "bytes": 256,
+          "sha256": "6e74daa642d69fba56046457816fd7334de86af98481435c6730630e3dc26cd9"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 57088,
+          "bytes": 256,
+          "sha256": "28494e949ac7b3610621c8f598c26e8a3bd12106d3463374559853b742828230"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 57344,
+          "bytes": 256,
+          "sha256": "fc7b8fc0b61a173b8604c2d58077c09f0b2927140f1ddfed11d60cb7db813973"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 57600,
+          "bytes": 256,
+          "sha256": "007628be015f948fc570098d6c3424977d9dc448d26c04d1c185421f2304fab3"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 57856,
+          "bytes": 256,
+          "sha256": "d71e2943c836338178facd0e5d9c57a2a23ae237bcba072a4a9dd00a15015e35"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 58112,
+          "bytes": 256,
+          "sha256": "d10572819c869fad91d26b580b2ae8c752c9dd4db810fd74a6be54615c24491c"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 58368,
+          "bytes": 256,
+          "sha256": "d4c0a39726af9182a8d19ce931ef2960bfb6f662bb919703b10c408428a7d39d"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 58624,
+          "bytes": 256,
+          "sha256": "a4d188a64a18207832e64372fceae3b73f6aff53b2691bcbfc449e0f67d62239"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 58880,
+          "bytes": 256,
+          "sha256": "d223f9ea725e8db399e9a1e261dcf2330d6ea520b61d6ddb7e75864b954db6b5"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 59136,
+          "bytes": 256,
+          "sha256": "6dd87491797a5b070f4da1fa9ea48a166ef610dc4cd3a55233561c2a2626b5c2"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 59392,
+          "bytes": 256,
+          "sha256": "84b544190b8b3478563d21869950a8bbb95f3161a1bf065f773bbb51f6c1bb16"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 59648,
+          "bytes": 256,
+          "sha256": "42d0b34470f6dac012a74fc3e181f499179315a4c3af352785c87052373561ba"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 59904,
+          "bytes": 256,
+          "sha256": "0228476501c4ce49130867fa4c6db8dda47bf5f71dcf030e82ebd06034676254"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 60160,
+          "bytes": 256,
+          "sha256": "5667ffde4d231771ef19a1450d4ec7bc0ffcd231f3935dc2defd7d699e9ae000"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 60416,
+          "bytes": 256,
+          "sha256": "2d2d90052994231a6a1334cacba2735d2bd0fd1fa88eec1b139286ebb0e7f79e"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 60672,
+          "bytes": 256,
+          "sha256": "f21f9681f95e5bf43806f3ff7d56b7f95aa74ff84250b23bd7d3a7c2639a6458"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 60928,
+          "bytes": 256,
+          "sha256": "1a84cb77980db1037b1a4a36bab9811c2298b40e7c6f480216f28c2b2f8fa016"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 61440,
+          "bytes": 256,
+          "sha256": "8b62e647bc89282495acc2d0337a94ac4911488de65db0077c3cd9509be8e6f8"
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 61696,
+          "bytes": 135,
+          "sha256": "3561c947d311799bb83bac7030f71721d76a360907854d81a63901bc362646a0"
+        }
+      ],
+      "removed": [
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 52736,
+          "reference": "documents/valid/statistics.py:34560",
+          "kind": "shingle_near_duplicate",
+          "containment": 0.9787234042553191,
+          "jaccard": 0.8363636363636363
+        },
+        {
+          "path": "documents/valid/statistics.py",
+          "offset": 61184,
+          "reference": "documents/valid/statistics.py:29184",
+          "kind": "shingle_near_duplicate",
+          "containment": 0.967741935483871,
+          "jaccard": 0.9090909090909091
+        }
+      ]
+    },
+    "test": {
+      "path": "test.rawblocks",
+      "sha256": "ef33889bdcd5d50081c4f977194ecd2258d67e304b805ed0b01ed2a8388949ab",
+      "bytes_scored": 29480,
+      "kept": [
+        {
+          "path": "documents/test/graphlib.py",
+          "offset": 0,
+          "bytes": 256,
+          "sha256": "db1275716a17df920fabe9d1cbc82cdc3f51a38f0161d5a34fdd8dfc7e6ab349"
+        },
+        {
+          "path": "documents/test/graphlib.py",
+          "offset": 256,
+          "bytes": 256,
+          "sha256": "a60c73d9a315f7dab7f4cbfbda01f4a53c033b9806a2c7b4d458d91a6bf3309b"
+        },
+        {
+          "path": "documents/test/graphlib.py",
+          "offset": 512,
+          "bytes": 256,
+          "sha256": "89b5d4531419ca9aceaeca6136beb1ba3a49423c2bacfb6896ac8fe3f03513ca"
+        },
+        {
+          "path": "documents/test/graphlib.py",
+          "offset": 768,
+          "bytes": 256,
+          "sha256": "b4fa8586456e2994bd7d3285701eb1e2084a5bbb2d8939ef0dd901526f6a2b54"
+        },
+        {
+          "path": "documents/test/graphlib.py",
+          "offset": 1024,
+          "bytes": 256,
+          "sha256": "0206a3bb89e7b8a7a1b2cbe2d98aea24955f3d376d0d18d533c20650cf7d3488"
+        },
+        {
+          "path": "documents/test/graphlib.py",
+          "offset": 1280,
+          "bytes": 256,
+          "sha256": "318576420e2471e02fdad46e6a43577135f8b6e64b17504d3fb51e90a95a770c"
+        },
+        {
+          "path": "documents/test/graphlib.py",
+          "offset": 1536,
+          "bytes": 256,
+          "sha256": "415a86b5bcf83b49120ff9a70cd05c4dd27f33e74ce0b64376824f6b12adb8f3"
+        },
+        {
+          "path": "documents/test/graphlib.py",
+          "offset": 1792,
+          "bytes": 256,
+          "sha256": "5ca3945b0f8933a0ba4dfe8628b13f5c18789cf83926f6e66c218555594e5c37"
+        },
+        {
+          "path": "documents/test/graphlib.py",
+          "offset": 2048,
+          "bytes": 256,
+          "sha256": "ff25a9008755b0023475d65b2e3d7e0259a3ce25a1b2c85b0ec8cc958ff1dd39"
+        },
+        {
+          "path": "documents/test/graphlib.py",
+          "offset": 2304,
+          "bytes": 256,
+          "sha256": "a58851d5817465f813842b930703539dd63cfa8f6d963b4670b1b9c39e6069d5"
+        },
+        {
+          "path": "documents/test/graphlib.py",
+          "offset": 2560,
+          "bytes": 256,
+          "sha256": "73c62fab6d74504728d0c756e3ea59131e832f22ff4ec73132e0983769a38264"
+        },
+        {
+          "path": "documents/test/graphlib.py",
+          "offset": 2816,
+          "bytes": 256,
+          "sha256": "422191fb5c5c911e736a3a06397155183f53fd07a3dd196425e24771085de83d"
+        },
+        {
+          "path": "documents/test/graphlib.py",
+          "offset": 3072,
+          "bytes": 256,
+          "sha256": "8bd15e6ed9d50613dde175ad94211ff8bf66de35450f63effc05426a041bef37"
+        },
+        {
+          "path": "documents/test/graphlib.py",
+          "offset": 3328,
+          "bytes": 256,
+          "sha256": "f10bff73ed457b6a3f3604ed01a05c220f465d87b4997f5ed6e5370489d977e8"
+        },
+        {
+          "path": "documents/test/graphlib.py",
+          "offset": 3584,
+          "bytes": 256,
+          "sha256": "b189737e7768332e6ca863f57ffe5b63861a8a60c60735e9c60d64569870522c"
+        },
+        {
+          "path": "documents/test/graphlib.py",
+          "offset": 3840,
+          "bytes": 256,
+          "sha256": "6246dcc967a99294b0e466bc82729d4c9f5e5df20507d5c0bdc7622d99e293cf"
+        },
+        {
+          "path": "documents/test/graphlib.py",
+          "offset": 4096,
+          "bytes": 256,
+          "sha256": "25d971b8257c390f1db1eaf44d6095232f7a10231a953d5ea181991458965d72"
+        },
+        {
+          "path": "documents/test/graphlib.py",
+          "offset": 4352,
+          "bytes": 256,
+          "sha256": "50372e857ba4e4bb686d424789c3d82c8f8cfcb02c7b666cd307b8c8236276bc"
+        },
+        {
+          "path": "documents/test/graphlib.py",
+          "offset": 4608,
+          "bytes": 256,
+          "sha256": "8ebf1d234d1aa2e2304047f6c5fe3968d7c10b5314e5b05e2e2cea064c32973e"
+        },
+        {
+          "path": "documents/test/graphlib.py",
+          "offset": 4864,
+          "bytes": 256,
+          "sha256": "439e36c0b949791056e40d38e6f0aa727f8592d6653c5560d105acf17eff051f"
+        },
+        {
+          "path": "documents/test/graphlib.py",
+          "offset": 5120,
+          "bytes": 256,
+          "sha256": "70796461743a6c6c7a646171adf42d2f51ee4756724ed5aff26ebf0b1151fe6e"
+        },
+        {
+          "path": "documents/test/graphlib.py",
+          "offset": 5376,
+          "bytes": 256,
+          "sha256": "e8fe178b3f149f2276e8d82b753d1c22118dea97682e1c9495ec2fcf754fb092"
+        },
+        {
+          "path": "documents/test/graphlib.py",
+          "offset": 5632,
+          "bytes": 256,
+          "sha256": "eccc209bd4a9c0709a6426afb7c39319fdde914126cc8c8c5030a74ea66a7782"
+        },
+        {
+          "path": "documents/test/graphlib.py",
+          "offset": 5888,
+          "bytes": 256,
+          "sha256": "daf7d6f25f77c1c92433e5fc97b9e79a1a2f56c9e94fcba3816984f2387010a7"
+        },
+        {
+          "path": "documents/test/graphlib.py",
+          "offset": 6144,
+          "bytes": 256,
+          "sha256": "ae6b211dff33ebb7eddac1a2b6572ef93b7e8e9ab3296ad03685d6160ab2f320"
+        },
+        {
+          "path": "documents/test/graphlib.py",
+          "offset": 6400,
+          "bytes": 256,
+          "sha256": "c14d9dc0d7824e93ec197481af2bcf9926973d2bfe5a1411d84f432bc209e7f3"
+        },
+        {
+          "path": "documents/test/graphlib.py",
+          "offset": 6656,
+          "bytes": 256,
+          "sha256": "d4515137ebaadf0fc9ce8ac1d2c8048547aa2a1ef65b7fbd3e9a48ac4a95b9dc"
+        },
+        {
+          "path": "documents/test/graphlib.py",
+          "offset": 6912,
+          "bytes": 256,
+          "sha256": "12b6dccc0cd0e3dbcb45f4032ae304b37b0248549c9c5e0fbc892785eb3628d0"
+        },
+        {
+          "path": "documents/test/graphlib.py",
+          "offset": 7168,
+          "bytes": 256,
+          "sha256": "b3d04d56f08804c50346db3452f1081652fcdd410ee0844eb80d24e7a7e0f7b8"
+        },
+        {
+          "path": "documents/test/graphlib.py",
+          "offset": 7424,
+          "bytes": 256,
+          "sha256": "eea67522172c34262b27ef7029f66f7774daebb25658aa05cbddc6e73118fb3f"
+        },
+        {
+          "path": "documents/test/graphlib.py",
+          "offset": 7680,
+          "bytes": 256,
+          "sha256": "f5085d110db9e609a4dc9b09911ec640ace2896f1e32e8b64fc1e5cb13bb1dfd"
+        },
+        {
+          "path": "documents/test/graphlib.py",
+          "offset": 7936,
+          "bytes": 256,
+          "sha256": "4a157a46c14a90d1eb90b9078400fadccc46d9c1f1f8447a885a4744f8ed0c86"
+        },
+        {
+          "path": "documents/test/graphlib.py",
+          "offset": 8192,
+          "bytes": 256,
+          "sha256": "c737aa8e890bb21cc99e08723bda74574edcf3b7df29389ed4293db47bb978db"
+        },
+        {
+          "path": "documents/test/graphlib.py",
+          "offset": 8448,
+          "bytes": 256,
+          "sha256": "56b093bd9025e05e538a9f0694b0be9f2a56eb4f97ef1d112665c65ea2525bad"
+        },
+        {
+          "path": "documents/test/graphlib.py",
+          "offset": 8704,
+          "bytes": 256,
+          "sha256": "55d650e714169c71becfebac26faa9f8ad73310d6f2a27e8bbe251784cdce0be"
+        },
+        {
+          "path": "documents/test/graphlib.py",
+          "offset": 8960,
+          "bytes": 256,
+          "sha256": "af94bf75bede647ad45361c36a1ed664ca541ab24ffd8866b456f2b292c30150"
+        },
+        {
+          "path": "documents/test/graphlib.py",
+          "offset": 9216,
+          "bytes": 256,
+          "sha256": "feaf0e16cbce805b55b572e2823520ce5e250e4ea05ba7d21695b8d5ed7c548e"
+        },
+        {
+          "path": "documents/test/graphlib.py",
+          "offset": 9472,
+          "bytes": 176,
+          "sha256": "a169fabcf7e8909f128175a80afffaf598c89da985f7092f6d5bfb93f084db15"
+        },
+        {
+          "path": "documents/test/queue.py",
+          "offset": 0,
+          "bytes": 256,
+          "sha256": "dd59c318bc2d1f1c0ecfb05b09c0b9d6d068b47d110f554cca265e1b3f074bb5"
+        },
+        {
+          "path": "documents/test/queue.py",
+          "offset": 256,
+          "bytes": 256,
+          "sha256": "5531250ddbe0eba0ea46df0643d05d279f1fd245a784da3dffda16f3094ca5c8"
+        },
+        {
+          "path": "documents/test/queue.py",
+          "offset": 512,
+          "bytes": 256,
+          "sha256": "7790293b97a336308db1642b11f6e52b44e6ab1ed99c2098276d13b17b5a8dd4"
+        },
+        {
+          "path": "documents/test/queue.py",
+          "offset": 768,
+          "bytes": 256,
+          "sha256": "13eaf889ce32d3faaee9f955e75188dd41390233a8c489cd6f6f0a5d93e2cdc3"
+        },
+        {
+          "path": "documents/test/queue.py",
+          "offset": 1024,
+          "bytes": 256,
+          "sha256": "4ef26ef8405c10a6073b7a329e11a4ca703f9b25b9528d9a9f04b8851cfc164a"
+        },
+        {
+          "path": "documents/test/queue.py",
+          "offset": 1280,
+          "bytes": 256,
+          "sha256": "727202e7f4bdc676d822ed53c2a04d9ca843572b358d1801cf606d73844795c5"
+        },
+        {
+          "path": "documents/test/queue.py",
+          "offset": 1536,
+          "bytes": 256,
+          "sha256": "1d2d6f16858698cfb7a1a15a7e65a74c14d9900329de27245d8091954a466ceb"
+        },
+        {
+          "path": "documents/test/queue.py",
+          "offset": 1792,
+          "bytes": 256,
+          "sha256": "6ac4f01ef7b4c10df1b1ccfe67a1fefc3beb33fad3ae7e7a501cd6a202b12e68"
+        },
+        {
+          "path": "documents/test/queue.py",
+          "offset": 2048,
+          "bytes": 256,
+          "sha256": "b1e2607a0f8fb7dd99c7be2c4ed3ab88f390980b19935e5ee5108c962a18003e"
+        },
+        {
+          "path": "documents/test/queue.py",
+          "offset": 2304,
+          "bytes": 256,
+          "sha256": "669841ebe60b75fa7d09b2bae7f6dc4e686e6774b50bb6a140cdcbd875d7d8b8"
+        },
+        {
+          "path": "documents/test/queue.py",
+          "offset": 2560,
+          "bytes": 256,
+          "sha256": "0c6c47b1eb973f397a10bc019e0e448d98f9e94a685c7b5e74ef80b2dfeb45d0"
+        },
+        {
+          "path": "documents/test/queue.py",
+          "offset": 2816,
+          "bytes": 256,
+          "sha256": "ab453cc31a7526472d6198c1caf69610f6ffaf3a8263efde97b94e3c0088dbe7"
+        },
+        {
+          "path": "documents/test/queue.py",
+          "offset": 3072,
+          "bytes": 256,
+          "sha256": "2d75a7e7bf90fa9ed39b96eef3d0adea83d3fe2cd5615c37b5eaafdbeda10e58"
+        },
+        {
+          "path": "documents/test/queue.py",
+          "offset": 3328,
+          "bytes": 256,
+          "sha256": "dfa398358a4aa39d109a0b19c598e9751ca11a110b276f43456773d6543c4e5b"
+        },
+        {
+          "path": "documents/test/queue.py",
+          "offset": 3584,
+          "bytes": 256,
+          "sha256": "fe49c05fb1c5a03f8ceebf572a542550fe28f51ed09417940d1da4599b591935"
+        },
+        {
+          "path": "documents/test/queue.py",
+          "offset": 3840,
+          "bytes": 256,
+          "sha256": "834ab1b02a0f946c617200ba0ddc7415ce124ffe2dbed2e76ac56f3e7a297126"
+        },
+        {
+          "path": "documents/test/queue.py",
+          "offset": 4096,
+          "bytes": 256,
+          "sha256": "3e7eceb51b032c57d9109f2a3f5b5d4dde918732bce8348ec5df425db8cc0753"
+        },
+        {
+          "path": "documents/test/queue.py",
+          "offset": 4352,
+          "bytes": 256,
+          "sha256": "233c95f861f054f25e27a0ac6f702c814c58f54bc52bdd21a35b26b2336094be"
+        },
+        {
+          "path": "documents/test/queue.py",
+          "offset": 4608,
+          "bytes": 256,
+          "sha256": "bf4aa063d1170e04bfa201a0a5d15fd9c69845c214e4847564d3f0bd10ae66a7"
+        },
+        {
+          "path": "documents/test/queue.py",
+          "offset": 4864,
+          "bytes": 256,
+          "sha256": "3e701d5955394be920bf2101ccc83a2c01d84c231964e0101f0867a90c2643e4"
+        },
+        {
+          "path": "documents/test/queue.py",
+          "offset": 5120,
+          "bytes": 256,
+          "sha256": "02af4751df7ea226de6b3f066df7f8fe0e2cea0febc67a5f62d84fbfe36c3e94"
+        },
+        {
+          "path": "documents/test/queue.py",
+          "offset": 5376,
+          "bytes": 256,
+          "sha256": "5a64338e85b0e1db2eeda7f85c1f290706240de9834e105df95eb16f5106062a"
+        },
+        {
+          "path": "documents/test/queue.py",
+          "offset": 5632,
+          "bytes": 256,
+          "sha256": "616cc56601741c5439f4d6fdc84bfe0b843722a2c7508842203f6ce900625a92"
+        },
+        {
+          "path": "documents/test/queue.py",
+          "offset": 5888,
+          "bytes": 256,
+          "sha256": "3b77bfe03570128ec2d55e84375c38aba689ec5cf25ecb3a92e9fa50d3907c6c"
+        },
+        {
+          "path": "documents/test/queue.py",
+          "offset": 6144,
+          "bytes": 256,
+          "sha256": "19a2c08add0d39e8ecfd7589f3ea73416955e47708db04f4a4edfb2a9c5fc14b"
+        },
+        {
+          "path": "documents/test/queue.py",
+          "offset": 6400,
+          "bytes": 256,
+          "sha256": "7dd77bc4e38145ce5cbecd5f8ff097ec2a5f2cbe3f81e8bb52511e0630f13d28"
+        },
+        {
+          "path": "documents/test/queue.py",
+          "offset": 6656,
+          "bytes": 256,
+          "sha256": "3cb0bd59e284cabdde4fa70f300ba7bfe8ef6933d0a45a62adc47d80f98836fb"
+        },
+        {
+          "path": "documents/test/queue.py",
+          "offset": 6912,
+          "bytes": 256,
+          "sha256": "8037909c2f3dd61465dc7ad1d1e5bf27e1e75be4b3cdaf36b4f13056b6c17c99"
+        },
+        {
+          "path": "documents/test/queue.py",
+          "offset": 7168,
+          "bytes": 256,
+          "sha256": "2b1b4a9f56b8f785b1dbfd4dae3af9caff9184f0a957dca065b856bf9477c7da"
+        },
+        {
+          "path": "documents/test/queue.py",
+          "offset": 7424,
+          "bytes": 256,
+          "sha256": "20d46d817ece3781836ea12edbf8202284008e351a63ee2326b52c000d5f573a"
+        },
+        {
+          "path": "documents/test/queue.py",
+          "offset": 7680,
+          "bytes": 256,
+          "sha256": "89ef9199466174aa3d268f4021841490e8c2246b0569a5d862a35f7161dfcc59"
+        },
+        {
+          "path": "documents/test/queue.py",
+          "offset": 7936,
+          "bytes": 256,
+          "sha256": "78b21996aa3cabf48260b6779e423d6b50ba3fa36ef10c8f9e136dd883827acd"
+        },
+        {
+          "path": "documents/test/queue.py",
+          "offset": 8192,
+          "bytes": 256,
+          "sha256": "46c021c63f47760df12a50d05ebf4bcbc7d3bca0c707b49606fa432d35458bc0"
+        },
+        {
+          "path": "documents/test/queue.py",
+          "offset": 8448,
+          "bytes": 256,
+          "sha256": "f8de5a6960e524feeea86f93843a1c6fb46367d26d27905bfdee789a4db28462"
+        },
+        {
+          "path": "documents/test/queue.py",
+          "offset": 8704,
+          "bytes": 256,
+          "sha256": "51139b7e4a390f345277372e310b14ce88ae3c45237534a047c63056fc412da2"
+        },
+        {
+          "path": "documents/test/queue.py",
+          "offset": 8960,
+          "bytes": 256,
+          "sha256": "5b376e830e3a9f4ea4c2a758054522d1517c7a4c4561e365fdb631c6dfa7ad7d"
+        },
+        {
+          "path": "documents/test/queue.py",
+          "offset": 9216,
+          "bytes": 256,
+          "sha256": "60da7dac92f56d8698569cf0bbfe495c24e90ea5f5e1f5da2d236a88f5a508f3"
+        },
+        {
+          "path": "documents/test/queue.py",
+          "offset": 9472,
+          "bytes": 256,
+          "sha256": "36b6571231b87a0ba3c0c7ff771f790ca13726396eacfbe0aae702d83f020628"
+        },
+        {
+          "path": "documents/test/queue.py",
+          "offset": 9728,
+          "bytes": 256,
+          "sha256": "7d5243e2f58b06e3e41742d48cc913468a2b9e1eb29b3e7c2fdb9e3125c13ddc"
+        },
+        {
+          "path": "documents/test/queue.py",
+          "offset": 9984,
+          "bytes": 256,
+          "sha256": "35e38962b7d07ff800446ddf78353f46a85685debbb9916273a47c1bc26b0f3e"
+        },
+        {
+          "path": "documents/test/queue.py",
+          "offset": 10240,
+          "bytes": 256,
+          "sha256": "1d781c5aae807499a137adcf961886589653ae26250ca54f778c8224553d8a6f"
+        },
+        {
+          "path": "documents/test/queue.py",
+          "offset": 10496,
+          "bytes": 256,
+          "sha256": "1eba838256124ce3895398e255582239e8ed4939ad5e407aae30ba4135e08e32"
+        },
+        {
+          "path": "documents/test/queue.py",
+          "offset": 10752,
+          "bytes": 256,
+          "sha256": "eac01e9a1eb5b667de980ec50dc2fba9e6af3e8afab08277c2ca2b8b6ffe024a"
+        },
+        {
+          "path": "documents/test/queue.py",
+          "offset": 11008,
+          "bytes": 256,
+          "sha256": "24118514adaff90379d19a46f452d68201a8f140b810359adb2f3897e789abff"
+        },
+        {
+          "path": "documents/test/queue.py",
+          "offset": 11264,
+          "bytes": 256,
+          "sha256": "7b6b3b50d9e84d409be7af75d97a35a1aafb8f9c8788b5f2fc0a35b6f91a2441"
+        },
+        {
+          "path": "documents/test/queue.py",
+          "offset": 11520,
+          "bytes": 256,
+          "sha256": "57d6d7f2ac5df271115b772443840a0494ea862fa13b06e0cfe311705484ad59"
+        },
+        {
+          "path": "documents/test/queue.py",
+          "offset": 11776,
+          "bytes": 256,
+          "sha256": "6fffbd245bb39f32471c9b5711a1af21d413f4efc45938883e4d308740cdde04"
+        },
+        {
+          "path": "documents/test/queue.py",
+          "offset": 12032,
+          "bytes": 256,
+          "sha256": "d059a54d3e93d712661b27342ad36e571ce28f0c7ceba8946548311d415f7674"
+        },
+        {
+          "path": "documents/test/queue.py",
+          "offset": 12288,
+          "bytes": 256,
+          "sha256": "65dbee39f0e6036181e3b35bfd1077ddcfa53640f89cac1f07f628eda966d15b"
+        },
+        {
+          "path": "documents/test/queue.py",
+          "offset": 12544,
+          "bytes": 256,
+          "sha256": "3affba9368989e80b57979082fd2e1a2203581c9780a87a95ec7fe8b38eabe24"
+        },
+        {
+          "path": "documents/test/queue.py",
+          "offset": 12800,
+          "bytes": 256,
+          "sha256": "19999009efbd4103b7be1e40c976cac812c68e1c7851faef2f8cf004fba6a969"
+        },
+        {
+          "path": "documents/test/queue.py",
+          "offset": 13056,
+          "bytes": 256,
+          "sha256": "fcfbb5b6e68ad179cafb40274faa71282deb17b5582129734257c35fa06f26b9"
+        },
+        {
+          "path": "documents/test/queue.py",
+          "offset": 13312,
+          "bytes": 169,
+          "sha256": "2eec0d4c61e2155a7eabf60df550bae3b97a3e69be6675f9169b025831105e68"
+        },
+        {
+          "path": "documents/test/sched.py",
+          "offset": 0,
+          "bytes": 256,
+          "sha256": "675d6ca350622034e321b0d795cbce2d48ffa0c8e158b7f5d28f26f83ebb05ca"
+        },
+        {
+          "path": "documents/test/sched.py",
+          "offset": 256,
+          "bytes": 256,
+          "sha256": "4522a634f9e85bb30666887e5e8b2d1182356f7f32515c5d8026ae1b9598424b"
+        },
+        {
+          "path": "documents/test/sched.py",
+          "offset": 512,
+          "bytes": 256,
+          "sha256": "f55fe69ae831fd558baa7a0b01ad1af089e4a446e7d87e4c103cbe659f7f9d43"
+        },
+        {
+          "path": "documents/test/sched.py",
+          "offset": 768,
+          "bytes": 256,
+          "sha256": "a07910cb0c6f07be21a47648f7bec7d56e403fb7a2bc718f4516a9e01d5a5afb"
+        },
+        {
+          "path": "documents/test/sched.py",
+          "offset": 1024,
+          "bytes": 256,
+          "sha256": "71b0b3a0485cc7ccfc1933b04af0f0462c06d46ce7e2bdc872905fd80e5684a6"
+        },
+        {
+          "path": "documents/test/sched.py",
+          "offset": 1280,
+          "bytes": 256,
+          "sha256": "470002e593623e17330e18544e7c1a82995c4afaa6a5e919cd792bd2242e1705"
+        },
+        {
+          "path": "documents/test/sched.py",
+          "offset": 1536,
+          "bytes": 256,
+          "sha256": "107f55d1916a6684893d1e1031cb28b2b26d28d38a8669e305de9c96d3803ff9"
+        },
+        {
+          "path": "documents/test/sched.py",
+          "offset": 1792,
+          "bytes": 256,
+          "sha256": "358ef43489d47bc102d20fb55cb31d7d598c5ebc38ded13e7197fbcfd0ba7182"
+        },
+        {
+          "path": "documents/test/sched.py",
+          "offset": 2048,
+          "bytes": 256,
+          "sha256": "7005257ff42b6b688c7db548f5914e0f261d424c063d9ed1b151c82bb31d92f4"
+        },
+        {
+          "path": "documents/test/sched.py",
+          "offset": 2304,
+          "bytes": 256,
+          "sha256": "894521df3d475826a0af2604cbd4e269bd11fc032f102d4e8cf4802b46cabb5b"
+        },
+        {
+          "path": "documents/test/sched.py",
+          "offset": 2560,
+          "bytes": 256,
+          "sha256": "75abb6500701c1575a30ca82936426b1755299653b7601a7935960cd027e57d9"
+        },
+        {
+          "path": "documents/test/sched.py",
+          "offset": 2816,
+          "bytes": 256,
+          "sha256": "5ebd7e4c2d3285bce649813a2918759356923a1e053501ef0c976a918dfe9407"
+        },
+        {
+          "path": "documents/test/sched.py",
+          "offset": 3072,
+          "bytes": 256,
+          "sha256": "fe91ca90a256aad756ab09ba48e657aa24b11292589cce65e2ff452a56c08b9f"
+        },
+        {
+          "path": "documents/test/sched.py",
+          "offset": 3328,
+          "bytes": 256,
+          "sha256": "d4f85c9280a232c9c8d6d18f5d63469f58d22d2d0b36ef8b4316e5bf686da16d"
+        },
+        {
+          "path": "documents/test/sched.py",
+          "offset": 3584,
+          "bytes": 256,
+          "sha256": "4df937f3f381bdf4a9e2161a747338bcdad4c2170bfcf45bb233de587d16e69f"
+        },
+        {
+          "path": "documents/test/sched.py",
+          "offset": 3840,
+          "bytes": 256,
+          "sha256": "3ac462411b7175613cbcbf8925a5ead3fa0289d079d2338b7a58321f1aef9137"
+        },
+        {
+          "path": "documents/test/sched.py",
+          "offset": 4096,
+          "bytes": 256,
+          "sha256": "00c4fa03005a81bbb99172e7c192e9e754656933307bbcc4217b911207cb9ff6"
+        },
+        {
+          "path": "documents/test/sched.py",
+          "offset": 4352,
+          "bytes": 256,
+          "sha256": "210ab9053230b49b599b09db297fce97daa5a66e248db322c39ff2faf904ce86"
+        },
+        {
+          "path": "documents/test/sched.py",
+          "offset": 4608,
+          "bytes": 256,
+          "sha256": "0c0ebc718a28db4d739f27ae20b2adcd5f4b07a17603f3f8d72a431d81584b23"
+        },
+        {
+          "path": "documents/test/sched.py",
+          "offset": 4864,
+          "bytes": 256,
+          "sha256": "c60c2df6ea97e3819ca3732f53a6c6a1c8a3a24aacb63e49334dc71aaf14872c"
+        },
+        {
+          "path": "documents/test/sched.py",
+          "offset": 5120,
+          "bytes": 256,
+          "sha256": "060dbb2fa70484d839a462fdf156d171d62c2cc1c1985b39d346861873c48b6b"
+        },
+        {
+          "path": "documents/test/sched.py",
+          "offset": 5376,
+          "bytes": 256,
+          "sha256": "dab6ba88e50de493dd221e506d6568f6a4fc00e00cd91a455b83a1dd09e6208d"
+        },
+        {
+          "path": "documents/test/sched.py",
+          "offset": 5632,
+          "bytes": 256,
+          "sha256": "2514fc7863d1d3d81cb3b893230e06cde808e0cbd113ca96ea4ab799a4b77612"
+        },
+        {
+          "path": "documents/test/sched.py",
+          "offset": 5888,
+          "bytes": 256,
+          "sha256": "9df0f9154a49d9f79db00d6ae525ee09bb4623d19b722b57e8d5bfb47a62ae7f"
+        },
+        {
+          "path": "documents/test/sched.py",
+          "offset": 6144,
+          "bytes": 207,
+          "sha256": "3890bb7e488463c7745542afd216923b62ea26fb2739587675646b8a5a9ad3bc"
+        }
+      ],
+      "removed": []
+    }
+  },
+  "dedup": {
+    "tokens": "ASCII identifiers/numbers/punctuation, whitespace-insensitive, case-sensitive",
+    "shingle": 5,
+    "jaccard": 0.8,
+    "containment": 0.9,
+    "min_shared": 8,
+    "reference_stride": 128,
+    "block_bytes": 256,
+    "semantic_dedup": false
+  },
+  "preparation_cpu_seconds": 0.3097400790000001,
+  "preparation_wall_seconds": 0.3097553939999784
+}

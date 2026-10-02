@@ -1,0 +1,1137 @@
+{
+  "logit_cases": [
+    {
+      "model": "hybrid_odd.edge",
+      "kernel": "scalar",
+      "tokens": 63,
+      "compared_values": 16128,
+      "max_absolute_error": 5.960464477539062e-07,
+      "passed": true
+    },
+    {
+      "model": "hybrid_odd.edge",
+      "kernel": "lookup2",
+      "tokens": 63,
+      "compared_values": 16128,
+      "max_absolute_error": 5.960464477539062e-07,
+      "passed": true
+    },
+    {
+      "model": "hybrid_odd.edge",
+      "kernel": "auto",
+      "tokens": 63,
+      "compared_values": 16128,
+      "max_absolute_error": 4.76837158203125e-07,
+      "passed": true
+    },
+    {
+      "model": "hybrid_all_bytes.edge",
+      "kernel": "scalar",
+      "tokens": 273,
+      "compared_values": 69888,
+      "max_absolute_error": 8.344650268554688e-07,
+      "passed": true
+    },
+    {
+      "model": "hybrid_all_bytes.edge",
+      "kernel": "lookup2",
+      "tokens": 273,
+      "compared_values": 69888,
+      "max_absolute_error": 8.344650268554688e-07,
+      "passed": true
+    },
+    {
+      "model": "hybrid_all_bytes.edge",
+      "kernel": "auto",
+      "tokens": 273,
+      "compared_values": 69888,
+      "max_absolute_error": 7.152557373046875e-07,
+      "passed": true
+    },
+    {
+      "model": "legacy.edge",
+      "kernel": "scalar",
+      "tokens": 25,
+      "compared_values": 6400,
+      "max_absolute_error": 1.7881393432617188e-07,
+      "passed": true
+    },
+    {
+      "model": "legacy.edge",
+      "kernel": "lookup2",
+      "tokens": 25,
+      "compared_values": 6400,
+      "max_absolute_error": 2.384185791015625e-07,
+      "passed": true
+    },
+    {
+      "model": "legacy.edge",
+      "kernel": "auto",
+      "tokens": 25,
+      "compared_values": 6400,
+      "max_absolute_error": 2.384185791015625e-07,
+      "passed": true
+    },
+    {
+      "model": "trained.edge",
+      "kernel": "scalar",
+      "tokens": 47,
+      "compared_values": 12032,
+      "max_absolute_error": 1.9073486328125e-06,
+      "passed": true
+    },
+    {
+      "model": "trained.edge",
+      "kernel": "lookup2",
+      "tokens": 47,
+      "compared_values": 12032,
+      "max_absolute_error": 1.9073486328125e-06,
+      "passed": true
+    },
+    {
+      "model": "trained.edge",
+      "kernel": "auto",
+      "tokens": 47,
+      "compared_values": 12032,
+      "max_absolute_error": 1.9073486328125e-06,
+      "passed": true
+    }
+  ],
+  "causality_passed": true,
+  "all_parameters_receive_gradients": true
+}
+{
+  "logit_cases": [
+    {
+      "model": "fp32-17.edge",
+      "kernel": "scalar",
+      "tokens": 130,
+      "compared_values": 33280,
+      "max_absolute_error": 5.960464477539062e-07,
+      "passed": true
+    },
+    {
+      "model": "fp32-17.edge",
+      "kernel": "lookup2",
+      "tokens": 130,
+      "compared_values": 33280,
+      "max_absolute_error": 5.960464477539062e-07,
+      "passed": true
+    },
+    {
+      "model": "fp32-17.edge",
+      "kernel": "auto",
+      "tokens": 130,
+      "compared_values": 33280,
+      "max_absolute_error": 5.960464477539062e-07,
+      "passed": true
+    },
+    {
+      "model": "fp32-32.edge",
+      "kernel": "scalar",
+      "tokens": 130,
+      "compared_values": 33280,
+      "max_absolute_error": 5.960464477539062e-07,
+      "passed": true
+    },
+    {
+      "model": "fp32-32.edge",
+      "kernel": "lookup2",
+      "tokens": 130,
+      "compared_values": 33280,
+      "max_absolute_error": 5.960464477539062e-07,
+      "passed": true
+    },
+    {
+      "model": "fp32-32.edge",
+      "kernel": "auto",
+      "tokens": 130,
+      "compared_values": 33280,
+      "max_absolute_error": 7.152557373046875e-07,
+      "passed": true
+    },
+    {
+      "model": "ternary-17.edge",
+      "kernel": "scalar",
+      "tokens": 130,
+      "compared_values": 33280,
+      "max_absolute_error": 4.76837158203125e-07,
+      "passed": true
+    },
+    {
+      "model": "ternary-17.edge",
+      "kernel": "lookup2",
+      "tokens": 130,
+      "compared_values": 33280,
+      "max_absolute_error": 4.76837158203125e-07,
+      "passed": true
+    },
+    {
+      "model": "ternary-17.edge",
+      "kernel": "auto",
+      "tokens": 130,
+      "compared_values": 33280,
+      "max_absolute_error": 4.76837158203125e-07,
+      "passed": true
+    },
+    {
+      "model": "ternary-32.edge",
+      "kernel": "scalar",
+      "tokens": 130,
+      "compared_values": 33280,
+      "max_absolute_error": 7.152557373046875e-07,
+      "passed": true
+    },
+    {
+      "model": "ternary-32.edge",
+      "kernel": "lookup2",
+      "tokens": 130,
+      "compared_values": 33280,
+      "max_absolute_error": 5.960464477539062e-07,
+      "passed": true
+    },
+    {
+      "model": "ternary-32.edge",
+      "kernel": "auto",
+      "tokens": 130,
+      "compared_values": 33280,
+      "max_absolute_error": 7.152557373046875e-07,
+      "passed": true
+    },
+    {
+      "model": "qk_fp32-17.edge",
+      "kernel": "scalar",
+      "tokens": 130,
+      "compared_values": 33280,
+      "max_absolute_error": 4.76837158203125e-07,
+      "passed": true
+    },
+    {
+      "model": "qk_fp32-17.edge",
+      "kernel": "lookup2",
+      "tokens": 130,
+      "compared_values": 33280,
+      "max_absolute_error": 4.76837158203125e-07,
+      "passed": true
+    },
+    {
+      "model": "qk_fp32-17.edge",
+      "kernel": "auto",
+      "tokens": 130,
+      "compared_values": 33280,
+      "max_absolute_error": 4.76837158203125e-07,
+      "passed": true
+    },
+    {
+      "model": "qk_fp32-32.edge",
+      "kernel": "scalar",
+      "tokens": 130,
+      "compared_values": 33280,
+      "max_absolute_error": 6.556510925292969e-07,
+      "passed": true
+    },
+    {
+      "model": "qk_fp32-32.edge",
+      "kernel": "lookup2",
+      "tokens": 130,
+      "compared_values": 33280,
+      "max_absolute_error": 5.960464477539062e-07,
+      "passed": true
+    },
+    {
+      "model": "qk_fp32-32.edge",
+      "kernel": "auto",
+      "tokens": 130,
+      "compared_values": 33280,
+      "max_absolute_error": 5.960464477539062e-07,
+      "passed": true
+    },
+    {
+      "model": "memory_fp32-17.edge",
+      "kernel": "scalar",
+      "tokens": 130,
+      "compared_values": 33280,
+      "max_absolute_error": 5.960464477539062e-07,
+      "passed": true
+    },
+    {
+      "model": "memory_fp32-17.edge",
+      "kernel": "lookup2",
+      "tokens": 130,
+      "compared_values": 33280,
+      "max_absolute_error": 5.960464477539062e-07,
+      "passed": true
+    },
+    {
+      "model": "memory_fp32-17.edge",
+      "kernel": "auto",
+      "tokens": 130,
+      "compared_values": 33280,
+      "max_absolute_error": 4.76837158203125e-07,
+      "passed": true
+    },
+    {
+      "model": "memory_fp32-32.edge",
+      "kernel": "scalar",
+      "tokens": 130,
+      "compared_values": 33280,
+      "max_absolute_error": 7.152557373046875e-07,
+      "passed": true
+    },
+    {
+      "model": "memory_fp32-32.edge",
+      "kernel": "lookup2",
+      "tokens": 130,
+      "compared_values": 33280,
+      "max_absolute_error": 7.152557373046875e-07,
+      "passed": true
+    },
+    {
+      "model": "memory_fp32-32.edge",
+      "kernel": "auto",
+      "tokens": 130,
+      "compared_values": 33280,
+      "max_absolute_error": 7.152557373046875e-07,
+      "passed": true
+    },
+    {
+      "model": "memory_int8-17.edge",
+      "kernel": "scalar",
+      "tokens": 130,
+      "compared_values": 33280,
+      "max_absolute_error": 7.152557373046875e-07,
+      "passed": true
+    },
+    {
+      "model": "memory_int8-17.edge",
+      "kernel": "lookup2",
+      "tokens": 130,
+      "compared_values": 33280,
+      "max_absolute_error": 7.152557373046875e-07,
+      "passed": true
+    },
+    {
+      "model": "memory_int8-17.edge",
+      "kernel": "auto",
+      "tokens": 130,
+      "compared_values": 33280,
+      "max_absolute_error": 7.152557373046875e-07,
+      "passed": true
+    },
+    {
+      "model": "memory_int8-32.edge",
+      "kernel": "scalar",
+      "tokens": 130,
+      "compared_values": 33280,
+      "max_absolute_error": 5.960464477539062e-07,
+      "passed": true
+    },
+    {
+      "model": "memory_int8-32.edge",
+      "kernel": "lookup2",
+      "tokens": 130,
+      "compared_values": 33280,
+      "max_absolute_error": 5.960464477539062e-07,
+      "passed": true
+    },
+    {
+      "model": "memory_int8-32.edge",
+      "kernel": "auto",
+      "tokens": 130,
+      "compared_values": 33280,
+      "max_absolute_error": 5.960464477539062e-07,
+      "passed": true
+    },
+    {
+      "model": "int8-17.edge",
+      "kernel": "scalar",
+      "tokens": 130,
+      "compared_values": 33280,
+      "max_absolute_error": 4.76837158203125e-07,
+      "passed": true
+    },
+    {
+      "model": "int8-17.edge",
+      "kernel": "lookup2",
+      "tokens": 130,
+      "compared_values": 33280,
+      "max_absolute_error": 4.76837158203125e-07,
+      "passed": true
+    },
+    {
+      "model": "int8-17.edge",
+      "kernel": "auto",
+      "tokens": 130,
+      "compared_values": 33280,
+      "max_absolute_error": 4.76837158203125e-07,
+      "passed": true
+    },
+    {
+      "model": "int8-32.edge",
+      "kernel": "scalar",
+      "tokens": 130,
+      "compared_values": 33280,
+      "max_absolute_error": 7.152557373046875e-07,
+      "passed": true
+    },
+    {
+      "model": "int8-32.edge",
+      "kernel": "lookup2",
+      "tokens": 130,
+      "compared_values": 33280,
+      "max_absolute_error": 7.152557373046875e-07,
+      "passed": true
+    },
+    {
+      "model": "int8-32.edge",
+      "kernel": "auto",
+      "tokens": 130,
+      "compared_values": 33280,
+      "max_absolute_error": 5.364418029785156e-07,
+      "passed": true
+    },
+    {
+      "model": "output-int8.edge",
+      "kernel": "scalar",
+      "tokens": 256,
+      "compared_values": 65536,
+      "max_absolute_error": 7.152557373046875e-07,
+      "passed": true
+    },
+    {
+      "model": "output-int8.edge",
+      "kernel": "lookup2",
+      "tokens": 256,
+      "compared_values": 65536,
+      "max_absolute_error": 7.152557373046875e-07,
+      "passed": true
+    },
+    {
+      "model": "output-int8.edge",
+      "kernel": "auto",
+      "tokens": 256,
+      "compared_values": 65536,
+      "max_absolute_error": 5.960464477539062e-07,
+      "passed": true
+    },
+    {
+      "model": "output-ternary.edge",
+      "kernel": "scalar",
+      "tokens": 256,
+      "compared_values": 65536,
+      "max_absolute_error": 4.76837158203125e-07,
+      "passed": true
+    },
+    {
+      "model": "output-ternary.edge",
+      "kernel": "lookup2",
+      "tokens": 256,
+      "compared_values": 65536,
+      "max_absolute_error": 4.76837158203125e-07,
+      "passed": true
+    },
+    {
+      "model": "output-ternary.edge",
+      "kernel": "auto",
+      "tokens": 256,
+      "compared_values": 65536,
+      "max_absolute_error": 4.76837158203125e-07,
+      "passed": true
+    },
+    {
+      "model": "fp32-seed11.edge",
+      "kernel": "scalar",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 1.9073486328125e-06,
+      "passed": true
+    },
+    {
+      "model": "fp32-seed11.edge",
+      "kernel": "lookup2",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 1.9073486328125e-06,
+      "passed": true
+    },
+    {
+      "model": "fp32-seed11.edge",
+      "kernel": "auto",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 2.384185791015625e-06,
+      "passed": true
+    },
+    {
+      "model": "fp32-seed22.edge",
+      "kernel": "scalar",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 2.384185791015625e-06,
+      "passed": true
+    },
+    {
+      "model": "fp32-seed22.edge",
+      "kernel": "lookup2",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 2.384185791015625e-06,
+      "passed": true
+    },
+    {
+      "model": "fp32-seed22.edge",
+      "kernel": "auto",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 1.7881393432617188e-06,
+      "passed": true
+    },
+    {
+      "model": "fp32-seed33.edge",
+      "kernel": "scalar",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 2.384185791015625e-06,
+      "passed": true
+    },
+    {
+      "model": "fp32-seed33.edge",
+      "kernel": "lookup2",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 2.384185791015625e-06,
+      "passed": true
+    },
+    {
+      "model": "fp32-seed33.edge",
+      "kernel": "auto",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 2.7418136596679688e-06,
+      "passed": true
+    },
+    {
+      "model": "int8-seed11.edge",
+      "kernel": "scalar",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 2.384185791015625e-06,
+      "passed": true
+    },
+    {
+      "model": "int8-seed11.edge",
+      "kernel": "lookup2",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 2.384185791015625e-06,
+      "passed": true
+    },
+    {
+      "model": "int8-seed11.edge",
+      "kernel": "auto",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 1.6689300537109375e-06,
+      "passed": true
+    },
+    {
+      "model": "int8-seed22.edge",
+      "kernel": "scalar",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 2.384185791015625e-06,
+      "passed": true
+    },
+    {
+      "model": "int8-seed22.edge",
+      "kernel": "lookup2",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 2.384185791015625e-06,
+      "passed": true
+    },
+    {
+      "model": "int8-seed22.edge",
+      "kernel": "auto",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 1.9073486328125e-06,
+      "passed": true
+    },
+    {
+      "model": "int8-seed33.edge",
+      "kernel": "scalar",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 3.337860107421875e-06,
+      "passed": true
+    },
+    {
+      "model": "int8-seed33.edge",
+      "kernel": "lookup2",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 3.337860107421875e-06,
+      "passed": true
+    },
+    {
+      "model": "int8-seed33.edge",
+      "kernel": "auto",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 2.4437904357910156e-06,
+      "passed": true
+    },
+    {
+      "model": "memory_fp32-seed11.edge",
+      "kernel": "scalar",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 1.9073486328125e-06,
+      "passed": true
+    },
+    {
+      "model": "memory_fp32-seed11.edge",
+      "kernel": "lookup2",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 1.9073486328125e-06,
+      "passed": true
+    },
+    {
+      "model": "memory_fp32-seed11.edge",
+      "kernel": "auto",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 1.9073486328125e-06,
+      "passed": true
+    },
+    {
+      "model": "memory_fp32-seed22.edge",
+      "kernel": "scalar",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 1.9073486328125e-06,
+      "passed": true
+    },
+    {
+      "model": "memory_fp32-seed22.edge",
+      "kernel": "lookup2",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 1.9073486328125e-06,
+      "passed": true
+    },
+    {
+      "model": "memory_fp32-seed22.edge",
+      "kernel": "auto",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 1.9073486328125e-06,
+      "passed": true
+    },
+    {
+      "model": "memory_fp32-seed33.edge",
+      "kernel": "scalar",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 3.337860107421875e-06,
+      "passed": true
+    },
+    {
+      "model": "memory_fp32-seed33.edge",
+      "kernel": "lookup2",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 3.337860107421875e-06,
+      "passed": true
+    },
+    {
+      "model": "memory_fp32-seed33.edge",
+      "kernel": "auto",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 2.384185791015625e-06,
+      "passed": true
+    },
+    {
+      "model": "memory_int8-seed11.edge",
+      "kernel": "scalar",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 2.0265579223632812e-06,
+      "passed": true
+    },
+    {
+      "model": "memory_int8-seed11.edge",
+      "kernel": "lookup2",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 2.1457672119140625e-06,
+      "passed": true
+    },
+    {
+      "model": "memory_int8-seed11.edge",
+      "kernel": "auto",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 1.9073486328125e-06,
+      "passed": true
+    },
+    {
+      "model": "memory_int8-seed22.edge",
+      "kernel": "scalar",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 2.0265579223632812e-06,
+      "passed": true
+    },
+    {
+      "model": "memory_int8-seed22.edge",
+      "kernel": "lookup2",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 2.1457672119140625e-06,
+      "passed": true
+    },
+    {
+      "model": "memory_int8-seed22.edge",
+      "kernel": "auto",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 1.9073486328125e-06,
+      "passed": true
+    },
+    {
+      "model": "memory_int8-seed33.edge",
+      "kernel": "scalar",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 2.384185791015625e-06,
+      "passed": true
+    },
+    {
+      "model": "memory_int8-seed33.edge",
+      "kernel": "lookup2",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 2.384185791015625e-06,
+      "passed": true
+    },
+    {
+      "model": "memory_int8-seed33.edge",
+      "kernel": "auto",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 1.9073486328125e-06,
+      "passed": true
+    },
+    {
+      "model": "qk_fp32-seed11.edge",
+      "kernel": "scalar",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 3.4570693969726562e-06,
+      "passed": true
+    },
+    {
+      "model": "qk_fp32-seed11.edge",
+      "kernel": "lookup2",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 3.2186508178710938e-06,
+      "passed": true
+    },
+    {
+      "model": "qk_fp32-seed11.edge",
+      "kernel": "auto",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 2.384185791015625e-06,
+      "passed": true
+    },
+    {
+      "model": "qk_fp32-seed22.edge",
+      "kernel": "scalar",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 2.86102294921875e-06,
+      "passed": true
+    },
+    {
+      "model": "qk_fp32-seed22.edge",
+      "kernel": "lookup2",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 3.0100345611572266e-06,
+      "passed": true
+    },
+    {
+      "model": "qk_fp32-seed22.edge",
+      "kernel": "auto",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 2.384185791015625e-06,
+      "passed": true
+    },
+    {
+      "model": "qk_fp32-seed33.edge",
+      "kernel": "scalar",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 3.0994415283203125e-06,
+      "passed": true
+    },
+    {
+      "model": "qk_fp32-seed33.edge",
+      "kernel": "lookup2",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 3.0994415283203125e-06,
+      "passed": true
+    },
+    {
+      "model": "qk_fp32-seed33.edge",
+      "kernel": "auto",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 3.039836883544922e-06,
+      "passed": true
+    },
+    {
+      "model": "ternary-seed11.edge",
+      "kernel": "scalar",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 6.4373016357421875e-06,
+      "passed": true
+    },
+    {
+      "model": "ternary-seed11.edge",
+      "kernel": "lookup2",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 4.0531158447265625e-06,
+      "passed": true
+    },
+    {
+      "model": "ternary-seed11.edge",
+      "kernel": "auto",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 7.867813110351562e-06,
+      "passed": true
+    },
+    {
+      "model": "ternary-seed22.edge",
+      "kernel": "scalar",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 2.86102294921875e-06,
+      "passed": true
+    },
+    {
+      "model": "ternary-seed22.edge",
+      "kernel": "lookup2",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 2.384185791015625e-06,
+      "passed": true
+    },
+    {
+      "model": "ternary-seed22.edge",
+      "kernel": "auto",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 2.6226043701171875e-06,
+      "passed": true
+    },
+    {
+      "model": "ternary-seed33.edge",
+      "kernel": "scalar",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 2.5033950805664062e-06,
+      "passed": true
+    },
+    {
+      "model": "ternary-seed33.edge",
+      "kernel": "lookup2",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 4.410743713378906e-06,
+      "passed": true
+    },
+    {
+      "model": "ternary-seed33.edge",
+      "kernel": "auto",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 3.2186508178710938e-06,
+      "passed": true
+    },
+    {
+      "model": "fp32-head-int8-seed11.edge",
+      "kernel": "scalar",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 1.9073486328125e-06,
+      "passed": true
+    },
+    {
+      "model": "fp32-head-int8-seed11.edge",
+      "kernel": "lookup2",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 1.9073486328125e-06,
+      "passed": true
+    },
+    {
+      "model": "fp32-head-int8-seed11.edge",
+      "kernel": "auto",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 2.384185791015625e-06,
+      "passed": true
+    },
+    {
+      "model": "fp32-head-int8-seed22.edge",
+      "kernel": "scalar",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 2.1457672119140625e-06,
+      "passed": true
+    },
+    {
+      "model": "fp32-head-int8-seed22.edge",
+      "kernel": "lookup2",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 2.1457672119140625e-06,
+      "passed": true
+    },
+    {
+      "model": "fp32-head-int8-seed22.edge",
+      "kernel": "auto",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 1.9073486328125e-06,
+      "passed": true
+    },
+    {
+      "model": "fp32-head-int8-seed33.edge",
+      "kernel": "scalar",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 2.384185791015625e-06,
+      "passed": true
+    },
+    {
+      "model": "fp32-head-int8-seed33.edge",
+      "kernel": "lookup2",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 2.384185791015625e-06,
+      "passed": true
+    },
+    {
+      "model": "fp32-head-int8-seed33.edge",
+      "kernel": "auto",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 2.652406692504883e-06,
+      "passed": true
+    },
+    {
+      "model": "int8-head-int8-seed11.edge",
+      "kernel": "scalar",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 2.384185791015625e-06,
+      "passed": true
+    },
+    {
+      "model": "int8-head-int8-seed11.edge",
+      "kernel": "lookup2",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 2.384185791015625e-06,
+      "passed": true
+    },
+    {
+      "model": "int8-head-int8-seed11.edge",
+      "kernel": "auto",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 1.9073486328125e-06,
+      "passed": true
+    },
+    {
+      "model": "int8-head-int8-seed22.edge",
+      "kernel": "scalar",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 2.6226043701171875e-06,
+      "passed": true
+    },
+    {
+      "model": "int8-head-int8-seed22.edge",
+      "kernel": "lookup2",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 2.6226043701171875e-06,
+      "passed": true
+    },
+    {
+      "model": "int8-head-int8-seed22.edge",
+      "kernel": "auto",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 2.384185791015625e-06,
+      "passed": true
+    },
+    {
+      "model": "int8-head-int8-seed33.edge",
+      "kernel": "scalar",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 3.337860107421875e-06,
+      "passed": true
+    },
+    {
+      "model": "int8-head-int8-seed33.edge",
+      "kernel": "lookup2",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 3.337860107421875e-06,
+      "passed": true
+    },
+    {
+      "model": "int8-head-int8-seed33.edge",
+      "kernel": "auto",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 2.6226043701171875e-06,
+      "passed": true
+    },
+    {
+      "model": "memory_int8-head-int8-seed11.edge",
+      "kernel": "scalar",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 2.384185791015625e-06,
+      "passed": true
+    },
+    {
+      "model": "memory_int8-head-int8-seed11.edge",
+      "kernel": "lookup2",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 2.384185791015625e-06,
+      "passed": true
+    },
+    {
+      "model": "memory_int8-head-int8-seed11.edge",
+      "kernel": "auto",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 1.9073486328125e-06,
+      "passed": true
+    },
+    {
+      "model": "memory_int8-head-int8-seed22.edge",
+      "kernel": "scalar",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 2.384185791015625e-06,
+      "passed": true
+    },
+    {
+      "model": "memory_int8-head-int8-seed22.edge",
+      "kernel": "lookup2",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 2.384185791015625e-06,
+      "passed": true
+    },
+    {
+      "model": "memory_int8-head-int8-seed22.edge",
+      "kernel": "auto",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 1.9073486328125e-06,
+      "passed": true
+    },
+    {
+      "model": "memory_int8-head-int8-seed33.edge",
+      "kernel": "scalar",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 2.384185791015625e-06,
+      "passed": true
+    },
+    {
+      "model": "memory_int8-head-int8-seed33.edge",
+      "kernel": "lookup2",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 2.384185791015625e-06,
+      "passed": true
+    },
+    {
+      "model": "memory_int8-head-int8-seed33.edge",
+      "kernel": "auto",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 1.9073486328125e-06,
+      "passed": true
+    },
+    {
+      "model": "mixed_tiny.edge",
+      "kernel": "scalar",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 2.1457672119140625e-06,
+      "passed": true
+    },
+    {
+      "model": "mixed_tiny.edge",
+      "kernel": "lookup2",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 2.1457672119140625e-06,
+      "passed": true
+    },
+    {
+      "model": "mixed_tiny.edge",
+      "kernel": "auto",
+      "tokens": 96,
+      "compared_values": 24576,
+      "max_absolute_error": 1.9073486328125e-06,
+      "passed": true
+    }
+  ],
+  "malformed_models_rejected": 4,
+  "total_cases": 126,
+  "maximum_absolute_error": 7.867813110351562e-06,
+  "relative_tolerance": 3e-05,
+  "absolute_tolerance": 3e-05,
+  "note": "All logits compared, not merely generated text. Weight byte accounting checked per model."
+}
+[configure] started
+[configure] passed
+[build] started
+[build] passed
+[cpp_tests] started
+[cpp_tests] passed
+[python_tests] started
+[python_tests] passed
+[transformer_parity] started
+[transformer_parity] passed
+[train_and_evaluate] started
+[train_and_evaluate] passed
+[trained_parity] started
+[trained_parity] passed
+[native_benchmark] started
+[native_benchmark] passed
+Metas desta execução concluídas. Status: /mnt/data/EdgeAI-Engine-v0.5/results/v05/goals-quick/status.json

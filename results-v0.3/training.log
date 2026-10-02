@@ -1,0 +1,81 @@
+{"step": 1, "train_loss": 5.607232570648193, "validation_nll": 5.601115584373474}
+{"step": 20, "train_loss": 4.57940673828125, "validation_nll": 4.577215194702148}
+{"step": 40, "train_loss": 3.105034828186035, "validation_nll": 3.13593852519989}
+{"step": 60, "train_loss": 2.688366174697876, "validation_nll": 2.8150060772895813}
+{"step": 80, "train_loss": 2.6031410694122314, "validation_nll": 2.7035211622714996}
+{"step": 100, "train_loss": 2.4605305194854736, "validation_nll": 2.6181739568710327}
+{"step": 120, "train_loss": 2.42616605758667, "validation_nll": 2.5440245866775513}
+{"step": 140, "train_loss": 2.2418742179870605, "validation_nll": 2.478430926799774}
+{"step": 160, "train_loss": 2.1983633041381836, "validation_nll": 2.4192054867744446}
+{
+  "kind": "educational_byte_lm_not_general_assistant",
+  "seed": 42,
+  "threads": 1,
+  "parameters": 24102,
+  "training_bytes": 664,
+  "validation_bytes": 476,
+  "training_sha256": "8068f6d33d4709fe2901aecb65e8721ef6dd93c7a93e22f5ddf6f6c58828dbc4",
+  "validation_sha256": "d3347f155176108371b7827f62e879f2a581985eba319379f41892bf50d541fb",
+  "steps": 160,
+  "best_step": 160,
+  "initial_validation_nll": 5.647092580795288,
+  "best_validation_nll": 2.4192054867744446,
+  "bits_per_byte": 3.490175758660862,
+  "seconds": 3.232751597999936,
+  "energy_joules": null,
+  "export_bytes": 70452,
+  "config": {
+    "dim": 32,
+    "hidden": 64,
+    "key_dim": 16,
+    "window": 16,
+    "loops": 1
+  },
+  "history": [
+    {
+      "step": 1,
+      "train_loss": 5.607232570648193,
+      "validation_nll": 5.601115584373474
+    },
+    {
+      "step": 20,
+      "train_loss": 4.57940673828125,
+      "validation_nll": 4.577215194702148
+    },
+    {
+      "step": 40,
+      "train_loss": 3.105034828186035,
+      "validation_nll": 3.13593852519989
+    },
+    {
+      "step": 60,
+      "train_loss": 2.688366174697876,
+      "validation_nll": 2.8150060772895813
+    },
+    {
+      "step": 80,
+      "train_loss": 2.6031410694122314,
+      "validation_nll": 2.7035211622714996
+    },
+    {
+      "step": 100,
+      "train_loss": 2.4605305194854736,
+      "validation_nll": 2.6181739568710327
+    },
+    {
+      "step": 120,
+      "train_loss": 2.42616605758667,
+      "validation_nll": 2.5440245866775513
+    },
+    {
+      "step": 140,
+      "train_loss": 2.2418742179870605,
+      "validation_nll": 2.478430926799774
+    },
+    {
+      "step": 160,
+      "train_loss": 2.1983633041381836,
+      "validation_nll": 2.4192054867744446
+    }
+  ]
+}

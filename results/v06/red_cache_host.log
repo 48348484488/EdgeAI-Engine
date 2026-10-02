@@ -1,0 +1,14 @@
+F....
+======================================================================
+FAIL: test_training_identity_includes_host (test_external_training.TrainingCacheHostContract.test_training_identity_includes_host)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/EdgeAI-Engine-v0.6/tests/test_external_training.py", line 31, in test_training_identity_includes_host
+    self.assertIn('host',key,'cached training time must not be silently attributed to a different CPU')
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'host' not found in {'protocol': 'v06-cpu-tokenization-1', 'kind': 'byte257', 'seed': 11, 'cpu_budget': 20.0, 'threads': 1, 'config': {'dim': 64, 'hidden': 168, 'window': 64, 'precision': 'int8', 'vocab_size': 257}, 'snapshot_sha256': '68d001ec093a83c6b9ea3f91d41d9dfa9fadde66cc78f4c92c21a45fc03b7c1b', 'tokenizer': '9e0a5fae0639a42793c8e7a12b76864ec9c0e49d72e69f7315518335a7565d59', 'torch': '2.10.0+cpu', 'code': {'benchmarks/tokenization_v06.py': '60d851d9b41dc63f5a6c95b009bd85d83edf76486d2a2f12fad87922df7dcae7', 'tools/transformer_model.py': 'd84d79edf279c7c2c0646abc6ed9afba46db8ec6f09ff01e1f1e6c2d226fd401', 'tools/byte_bpe.py': '5f1796d7fe739228f2ca27f0bb7d869b128b6ac38e03034e6712c4292d5a5ac7', 'tools/mixed_model.py': '1c5240e454271986d311a6db857b192373ff665b9242b6f315bb9fc408f69f9a', 'tools/external_data.py': 'e7da2245227c7290bd61315a3ff02c6ce7e39de78f4cccab86e866a074221c10'}} : cached training time must not be silently attributed to a different CPU
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.005s
+
+FAILED (failures=1)

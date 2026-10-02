@@ -1,0 +1,23 @@
+FF
+======================================================================
+FAIL: test_profile_is_executable (test_sft_workflow_v07.WorkflowV07.test_profile_is_executable)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/EdgeAI-Engine-v0.7/tests/test_sft_workflow_v07.py", line 13, in test_profile_is_executable
+    self.assertGreaterEqual(len(stages),9,'missing instruction goal executor')
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 not greater than or equal to 9 : missing instruction goal executor
+
+======================================================================
+FAIL: test_scoring_separates_empty_eos_from_correctness (test_sft_workflow_v07.WorkflowV07.test_scoring_separates_empty_eos_from_correctness)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/EdgeAI-Engine-v0.7/tests/test_sft_workflow_v07.py", line 20, in test_scoring_separates_empty_eos_from_correctness
+    self.assertIsNotNone(importlib.util.find_spec('instruction_eval_v07'))
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unexpectedly None
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.001s
+
+FAILED (failures=2)

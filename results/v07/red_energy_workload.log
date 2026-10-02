@@ -1,0 +1,11 @@
+{
+  "available": false,
+  "package_energy_joules": null,
+  "elapsed_seconds": 0.014825451999968209,
+  "exit_code": 1,
+  "domains": [],
+  "stdout": "",
+  "stderr": "use edgeai_text_eval or edgeai_generate for EDGEAI6 same-text benchmarks\n",
+  "limitations": "Package energy, not process-isolated or whole-wall energy. At most one wrap can be corrected. No extrapolation from latency.",
+  "reason": "No readable package RAPL counters in this environment"
+}

@@ -1,0 +1,23 @@
+..............F...................F.....
+======================================================================
+FAIL: test_external_tokenization_comparison_present (test_external_training.TrainingGate.test_external_tokenization_comparison_present)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/EdgeAI-Engine-v0.6/tests/test_external_training.py", line 6, in test_external_tokenization_comparison_present
+    self.assertIsNotNone(importlib.util.find_spec('tokenization_v06'))
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unexpectedly None
+
+======================================================================
+FAIL: test_interactive_cli_reports_current_version (test_v05_workflow.WorkflowTests.test_interactive_cli_reports_current_version)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/EdgeAI-Engine-v0.6/tests/test_v05_workflow.py", line 34, in test_interactive_cli_reports_current_version
+    self.assertIn('EdgeAI Engine v0.5',result.stdout)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'EdgeAI Engine v0.5' not found in "EdgeAI Engine v0.6 | threads=5 sse2=1 avx=1 avx2=1 | backend=echo-reasoner-dev\nModelo experimental: nao e um assistente conversacional avancado.\nScore do token nao representa chance de a resposta estar correta.\nDigite 'sair' para fechar.\n> "
+
+----------------------------------------------------------------------
+Ran 40 tests in 0.135s
+
+FAILED (failures=2)

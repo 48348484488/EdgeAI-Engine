@@ -1,0 +1,68 @@
+[  1%] Building CXX object CMakeFiles/edgeai.dir/src/Engine.cpp.o
+[  3%] Building CXX object CMakeFiles/edgeai.dir/src/Router.cpp.o
+[  5%] Building CXX object CMakeFiles/edgeai.dir/src/Calculator.cpp.o
+[  7%] Building CXX object CMakeFiles/edgeai.dir/src/Memory.cpp.o
+[  9%] Building CXX object CMakeFiles/edgeai.dir/src/Scheduler.cpp.o
+[ 11%] Building CXX object CMakeFiles/edgeai.dir/src/Hardware.cpp.o
+[ 13%] Building CXX object CMakeFiles/edgeai.dir/src/Backend.cpp.o
+[ 15%] Building CXX object CMakeFiles/edgeai.dir/src/HybridMemory.cpp.o
+[ 17%] Building CXX object CMakeFiles/edgeai.dir/src/HybridModel.cpp.o
+[ 19%] Building CXX object CMakeFiles/edgeai.dir/src/HybridBackend.cpp.o
+[ 21%] Building CXX object CMakeFiles/edgeai.dir/src/TransformerModel.cpp.o
+[ 23%] Building CXX object CMakeFiles/edgeai.dir/src/TransformerBackend.cpp.o
+[ 25%] Building CXX object CMakeFiles/edgeai.dir/src/MixedMatrix.cpp.o
+[ 27%] Building CXX object CMakeFiles/edgeai.dir/src/Int8Kernel.cpp.o
+[ 29%] Building CXX object CMakeFiles/edgeai.dir/src/Ternary.cpp.o
+[ 31%] Building CXX object CMakeFiles/edgeai.dir/src/Kernels.cpp.o
+[ 33%] Building CXX object CMakeFiles/edgeai.dir/src/EdgeModel.cpp.o
+[ 35%] Building CXX object CMakeFiles/edgeai.dir/src/TernaryBackend.cpp.o
+[ 37%] Linking CXX static library libedgeai.a
+[ 37%] Built target edgeai
+[ 39%] Building CXX object CMakeFiles/edgeai_chat.dir/examples/chat.cpp.o
+[ 41%] Building CXX object CMakeFiles/edgeai_make_demo.dir/tools/make_demo_model.cpp.o
+[ 43%] Linking CXX executable edgeai_make_demo
+[ 43%] Built target edgeai_make_demo
+[ 45%] Building CXX object CMakeFiles/edgeai_logits.dir/tools/logits.cpp.o
+[ 47%] Linking CXX executable edgeai_chat
+[ 47%] Built target edgeai_chat
+[ 49%] Building CXX object CMakeFiles/edgeai_evaluate.dir/tools/evaluate.cpp.o
+[ 50%] Linking CXX executable edgeai_logits
+[ 50%] Built target edgeai_logits
+[ 52%] Building CXX object CMakeFiles/edgeai_inspect.dir/tools/inspect_model.cpp.o
+[ 54%] Linking CXX executable edgeai_evaluate
+[ 54%] Built target edgeai_evaluate
+[ 56%] Building CXX object CMakeFiles/edgeai_tests.dir/tests/test_engine.cpp.o
+[ 58%] Linking CXX executable edgeai_inspect
+[ 58%] Built target edgeai_inspect
+[ 60%] Building CXX object CMakeFiles/edgeai_regressions.dir/tests/test_regressions.cpp.o
+[ 62%] Linking CXX executable edgeai_tests
+[ 62%] Built target edgeai_tests
+[ 64%] Building CXX object CMakeFiles/edgeai_test_memory.dir/tests/test_memory.cpp.o
+[ 66%] Linking CXX executable edgeai_regressions
+[ 66%] Built target edgeai_regressions
+[ 68%] Building CXX object CMakeFiles/edgeai_test_kernels.dir/tests/test_kernels.cpp.o
+[ 70%] Linking CXX executable edgeai_test_memory
+[ 70%] Built target edgeai_test_memory
+[ 72%] Building CXX object CMakeFiles/edgeai_test_hybrid.dir/tests/test_hybrid.cpp.o
+[ 74%] Linking CXX executable edgeai_test_kernels
+[ 74%] Built target edgeai_test_kernels
+[ 76%] Building CXX object CMakeFiles/edgeai_test_tools.dir/tests/test_tools.cpp.o
+[ 78%] Linking CXX executable edgeai_test_hybrid
+[ 80%] Linking CXX executable edgeai_test_tools
+[ 80%] Built target edgeai_test_hybrid
+[ 80%] Built target edgeai_test_tools
+[ 82%] Building CXX object CMakeFiles/edgeai_test_precision.dir/tests/test_precision.cpp.o
+[ 84%] Building CXX object CMakeFiles/edgeai_test_transformer.dir/tests/test_transformer.cpp.o
+[ 86%] Linking CXX executable edgeai_test_precision
+[ 86%] Built target edgeai_test_precision
+[ 88%] Building CXX object CMakeFiles/edgeai_benchmark.dir/benchmarks/benchmark.cpp.o
+[ 90%] Linking CXX executable edgeai_test_transformer
+[ 90%] Built target edgeai_test_transformer
+[ 92%] Building CXX object CMakeFiles/edgeai_runtime_benchmark.dir/benchmarks/runtime.cpp.o
+[ 94%] Linking CXX executable edgeai_benchmark
+[ 94%] Built target edgeai_benchmark
+[ 96%] Building CXX object CMakeFiles/edgeai_matrix_benchmark.dir/benchmarks/ternary_vs_dense.cpp.o
+[ 98%] Linking CXX executable edgeai_runtime_benchmark
+[ 98%] Built target edgeai_runtime_benchmark
+[100%] Linking CXX executable edgeai_matrix_benchmark
+[100%] Built target edgeai_matrix_benchmark

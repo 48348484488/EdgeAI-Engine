@@ -1,0 +1,379 @@
+{
+  "schema": 1,
+  "source": "EdgeAI v0.4 own project source/documentation; predominantly generated during development, not independent human corpus",
+  "archive_sha256": "0749d5644a50df2b5c3ce18add57737bcf28460b93138ba46ef7e90fb66a661c",
+  "split_seed": 20260925,
+  "documents": [
+    {
+      "path": "documents/valid/code/include/edgeai/Hardware.hpp",
+      "source": "include/edgeai/Hardware.hpp",
+      "domain": "code",
+      "split": "valid",
+      "group": "Hardware",
+      "bytes": 188,
+      "sha256": "8a6e72e9039f53abee106bd371bad09eea0672753e55d7758ddec3467d4f1b7b"
+    },
+    {
+      "path": "documents/valid/code/src/Hardware.cpp",
+      "source": "src/Hardware.cpp",
+      "domain": "code",
+      "split": "valid",
+      "group": "Hardware",
+      "bytes": 814,
+      "sha256": "aa5cce2b25cd9385f9cb911faa1c96c2008261b4fa2e0399ee9df5a1a033f284"
+    },
+    {
+      "path": "documents/valid/code/include/edgeai/MixedMatrix.hpp",
+      "source": "include/edgeai/MixedMatrix.hpp",
+      "domain": "code",
+      "split": "valid",
+      "group": "MixedMatrix",
+      "bytes": 2075,
+      "sha256": "ce88689b6b220c4f8d3f387d916ab6966e26d1536dbbed9088c49dde47bdd3ee"
+    },
+    {
+      "path": "documents/valid/code/src/MixedMatrix.cpp",
+      "source": "src/MixedMatrix.cpp",
+      "domain": "code",
+      "split": "valid",
+      "group": "MixedMatrix",
+      "bytes": 4987,
+      "sha256": "cc40dbe2fb220bcd460d5a6db944e265b6a1a6b3a8a621203659acd9b80c34a8"
+    },
+    {
+      "path": "documents/valid/code/include/edgeai/Binary.hpp",
+      "source": "include/edgeai/Binary.hpp",
+      "domain": "code",
+      "split": "valid",
+      "group": "Binary",
+      "bytes": 1099,
+      "sha256": "492f1d189121ed59be17c50fe17975d8f01955b472a7b025b0818edd20bd6dc9"
+    },
+    {
+      "path": "documents/test/code/include/edgeai/HybridModel.hpp",
+      "source": "include/edgeai/HybridModel.hpp",
+      "domain": "code",
+      "split": "test",
+      "group": "HybridModel",
+      "bytes": 901,
+      "sha256": "719bea19058ee609f8a6837b873186385c02ffac43b9ec124bd2cb6fbe1761b9"
+    },
+    {
+      "path": "documents/test/code/src/HybridModel.cpp",
+      "source": "src/HybridModel.cpp",
+      "domain": "code",
+      "split": "test",
+      "group": "HybridModel",
+      "bytes": 5804,
+      "sha256": "a2a237974dc17d8beb927d9ca1ceba8a5c353d7b60e50512d1f42ee494f82f73"
+    },
+    {
+      "path": "documents/test/code/include/edgeai/Calculator.hpp",
+      "source": "include/edgeai/Calculator.hpp",
+      "domain": "code",
+      "split": "test",
+      "group": "Calculator",
+      "bytes": 138,
+      "sha256": "6fefbcd4fc4490ae520830d9b4a7a8476457a8b72f9e6ca0a475cea29de6c8fa"
+    },
+    {
+      "path": "documents/test/code/src/Calculator.cpp",
+      "source": "src/Calculator.cpp",
+      "domain": "code",
+      "split": "test",
+      "group": "Calculator",
+      "bytes": 3410,
+      "sha256": "12e5d56f724a89672346ff8bbc4c868537a9054a544f1dc40d1f1cda5e6d8f70"
+    },
+    {
+      "path": "documents/test/code/include/edgeai/TernaryBackend.hpp",
+      "source": "include/edgeai/TernaryBackend.hpp",
+      "domain": "code",
+      "split": "test",
+      "group": "TernaryBackend",
+      "bytes": 1223,
+      "sha256": "72e9cdb7f6900d9984921be4966cd9907f2b0148e5406656e5f48b8c3d083bef"
+    },
+    {
+      "path": "documents/test/code/src/TernaryBackend.cpp",
+      "source": "src/TernaryBackend.cpp",
+      "domain": "code",
+      "split": "test",
+      "group": "TernaryBackend",
+      "bytes": 4344,
+      "sha256": "1276b27093770bcb9052c3b050375fcbc6b306d455b8bd520ed10e82b55c7aab"
+    },
+    {
+      "path": "documents/train/code/include/edgeai/Backend.hpp",
+      "source": "include/edgeai/Backend.hpp",
+      "domain": "code",
+      "split": "train",
+      "group": "Backend",
+      "bytes": 896,
+      "sha256": "54c60532ee3154cb42aa311d0f79eb0c25e8cf3b879b0658fcca67fa1f76e436"
+    },
+    {
+      "path": "documents/train/code/src/Backend.cpp",
+      "source": "src/Backend.cpp",
+      "domain": "code",
+      "split": "train",
+      "group": "Backend",
+      "bytes": 621,
+      "sha256": "cd1a8b0ac1e52b87adb3787da2631416e0a0757d6728503bac012dbe3e096ec9"
+    },
+    {
+      "path": "documents/train/code/include/edgeai/Scheduler.hpp",
+      "source": "include/edgeai/Scheduler.hpp",
+      "domain": "code",
+      "split": "train",
+      "group": "Scheduler",
+      "bytes": 338,
+      "sha256": "afec4949aa902e72a7d48b5f3196502c76fb54e79fd6c3e87685675466087f6d"
+    },
+    {
+      "path": "documents/train/code/src/Scheduler.cpp",
+      "source": "src/Scheduler.cpp",
+      "domain": "code",
+      "split": "train",
+      "group": "Scheduler",
+      "bytes": 441,
+      "sha256": "d45bc47c21635a6393644721e9d4629812592014caf75871d1b531228413497a"
+    },
+    {
+      "path": "documents/train/code/include/edgeai/HybridMemory.hpp",
+      "source": "include/edgeai/HybridMemory.hpp",
+      "domain": "code",
+      "split": "train",
+      "group": "HybridMemory",
+      "bytes": 1211,
+      "sha256": "c1decd91bf1461b6492b6a2eff08971b484b087168dfb3da60db63d541f17a95"
+    },
+    {
+      "path": "documents/train/code/src/HybridMemory.cpp",
+      "source": "src/HybridMemory.cpp",
+      "domain": "code",
+      "split": "train",
+      "group": "HybridMemory",
+      "bytes": 2971,
+      "sha256": "b8f6b5c38dc5da09384cd4aea244ab1371c05202cc9ca16b4ed71feb8c054f4d"
+    },
+    {
+      "path": "documents/train/code/include/edgeai/Ternary.hpp",
+      "source": "include/edgeai/Ternary.hpp",
+      "domain": "code",
+      "split": "train",
+      "group": "Ternary",
+      "bytes": 2412,
+      "sha256": "c2057eaada476ea1593f4c9e5441bcf945b0b59f92fd505b67f972c1c88f67d8"
+    },
+    {
+      "path": "documents/train/code/src/Ternary.cpp",
+      "source": "src/Ternary.cpp",
+      "domain": "code",
+      "split": "train",
+      "group": "Ternary",
+      "bytes": 6245,
+      "sha256": "eb088dcc4f90768b71cb8becf62338ba0b18a1333288f83c1f97023450a8688c"
+    },
+    {
+      "path": "documents/train/code/include/edgeai/Router.hpp",
+      "source": "include/edgeai/Router.hpp",
+      "domain": "code",
+      "split": "train",
+      "group": "Router",
+      "bytes": 111,
+      "sha256": "309a80ea04ad90bfb86f990f5a65ce624fa11a645a4c129dc9186525dd74756f"
+    },
+    {
+      "path": "documents/train/code/src/Router.cpp",
+      "source": "src/Router.cpp",
+      "domain": "code",
+      "split": "train",
+      "group": "Router",
+      "bytes": 1590,
+      "sha256": "bbbcbbfe3f5f3d0233d793676283baafe84eadef2838fce88bd217c08d816183"
+    },
+    {
+      "path": "documents/train/code/include/edgeai/Types.hpp",
+      "source": "include/edgeai/Types.hpp",
+      "domain": "code",
+      "split": "train",
+      "group": "Types",
+      "bytes": 492,
+      "sha256": "19e352b2d98d4cb1871aae1cd5b8fa9bf0a9baff5734cd145e6873b941db0c48"
+    },
+    {
+      "path": "documents/train/code/include/edgeai/Memory.hpp",
+      "source": "include/edgeai/Memory.hpp",
+      "domain": "code",
+      "split": "train",
+      "group": "Memory",
+      "bytes": 458,
+      "sha256": "6dffe1b1e628a4eacc216e317108c3490022c29bb8c9dfc2f76350996e66ab5c"
+    },
+    {
+      "path": "documents/train/code/src/Memory.cpp",
+      "source": "src/Memory.cpp",
+      "domain": "code",
+      "split": "train",
+      "group": "Memory",
+      "bytes": 1695,
+      "sha256": "60a06453e404b31c3b48258f47da5ed21e631623418496538d573ed637e2893f"
+    },
+    {
+      "path": "documents/train/code/src/Int8Kernel.cpp",
+      "source": "src/Int8Kernel.cpp",
+      "domain": "code",
+      "split": "train",
+      "group": "Int8Kernel",
+      "bytes": 1786,
+      "sha256": "3ae7f141cb58a84827abb8ca080213518dc55888492a55eb561515a798872842"
+    },
+    {
+      "path": "documents/train/code/include/edgeai/HybridBackend.hpp",
+      "source": "include/edgeai/HybridBackend.hpp",
+      "domain": "code",
+      "split": "train",
+      "group": "HybridBackend",
+      "bytes": 1163,
+      "sha256": "67d00e160a107b5962ba2f12218621d49d3464c893f3aa42924167def2d6f14a"
+    },
+    {
+      "path": "documents/train/code/src/HybridBackend.cpp",
+      "source": "src/HybridBackend.cpp",
+      "domain": "code",
+      "split": "train",
+      "group": "HybridBackend",
+      "bytes": 4973,
+      "sha256": "813512ee495a3364e9b22722c5f4cfc75a83e9549ff11f8dbd9f975e2cec5810"
+    },
+    {
+      "path": "documents/train/code/include/edgeai/EdgeModel.hpp",
+      "source": "include/edgeai/EdgeModel.hpp",
+      "domain": "code",
+      "split": "train",
+      "group": "EdgeModel",
+      "bytes": 1186,
+      "sha256": "99ab51ca64e14627960d17a316d723d10b268d52d8a6336eac280ee5bf0b5dbe"
+    },
+    {
+      "path": "documents/train/code/src/EdgeModel.cpp",
+      "source": "src/EdgeModel.cpp",
+      "domain": "code",
+      "split": "train",
+      "group": "EdgeModel",
+      "bytes": 5570,
+      "sha256": "637262d7b2b7b164aab8596058460a7437b50d49ed3eb3eeba28a764ee68963a"
+    },
+    {
+      "path": "documents/train/code/include/edgeai/Engine.hpp",
+      "source": "include/edgeai/Engine.hpp",
+      "domain": "code",
+      "split": "train",
+      "group": "Engine",
+      "bytes": 766,
+      "sha256": "9eaab0c8fa6c1955451153e27e1e29c52d8a14a70cbfee7bd93cd3404f147d96"
+    },
+    {
+      "path": "documents/train/code/src/Engine.cpp",
+      "source": "src/Engine.cpp",
+      "domain": "code",
+      "split": "train",
+      "group": "Engine",
+      "bytes": 1324,
+      "sha256": "5a8ee2f3688f8b5d3d06cba16493db46f8d945709b34e7ce800dcf5b6f9f6c59"
+    },
+    {
+      "path": "documents/train/code/include/edgeai/Kernels.hpp",
+      "source": "include/edgeai/Kernels.hpp",
+      "domain": "code",
+      "split": "train",
+      "group": "Kernels",
+      "bytes": 995,
+      "sha256": "de7de02a80344cfd37796282002ce35dc5beb4fd02af91ceefafb41b1a333205"
+    },
+    {
+      "path": "documents/train/code/src/Kernels.cpp",
+      "source": "src/Kernels.cpp",
+      "domain": "code",
+      "split": "train",
+      "group": "Kernels",
+      "bytes": 5084,
+      "sha256": "bd26ad00dc40e9f58c59d90e3b947ab574c3d965d7df0b16d2e25262b042d123"
+    },
+    {
+      "path": "documents/valid/text/docs/FORMAT-v0.4.md",
+      "source": "docs/FORMAT-v0.4.md",
+      "domain": "text",
+      "split": "valid",
+      "group": "docs/FORMAT-v0.4.md",
+      "bytes": 2647,
+      "sha256": "6f7dcd543ce063faaa30aea2df34718013612c51a6daca68479dae31e0a32c59"
+    },
+    {
+      "path": "documents/test/text/docs/IMPLEMENTATION-v0.3.md",
+      "source": "docs/IMPLEMENTATION-v0.3.md",
+      "domain": "text",
+      "split": "test",
+      "group": "docs/IMPLEMENTATION-v0.3.md",
+      "bytes": 1229,
+      "sha256": "fb025b18fb8507f5b952c4d385a3140fab402d293db15e1a881ed1c9e475abdf"
+    },
+    {
+      "path": "documents/train/text/docs/DESIGN-v0.4.md",
+      "source": "docs/DESIGN-v0.4.md",
+      "domain": "text",
+      "split": "train",
+      "group": "docs/DESIGN-v0.4.md",
+      "bytes": 1186,
+      "sha256": "1da2f041d76b913258c1386663792d5087ec5e4a7f1d1436350ce73e6602c823"
+    },
+    {
+      "path": "documents/train/text/docs/PROTOCOL-v0.4.md",
+      "source": "docs/PROTOCOL-v0.4.md",
+      "domain": "text",
+      "split": "train",
+      "group": "docs/PROTOCOL-v0.4.md",
+      "bytes": 1662,
+      "sha256": "ac810c24b278de76e692d1b123240b21bdbcfb089262506b9fd406a16a59af1b"
+    },
+    {
+      "path": "documents/train/text/docs/FORMAT.md",
+      "source": "docs/FORMAT.md",
+      "domain": "text",
+      "split": "train",
+      "group": "docs/FORMAT.md",
+      "bytes": 2568,
+      "sha256": "f5c625758b02e0f8d1316109141856f130055aa3d9e532bccd79e45071a80c0b"
+    },
+    {
+      "path": "documents/train/text/docs/IMPLEMENTATION-v0.4.md",
+      "source": "docs/IMPLEMENTATION-v0.4.md",
+      "domain": "text",
+      "split": "train",
+      "group": "docs/IMPLEMENTATION-v0.4.md",
+      "bytes": 1517,
+      "sha256": "f164d85d7f6e2bf55a81461ca0a363ac48e0eab1c7684b097857c2e62f43c503"
+    },
+    {
+      "path": "documents/train/text/README.md",
+      "source": "README.md",
+      "domain": "text",
+      "split": "train",
+      "group": "README.md",
+      "bytes": 8072,
+      "sha256": "7968305236494163a4dec1479f68db6ca56534c723b430d83ac66a23d0863d33"
+    },
+    {
+      "path": "documents/train/text/docs/DESIGN-v0.3.md",
+      "source": "docs/DESIGN-v0.3.md",
+      "domain": "text",
+      "split": "train",
+      "group": "docs/DESIGN-v0.3.md",
+      "bytes": 1505,
+      "sha256": "6bbaea27e6902afdd1222f6e6e5db023ecc52b734a4fcfe26f9332412d750633"
+    }
+  ],
+  "removed_duplicate_files": [],
+  "dataset_id": "686859c952516a7b6c08b73a7e80deec4f4cd5fcf13ca69ec469da8ee7d01e26"
+}

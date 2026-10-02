@@ -1,0 +1,1 @@
+{"validated": true, "training_runs": 3, "evaluated_phases": 6, "examples_per_phase": 194, "logit_cases": 36, "greedy_cases": 24, "energy_claim": false}

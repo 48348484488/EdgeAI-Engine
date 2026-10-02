@@ -1,0 +1,245 @@
+{
+  "protocol": "same training process-CPU seconds; excludes initialization/evaluation/export/tokenization; includes batch sampling, gradient and optimizer work",
+  "config": {
+    "byte257": {
+      "dim": 64,
+      "hidden": 168,
+      "window": 64,
+      "precision": "int8",
+      "vocab_size": 257
+    },
+    "bpe513": {
+      "dim": 48,
+      "hidden": 128,
+      "window": 64,
+      "precision": "int8",
+      "vocab_size": 513
+    }
+  },
+  "cpu_budget_seconds": 1.0,
+  "threads": 1,
+  "seeds": [
+    11
+  ],
+  "expected": 2,
+  "runs": [
+    {
+      "kind": "byte257",
+      "seed": 11,
+      "identity": {
+        "protocol": "v06-cpu-tokenization-1",
+        "kind": "byte257",
+        "seed": 11,
+        "cpu_budget": 1.0,
+        "threads": 1,
+        "config": {
+          "dim": 64,
+          "hidden": 168,
+          "window": 64,
+          "precision": "int8",
+          "vocab_size": 257
+        },
+        "snapshot_sha256": "68d001ec093a83c6b9ea3f91d41d9dfa9fadde66cc78f4c92c21a45fc03b7c1b",
+        "tokenizer": "9e0a5fae0639a42793c8e7a12b76864ec9c0e49d72e69f7315518335a7565d59",
+        "torch": "2.10.0+cpu",
+        "host": {
+          "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+          "python": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]",
+          "cpu": "AMD EPYC 9V74 80-Core Processor"
+        },
+        "code": {
+          "benchmarks/tokenization_v06.py": "61adad9f8cc3fd66159e5259623b49a26c1ddde9936769086a30db15c256901d",
+          "tools/transformer_model.py": "d84d79edf279c7c2c0646abc6ed9afba46db8ec6f09ff01e1f1e6c2d226fd401",
+          "tools/byte_bpe.py": "5f1796d7fe739228f2ca27f0bb7d869b128b6ac38e03034e6712c4292d5a5ac7",
+          "tools/mixed_model.py": "1c5240e454271986d311a6db857b192373ff665b9242b6f315bb9fc408f69f9a",
+          "tools/external_data.py": "e7da2245227c7290bd61315a3ff02c6ce7e39de78f4cccab86e866a074221c10",
+          "tools/hybrid_model.py": "37187a5fe67d743b79398ba9816e8becc2b1535b042cff789ae996f2781471e0",
+          "tools/train_tiny.py": "2a7a2564f913b93740fda9141acbc676b9f8934d7b692cc121d92bcdd622c667"
+        }
+      },
+      "parameters": 71529,
+      "steps": 166,
+      "selected_step": 166,
+      "selected_validation_bpb": 3.8899815744506396,
+      "train_cpu_seconds": 1.0012760070000022,
+      "train_wall_seconds": 1.0017363930007832,
+      "total_trial_wall_seconds": 3.5703725989999384,
+      "training_tokens": 84992,
+      "training_raw_bytes": 84992,
+      "training_batches_sha256": "ec2260a385ac0df9bfce772326123dfb0775a815d348bd28b8de6f5062a944a2",
+      "metrics": {
+        "bits_per_byte": 3.512485955577242,
+        "nll_sum": 71774.06384277344,
+        "raw_bytes": 29480,
+        "target_tokens": 29480,
+        "token_accuracy": 0.36343283582089553
+      },
+      "native_metrics": {
+        "blocks": 116,
+        "raw_bytes": 29480,
+        "target_tokens": 29480,
+        "nll_sum": 71774.063006429,
+        "bits_per_byte": 3.5124859146482,
+        "token_accuracy": 0.3634328358209,
+        "load_seconds": 0.000224388,
+        "tokenization_seconds": 3.9965e-05,
+        "forward_and_scoring_seconds": 0.286181529,
+        "total_seconds": 0.286684572,
+        "cpu_seconds": 0.286083,
+        "weights_bytes": 126088,
+        "state_bytes": 32768,
+        "working_bytes": 37156,
+        "bos_scored_as_byte": false,
+        "energy_joules": null
+      },
+      "validation_curve": [
+        {
+          "step": 41,
+          "cpu_seconds": 0.2540741989999993,
+          "validation_bpb": 4.5573277121828655
+        },
+        {
+          "step": 81,
+          "cpu_seconds": 0.5007314980000013,
+          "validation_bpb": 4.172226891054079
+        },
+        {
+          "step": 124,
+          "cpu_seconds": 0.7512282590000012,
+          "validation_bpb": 3.9458165759810577
+        },
+        {
+          "step": 166,
+          "cpu_seconds": 1.0012760070000022,
+          "validation_bpb": 3.8899815744506396
+        }
+      ],
+      "model_path": "models/quick_v06/byte257-seed11.edge",
+      "file_bytes": 126272,
+      "artifacts": {
+        "models/quick_v06/byte257-seed11.edge": "f925fca5568e19a2feffef615a6ee9318c4b555e6a4821578e2097b9347adee9",
+        "models/quick_v06/byte257-seed11.pt": "70646d59c4cb6c2b799cf03251bc7ca42e23531688ba3002082e0c53280eb7e6"
+      }
+    },
+    {
+      "kind": "bpe513",
+      "seed": 11,
+      "identity": {
+        "protocol": "v06-cpu-tokenization-1",
+        "kind": "bpe513",
+        "seed": 11,
+        "cpu_budget": 1.0,
+        "threads": 1,
+        "config": {
+          "dim": 48,
+          "hidden": 128,
+          "window": 64,
+          "precision": "int8",
+          "vocab_size": 513
+        },
+        "snapshot_sha256": "68d001ec093a83c6b9ea3f91d41d9dfa9fadde66cc78f4c92c21a45fc03b7c1b",
+        "tokenizer": "1d75f0afc1e7746085a5e40655ab9e880833b53f5058c61f7f495d86ae18373e",
+        "torch": "2.10.0+cpu",
+        "host": {
+          "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+          "python": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]",
+          "cpu": "AMD EPYC 9V74 80-Core Processor"
+        },
+        "code": {
+          "benchmarks/tokenization_v06.py": "61adad9f8cc3fd66159e5259623b49a26c1ddde9936769086a30db15c256901d",
+          "tools/transformer_model.py": "d84d79edf279c7c2c0646abc6ed9afba46db8ec6f09ff01e1f1e6c2d226fd401",
+          "tools/byte_bpe.py": "5f1796d7fe739228f2ca27f0bb7d869b128b6ac38e03034e6712c4292d5a5ac7",
+          "tools/mixed_model.py": "1c5240e454271986d311a6db857b192373ff665b9242b6f315bb9fc408f69f9a",
+          "tools/external_data.py": "e7da2245227c7290bd61315a3ff02c6ce7e39de78f4cccab86e866a074221c10",
+          "tools/hybrid_model.py": "37187a5fe67d743b79398ba9816e8becc2b1535b042cff789ae996f2781471e0",
+          "tools/train_tiny.py": "2a7a2564f913b93740fda9141acbc676b9f8934d7b692cc121d92bcdd622c667"
+        }
+      },
+      "parameters": 71633,
+      "steps": 167,
+      "selected_step": 167,
+      "selected_validation_bpb": 3.5442662994600496,
+      "train_cpu_seconds": 1.0006875789999965,
+      "train_wall_seconds": 1.0011565800000426,
+      "total_trial_wall_seconds": 2.7268139799998607,
+      "training_tokens": 85504,
+      "training_raw_bytes": 180601,
+      "training_batches_sha256": "d3fea1e1e89e91bd01f4afed4af4ee32b54032a5bdf7afed89e53d97f2eb3e20",
+      "metrics": {
+        "bits_per_byte": 3.0883335062648483,
+        "nll_sum": 63106.941650390625,
+        "raw_bytes": 29480,
+        "target_tokens": 15633,
+        "token_accuracy": 0.2398132156335956
+      },
+      "native_metrics": {
+        "blocks": 116,
+        "raw_bytes": 29480,
+        "target_tokens": 15633,
+        "nll_sum": 63106.940990478,
+        "bits_per_byte": 3.08833347397,
+        "token_accuracy": 0.2398132156336,
+        "load_seconds": 0.000316486,
+        "tokenization_seconds": 0.00273273,
+        "forward_and_scoring_seconds": 0.16751609,
+        "total_seconds": 0.170863342,
+        "cpu_seconds": 0.170528,
+        "weights_bytes": 151672,
+        "state_bytes": 24576,
+        "working_bytes": 29220,
+        "bos_scored_as_byte": false,
+        "energy_joules": null
+      },
+      "validation_curve": [
+        {
+          "step": 44,
+          "cpu_seconds": 0.25514964600000134,
+          "validation_bpb": 3.886182409213901
+        },
+        {
+          "step": 85,
+          "cpu_seconds": 0.502098022000002,
+          "validation_bpb": 3.714852129555509
+        },
+        {
+          "step": 125,
+          "cpu_seconds": 0.750113601999999,
+          "validation_bpb": 3.63014171991534
+        },
+        {
+          "step": 167,
+          "cpu_seconds": 1.0006875789999965,
+          "validation_bpb": 3.5442662994600496
+        }
+      ],
+      "model_path": "models/quick_v06/bpe513-seed11.edge",
+      "file_bytes": 153904,
+      "artifacts": {
+        "models/quick_v06/bpe513-seed11.edge": "bcf356e770597a061348867498f38df97b956ab3307531c9fe33d67d98f435b4",
+        "models/quick_v06/bpe513-seed11.pt": "5a7a39e6316cbede9595a7d15915ded8124e0983f1bd259c37e40e276ad1ece4"
+      }
+    }
+  ],
+  "dataset_manifest_sha256": "68d001ec093a83c6b9ea3f91d41d9dfa9fadde66cc78f4c92c21a45fc03b7c1b",
+  "pretokenization_cpu_seconds": 0.07783778900000016,
+  "train_raw_bytes": 357941,
+  "test_raw_bytes": 29480,
+  "valid_raw_bytes": 104763,
+  "hardware": {
+    "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+    "processor": "",
+    "cpu_model": "AMD EPYC 9V74 80-Core Processor"
+  },
+  "baseline_bigram": {
+    "bits_per_byte": 3.557375938696749,
+    "method": "byte bigram add-0.1; first-byte distribution trained; reset per raw block"
+  },
+  "metric_caveats": [
+    "canonical token sequence code length, not marginalized probability of raw strings",
+    "BPE sees more bytes per 64-token window and per batch",
+    "different hidden dimensions to match parameter counts",
+    "one independently authored project, not independent repositories or multiple natural languages"
+  ],
+  "completed": 2,
+  "invocation_wall_seconds": 6.406292049000058
+}

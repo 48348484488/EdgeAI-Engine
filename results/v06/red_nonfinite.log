@@ -1,0 +1,15 @@
+Internal ctest changing into directory: /mnt/data/EdgeAI-Engine-v0.6/build
+Test project /mnt/data/EdgeAI-Engine-v0.6/build
+    Start 9: edgeai_bpe
+1/1 Test #9: edgeai_bpe .......................Subprocess aborted***Exception:   0.00 sec
+terminate called after throwing an instance of 'std::runtime_error'
+  what():  ok
+
+
+0% tests passed, 1 tests failed out of 1
+
+Total Test time (real) =   0.00 sec
+
+The following tests FAILED:
+	  9 - edgeai_bpe (Subprocess aborted)
+Errors while running CTest

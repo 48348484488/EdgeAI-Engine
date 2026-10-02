@@ -1,0 +1,11 @@
+{
+  "data/code_demo/NOTICE.md": "427c9fbd4842ce9473313286ba067be6bc2e0abdacff8e05180c9dd0d7286a59",
+  "data/code_demo/cases.json": "9d8775391cd6b303e0cc811831f3238773a8a0071c4506cbaaf88527ed1fdb56",
+  "data/code_demo/include/player.h": "313d982ffbe07f0697a70902f041ac60e78b67dff203447412a15f3894a9378a",
+  "data/code_demo/scripts/accounts.pwn": "d5960aa1089e8ccbe006d7935438ccdd420ddc8580dc3d3fab78045f59532c25",
+  "data/code_demo/scripts/config.py": "cbbcacb3da4b6bb8e230a47c3f6083dd705d06c35868b99a0ec3d9685f9414b8",
+  "data/code_demo/src/inventory.cpp": "118165a199b40a2a2d02e5a8450eaeb51ebe48ce886dd06be3c406ad799b59d0",
+  "data/code_demo/src/player.cpp": "afc9c137be910c9ab316a7335a62903c835eb0488354a7faf734b87c707370ac",
+  "data/code_demo/web/menu.js": "389dacea6f05f57dafbdb5bd6a13ec1f9f1ddd290935e610904d4809913de0fa",
+  "data/reference_diagnostic/cases.json": "1f2c8531cce88d49cb4cc4626026d209a6d29b29036c3cd4ba81d483f15d8d5d"
+}

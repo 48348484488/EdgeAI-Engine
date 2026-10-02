@@ -1,0 +1,20 @@
+{
+  "documents": 18,
+  "raw_bytes": {
+    "train": 357941,
+    "valid": 105275,
+    "test": 29480
+  },
+  "evaluation": {
+    "valid": {
+      "kept": 411,
+      "removed": 2,
+      "bytes": 104763
+    },
+    "test": {
+      "kept": 116,
+      "removed": 0,
+      "bytes": 29480
+    }
+  }
+}

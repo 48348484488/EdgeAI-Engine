@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "method": "deterministic lexical retrieval; no model",
+  "host": "Linux-6.18.44-x86_64-with-glibc2.41",
+  "cases": 18,
+  "positive_cases": 14,
+  "negative_cases": 4,
+  "positive_top1": 14,
+  "positive_top3": 14,
+  "negative_empty": 4,
+  "median_seconds_including_process": 0.001604519999943932,
+  "all_snippets_match_source": true,
+  "energy_joules": null,
+  "limitations": [
+    "small authored fixture, not independent benchmark",
+    "same symbols in question and source; lexical retrieval only",
+    "source is rescanned per process",
+    "absence in inspected scope is not absence in entire project"
+  ]
+}

@@ -1,0 +1,1009 @@
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -1,5 +1,5 @@
+ cmake_minimum_required(VERSION 3.16)
+-project(EdgeAIEngine VERSION 0.3.0 LANGUAGES CXX)
++project(EdgeAIEngine VERSION 0.4.0 LANGUAGES CXX)
+ set(CMAKE_CXX_STANDARD 17)
+ set(CMAKE_CXX_STANDARD_REQUIRED ON)
+ set(CMAKE_CXX_EXTENSIONS OFF)
+@@ -17,7 +17,7 @@
+ add_library(edgeai
+     src/Engine.cpp src/Router.cpp src/Calculator.cpp src/Memory.cpp src/Scheduler.cpp src/Hardware.cpp src/Backend.cpp
+     src/HybridMemory.cpp src/HybridModel.cpp src/HybridBackend.cpp
+-    src/Ternary.cpp src/Kernels.cpp src/EdgeModel.cpp src/TernaryBackend.cpp
++    src/MixedMatrix.cpp src/Int8Kernel.cpp src/Ternary.cpp src/Kernels.cpp src/EdgeModel.cpp src/TernaryBackend.cpp
+ )
+ target_include_directories(edgeai PUBLIC include)
+ if(MSVC)
+@@ -41,7 +41,7 @@
+   add_executable(edgeai_regressions tests/test_regressions.cpp)
+   target_link_libraries(edgeai_regressions PRIVATE edgeai)
+   add_test(NAME edgeai_regressions COMMAND edgeai_regressions)
+-  foreach(test memory kernels hybrid tools)
++  foreach(test memory kernels hybrid tools precision)
+     add_executable(edgeai_test_${test} tests/test_${test}.cpp)
+     target_link_libraries(edgeai_test_${test} PRIVATE edgeai)
+     add_test(NAME edgeai_${test} COMMAND edgeai_test_${test})
+@@ -55,3 +55,11 @@
+   add_executable(edgeai_matrix_benchmark benchmarks/ternary_vs_dense.cpp)
+   target_link_libraries(edgeai_matrix_benchmark PRIVATE edgeai)
+ endif()
++
++if(EDGEAI_BUILD_TESTS AND TARGET edgeai_runtime_benchmark)
++  find_package(Python3 COMPONENTS Interpreter QUIET)
++  if(Python3_Interpreter_FOUND)
++    add_test(NAME edgeai_runtime_cli COMMAND ${Python3_EXECUTABLE}
++      ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_runtime_cli.py $<TARGET_FILE:edgeai_runtime_benchmark>)
++  endif()
++endif()
+--- a/benchmarks/output_ptq.py
++++ b/benchmarks/output_ptq.py
+@@ -0,0 +1,46 @@
++#!/usr/bin/env python3
++"""Separate, frozen-checkpoint INT8 output-head quantization experiment.
++No retraining, seed selection or modification of the primary comparison.
++"""
++import argparse,json,statistics,sys
++from pathlib import Path
++sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'tools'))
++import torch
++from mixed_model import MixedHybrid,numeric_weight_bytes,export_mixed
++from precision_v04 import batch,evaluate
++
++def main():
++    p=argparse.ArgumentParser(description=__doc__)
++    p.add_argument('--quality',type=Path,default=Path('results/precision_quality.json'))
++    p.add_argument('--out',type=Path,default=Path('results/output_ptq.json'))
++    p.add_argument('--models',type=Path,default=Path('models/head_ptq'))
++    args=p.parse_args();torch.set_num_threads(1)
++    quality=json.loads(args.quality.read_text());tests={}
++    for length,seed in quality['test_seed_by_length'].items():
++        generator=torch.Generator().manual_seed(seed)
++        tests[length]=[batch(32,int(length),generator) for _ in range(quality['test_size']//32)]
++    args.models.mkdir(parents=True,exist_ok=True);rows=[]
++    for old in quality['runs']:
++        if old['kind'] not in ('fp32','int8','memory_int8'):continue
++        checkpoint=Path(old['checkpoint']);data=torch.load(checkpoint,map_location='cpu',weights_only=True)
++        config=dict(data['config']);config['output_precision']='int8'
++        model=MixedHybrid(**config);model.load_state_dict(data['state_dict']);model.eval()
++        result={length:evaluate(model,batches) for length,batches in tests.items()}
++        name=f"{old['kind']}-head-int8-seed{old['seed']}";out=args.models/name
++        export_mixed(model,out.with_suffix('.edge'))
++        torch.save(dict(config=config,state_dict=model.state_dict(),kind='output_ptq',source_checkpoint=str(checkpoint)),out.with_suffix('.pt'))
++        rows.append(dict(policy=old['kind'],seed=old['seed'],baseline_metrics=old['metrics'],quantized_metrics=result,
++                         baseline_weight_bytes=old['numeric_weight_bytes'],weight_bytes=numeric_weight_bytes(model),
++                         edge_file_bytes=out.with_suffix('.edge').stat().st_size,source=str(checkpoint),model=str(out.with_suffix('.edge'))))
++    summary={}
++    for policy in ('fp32','memory_int8','int8'):
++        group=[r for r in rows if r['policy']==policy]
++        summary[policy]=dict(weight_bytes=group[0]['weight_bytes'],edge_file_bytes=group[0]['edge_file_bytes'],
++            by_length={length:dict(baseline_mean_accuracy=statistics.mean(r['baseline_metrics'][length]['accuracy'] for r in group),
++                                  quantized_mean_accuracy=statistics.mean(r['quantized_metrics'][length]['accuracy'] for r in group)) for length in tests})
++    report=dict(experiment='INT8 output head applied after primary fixed training; no retraining',
++                caveat='Same held-out examples re-used for a declared separate ablation; not new confirmation of language/general intelligence',
++                summary=summary,runs=rows)
++    args.out.parent.mkdir(parents=True,exist_ok=True);args.out.write_text(json.dumps(report,indent=2)+'\n')
++    print(json.dumps(summary,indent=2))
++if __name__=='__main__':main()
+--- a/benchmarks/precision_v04.py
++++ b/benchmarks/precision_v04.py
+@@ -0,0 +1,125 @@
++#!/usr/bin/env python3
++"""Predeclared synthetic recall benchmark. Not a general-language benchmark.
++
++Six hybrid precision policies have identical FP32 master initialization per seed,
++same examples, optimizer and update count. Transformer uses a near-matched count.
++No checkpoint/seed selection on test; every final checkpoint is reported and saved.
++"""
++import argparse
++import hashlib
++import json
++import platform
++import random
++import statistics
++import sys
++import time
++from pathlib import Path
++sys.path.insert(0, str(Path(__file__).resolve().parents[1]/'tools'))
++import torch
++from torch.nn import functional as F
++from mixed_model import MixedHybrid, POLICIES, numeric_weight_bytes, export_mixed
++from quality_v03 import Transformer, batch
++
++def evaluate(model, batches):
++    correct=total=0; nll=0.
++    with torch.inference_mode():
++        for x,y in batches:
++            logits=model(x)[:,-1]
++            correct+=int((logits.argmax(-1)==y).sum())
++            total+=len(y);nll+=float(F.cross_entropy(logits,y,reduction='sum'))
++    return dict(accuracy=correct/total,correct=correct,total=total,nll=nll/total)
++
++def data_hash(batches):
++    h=hashlib.sha256()
++    for x,y in batches:h.update(x.numpy().tobytes());h.update(y.numpy().tobytes())
++    return h.hexdigest()
++
++def state_hash(model):
++    h=hashlib.sha256()
++    for name,p in model.state_dict().items():h.update(name.encode());h.update(p.numpy().tobytes())
++    return h.hexdigest()
++
++def main():
++    p=argparse.ArgumentParser(description=__doc__)
++    p.add_argument('--steps',type=int,default=400)
++    p.add_argument('--seeds',type=int,nargs='+',default=[11,22,33])
++    p.add_argument('--test-size',type=int,default=1024)
++    p.add_argument('--threads',type=int,default=1)
++    p.add_argument('--out',type=Path,default=Path('results/precision_quality.json'))
++    p.add_argument('--checkpoint-dir',type=Path,default=Path('models/recall'))
++    args=p.parse_args()
++    if min(args.steps,args.threads,args.test_size)<1 or args.test_size%32:
++        p.error('positive steps/threads/test-size; test-size must be a multiple of 32')
++    if len(set(args.seeds))!=len(args.seeds):p.error('seeds must not repeat')
++    torch.set_num_threads(args.threads);torch.use_deterministic_algorithms(True)
++    tests={}
++    for length in (32,64):
++        generator=torch.Generator().manual_seed(268113+length)
++        tests[str(length)]=[batch(32,length,generator) for _ in range(args.test_size//32)]
++    args.checkpoint_dir.mkdir(parents=True,exist_ok=True)
++    rows=[];kinds=list(POLICIES)+['transformer_fp32'];initial_hashes={}
++    for seed in args.seeds:
++        order=list(kinds);random.Random(seed+802).shuffle(order)
++        for kind in order:
++            torch.manual_seed(seed)
++            model=Transformer(hidden=16) if kind=='transformer_fp32' else MixedHybrid(policy=kind)
++            initial=state_hash(model)
++            if kind!='transformer_fp32':
++                previous=initial_hashes.setdefault(seed,initial)
++                if initial!=previous:raise AssertionError('hybrid master initialization mismatch')
++            optimizer=torch.optim.AdamW(model.parameters(),lr=.002,weight_decay=.01)
++            generator=torch.Generator().manual_seed(8100+seed)
++            batch_digest=hashlib.sha256();curve=[]
++            model.train();start=time.perf_counter();cpu_start=time.process_time()
++            for step in range(1,args.steps+1):
++                x,y=batch(32,32,generator)
++                batch_digest.update(x.numpy().tobytes());batch_digest.update(y.numpy().tobytes())
++                loss=F.cross_entropy(model(x)[:,-1],y)
++                if not torch.isfinite(loss):raise RuntimeError(f'nonfinite loss: {kind}/{seed}/{step}')
++                optimizer.zero_grad(set_to_none=True);loss.backward()
++                torch.nn.utils.clip_grad_norm_(model.parameters(),1.);optimizer.step()
++                if step%100==0 or step==args.steps:curve.append(dict(step=step,loss=float(loss.detach())))
++            cpu=time.process_time()-cpu_start;elapsed=time.perf_counter()-start
++            model.eval();metrics={length:evaluate(model,test) for length,test in tests.items()}
++            config={} if kind=='transformer_fp32' else model.export_config()
++            checkpoint=args.checkpoint_dir/f'{kind}-seed{seed}.pt'
++            torch.save(dict(kind=kind,seed=seed,steps=args.steps,config=config,state_dict=model.state_dict()),checkpoint)
++            export_bytes=None;payload_bytes=sum(p.numel() for p in model.parameters())*4
++            if kind!='transformer_fp32':
++                export_mixed(model,checkpoint.with_suffix('.edge'))
++                export_bytes=checkpoint.with_suffix('.edge').stat().st_size
++                payload_bytes=numeric_weight_bytes(model)
++            row=dict(kind=kind,seed=seed,parameters=sum(p.numel() for p in model.parameters()),
++                     initial_state_sha256=initial,training_batches_sha256=batch_digest.hexdigest(),
++                     steps=args.steps,train_examples=args.steps*32,train_seconds=elapsed,
++                     train_cpu_seconds=cpu,energy_joules=None,metrics=metrics,
++                     numeric_weight_bytes=payload_bytes,edge_file_bytes=export_bytes,curve=curve,
++                     checkpoint=str(checkpoint))
++            rows.append(row);print(json.dumps(row),flush=True)
++    for seed in args.seeds:
++        if len({r['training_batches_sha256'] for r in rows if r['seed']==seed})!=1:
++            raise AssertionError('training batches differ across variants')
++    summary={}
++    for kind in kinds:
++        group=[r for r in rows if r['kind']==kind]
++        summary[kind]=dict(parameters=group[0]['parameters'],numeric_weight_bytes=group[0]['numeric_weight_bytes'],
++                          edge_file_bytes=group[0]['edge_file_bytes'],mean_train_seconds=statistics.mean(r['train_seconds'] for r in group),
++                          mean_train_cpu_seconds=statistics.mean(r['train_cpu_seconds'] for r in group),
++                          by_length={length:dict(mean_accuracy=statistics.mean(r['metrics'][length]['accuracy'] for r in group),
++                             min_accuracy=min(r['metrics'][length]['accuracy'] for r in group),
++                             max_accuracy=max(r['metrics'][length]['accuracy'] for r in group)) for length in tests})
++    report=dict(task='6 joint key/value symbols followed by distractors and a query; 8 values; chance 12.5%',
++                limitations='Synthetic task; not natural language, code or general intelligence. Three seeds are not an inferential confidence interval.',
++                policy_definitions=POLICIES,primary_length=32,stress_length=64,local_window=16,
++                steps=args.steps,batch_size=32,seeds=args.seeds,test_size=args.test_size,
++                test_seed_by_length={length:268113+int(length) for length in tests},
++                test_sha256={length:data_hash(test) for length,test in tests.items()},
++                checkpoint_selection='final fixed step for every run; no test selection',
++                optimizer='AdamW lr=.002 weight_decay=.01 clip_norm=1',
++                precision_note='FP32 master weights/gradients/state. Ternary uses per-row centering; INT8 uses absmax scale without centering. Comparisons include this policy difference.',
++                transformer_note='Transformer hidden=16, hybrid hidden=64 to near-match total parameters; neither FLOPs nor architecture equalized.',
++                torch_version=torch.__version__,threads=args.threads,platform=platform.platform(),
++                summary=summary,runs=rows)
++    args.out.parent.mkdir(parents=True,exist_ok=True);args.out.write_text(json.dumps(report,indent=2)+'\n')
++    print(json.dumps(summary,indent=2),flush=True)
++if __name__=='__main__':main()
+--- a/benchmarks/run_precision_native.py
++++ b/benchmarks/run_precision_native.py
+@@ -0,0 +1,52 @@
++#!/usr/bin/env python3
++"""Native forward timing, not intelligence or a direct energy measurement."""
++import argparse,json,platform,random,statistics,subprocess,tempfile
++from pathlib import Path
++
++def main():
++    ap=argparse.ArgumentParser(description=__doc__)
++    ap.add_argument('--binary',type=Path,default=Path('build/edgeai_runtime_benchmark'))
++    ap.add_argument('--tokens',type=int,default=50000)
++    ap.add_argument('--rounds',type=int,default=7)
++    ap.add_argument('--out',type=Path,default=Path('results/precision_native.json'))
++    args=ap.parse_args()
++    if not 1<=args.tokens<=1000000 or args.rounds<1:ap.error('invalid tokens/rounds')
++    policies=['fp32','ternary','qk_fp32','memory_fp32','memory_int8','int8']
++    cases=[(p,Path(f'models/recall/{p}-seed11.edge')) for p in policies]
++    for p in ('memory_int8','int8','fp32'):
++        file=Path(f'models/head_ptq/{p}-head-int8-seed11.edge')
++        if file.exists():cases.append((p+'_head_int8',file))
++    results=[];rng=random.Random(9274)
++    with tempfile.TemporaryDirectory() as td:
++        rss_path=Path(td)/'rss.txt'
++        for repeat in range(args.rounds):
++            order=list(cases);rng.shuffle(order)
++            for name,path in order:
++                cmd=[str(args.binary.resolve()),str(path),str(args.tokens),'auto']
++                with_time=Path('/usr/bin/time').exists()
++                if with_time:cmd=['/usr/bin/time','-f','%M','-o',str(rss_path)]+cmd
++                run=subprocess.run(cmd,capture_output=True,text=True,check=True)
++                row=json.loads(run.stdout);row.update(policy=name,round=repeat,model=str(path),
++                    model_file_bytes=path.stat().st_size,peak_rss_kib=int(rss_path.read_text().strip()) if with_time else None)
++                results.append(row)
++    summary={}
++    for name,_ in cases:
++        group=[r for r in results if r['policy']==name]
++        summary[name]=dict(median_seconds=statistics.median(r['seconds'] for r in group),
++            median_cpu_seconds=statistics.median(r['cpu_seconds'] for r in group),
++            min_seconds=min(r['seconds'] for r in group),max_seconds=max(r['seconds'] for r in group),
++            median_us_per_byte_step=statistics.median(r['seconds']*1e6/r['tokens'] for r in group),
++            weights_bytes=group[0]['weights_bytes'],file_bytes=group[0]['model_file_bytes'],
++            median_peak_rss_kib=statistics.median(r['peak_rss_kib'] for r in group) if group[0]['peak_rss_kib'] is not None else None,
++            state_payload_bytes=group[0]['state_payload_bytes'],numeric_working_bytes=group[0]['numeric_working_bytes'])
++    cpu=None
++    info=Path('/proc/cpuinfo')
++    if info.exists():cpu=next((s.split(':',1)[1].strip() for s in info.read_text().splitlines() if s.startswith('model name')),None)
++    report=dict(platform=platform.platform(),cpu_model=cpu,threads=1,tokens=args.tokens,rounds=args.rounds,
++                model_seed=11,seed_selection='fixed first registered seed, not fastest/best checkpoint',
++                clock='steady_clock for wall; std::clock for process CPU',energy_joules=None,
++                warnings='Tiny synthetic-trained byte model. Not representative of old PCs. RSS includes allocator/runtime. INT8 still uses FP32 activations/accumulation. Not a general quality or energy benchmark.',
++                summary=summary,runs=results)
++    args.out.parent.mkdir(parents=True,exist_ok=True);args.out.write_text(json.dumps(report,indent=2)+'\n')
++    print(json.dumps(summary,indent=2))
++if __name__=='__main__':main()
+--- a/benchmarks/runtime.cpp
++++ b/benchmarks/runtime.cpp
+@@ -1,7 +1,31 @@
+ #include "edgeai/HybridBackend.hpp"
+ #include <chrono>
++#include <cmath>
++#include <ctime>
++#include <iomanip>
+ #include <iostream>
+ #include <stdexcept>
+-int main(int argc,char**argv){try{if(argc<2)return 2;std::size_t tokens=argc>2?std::stoul(argv[2]):20000;if(tokens==0||tokens>1000000)throw std::invalid_argument("tokens in 1..1000000");edgeai::HybridBackend b(argv[1]);for(int i=0;i<128;++i)b.step(static_cast<unsigned char>(i));b.reset();double checksum=0;auto start=std::chrono::steady_clock::now();for(std::size_t i=0;i<tokens;++i){auto& z=b.step(static_cast<unsigned char>(i%256));checksum+=z[i%256];}double sec=std::chrono::duration<double>(std::chrono::steady_clock::now()-start).count();
+- std::cout<<"{\"tokens\":"<<tokens<<",\"seconds\":"<<sec<<",\"byte_steps_per_second\":"<<tokens/sec<<",\"weights_bytes\":"<<b.model().weight_bytes()<<",\"state_payload_bytes\":"<<b.model().state_payload_bytes()<<",\"numeric_working_bytes\":"<<b.numeric_working_bytes()<<",\"checksum\":"<<checksum<<",\"energy_joules\":null,\"note\":\"teacher-forced byte steps, includes all projections and readout, not useful answers per second\"}\n";return 0;
+- }catch(const std::exception&e){std::cerr<<e.what()<<"\n";return 1;}}
++#include <string>
++int main(int argc,char**argv){try{
++    if(argc<2||argc>4){std::cerr<<"usage: edgeai_runtime_benchmark model.edge [tokens] [auto|scalar|lookup2|avx2]\n";return 2;}
++    std::string count=argc>2?argv[2]:"20000";
++    if(count.empty()||count.find_first_not_of("0123456789")!=std::string::npos)throw std::invalid_argument("tokens must be an unsigned integer");
++    std::size_t tokens=std::stoul(count);
++    if(tokens==0||tokens>1000000)throw std::invalid_argument("tokens in 1..1000000");
++    std::string name=argc>3?argv[3]:"auto";edgeai::Kernel kernel=edgeai::Kernel::Auto;
++    if(name=="scalar")kernel=edgeai::Kernel::Scalar;else if(name=="lookup2")kernel=edgeai::Kernel::Lookup;
++    else if(name=="avx2")kernel=edgeai::Kernel::Avx2;else if(name!="auto")throw std::invalid_argument("unknown kernel");
++    edgeai::HybridBackend b(argv[1],kernel);
++    for(int i=0;i<128;++i)b.step(static_cast<unsigned char>(i));b.reset();double checksum=0;
++    auto start=std::chrono::steady_clock::now();auto cpu_start=std::clock();
++    for(std::size_t i=0;i<tokens;++i){auto&z=b.step(static_cast<unsigned char>(i%256));checksum+=z[i%256];}
++    double cpu=double(std::clock()-cpu_start)/CLOCKS_PER_SEC;
++    double sec=std::chrono::duration<double>(std::chrono::steady_clock::now()-start).count();
++    if(!std::isfinite(checksum))throw std::runtime_error("nonfinite forward output");
++    std::cout<<std::setprecision(12)<<"{\"tokens\":"<<tokens<<",\"seconds\":"<<sec
++      <<",\"cpu_seconds\":"<<cpu<<",\"requested_kernel\":\""<<name<<"\",\"byte_steps_per_second\":"<<tokens/sec
++      <<",\"weights_bytes\":"<<b.model().weight_bytes()<<",\"state_payload_bytes\":"<<b.model().state_payload_bytes()
++      <<",\"numeric_working_bytes\":"<<b.numeric_working_bytes()<<",\"checksum\":"<<checksum
++      <<",\"energy_joules\":null,\"note\":\"teacher-forced byte steps, not useful answers per second; model load and warmup excluded from step timer\"}\n";
++    return 0;
++}catch(const std::exception&e){std::cerr<<e.what()<<"\n";return 1;}}
+--- a/include/edgeai/HybridModel.hpp
++++ b/include/edgeai/HybridModel.hpp
+@@ -1,5 +1,5 @@
+ #pragma once
+-#include "Ternary.hpp"
++#include "MixedMatrix.hpp"
+ #include <cstdint>
+ #include <string>
+ #include <vector>
+@@ -11,9 +11,11 @@
+ class HybridModel {
+ public:
+     HybridConfig config;
++    std::uint32_t source_format_version=4;
+     std::vector<float> embedding;
+-    TernaryMatrix query,key,value,project,up,down;
+-    DenseMatrix gates,output;
++    MixedMatrix query,key,value,project,up,down;
++    DenseMatrix gates;
++    MixedMatrix output;
+     bool valid()const;
+     std::size_t weight_bytes()const;
+     std::size_t parameter_count()const;
+--- a/include/edgeai/Kernels.hpp
++++ b/include/edgeai/Kernels.hpp
+@@ -13,4 +13,6 @@
+                     Kernel requested, KernelWorkspace* workspace=nullptr);
+ void dense_kernel(const float* weights, const float* bias, std::size_t rows,
+                   std::size_t cols, const float* x, float* y, Kernel requested);
++void int8_kernel(const std::int8_t* weights,const float* scales,const float* bias,
++                 std::size_t rows,std::size_t cols,const float* x,float* y,Kernel requested);
+ }
+--- a/include/edgeai/MixedMatrix.hpp
++++ b/include/edgeai/MixedMatrix.hpp
+@@ -0,0 +1,50 @@
++#pragma once
++#include "Ternary.hpp"
++#include <variant>
++#include <utility>
++namespace edgeai {
++enum class Precision : std::uint32_t { Fp32=0, Int8=1, Ternary=2 };
++const char* precision_name(Precision p);
++// Symmetric per-row INT8 weights. Activations, accumulation and bias are FP32.
++class Int8Matrix {
++public:
++    Int8Matrix()=default;
++    Int8Matrix(std::size_t rows,std::size_t cols);
++    std::size_t rows()const{return rows_;}
++    std::size_t cols()const{return cols_;}
++    std::size_t storage_bytes()const{return weights_.size()+8*rows_;}
++    void set(std::size_t r,std::size_t c,int value);
++    int get(std::size_t r,std::size_t c)const;
++    void set_scale(std::size_t r,float scale);
++    void set_bias(std::size_t r,float bias);
++    float scale(std::size_t r)const{return scales_.at(r);}
++    float bias(std::size_t r)const{return bias_.at(r);}
++    std::vector<float> matvec(const std::vector<float>& x)const;
++    void matvec_into(const float* x,std::size_t n,float* y,std::size_t out_n,Kernel kernel=Kernel::Auto)const;
++    void save(std::ostream& out)const;
++    static Int8Matrix load(std::istream& in);
++private:
++    std::size_t rows_=0,cols_=0;
++    std::vector<std::int8_t> weights_;
++    std::vector<float> scales_,bias_;
++};
++// No dense copy/cache is retained alongside a quantized matrix.
++class MixedMatrix {
++public:
++    MixedMatrix()=default;
++    MixedMatrix(TernaryMatrix m):matrix_(std::move(m)){}
++    MixedMatrix(DenseMatrix m):matrix_(std::move(m)){}
++    MixedMatrix(Int8Matrix m):matrix_(std::move(m)){}
++    Precision kind()const;
++    std::size_t rows()const;
++    std::size_t cols()const;
++    std::size_t weight_count()const{return rows()*cols();}
++    std::size_t storage_bytes()const;
++    std::vector<float> matvec(const std::vector<float>& x)const;
++    void matvec_into(const float* x,std::size_t n,float* y,std::size_t out_n,Kernel kernel=Kernel::Auto,KernelWorkspace* workspace=nullptr)const;
++    void save(std::ostream& out)const;
++    static MixedMatrix load(std::istream& in);
++private:
++    std::variant<TernaryMatrix,DenseMatrix,Int8Matrix> matrix_;
++};
++}
+--- a/src/HybridBackend.cpp
++++ b/src/HybridBackend.cpp
+@@ -19,7 +19,7 @@
+ void HybridBackend::reset(){delta_.reset();local_.reset();tokens_seen_=0;std::fill(logits_.begin(),logits_.end(),0);}
+ const std::vector<float>& HybridBackend::step(std::uint8_t token){
+  const auto& c=model_.config;std::copy_n(model_.embedding.data()+std::size_t(token)*c.dim,c.dim,emb_.data());norm(emb_,norm_);
+- auto mv=[&](const TernaryMatrix& a,const std::vector<float>& x,std::vector<float>& y){a.matvec_into(x.data(),x.size(),y.data(),y.size(),kernel_,&workspace_);};
++ auto mv=[&](const MixedMatrix& a,const std::vector<float>& x,std::vector<float>& y){a.matvec_into(x.data(),x.size(),y.data(),y.size(),kernel_,&workspace_);};
+  mv(model_.query,norm_,q_);mv(model_.key,norm_,k_);mv(model_.value,norm_,v_);unit(q_);unit(k_);
+  model_.gates.matvec_into(norm_.data(),norm_.size(),gates_.data(),3,kernel_==Kernel::Lookup?Kernel::Scalar:kernel_);
+  delta_.update(k_,v_,sigmoid(c.decay_logit+gates_[0]),sigmoid(c.write_logit+gates_[1]));local_.push(k_,v_);delta_.read(q_,long_);local_.read(q_,near_);
+--- a/src/HybridModel.cpp
++++ b/src/HybridModel.cpp
+@@ -6,7 +6,8 @@
+ #include <random>
+ #include <stdexcept>
+ namespace edgeai { namespace {
+-constexpr char MAGIC[8]={'E','D','G','E','A','I','3','\0'};
++constexpr char MAGIC3[8]={'E','D','G','E','A','I','3','\0'};
++constexpr char MAGIC4[8]={'E','D','G','E','A','I','4','\0'};
+ template<class T>void wr(std::ostream& o,const T& v){o.write(reinterpret_cast<const char*>(&v),sizeof(v));if(!o)throw std::runtime_error("model write failed");}
+ template<class T>T rd(std::istream& i){T v{};i.read(reinterpret_cast<char*>(&v),sizeof(v));if(!i)throw std::runtime_error("truncated model header");return v;}
+ bool config_valid(const HybridConfig& c){return c.dim>=4&&c.dim<=2048&&c.hidden>=4&&c.hidden<=8192&&c.key_dim>=1&&c.key_dim<=256&&c.window>=1&&c.window<=4096&&c.loops>=1&&c.loops<=16&&c.max_generate>=1&&c.max_generate<=4096&&std::isfinite(c.decay_logit)&&std::isfinite(c.write_logit)&&std::isfinite(c.mix_logit);}
+@@ -16,34 +17,39 @@
+ std::size_t HybridModel::weight_bytes()const{return embedding.size()*4+query.storage_bytes()+key.storage_bytes()+value.storage_bytes()+project.storage_bytes()+up.storage_bytes()+down.storage_bytes()+gates.storage_bytes()+output.storage_bytes()+12;}
+ std::size_t HybridModel::parameter_count()const{
+  // Count master weights + biases + learned global gates; row scales are derived.
+- auto layer=[](const TernaryMatrix& t){return t.weight_count()+t.rows();};
++ auto layer=[](const MixedMatrix& t){return t.weight_count()+t.rows();};
+  return embedding.size()+layer(query)+layer(key)+layer(value)+layer(project)+layer(up)+layer(down)+256ull*config.dim+256+3+3*config.dim+3;
+ }
+ std::size_t HybridModel::state_payload_bytes()const{return 4ull*(config.key_dim*config.dim+config.window*(config.key_dim+config.dim));}
+ void HybridModel::save(const std::string& path)const{
+  if(!valid())throw std::runtime_error("invalid hybrid model");
+- binary::little_endian();std::ofstream o(path,std::ios::binary);if(!o)throw std::runtime_error("cannot write model");o.write(MAGIC,8);wr(o,std::uint32_t(3));
++ binary::little_endian();std::ofstream o(path,std::ios::binary);if(!o)throw std::runtime_error("cannot write model");o.write(MAGIC4,8);wr(o,std::uint32_t(4));
+  const auto& c=config;for(auto n:{c.dim,c.hidden,c.key_dim,c.window,c.loops,c.max_generate})wr(o,n);wr(o,c.decay_logit);wr(o,c.write_logit);wr(o,c.mix_logit);
+  wr(o,std::uint64_t(embedding.size()));o.write(reinterpret_cast<const char*>(embedding.data()),static_cast<std::streamsize>(embedding.size()*4));query.save(o);key.save(o);value.save(o);project.save(o);up.save(o);down.save(o);gates.save(o);output.save(o);if(!o)throw std::runtime_error("model write failed");
+ }
+ HybridModel HybridModel::load(const std::string& path){
+- binary::little_endian();std::ifstream i(path,std::ios::binary);if(!i)throw std::runtime_error("cannot open model: "+path);char magic[8]{};i.read(magic,8);if(std::memcmp(magic,MAGIC,8)!=0||rd<std::uint32_t>(i)!=3)throw std::runtime_error("not an EDGEAI3 model");
+- HybridModel m;auto& c=m.config;c.dim=rd<std::uint32_t>(i);c.hidden=rd<std::uint32_t>(i);c.key_dim=rd<std::uint32_t>(i);c.window=rd<std::uint32_t>(i);c.loops=rd<std::uint32_t>(i);c.max_generate=rd<std::uint32_t>(i);c.decay_logit=rd<float>(i);c.write_logit=rd<float>(i);c.mix_logit=rd<float>(i);
++ binary::little_endian();std::ifstream i(path,std::ios::binary);if(!i)throw std::runtime_error("cannot open model: "+path);char magic[8]{};i.read(magic,8);auto version=rd<std::uint32_t>(i);
++ if(!((version==3&&std::memcmp(magic,MAGIC3,8)==0)||(version==4&&std::memcmp(magic,MAGIC4,8)==0)))throw std::runtime_error("not a supported EDGEAI3/4 model");
++ HybridModel m;m.source_format_version=version;auto& c=m.config;c.dim=rd<std::uint32_t>(i);c.hidden=rd<std::uint32_t>(i);c.key_dim=rd<std::uint32_t>(i);c.window=rd<std::uint32_t>(i);c.loops=rd<std::uint32_t>(i);c.max_generate=rd<std::uint32_t>(i);c.decay_logit=rd<float>(i);c.write_logit=rd<float>(i);c.mix_logit=rd<float>(i);
+  if(!config_valid(c))throw std::runtime_error("invalid hybrid configuration");
+  auto n=rd<std::uint64_t>(i);if(n!=256ull*c.dim)throw std::runtime_error("invalid embedding dimensions");binary::remaining(i,std::size_t(n)*4);m.embedding.resize(std::size_t(n));i.read(reinterpret_cast<char*>(m.embedding.data()),static_cast<std::streamsize>(n*4));
+- m.query=TernaryMatrix::load(i);m.key=TernaryMatrix::load(i);m.value=TernaryMatrix::load(i);m.project=TernaryMatrix::load(i);m.up=TernaryMatrix::load(i);m.down=TernaryMatrix::load(i);m.gates=DenseMatrix::load(i);m.output=DenseMatrix::load(i);
++ auto load_projection=[&]()->MixedMatrix{return version==3?MixedMatrix(TernaryMatrix::load(i)):MixedMatrix::load(i);};
++ m.query=load_projection();m.key=load_projection();m.value=load_projection();m.project=load_projection();m.up=load_projection();m.down=load_projection();
++ m.gates=DenseMatrix::load(i);m.output=version==3?MixedMatrix(DenseMatrix::load(i)):MixedMatrix::load(i);
+  if(!m.valid())throw std::runtime_error("invalid hybrid model tensors");
+  if(i.peek()!=std::char_traits<char>::eof())throw std::runtime_error("trailing model payload");
+  return m;
+ }
+-bool is_hybrid_file(const std::string& path){std::ifstream i(path,std::ios::binary);char magic[8]{};i.read(magic,8);if(!i)throw std::runtime_error("cannot read model header: "+path);return std::memcmp(magic,MAGIC,8)==0;}
++bool is_hybrid_file(const std::string& path){std::ifstream i(path,std::ios::binary);char magic[8]{};i.read(magic,8);if(!i)throw std::runtime_error("cannot read model header: "+path);return std::memcmp(magic,MAGIC3,8)==0||std::memcmp(magic,MAGIC4,8)==0;}
+ HybridModel make_hybrid_demo(std::uint32_t d,std::uint32_t k,std::uint32_t w){
+  HybridModel m;m.config.dim=d;m.config.hidden=d*2;m.config.key_dim=k;m.config.window=w;
+  if(!config_valid(m.config))throw std::invalid_argument("invalid demo dimensions");
+  std::mt19937 rng(73);std::normal_distribution<float> f(0,.1f);std::uniform_int_distribution<int> q(-1,1);m.embedding.resize(256ull*d);for(auto&v:m.embedding)v=f(rng);
+- m.query=TernaryMatrix(k,d);m.key=TernaryMatrix(k,d);m.value=TernaryMatrix(d,d);m.project=TernaryMatrix(d,d);m.up=TernaryMatrix(d*2,d);m.down=TernaryMatrix(d,d*2);m.gates=DenseMatrix(3,d);m.output=DenseMatrix(256,d);
+- for(auto* a:{&m.query,&m.key,&m.value,&m.project,&m.up,&m.down})for(std::size_t r=0;r<a->rows();++r){a->set_scale(r,.08f);for(std::size_t c=0;c<a->cols();++c)a->set(r,c,q(rng));}
+- for(std::size_t r=0;r<256;++r)for(std::size_t c=0;c<d;++c)m.output.weight(r,c)=f(rng);
++ auto random_ternary=[&](std::size_t rows,std::size_t cols){
++    TernaryMatrix a(rows,cols);for(std::size_t r=0;r<rows;++r){a.set_scale(r,.08f);for(std::size_t col=0;col<cols;++col)a.set(r,col,q(rng));}return a;
++ };
++ m.query=random_ternary(k,d);m.key=random_ternary(k,d);m.value=random_ternary(d,d);m.project=random_ternary(d,d);m.up=random_ternary(d*2,d);m.down=random_ternary(d,d*2);m.gates=DenseMatrix(3,d);
++ DenseMatrix output(256,d);for(std::size_t r=0;r<256;++r)for(std::size_t col=0;col<d;++col)output.weight(r,col)=f(rng);m.output=std::move(output);
+  return m;
+ }
+ }
+--- a/src/Int8Kernel.cpp
++++ b/src/Int8Kernel.cpp
+@@ -0,0 +1,42 @@
++#include "edgeai/Kernels.hpp"
++#include <cstring>
++#include <stdexcept>
++#if (defined(__x86_64__) || defined(__i386__)) && (defined(__GNUC__) || defined(__clang__)) && !defined(EDGEAI_DISABLE_SIMD)
++#define EDGEAI_INT8_AVX 1
++#include <immintrin.h>
++#else
++#define EDGEAI_INT8_AVX 0
++#endif
++namespace edgeai {
++namespace {
++#if EDGEAI_INT8_AVX
++__attribute__((target("avx2"))) void int8_avx(
++    const std::int8_t*w,const float*s,const float*b,std::size_t rows,
++    std::size_t cols,const float*x,float*y){
++    for(std::size_t r=0;r<rows;++r){
++        const auto*row=w+r*cols;__m256 sum=_mm256_setzero_ps();std::size_t c=0;
++        for(;c+8<=cols;c+=8){
++            __m128i raw=_mm_loadl_epi64(reinterpret_cast<const __m128i*>(row+c));
++            __m256 weights=_mm256_cvtepi32_ps(_mm256_cvtepi8_epi32(raw));
++            sum=_mm256_add_ps(sum,_mm256_mul_ps(weights,_mm256_loadu_ps(x+c)));
++        }
++        __m128 h=_mm_add_ps(_mm256_castps256_ps128(sum),_mm256_extractf128_ps(sum,1));
++        h=_mm_hadd_ps(h,h);h=_mm_hadd_ps(h,h);float total=_mm_cvtss_f32(h);
++        for(;c<cols;++c)total+=float(row[c])*x[c];
++        y[r]=total*s[r]+b[r];
++    }
++}
++#endif
++}
++void int8_kernel(const std::int8_t*w,const float*s,const float*b,
++                 std::size_t rows,std::size_t cols,const float*x,float*y,Kernel requested){
++    if(requested==Kernel::Avx2&&!avx2_available())throw std::runtime_error("AVX2 unavailable");
++#if EDGEAI_INT8_AVX
++    if(requested==Kernel::Avx2||(requested==Kernel::Auto&&avx2_available())){
++        int8_avx(w,s,b,rows,cols,x,y);return;
++    }
++#endif
++    // Lookup is a ternary-only algorithm; use scalar for an explicit lookup request.
++    for(std::size_t r=0;r<rows;++r){float total=0;for(std::size_t c=0;c<cols;++c)total+=float(w[r*cols+c])*x[c];y[r]=total*s[r]+b[r];}
++}
++}
+--- a/src/MixedMatrix.cpp
++++ b/src/MixedMatrix.cpp
+@@ -0,0 +1,64 @@
++#include "edgeai/MixedMatrix.hpp"
++#include "edgeai/Binary.hpp"
++#include <cmath>
++#include <istream>
++#include <ostream>
++#include <type_traits>
++namespace edgeai { namespace {
++template<class T> void write(std::ostream& o,T v){o.write(reinterpret_cast<const char*>(&v),sizeof(v));if(!o)throw std::runtime_error("matrix write failed");}
++template<class T> T read(std::istream& i){T v{};i.read(reinterpret_cast<char*>(&v),sizeof(v));if(!i)throw std::runtime_error("truncated mixed matrix");return v;}
++bool valid_scale(float x){return std::isfinite(x)&&x>0&&std::isfinite(x*127.f);}
++}
++const char* precision_name(Precision p){switch(p){case Precision::Fp32:return "fp32";case Precision::Int8:return "int8_w8a32";case Precision::Ternary:return "ternary_2bit";}throw std::invalid_argument("unknown precision");}
++Int8Matrix::Int8Matrix(std::size_t r,std::size_t c):rows_(r),cols_(c),weights_(binary::count(r,c),0),scales_(r,1),bias_(r,0){}
++void Int8Matrix::set(std::size_t r,std::size_t c,int v){if(r>=rows_||c>=cols_)throw std::out_of_range("INT8 matrix index");if(v< -127||v>127)throw std::invalid_argument("INT8 code outside [-127,127]");weights_[r*cols_+c]=static_cast<std::int8_t>(v);}
++int Int8Matrix::get(std::size_t r,std::size_t c)const{if(r>=rows_||c>=cols_)throw std::out_of_range("INT8 matrix index");return weights_[r*cols_+c];}
++void Int8Matrix::set_scale(std::size_t r,float v){if(!valid_scale(v))throw std::invalid_argument("invalid INT8 scale");scales_.at(r)=v;}
++void Int8Matrix::set_bias(std::size_t r,float v){if(!std::isfinite(v))throw std::invalid_argument("invalid INT8 bias");bias_.at(r)=v;}
++std::vector<float> Int8Matrix::matvec(const std::vector<float>&x)const{std::vector<float>y(rows_);matvec_into(x.data(),x.size(),y.data(),y.size());return y;}
++void Int8Matrix::matvec_into(const float*x,std::size_t n,float*y,std::size_t out_n,Kernel k)const{
++    if(n!=cols_||out_n<rows_||!x||!y||x==y)throw std::invalid_argument("INT8 shape/pointer mismatch");
++    int8_kernel(weights_.data(),scales_.data(),bias_.data(),rows_,cols_,x,y,k);
++}
++void Int8Matrix::save(std::ostream&o)const{
++    binary::little_endian();binary::count(rows_,cols_);
++    write(o,std::uint32_t(rows_));write(o,std::uint32_t(cols_));write(o,std::uint64_t(weights_.size()));
++    o.write(reinterpret_cast<const char*>(weights_.data()),static_cast<std::streamsize>(weights_.size()));
++    o.write(reinterpret_cast<const char*>(scales_.data()),static_cast<std::streamsize>(rows_*4));
++    o.write(reinterpret_cast<const char*>(bias_.data()),static_cast<std::streamsize>(rows_*4));
++    if(!o)throw std::runtime_error("INT8 write failed");
++}
++Int8Matrix Int8Matrix::load(std::istream&i){
++    binary::little_endian();auto r=read<std::uint32_t>(i),c=read<std::uint32_t>(i);auto n=read<std::uint64_t>(i);
++    auto count=binary::count(r,c);if(n!=count)throw std::runtime_error("invalid INT8 payload size");
++    binary::remaining(i,count+std::size_t(r)*8);Int8Matrix m(r,c);
++    i.read(reinterpret_cast<char*>(m.weights_.data()),static_cast<std::streamsize>(count));
++    i.read(reinterpret_cast<char*>(m.scales_.data()),static_cast<std::streamsize>(r)*4);
++    i.read(reinterpret_cast<char*>(m.bias_.data()),static_cast<std::streamsize>(r)*4);
++    if(!i)throw std::runtime_error("truncated INT8 matrix");
++    for(auto v:m.weights_)if(v== -128)throw std::runtime_error("reserved INT8 code");
++    for(float v:m.scales_)if(!valid_scale(v))throw std::runtime_error("invalid INT8 row scale");
++    if(!binary::finite(m.bias_.data(),r))throw std::runtime_error("nonfinite INT8 bias");
++    return m;
++}
++Precision MixedMatrix::kind()const{
++    if(std::holds_alternative<DenseMatrix>(matrix_))return Precision::Fp32;
++    if(std::holds_alternative<Int8Matrix>(matrix_))return Precision::Int8;
++    return Precision::Ternary;
++}
++std::size_t MixedMatrix::rows()const{return std::visit([](const auto&m){return m.rows();},matrix_);}
++std::size_t MixedMatrix::cols()const{return std::visit([](const auto&m){return m.cols();},matrix_);}
++std::size_t MixedMatrix::storage_bytes()const{return std::visit([](const auto&m){return m.storage_bytes();},matrix_);}
++std::vector<float> MixedMatrix::matvec(const std::vector<float>&x)const{std::vector<float>y(rows());matvec_into(x.data(),x.size(),y.data(),y.size());return y;}
++void MixedMatrix::matvec_into(const float*x,std::size_t n,float*y,std::size_t out_n,Kernel k,KernelWorkspace*w)const{
++    std::visit([&](const auto&m){using M=std::decay_t<decltype(m)>;
++        if constexpr(std::is_same_v<M,TernaryMatrix>)m.matvec_into(x,n,y,out_n,k,w);
++        else m.matvec_into(x,n,y,out_n,k);
++    },matrix_);
++}
++void MixedMatrix::save(std::ostream&o)const{write(o,std::uint32_t(kind()));std::visit([&](const auto&m){m.save(o);},matrix_);}
++MixedMatrix MixedMatrix::load(std::istream&i){
++    auto code=read<std::uint32_t>(i);
++    switch(code){case 0:return DenseMatrix::load(i);case 1:return Int8Matrix::load(i);case 2:return TernaryMatrix::load(i);default:throw std::runtime_error("unknown matrix dtype tag");}
++}
++}
+--- a/tests/test_precision.cpp
++++ b/tests/test_precision.cpp
+@@ -0,0 +1,65 @@
++#include "edgeai/MixedMatrix.hpp"
++#include "edgeai/HybridBackend.hpp"
++#include <cmath>
++#include <cstring>
++#include <cstdio>
++#include <iostream>
++#include <limits>
++#include <sstream>
++#include <stdexcept>
++#define CHECK(x) do{if(!(x))throw std::runtime_error(#x);}while(false)
++using namespace edgeai;
++template<class F> void rejected(F f){bool caught=false;try{f();}catch(const std::exception&){caught=true;}CHECK(caught);}
++int main(){
++    for(auto cols:{1u,7u,13u,32u}){
++        Int8Matrix m(7,cols); DenseMatrix reference(7,cols);
++        std::vector<float>x(cols),out(7);
++        for(unsigned c=0;c<cols;++c)x[c]=std::sin(float(c)*.7f);
++        for(unsigned r=0;r<7;++r){
++            float scale=.001f*(r+1),bias=.3f*r;
++            m.set_scale(r,scale);m.set_bias(r,bias);reference.bias(r)=bias;
++            for(unsigned c=0;c<cols;++c){int q=int((r*97+c*31)%255)-127;m.set(r,c,q);reference.weight(r,c)=q*scale;}
++        }
++        auto expected=reference.matvec(x);
++        for(Kernel k:{Kernel::Scalar,Kernel::Auto,Kernel::Lookup}){
++            m.matvec_into(x.data(),x.size(),out.data(),out.size(),k);
++            for(unsigned r=0;r<7;++r)CHECK(std::abs(out[r]-expected[r])<2e-5f);
++        }
++        if(avx2_available()){
++            m.matvec_into(x.data(),x.size(),out.data(),out.size(),Kernel::Avx2);
++            for(unsigned r=0;r<7;++r)CHECK(std::abs(out[r]-expected[r])<2e-5f);
++        }
++        CHECK(m.storage_bytes()==7*cols+7*8);
++        std::stringstream bytes(std::ios::in|std::ios::out|std::ios::binary);m.save(bytes);
++        auto loaded=Int8Matrix::load(bytes);
++        for(unsigned r=0;r<7;++r)for(unsigned c=0;c<cols;++c)CHECK(loaded.get(r,c)==m.get(r,c));
++        rejected([&]{m.set(0,0,-128);});rejected([&]{m.set(0,0,128);});
++        rejected([&]{m.set_scale(0,0);});rejected([&]{m.set_scale(0,-1);});
++        rejected([&]{m.set_scale(0,std::numeric_limits<float>::infinity());});
++        rejected([&]{m.set_bias(0,std::numeric_limits<float>::quiet_NaN());});
++        rejected([&]{m.matvec_into(x.data(),cols-1,out.data(),out.size());});
++        auto raw=bytes.str();
++        for(std::size_t n=0;n<raw.size();++n){std::stringstream short_file(raw.substr(0,n));rejected([&]{Int8Matrix::load(short_file);});}
++        auto bad=raw;bad[16]=char(128);std::stringstream invalid_code(bad);rejected([&]{Int8Matrix::load(invalid_code);});
++        bad=raw;std::memset(&bad[16+7*cols],0,4);std::stringstream zero_scale(bad);rejected([&]{Int8Matrix::load(zero_scale);});
++    }
++    TernaryMatrix t(3,5);DenseMatrix d(3,5);Int8Matrix i(3,5);
++    for(unsigned r=0;r<3;++r)for(unsigned c=0;c<5;++c){t.set(r,c,int(c%3)-1);d.weight(r,c)=float(c)-2;i.set(r,c,int(c)-2);}
++    for(auto m:{MixedMatrix(t),MixedMatrix(d),MixedMatrix(i)}){
++        std::stringstream stream(std::ios::in|std::ios::out|std::ios::binary);m.save(stream);
++        auto copy=MixedMatrix::load(stream);CHECK(copy.kind()==m.kind());CHECK(copy.storage_bytes()==m.storage_bytes());
++        CHECK(copy.matvec(std::vector<float>(5,1))==m.matvec(std::vector<float>(5,1)));
++    }
++    std::stringstream invalid(std::string("\xff\x00\x00\x00",4));rejected([&]{MixedMatrix::load(invalid);});
++    rejected([&]{Int8Matrix(0,3);});rejected([&]{Int8Matrix(65536,65536);});
++    auto model=make_hybrid_demo(16,8,4);
++    model.query=DenseMatrix(8,16);model.key=Int8Matrix(8,16);model.output=Int8Matrix(256,16);
++    CHECK(model.valid());model.save("precision-roundtrip.edge");
++    auto loaded=HybridModel::load("precision-roundtrip.edge");
++    CHECK(loaded.source_format_version==4);CHECK(loaded.query.kind()==Precision::Fp32);
++    CHECK(loaded.key.kind()==Precision::Int8);CHECK(loaded.up.kind()==Precision::Ternary);
++    CHECK(loaded.output.kind()==Precision::Int8);CHECK(loaded.weight_bytes()==model.weight_bytes());
++    HybridBackend b(loaded);for(unsigned n=0;n<100;++n)for(float v:b.step(n))CHECK(std::isfinite(v));
++    CHECK(load_backend("precision-roundtrip.edge")->available());std::remove("precision-roundtrip.edge");
++    std::cout<<"INT8 and mixed dtype arithmetic, validation, serialization, integration passed\n";
++}
+--- a/tests/test_precision_contract.py
++++ b/tests/test_precision_contract.py
+@@ -0,0 +1,71 @@
++"""Contracts for selective precision; all tests inspect real model behavior."""
++import sys, tempfile, unittest
++from pathlib import Path
++sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'tools'))
++import torch
++from torch.nn import functional as F
++try:
++    from mixed_model import MixedHybrid, Int8Linear, POLICIES, export_mixed
++except ImportError:
++    MixedHybrid = None
++
++class PrecisionContract(unittest.TestCase):
++    @classmethod
++    def setUpClass(cls):
++        torch.set_num_threads(1)
++    def setUp(self):
++        self.assertIsNotNone(MixedHybrid, 'mixed precision implementation is missing')
++    def test_policies_keep_same_master_parameters(self):
++        baseline = None
++        for policy in POLICIES:
++            torch.manual_seed(29)
++            model = MixedHybrid(16, 32, 8, 7, 2, policy=policy)
++            weights = model.state_dict()
++            if baseline is None:
++                baseline = weights
++            for key in weights:
++                torch.testing.assert_close(weights[key], baseline[key], rtol=0, atol=0)
++    def test_int8_grid_and_zero_rows(self):
++        layer = Int8Linear(5, 3)
++        with torch.no_grad():
++            layer.weight.copy_(torch.tensor([[0.,0,0,0,0],[-1.,-.333,0,.6,1.],[.001,.002,.004,-.003,0.]]))
++        scale = layer.weight.detach().abs().amax(1, keepdim=True).clamp_min(1e-8)/127
++        expected = (layer.weight.detach()/scale).round().clamp(-127,127)*scale
++        torch.testing.assert_close(layer.effective(), expected, rtol=1e-6, atol=1e-7)
++        self.assertTrue(torch.isfinite(layer.effective()).all())
++        layer(torch.ones(2,5)).sum().backward()
++        torch.testing.assert_close(layer.weight.grad, torch.full_like(layer.weight, 2))
++    def test_causal_and_all_parameters_train(self):
++        for policy in POLICIES:
++            with self.subTest(policy=policy):
++                torch.manual_seed(77)
++                model = MixedHybrid(12,20,5,4,2,policy=policy)
++                tokens = torch.randint(0,256,(2,14))
++                z = model(tokens)
++                torch.testing.assert_close(z[:,:5], model(tokens[:,:5]), rtol=3e-5, atol=3e-5)
++                F.cross_entropy(z.flatten(0,1), torch.randint(0,256,(28,))).backward()
++                for name, p in model.named_parameters():
++                    self.assertIsNotNone(p.grad, name)
++                    self.assertTrue(torch.isfinite(p.grad).all(), name)
++                    self.assertGreater(p.grad.abs().sum().item(), 0, name)
++    def test_fp32_is_unchanged_reference(self):
++        from hybrid_model import HybridTiny
++        torch.manual_seed(19); reference=HybridTiny(16,32,8,8,1,ternary=False)
++        torch.manual_seed(19); mixed=MixedHybrid(16,32,8,8,1,policy='fp32')
++        x=torch.randint(0,256,(3,20))
++        torch.testing.assert_close(mixed(x),reference(x),rtol=0,atol=0)
++    def test_export_validates_and_is_atomic(self):
++        model=MixedHybrid(16,32,8,8,1,policy='memory_int8')
++        with tempfile.TemporaryDirectory() as td:
++            path=Path(td)/'mixed.edge'
++            export_mixed(model,path)
++            previous=path.read_bytes()
++            self.assertEqual(previous[:8], b'EDGEAI4\0')
++            with torch.no_grad():model.emb.weight[0,0]=float('nan')
++            with self.assertRaises(ValueError):export_mixed(model,path)
++            self.assertEqual(path.read_bytes(),previous)
++    def test_invalid_policy_rejected(self):
++        with self.assertRaises(ValueError):MixedHybrid(policy='fp4-magic')
++        with self.assertRaises(ValueError):MixedHybrid(output_precision='invalid')
++
++if __name__=='__main__':unittest.main()
+--- a/tests/test_runtime_cli.py
++++ b/tests/test_runtime_cli.py
+@@ -0,0 +1,24 @@
++import json, subprocess, sys, unittest
++from pathlib import Path
++ROOT=Path(__file__).resolve().parents[1]
++BINARY=ROOT/'build/edgeai_runtime_benchmark'
++class RuntimeCLI(unittest.TestCase):
++    def test_cpu_metric_and_kernel(self):
++        model=ROOT/'models/hybrid_tiny.edge'
++        for k in ('scalar','auto'):
++            run=subprocess.run([str(BINARY),str(model),'100',k],capture_output=True,text=True,check=True)
++            data=json.loads(run.stdout)
++            self.assertIn('cpu_seconds',data)
++            self.assertGreaterEqual(data['cpu_seconds'],0)
++            self.assertEqual(data['requested_kernel'],k)
++            self.assertEqual(data['tokens'],100)
++            self.assertIsNone(data['energy_joules'])
++    def test_rejects_bad_arguments(self):
++        model=ROOT/'models/hybrid_tiny.edge'
++        for n,k in [('0','auto'),('-1','auto'),('20oops','auto'),('100','fake')]:
++            run=subprocess.run([str(BINARY),str(model),n,k],capture_output=True)
++            self.assertNotEqual(run.returncode,0,(n,k))
++if __name__=='__main__':
++    if len(sys.argv)>1 and not sys.argv[1].startswith('-'):
++        BINARY=Path(sys.argv.pop(1)).resolve()
++    unittest.main()
+--- a/tools/inspect_model.cpp
++++ b/tools/inspect_model.cpp
+@@ -2,6 +2,6 @@
+ #include "edgeai/EdgeModel.hpp"
+ #include <iostream>
+ int main(int argc,char**argv){try{if(argc!=2){std::cerr<<"usage: edgeai_inspect model.edge\n";return 2;}
+- if(edgeai::is_hybrid_file(argv[1])){edgeai::HybridBackend b(argv[1]);const auto& m=b.model();auto c=m.config;std::cout<<"format=EDGEAI3\nparameters="<<m.parameter_count()<<"\nresident_numeric_weights_bytes="<<m.weight_bytes()<<"\nsequence_state_payload_bytes="<<m.state_payload_bytes()<<"\nnumeric_working_bytes="<<b.numeric_working_bytes()<<"\nwindow="<<c.window<<"\ntrained_loops="<<c.loops<<"\navx2_kernel_available="<<edgeai::avx2_available()<<"\n";}
++ if(edgeai::is_hybrid_file(argv[1])){edgeai::HybridBackend b(argv[1]);const auto& m=b.model();auto c=m.config;std::cout<<"format=EDGEAI"<<m.source_format_version<<"\nparameters="<<m.parameter_count()<<"\nresident_numeric_weights_bytes="<<m.weight_bytes()<<"\nsequence_state_payload_bytes="<<m.state_payload_bytes()<<"\nnumeric_working_bytes="<<b.numeric_working_bytes()<<"\nwindow="<<c.window<<"\ntrained_loops="<<c.loops<<"\navx2_kernel_available="<<edgeai::avx2_available()<<"\n";std::cout<<"query_precision="<<edgeai::precision_name(m.query.kind())<<"\nkey_precision="<<edgeai::precision_name(m.key.kind())<<"\nvalue_precision="<<edgeai::precision_name(m.value.kind())<<"\nproject_precision="<<edgeai::precision_name(m.project.kind())<<"\nup_precision="<<edgeai::precision_name(m.up.kind())<<"\ndown_precision="<<edgeai::precision_name(m.down.kind())<<"\noutput_precision="<<edgeai::precision_name(m.output.kind())<<"\n";}
+  else{auto m=edgeai::EdgeModel::load(argv[1]);std::cout<<"format=EDGEAI2\nlegacy_parameter_count="<<m.parameter_count()<<"\nresident_numeric_weights_bytes="<<m.resident_weight_bytes()<<"\n";}return 0;
+  }catch(const std::exception&e){std::cerr<<e.what()<<"\n";return 1;}}
+--- a/tools/mixed_model.py
++++ b/tools/mixed_model.py
+@@ -0,0 +1,123 @@
++"""Selective weight precision for the existing hybrid equations.
++
++Training uses FP32 master weights and straight-through quantization. INT8 is
++symmetric per output row; activations, memory state, embedding and gates are FP32.
++No algorithmic change to HybridTiny.forward is made here.
++"""
++import os
++import tempfile
++from pathlib import Path
++import torch
++from torch import nn
++from torch.nn import functional as F
++from hybrid_model import HybridTiny, BitLinear
++from train_tiny import write_ternary, write_dense, write_floats, w_u32, w_u64, w_f32
++
++CORE_NAMES = ('query', 'key', 'value', 'project', 'up', 'down')
++POLICIES = {
++    'fp32': ('fp32',)*6,
++    'ternary': ('ternary',)*6,
++    'qk_fp32': ('fp32','fp32','ternary','ternary','ternary','ternary'),
++    'memory_fp32': ('fp32','fp32','fp32','fp32','ternary','ternary'),
++    'memory_int8': ('int8','int8','int8','int8','ternary','ternary'),
++    'int8': ('int8',)*6,
++}
++DTYPES = {'fp32': 0, 'int8': 1, 'ternary': 2}
++
++class Int8Linear(nn.Linear):
++    def quantized(self):
++        weight = self.weight.detach()
++        scale = weight.abs().amax(1, keepdim=True).clamp_min(1e-8) / 127
++        codes = (weight / scale).round().clamp(-127, 127).to(torch.int8)
++        return codes, scale
++    def effective(self):
++        codes, scale = self.quantized()
++        quantized = codes.to(self.weight.dtype) * scale
++        return self.weight + (quantized - self.weight).detach()
++    def forward(self, x):
++        return F.linear(x, self.effective(), self.bias)
++
++def replace_linear(source, precision):
++    if precision == 'fp32':
++        return source
++    cls = {'int8': Int8Linear, 'ternary': BitLinear}.get(precision)
++    if cls is None:
++        raise ValueError('unsupported precision: ' + str(precision))
++    # Constructing a quantized layer must not alter the global random stream.
++    with torch.random.fork_rng(devices=[]):
++        target = cls(source.in_features, source.out_features, bias=source.bias is not None)
++    target.load_state_dict(source.state_dict())
++    return target
++
++class MixedHybrid(HybridTiny):
++    def __init__(self, dim=32, hidden=64, key_dim=16, window=16, loops=1,
++                 policy='memory_int8', output_precision='fp32'):
++        if policy not in POLICIES or output_precision not in DTYPES:
++            raise ValueError('unknown precision policy/output precision')
++        super().__init__(dim, hidden, key_dim, window, loops,
++                         ternary=False, adaptive_gates=True)
++        self.policy, self.output_precision = policy, output_precision
++        for name, precision in zip(CORE_NAMES, POLICIES[policy]):
++            setattr(self, name, replace_linear(getattr(self, name), precision))
++        self.out = replace_linear(self.out, output_precision)
++    def export_config(self):
++        return dict(dim=self.dim, hidden=self.hidden, key_dim=self.key_dim,
++                    window=self.window, loops=self.loops, policy=self.policy,
++                    output_precision=self.output_precision)
++
++def layer_precision(layer):
++    return 'int8' if isinstance(layer, Int8Linear) else 'ternary' if isinstance(layer, BitLinear) else 'fp32'
++
++def layer_payload_bytes(layer):
++    count, rows = layer.weight.numel(), layer.out_features
++    kind = layer_precision(layer)
++    if kind == 'fp32':
++        return (count + rows)*4
++    return (count if kind == 'int8' else (count+3)//4) + rows*8
++
++def numeric_weight_bytes(model):
++    return model.emb.weight.numel()*4 + 12 + sum(layer_payload_bytes(getattr(model, name))
++             for name in CORE_NAMES + ('gates', 'out'))
++
++def write_mixed(f, layer):
++    kind = layer_precision(layer)
++    w_u32(f, DTYPES[kind])
++    if kind == 'fp32':
++        write_dense(f, layer)
++    elif kind == 'ternary':
++        write_ternary(f, layer)
++    else:
++        codes, scale = layer.quantized()
++        w_u32(f, layer.out_features); w_u32(f, layer.in_features)
++        w_u64(f, codes.numel())
++        f.write(codes.cpu().numpy().tobytes())
++        write_floats(f, scale)
++        write_floats(f, layer.bias)
++
++def export_mixed(model, path, max_generate=96):
++    if not isinstance(model, MixedHybrid) or not model.adaptive_gates:
++        raise ValueError('export requires MixedHybrid with adaptive gates')
++    if not 1 <= max_generate <= 4096:
++        raise ValueError('max_generate outside [1,4096]')
++    for name, p in model.named_parameters():
++        if p.dtype != torch.float32 or p.device.type != 'cpu' or not torch.isfinite(p).all():
++            raise ValueError('export requires finite CPU FP32 master weights: ' + name)
++    path = Path(path); path.parent.mkdir(parents=True, exist_ok=True)
++    tmp = None
++    try:
++        with tempfile.NamedTemporaryFile(dir=path.parent, delete=False) as f:
++            tmp = Path(f.name)
++            f.write(b'EDGEAI4\0'); w_u32(f, 4)
++            for n in (model.dim, model.hidden, model.key_dim, model.window, model.loops, max_generate):
++                w_u32(f, n)
++            for gate in (model.decay_logit, model.write_logit, model.mix_logit):
++                w_f32(f, gate.detach().item())
++            w_u64(f, model.emb.weight.numel()); write_floats(f, model.emb.weight)
++            for name in CORE_NAMES:
++                write_mixed(f, getattr(model, name))
++            write_dense(f, model.gates)
++            write_mixed(f, model.out)
++        os.replace(tmp, path)
++    finally:
++        if tmp is not None and tmp.exists():
++            tmp.unlink()
+--- a/tools/train_mixed.py
++++ b/tools/train_mixed.py
+@@ -0,0 +1,61 @@
++#!/usr/bin/env python3
++"""Train a selective-precision byte model; emits a CPU checkpoint and EDGEAI4.
++Validation is a separate input file. A tiny corpus is not evidence of general skill.
++"""
++import argparse, copy, hashlib, json, math, time
++from pathlib import Path
++import torch
++from torch.nn import functional as F
++from mixed_model import MixedHybrid, POLICIES, export_mixed as export, numeric_weight_bytes
++
++def batch(data, seq, size, generator):
++    count = len(data) - seq
++    if count < 1:
++        raise ValueError("dataset must contain at least seq+1 bytes; refusing implicit repetition")
++    starts = torch.randint(count, (size,), generator=generator)
++    x = torch.stack([data[i:i+seq] for i in starts])
++    y = torch.stack([data[i+1:i+seq+1] for i in starts])
++    return x, y
++
++def main():
++    ap=argparse.ArgumentParser(description=__doc__)
++    ap.add_argument("text"); ap.add_argument("--valid", required=True)
++    ap.add_argument("--out",default="models/mixed_tiny.edge")
++    for name, default in [("dim",32),("hidden",64),("key-dim",16),("window",16),("loops",1),("seq",32),("batch",8),("steps",160),("threads",1),("seed",42)]:
++        ap.add_argument("--"+name,type=int,default=default)
++    ap.add_argument("--lr",type=float,default=.002)
++    ap.add_argument("--policy",choices=list(POLICIES),default="memory_int8")
++    ap.add_argument("--output-precision",choices=["fp32","int8","ternary"],default="fp32")
++    args=ap.parse_args()
++    if min(args.steps,args.seq,args.batch,args.threads)<=0 or not 0 < args.lr < 1:
++        ap.error("steps, sequence, batch and threads must be positive; lr in (0,1)")
++    torch.set_num_threads(args.threads);torch.manual_seed(args.seed)
++    raw=Path(args.text).read_bytes(); validation=Path(args.valid).read_bytes()
++    if raw==validation: ap.error("training and validation files must differ")
++    train=torch.tensor(list(raw),dtype=torch.long);valid=torch.tensor(list(validation),dtype=torch.long)
++    cfg=dict(dim=args.dim,hidden=args.hidden,key_dim=args.key_dim,window=args.window,loops=args.loops,policy=args.policy,output_precision=args.output_precision)
++    model=MixedHybrid(**cfg);optimizer=torch.optim.AdamW(model.parameters(),lr=args.lr)
++    generator=torch.Generator().manual_seed(args.seed+100)
++    eval_generator=torch.Generator().manual_seed(10291)
++    eval_batches=[batch(valid,args.seq,args.batch,eval_generator) for _ in range(8)]
++    def evaluate():
++        model.eval()
++        with torch.inference_mode():
++            result=sum(F.cross_entropy(model(x).flatten(0,1),y.flatten()).item() for x,y in eval_batches)/len(eval_batches)
++        model.train();return result
++    initial=evaluate();best=initial;best_step=0;best_state=copy.deepcopy(model.state_dict());log=[]
++    start=time.perf_counter()
++    for step in range(1,args.steps+1):
++        x,y=batch(train,args.seq,args.batch,generator);z=model(x);loss=F.cross_entropy(z.flatten(0,1),y.flatten())
++        if not torch.isfinite(loss):raise RuntimeError("nonfinite training loss")
++        optimizer.zero_grad(set_to_none=True);loss.backward();torch.nn.utils.clip_grad_norm_(model.parameters(),1.0);optimizer.step()
++        if step==1 or step%max(1,args.steps//8)==0 or step==args.steps:
++            val=evaluate();entry=dict(step=step,train_loss=loss.item(),validation_nll=val);log.append(entry);print(json.dumps(entry),flush=True)
++            if val<best:best=val;best_step=step;best_state=copy.deepcopy(model.state_dict())
++    elapsed=time.perf_counter()-start;model.load_state_dict(best_state);model.eval()
++    out=Path(args.out);out.parent.mkdir(parents=True,exist_ok=True);export(model,out)
++    torch.save(dict(config=cfg,state_dict=best_state),out.with_suffix(".pt"))
++    report=dict(kind="educational_byte_lm_not_general_assistant",seed=args.seed,threads=args.threads,parameters=sum(p.numel() for p in model.parameters()),training_bytes=len(raw),validation_bytes=len(validation),training_sha256=hashlib.sha256(raw).hexdigest(),validation_sha256=hashlib.sha256(validation).hexdigest(),steps=args.steps,best_step=best_step,initial_validation_nll=initial,best_validation_nll=best,bits_per_byte=best/math.log(2),seconds=elapsed,energy_joules=None,export_bytes=out.stat().st_size,numeric_weight_bytes=numeric_weight_bytes(model),config=cfg,history=log)
++    out.with_suffix(".training.json").write_text(json.dumps(report,indent=2)+"\n")
++    print(json.dumps(report,indent=2))
++if __name__=="__main__":main()
+--- a/tools/verify_mixed.py
++++ b/tools/verify_mixed.py
+@@ -0,0 +1,60 @@
++#!/usr/bin/env python3
++"""Check every logit from EDGEAI4 under all policies and kernels, plus malformed files."""
++import argparse
++import json
++import subprocess
++import tempfile
++from pathlib import Path
++import torch
++from mixed_model import MixedHybrid, POLICIES, export_mixed, numeric_weight_bytes
++from verify_parity import compare
++
++def main():
++    p=argparse.ArgumentParser(description=__doc__)
++    p.add_argument('--binary',type=Path,required=True)
++    p.add_argument('--inspect',type=Path,required=True)
++    p.add_argument('--checkpoint-dir',type=Path,default=Path('models/recall'))
++    p.add_argument('--demo',type=Path,default=Path('models/mixed_tiny.pt'))
++    p.add_argument('--out',type=Path,default=Path('results/mixed_parity.json'))
++    args=p.parse_args();torch.set_num_threads(1);cases=[];results=[]
++    for policy in POLICIES:
++        for shape in ((17,31,7,5,3),(32,64,16,16,1)):
++            torch.manual_seed(918)
++            model=MixedHybrid(*shape,policy=policy)
++            cases.append((f'{policy}-{shape[0]}.edge',model,bytes(range(130))))
++    for out in ('int8','ternary'):
++        torch.manual_seed(333)
++        cases.append((f'output-{out}.edge',MixedHybrid(17,31,7,5,2,policy='memory_int8',output_precision=out),bytes(range(256))))
++    checkpoints=sorted(args.checkpoint_dir.glob('*.pt'))
++    checkpoints+=sorted((args.checkpoint_dir.parent/'head_ptq').glob('*.pt'))
++    if args.demo.exists():checkpoints.append(args.demo)
++    for path in checkpoints:
++        data=torch.load(path,map_location='cpu',weights_only=True)
++        if data.get('kind')=='transformer_fp32':continue
++        model=MixedHybrid(**data['config']);model.load_state_dict(data['state_dict'])
++        cases.append((path.stem+'.edge',model,bytes(range(96))))
++    with tempfile.TemporaryDirectory() as td:
++        td=Path(td)
++        for name,model,payload in cases:
++            model.eval();filename=td/name;export_mixed(model,filename)
++            info=subprocess.run([str(args.inspect.resolve()),str(filename)],capture_output=True,text=True,check=True)
++            fields=dict(line.split('=',1) for line in info.stdout.splitlines() if '=' in line)
++            if int(fields['resident_numeric_weights_bytes'])!=numeric_weight_bytes(model):
++                raise AssertionError('native weight accounting differs: '+name)
++            for kernel in ('scalar','lookup2','auto'):
++                results.append(compare(args.binary.resolve(),model,filename,payload,kernel,td))
++        # A model-level invalid tag, truncation or trailing data must fail without execution.
++        filename=td/'malformed.edge';model=MixedHybrid(16,32,8,8,1);export_mixed(model,filename)
++        good=filename.read_bytes();tag=56+256*16*4
++        mutations=[good[:tag]+b'\xff\xff\xff\xff'+good[tag+4:],good[:-1],good+b'EXTRA',good[:20]]
++        for damaged in mutations:
++            filename.write_bytes(damaged)
++            run=subprocess.run([str(args.inspect.resolve()),str(filename)],capture_output=True)
++            if run.returncode==0:raise AssertionError('malformed EDGEAI4 was accepted')
++    report=dict(logit_cases=results,malformed_models_rejected=len(mutations),
++                total_cases=len(results),maximum_absolute_error=max(r['max_absolute_error'] for r in results),
++                relative_tolerance=3e-5,absolute_tolerance=3e-5,
++                note='All logits compared, not merely generated text. Weight byte accounting checked per model.')
++    args.out.parent.mkdir(parents=True,exist_ok=True);args.out.write_text(json.dumps(report,indent=2)+'\n')
++    print(json.dumps(report,indent=2))
++if __name__=='__main__':main()

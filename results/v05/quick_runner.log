@@ -1,0 +1,15 @@
+[configure] started
+[configure] passed
+[build] started
+[build] passed
+[cpp_tests] started
+[cpp_tests] passed
+[python_tests] started
+[python_tests] passed
+[transformer_parity] started
+[transformer_parity] passed
+[train_and_evaluate] started
+[train_and_evaluate] passed
+[native_benchmark] started
+[native_benchmark] passed
+Metas desta execução concluídas. Status: /mnt/data/EdgeAI-Engine-v0.5/results/v05/goals-quick/status.json

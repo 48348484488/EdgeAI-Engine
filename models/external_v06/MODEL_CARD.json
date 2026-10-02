@@ -1,0 +1,20 @@
+{
+  "family": "small single-block Transformer, byte BPE",
+  "status": "research prototype, no instruction tuning or EOS",
+  "parameters": 71633,
+  "vocabulary": 513,
+  "window_tokens": 64,
+  "precision": "W8A32; FP32 embeddings, activations, optimizer/master training weights",
+  "snapshot": "data/cpython_snapshot/manifest.json",
+  "training_report": "results/v06/training.json",
+  "task_report": "results/v06/capability.json",
+  "limitations": [
+    "greedy output may be invalid UTF8 or nonsensical",
+    "not an assistant or code generator ready for production",
+    "zero of 28 diagnostic tasks passed per model",
+    "not evaluated against frontier models",
+    "no energy or weak-PC measurement"
+  ],
+  "demo_seed": 11,
+  "seed_selection": "convention, not best test score"
+}

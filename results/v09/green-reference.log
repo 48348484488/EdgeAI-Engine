@@ -1,0 +1,14 @@
+test_bounds_before_request (test_local_reference.ReferenceTests.test_bounds_before_request) ... ok
+test_explicit_model_sent (test_local_reference.ReferenceTests.test_explicit_model_sent) ... ok
+test_http_contract_preserves_text_and_records_model (test_local_reference.ReferenceTests.test_http_contract_preserves_text_and_records_model) ... ok
+test_http_failure_explicit (test_local_reference.ReferenceTests.test_http_failure_explicit) ... ok
+test_invalid_response_explicit (test_local_reference.ReferenceTests.test_invalid_response_explicit) ... ok
+test_localhost_resolves_to_literal_loopback (test_local_reference.ReferenceTests.test_localhost_resolves_to_literal_loopback) ... ok
+test_no_proxy_inherited (test_local_reference.ReferenceTests.test_no_proxy_inherited) ... ok
+test_redirect_never_followed (test_local_reference.ReferenceTests.test_redirect_never_followed) ... ok
+test_remote_endpoints_and_credentials_refused (test_local_reference.ReferenceTests.test_remote_endpoints_and_credentials_refused) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.147s
+
+OK

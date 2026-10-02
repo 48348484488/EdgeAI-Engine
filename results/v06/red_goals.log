@@ -1,0 +1,14 @@
+F..
+======================================================================
+FAIL: test_independent_profile_covers_evidence_gates (test_v06_workflow.IndependentGoals.test_independent_profile_covers_evidence_gates)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/EdgeAI-Engine-v0.6/tests/test_v06_workflow.py", line 17, in test_independent_profile_covers_evidence_gates
+    self.assertIn(gate,stages)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^
+AssertionError: 'snapshot_integrity' not found in {}
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.001s
+
+FAILED (failures=1)

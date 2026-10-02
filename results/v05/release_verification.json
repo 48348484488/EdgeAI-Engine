@@ -1,0 +1,22 @@
+{
+  "verified_at_utc": "2026-09-25T09:54:09.597412+00:00",
+  "candidate_archive_sha256": "878d96d11e97f18fc75bec3e53136ec09a411d1238b640e69dde548eb18c0f30",
+  "source_models_data_sha256": "938485b085ce1dd5a6ff6c8e8b52ad9add51e3502112702ee59d2a86f65035a0",
+  "archive_integrity_checked": true,
+  "sha256_manifest_checked": true,
+  "clean_extraction_build": "passed",
+  "clean_ctest_suites": 9,
+  "clean_python_tests": 23,
+  "arithmetic_smoke": "253*719=181907, neural bypass",
+  "trained_model_inspection": "EDGEAI5, 62112 parameters, 115968 numeric weight bytes",
+  "research_controller_stages": 12,
+  "research_controller_status": "passed",
+  "quick_controller_stages": 8,
+  "quick_controller_status": "passed",
+  "platforms_tested": [
+    "Linux x86-64"
+  ],
+  "windows_tested": false,
+  "energy_measured": false,
+  "note": "Final archive adds this verification record and final documentation; source/models/data digest must remain identical to the clean-compiled candidate."
+}

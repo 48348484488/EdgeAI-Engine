@@ -1,0 +1,13 @@
+{"seed": 11, "step": 1239, "train_cpu_seconds": 15.009342994000034, "validation_nll": 0.7063296247411657}
+{"seed": 11, "step": 2396, "train_cpu_seconds": 30.001089617999956, "validation_nll": 0.7140881255820946}
+{"seed": 11, "step": 3642, "train_cpu_seconds": 45.00020119499978, "validation_nll": 0.6314938492245145}
+{"seed": 11, "step": 4815, "train_cpu_seconds": 60.00645654399972, "validation_nll": 0.5850363934481585}
+{"seed": 22, "step": 1188, "train_cpu_seconds": 15.006749551000382, "validation_nll": 0.504868906515616}
+{"seed": 22, "step": 2394, "train_cpu_seconds": 30.01423042100042, "validation_nll": 0.39680254724290637}
+{"seed": 22, "step": 3576, "train_cpu_seconds": 45.008037959000475, "validation_nll": 0.43112691508399115}
+{"seed": 22, "step": 4796, "train_cpu_seconds": 60.003120597000674, "validation_nll": 0.399656930676213}
+{"seed": 33, "step": 1316, "train_cpu_seconds": 15.00122652600028, "validation_nll": 0.5197768776505082}
+{"seed": 33, "step": 2692, "train_cpu_seconds": 30.010150176000607, "validation_nll": 0.43821128650947855}
+{"seed": 33, "step": 4022, "train_cpu_seconds": 45.00431597800001, "validation_nll": 0.4394354025522868}
+{"seed": 33, "step": 5292, "train_cpu_seconds": 60.006190253999804, "validation_nll": 0.41844847621741116}
+{"completed": 3, "out": "/mnt/data/EdgeAI-Engine-v0.7/results/v07/training.json"}

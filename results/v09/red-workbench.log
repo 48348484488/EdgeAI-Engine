@@ -1,0 +1,77 @@
+FFFFFFFF
+======================================================================
+FAIL: test_case_validation (test_workbench_v09.WorkbenchTests.test_case_validation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/edgeai_work/EdgeAI-Engine-v0.9/tests/test_workbench_v09.py", line 14, in setUp
+    self.assertIsNotNone(importlib.util.find_spec('workbench'),'workbench missing')
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unexpectedly None : workbench missing
+
+======================================================================
+FAIL: test_cli_errors_nonzero_no_shell (test_workbench_v09.WorkbenchTests.test_cli_errors_nonzero_no_shell)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/edgeai_work/EdgeAI-Engine-v0.9/tests/test_workbench_v09.py", line 14, in setUp
+    self.assertIsNotNone(importlib.util.find_spec('workbench'),'workbench missing')
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unexpectedly None : workbench missing
+
+======================================================================
+FAIL: test_native_answer_and_runtime_metadata (test_workbench_v09.WorkbenchTests.test_native_answer_and_runtime_metadata)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/edgeai_work/EdgeAI-Engine-v0.9/tests/test_workbench_v09.py", line 14, in setUp
+    self.assertIsNotNone(importlib.util.find_spec('workbench'),'workbench missing')
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unexpectedly None : workbench missing
+
+======================================================================
+FAIL: test_no_reference_is_reported_as_not_requested (test_workbench_v09.WorkbenchTests.test_no_reference_is_reported_as_not_requested)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/edgeai_work/EdgeAI-Engine-v0.9/tests/test_workbench_v09.py", line 14, in setUp
+    self.assertIsNotNone(importlib.util.find_spec('workbench'),'workbench missing')
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unexpectedly None : workbench missing
+
+======================================================================
+FAIL: test_raw_scoring_does_not_turn_errors_into_success (test_workbench_v09.WorkbenchTests.test_raw_scoring_does_not_turn_errors_into_success)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/edgeai_work/EdgeAI-Engine-v0.9/tests/test_workbench_v09.py", line 14, in setUp
+    self.assertIsNotNone(importlib.util.find_spec('workbench'),'workbench missing')
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unexpectedly None : workbench missing
+
+======================================================================
+FAIL: test_reference_unavailable_is_not_scored_as_wrong_answer (test_workbench_v09.WorkbenchTests.test_reference_unavailable_is_not_scored_as_wrong_answer)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/edgeai_work/EdgeAI-Engine-v0.9/tests/test_workbench_v09.py", line 14, in setUp
+    self.assertIsNotNone(importlib.util.find_spec('workbench'),'workbench missing')
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unexpectedly None : workbench missing
+
+======================================================================
+FAIL: test_search_cli_limits_and_json (test_workbench_v09.WorkbenchTests.test_search_cli_limits_and_json)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/edgeai_work/EdgeAI-Engine-v0.9/tests/test_workbench_v09.py", line 14, in setUp
+    self.assertIsNotNone(importlib.util.find_spec('workbench'),'workbench missing')
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unexpectedly None : workbench missing
+
+======================================================================
+FAIL: test_search_json_real_lines (test_workbench_v09.WorkbenchTests.test_search_json_real_lines)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/edgeai_work/EdgeAI-Engine-v0.9/tests/test_workbench_v09.py", line 14, in setUp
+    self.assertIsNotNone(importlib.util.find_spec('workbench'),'workbench missing')
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unexpectedly None : workbench missing
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.002s
+
+FAILED (failures=8)

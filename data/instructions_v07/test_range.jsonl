@@ -1,0 +1,64 @@
+{"answer":"64","group":"pair:31:33","id":"98055decea23b1d8af04","language":"en","prompt":"Add: 31 + 33","task":"addition","template":"addition_en_base"}
+{"answer":"70","group":"pair:31:39","id":"5e2812cc2e37aaaf6feb","language":"en","prompt":"Add: 31 + 39","task":"addition","template":"addition_en_base"}
+{"answer":"67","group":"pair:30:37","id":"2f4a1615a77f0d7f6c39","language":"en","prompt":"Add: 30 + 37","task":"addition","template":"addition_en_base"}
+{"answer":"66","group":"pair:31:35","id":"e4f928f24b06bfe9b2fa","language":"en","prompt":"Add: 35 + 31","task":"addition","template":"addition_en_base"}
+{"answer":"63","group":"pair:30:33","id":"aef6a33dc86ddc467871","language":"en","prompt":"Add: 33 + 30","task":"addition","template":"addition_en_base"}
+{"answer":"67","group":"pair:32:35","id":"f17873739375bff3ed17","language":"en","prompt":"Add: 32 + 35","task":"addition","template":"addition_en_base"}
+{"answer":"70","group":"pair:33:37","id":"1f551bfa95e1f9b3d14e","language":"en","prompt":"Add: 37 + 33","task":"addition","template":"addition_en_base"}
+{"answer":"69","group":"pair:30:39","id":"d6fc051a53116f236e4a","language":"en","prompt":"Add: 30 + 39","task":"addition","template":"addition_en_base"}
+{"answer":"67","group":"pair:30:37","id":"470e82d19697e9a66a9a","language":"pt","prompt":"Some: 37 + 30","task":"addition","template":"addition_pt_base"}
+{"answer":"66","group":"pair:31:35","id":"eacbc35a4a6482aa2ab0","language":"pt","prompt":"Some: 35 + 31","task":"addition","template":"addition_pt_base"}
+{"answer":"71","group":"pair:33:38","id":"75d5134c17242af6a603","language":"pt","prompt":"Some: 33 + 38","task":"addition","template":"addition_pt_base"}
+{"answer":"63","group":"pair:31:32","id":"35a690a114ae846c00ac","language":"pt","prompt":"Some: 31 + 32","task":"addition","template":"addition_pt_base"}
+{"answer":"73","group":"pair:36:37","id":"8d75e68cc64bca14efb7","language":"pt","prompt":"Some: 36 + 37","task":"addition","template":"addition_pt_base"}
+{"answer":"68","group":"pair:30:38","id":"4d7a282889c46c304eaa","language":"pt","prompt":"Some: 30 + 38","task":"addition","template":"addition_pt_base"}
+{"answer":"78","group":"pair:39:39","id":"85063c40f803b9001405","language":"pt","prompt":"Some: 39 + 39","task":"addition","template":"addition_pt_base"}
+{"answer":"69","group":"pair:33:36","id":"c978ad4311e56f8cca74","language":"pt","prompt":"Some: 33 + 36","task":"addition","template":"addition_pt_base"}
+{"answer":"aaaafd","group":"longstring:aaaafd","id":"838a3b74b6f6f97cc797","language":"en","prompt":"Copy exactly: aaaafd","task":"copy","template":"copy_en_base"}
+{"answer":"aaacbd","group":"longstring:aaacbd","id":"cac457e74f84c0807e48","language":"en","prompt":"Copy exactly: aaacbd","task":"copy","template":"copy_en_base"}
+{"answer":"aaabfe","group":"longstring:aaabfe","id":"b505639f7b3237bbaf38","language":"en","prompt":"Copy exactly: aaabfe","task":"copy","template":"copy_en_base"}
+{"answer":"aaaeae","group":"longstring:aaaeae","id":"39c3e2f2a022c8d63b79","language":"en","prompt":"Copy exactly: aaaeae","task":"copy","template":"copy_en_base"}
+{"answer":"aaabda","group":"longstring:aaabda","id":"a9238d7532e9291144c3","language":"en","prompt":"Copy exactly: aaabda","task":"copy","template":"copy_en_base"}
+{"answer":"aaacda","group":"longstring:aaacda","id":"6deafdd3cf47873bce00","language":"en","prompt":"Copy exactly: aaacda","task":"copy","template":"copy_en_base"}
+{"answer":"aaaaef","group":"longstring:aaaaef","id":"13ae183236877ad3581f","language":"en","prompt":"Copy exactly: aaaaef","task":"copy","template":"copy_en_base"}
+{"answer":"aaabfb","group":"longstring:aaabfb","id":"3c76484325227eec6900","language":"en","prompt":"Copy exactly: aaabfb","task":"copy","template":"copy_en_base"}
+{"answer":"aaabbd","group":"longstring:aaabbd","id":"62faad03154f53dd085e","language":"pt","prompt":"Copie exatamente: aaabbd","task":"copy","template":"copy_pt_base"}
+{"answer":"aaadfb","group":"longstring:aaadfb","id":"f479295f103da7884396","language":"pt","prompt":"Copie exatamente: aaadfb","task":"copy","template":"copy_pt_base"}
+{"answer":"aaabdf","group":"longstring:aaabdf","id":"97c758b19661b9efaa7d","language":"pt","prompt":"Copie exatamente: aaabdf","task":"copy","template":"copy_pt_base"}
+{"answer":"aaaabc","group":"longstring:aaaabc","id":"206d1817ae2f31d3c006","language":"pt","prompt":"Copie exatamente: aaaabc","task":"copy","template":"copy_pt_base"}
+{"answer":"aaaaee","group":"longstring:aaaaee","id":"abf759ce4b053543a31b","language":"pt","prompt":"Copie exatamente: aaaaee","task":"copy","template":"copy_pt_base"}
+{"answer":"aaadbf","group":"longstring:aaadbf","id":"eddbdaae6f832cb52bfc","language":"pt","prompt":"Copie exatamente: aaadbf","task":"copy","template":"copy_pt_base"}
+{"answer":"aaabbe","group":"longstring:aaabbe","id":"8f6dff0fc2f61c0efabb","language":"pt","prompt":"Copie exatamente: aaabbe","task":"copy","template":"copy_pt_base"}
+{"answer":"aaaafa","group":"longstring:aaaafa","id":"6e51bac3b8348059417f","language":"pt","prompt":"Copie exatamente: aaaafa","task":"copy","template":"copy_pt_base"}
+{"answer":"x+49","group":"coefficient:49","id":"7f6d19e88dce7ef4c32f","language":"en","prompt":"Expression for x + 49:","task":"expression","template":"expression_en_base"}
+{"answer":"x*43","group":"coefficient:43","id":"7d4829ad864df77b8613","language":"en","prompt":"Expression for x * 43:","task":"expression","template":"expression_en_base"}
+{"answer":"x*47","group":"coefficient:47","id":"58de7a788c715ae71e66","language":"en","prompt":"Expression for x * 47:","task":"expression","template":"expression_en_base"}
+{"answer":"x-52","group":"coefficient:52","id":"f4769b4c52ad7489f1f5","language":"en","prompt":"Expression for x - 52:","task":"expression","template":"expression_en_base"}
+{"answer":"x*57","group":"coefficient:57","id":"aabffac79bcc843ecbb2","language":"en","prompt":"Expression for x * 57:","task":"expression","template":"expression_en_base"}
+{"answer":"x*49","group":"coefficient:49","id":"afd3c26297c9d03a6dbb","language":"en","prompt":"Expression for x * 49:","task":"expression","template":"expression_en_base"}
+{"answer":"x-56","group":"coefficient:56","id":"985c259659561a14e8c1","language":"en","prompt":"Expression for x - 56:","task":"expression","template":"expression_en_base"}
+{"answer":"x+47","group":"coefficient:47","id":"174121774b22c19fc1d2","language":"en","prompt":"Expression for x + 47:","task":"expression","template":"expression_en_base"}
+{"answer":"x+51","group":"coefficient:51","id":"da160718bcc65a23bd98","language":"pt","prompt":"Expressao para x + 51:","task":"expression","template":"expression_pt_base"}
+{"answer":"x-54","group":"coefficient:54","id":"235dc3c64dc1960721a1","language":"pt","prompt":"Expressao para x - 54:","task":"expression","template":"expression_pt_base"}
+{"answer":"x+41","group":"coefficient:41","id":"baddc716c2633f9daf5b","language":"pt","prompt":"Expressao para x + 41:","task":"expression","template":"expression_pt_base"}
+{"answer":"x-46","group":"coefficient:46","id":"3da5d2ef82d3d036fe49","language":"pt","prompt":"Expressao para x - 46:","task":"expression","template":"expression_pt_base"}
+{"answer":"x+43","group":"coefficient:43","id":"18242d817ef874cd2e08","language":"pt","prompt":"Expressao para x + 43:","task":"expression","template":"expression_pt_base"}
+{"answer":"x-56","group":"coefficient:56","id":"592d901d89124bb5b533","language":"pt","prompt":"Expressao para x - 56:","task":"expression","template":"expression_pt_base"}
+{"answer":"x+50","group":"coefficient:50","id":"93c32b28fa353ea8d222","language":"pt","prompt":"Expressao para x + 50:","task":"expression","template":"expression_pt_base"}
+{"answer":"x+47","group":"coefficient:47","id":"132a0f7af8b3b336fd2a","language":"pt","prompt":"Expressao para x + 47:","task":"expression","template":"expression_pt_base"}
+{"answer":"AAAEAF","group":"longstring:aaaeaf","id":"cb7ebe5de20e8a8261e0","language":"en","prompt":"Uppercase: aaaeaf","task":"uppercase","template":"uppercase_en_base"}
+{"answer":"AAAAAC","group":"longstring:aaaaac","id":"03b8e42cfdebf4a4b4c5","language":"en","prompt":"Uppercase: aaaaac","task":"uppercase","template":"uppercase_en_base"}
+{"answer":"AAAAEB","group":"longstring:aaaaeb","id":"5134eb680796b4bb5013","language":"en","prompt":"Uppercase: aaaaeb","task":"uppercase","template":"uppercase_en_base"}
+{"answer":"AAAAEE","group":"longstring:aaaaee","id":"fed6a8ca8c087ad6d6e9","language":"en","prompt":"Uppercase: aaaaee","task":"uppercase","template":"uppercase_en_base"}
+{"answer":"AAADDF","group":"longstring:aaaddf","id":"62b454aa6aa2df43f206","language":"en","prompt":"Uppercase: aaaddf","task":"uppercase","template":"uppercase_en_base"}
+{"answer":"AAABDF","group":"longstring:aaabdf","id":"e7561c31c28dc5464cbe","language":"en","prompt":"Uppercase: aaabdf","task":"uppercase","template":"uppercase_en_base"}
+{"answer":"AAADEC","group":"longstring:aaadec","id":"354371cdc9358c7b2dc6","language":"en","prompt":"Uppercase: aaadec","task":"uppercase","template":"uppercase_en_base"}
+{"answer":"AAADEA","group":"longstring:aaadea","id":"957243069db2b2d5dc16","language":"en","prompt":"Uppercase: aaadea","task":"uppercase","template":"uppercase_en_base"}
+{"answer":"AAABCB","group":"longstring:aaabcb","id":"2a7ee2c1b322b794d243","language":"pt","prompt":"Maiusculas: aaabcb","task":"uppercase","template":"uppercase_pt_base"}
+{"answer":"AAADBB","group":"longstring:aaadbb","id":"a4fa1cc5506231e0b844","language":"pt","prompt":"Maiusculas: aaadbb","task":"uppercase","template":"uppercase_pt_base"}
+{"answer":"AAADCE","group":"longstring:aaadce","id":"bb491a75fe8d21481f7c","language":"pt","prompt":"Maiusculas: aaadce","task":"uppercase","template":"uppercase_pt_base"}
+{"answer":"AAADDF","group":"longstring:aaaddf","id":"a1e69e42439a7b347532","language":"pt","prompt":"Maiusculas: aaaddf","task":"uppercase","template":"uppercase_pt_base"}
+{"answer":"AAACCD","group":"longstring:aaaccd","id":"3da4b88eb8265ca5be4b","language":"pt","prompt":"Maiusculas: aaaccd","task":"uppercase","template":"uppercase_pt_base"}
+{"answer":"AAACAC","group":"longstring:aaacac","id":"8e26741798fadb2e1d12","language":"pt","prompt":"Maiusculas: aaacac","task":"uppercase","template":"uppercase_pt_base"}
+{"answer":"AAAAFD","group":"longstring:aaaafd","id":"7624ead31e0d1c953292","language":"pt","prompt":"Maiusculas: aaaafd","task":"uppercase","template":"uppercase_pt_base"}
+{"answer":"AAADAB","group":"longstring:aaadab","id":"237165fd237e4e0001fa","language":"pt","prompt":"Maiusculas: aaadab","task":"uppercase","template":"uppercase_pt_base"}

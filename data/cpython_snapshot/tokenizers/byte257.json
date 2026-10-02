@@ -1,0 +1,5 @@
+{
+  "format": "edge-byte-bpe-1",
+  "merges": [],
+  "bos_id": 256
+}

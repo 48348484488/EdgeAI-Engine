@@ -1,0 +1,70 @@
+{
+  "cases": [
+    {
+      "kind": "hybrid_int8",
+      "seed": 11,
+      "trace_bytes": 289,
+      "max_abs_error": 1.6689300537109375e-06,
+      "logits_allclose": true,
+      "predictions_agree": true,
+      "native_metrics": {
+        "code": {
+          "blocks": 242,
+          "targets": 15356,
+          "correct": 2741,
+          "nll_sum": 52691.39832632,
+          "bits_per_byte": 4.9503528954732,
+          "accuracy": 0.17849700442824,
+          "seconds": 0.123242341,
+          "reset_between_blocks": true
+        },
+        "text": {
+          "blocks": 20,
+          "targets": 1228,
+          "correct": 186,
+          "nll_sum": 4281.9256498277,
+          "bits_per_byte": 5.0305479645454,
+          "accuracy": 0.1514657980456,
+          "seconds": 0.010034145,
+          "reset_between_blocks": true
+        }
+      }
+    },
+    {
+      "kind": "transformer_int8",
+      "seed": 11,
+      "trace_bytes": 289,
+      "max_abs_error": 1.6689300537109375e-06,
+      "logits_allclose": true,
+      "predictions_agree": true,
+      "native_metrics": {
+        "code": {
+          "blocks": 242,
+          "targets": 15356,
+          "correct": 2304,
+          "nll_sum": 54157.71947756,
+          "bits_per_byte": 5.0881136569505,
+          "accuracy": 0.15003907267518,
+          "seconds": 0.115825897,
+          "reset_between_blocks": true
+        },
+        "text": {
+          "blocks": 20,
+          "targets": 1228,
+          "correct": 111,
+          "nll_sum": 4386.8424766188,
+          "bits_per_byte": 5.1538077249015,
+          "accuracy": 0.090390879478827,
+          "seconds": 0.009177141,
+          "reset_between_blocks": true
+        }
+      }
+    }
+  ],
+  "max_abs_error": 1.6689300537109375e-06,
+  "trace_sha256": "b3edf80cd05b4467d2b91cbdc5d8bdb69cd49a1b627af70fc89cce580fe6bf43",
+  "atol": 6e-05,
+  "rtol": 6e-05,
+  "final_logits_binary_sha256": "acbdedd704d5c0fd9542d1db640d5ac324c1fdbb6a10d89bc530231f2d1a4209",
+  "final_evaluate_binary_sha256": "f1bce91d8858f5b8ee5b1889d70dfffb3b71371f1a2034319f5cdc185a656f48"
+}

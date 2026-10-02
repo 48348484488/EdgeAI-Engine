@@ -1,0 +1,872 @@
+{
+  "supplementary": true,
+  "used_for_selection": false,
+  "prompts": [
+    {
+      "id": "arith-0",
+      "category": "arithmetic",
+      "prompt": "Return only the integer result of 66*82-26: ",
+      "expression": "66*82-26",
+      "expected": "5386"
+    },
+    {
+      "id": "arith-1",
+      "category": "arithmetic",
+      "prompt": "Return only the integer result of (70+54)*41: ",
+      "expression": "(70+54)*41",
+      "expected": "5084"
+    },
+    {
+      "id": "arith-2",
+      "category": "arithmetic",
+      "prompt": "Return only the integer result of 38*37-13: ",
+      "expression": "38*37-13",
+      "expected": "1393"
+    },
+    {
+      "id": "arith-3",
+      "category": "arithmetic",
+      "prompt": "Return only the integer result of (71+62)*25: ",
+      "expression": "(71+62)*25",
+      "expected": "3325"
+    },
+    {
+      "id": "arith-4",
+      "category": "arithmetic",
+      "prompt": "Return only the integer result of 57*13-20: ",
+      "expression": "57*13-20",
+      "expected": "721"
+    },
+    {
+      "id": "arith-5",
+      "category": "arithmetic",
+      "prompt": "Return only the integer result of (27+58)*59: ",
+      "expression": "(27+58)*59",
+      "expected": "5015"
+    },
+    {
+      "id": "arith-6",
+      "category": "arithmetic",
+      "prompt": "Return only the integer result of 38*45-70: ",
+      "expression": "38*45-70",
+      "expected": "1640"
+    },
+    {
+      "id": "arith-7",
+      "category": "arithmetic",
+      "prompt": "Return only the integer result of (28+42)*26: ",
+      "expression": "(28+42)*26",
+      "expected": "1820"
+    },
+    {
+      "id": "arith-8",
+      "category": "arithmetic",
+      "prompt": "Return only the integer result of 86*28-34: ",
+      "expression": "86*28-34",
+      "expected": "2374"
+    },
+    {
+      "id": "arith-9",
+      "category": "arithmetic",
+      "prompt": "Return only the integer result of (38+56)*14: ",
+      "expression": "(38+56)*14",
+      "expected": "1316"
+    },
+    {
+      "id": "arith-10",
+      "category": "arithmetic",
+      "prompt": "Return only the integer result of 44*27-72: ",
+      "expression": "44*27-72",
+      "expected": "1116"
+    },
+    {
+      "id": "arith-11",
+      "category": "arithmetic",
+      "prompt": "Return only the integer result of (51+26)*67: ",
+      "expression": "(51+26)*67",
+      "expected": "5159"
+    },
+    {
+      "id": "copy-0",
+      "category": "exact_instruction",
+      "prompt": "Repeat exactly this text and nothing else: azul-47\nAnswer: ",
+      "expected": "azul-47"
+    },
+    {
+      "id": "copy-1",
+      "category": "exact_instruction",
+      "prompt": "Repeat exactly this text and nothing else: caixa_83\nAnswer: ",
+      "expected": "caixa_83"
+    },
+    {
+      "id": "copy-2",
+      "category": "exact_instruction",
+      "prompt": "Repeat exactly this text and nothing else: CPU-sem-GPU\nAnswer: ",
+      "expected": "CPU-sem-GPU"
+    },
+    {
+      "id": "copy-3",
+      "category": "exact_instruction",
+      "prompt": "Repeat exactly this text and nothing else: papel-915\nAnswer: ",
+      "expected": "papel-915"
+    },
+    {
+      "id": "copy-4",
+      "category": "exact_instruction",
+      "prompt": "Repeat exactly this text and nothing else: delta_604\nAnswer: ",
+      "expected": "delta_604"
+    },
+    {
+      "id": "copy-5",
+      "category": "exact_instruction",
+      "prompt": "Repeat exactly this text and nothing else: memoria-28\nAnswer: ",
+      "expected": "memoria-28"
+    },
+    {
+      "id": "copy-6",
+      "category": "exact_instruction",
+      "prompt": "Repeat exactly this text and nothing else: janela_731\nAnswer: ",
+      "expected": "janela_731"
+    },
+    {
+      "id": "copy-7",
+      "category": "exact_instruction",
+      "prompt": "Repeat exactly this text and nothing else: eco-502\nAnswer: ",
+      "expected": "eco-502"
+    },
+    {
+      "id": "code-add_values",
+      "category": "restricted_code",
+      "prompt": "# Complete the function to compute a+b.\ndef add_values(a, b):\n    return ",
+      "reference_expression": "a+b",
+      "cases": [
+        {
+          "a": 3,
+          "b": 2,
+          "expected": 5
+        },
+        {
+          "a": 7,
+          "b": 4,
+          "expected": 11
+        },
+        {
+          "a": -3,
+          "b": 5,
+          "expected": 2
+        },
+        {
+          "a": 0,
+          "b": 6,
+          "expected": 6
+        },
+        {
+          "a": 13,
+          "b": 7,
+          "expected": 20
+        }
+      ]
+    },
+    {
+      "id": "code-subtract_values",
+      "category": "restricted_code",
+      "prompt": "# Complete the function to compute a-b.\ndef subtract_values(a, b):\n    return ",
+      "reference_expression": "a-b",
+      "cases": [
+        {
+          "a": 3,
+          "b": 2,
+          "expected": 1
+        },
+        {
+          "a": 7,
+          "b": 4,
+          "expected": 3
+        },
+        {
+          "a": -3,
+          "b": 5,
+          "expected": -8
+        },
+        {
+          "a": 0,
+          "b": 6,
+          "expected": -6
+        },
+        {
+          "a": 13,
+          "b": 7,
+          "expected": 6
+        }
+      ]
+    },
+    {
+      "id": "code-multiply_values",
+      "category": "restricted_code",
+      "prompt": "# Complete the function to compute a*b.\ndef multiply_values(a, b):\n    return ",
+      "reference_expression": "a*b",
+      "cases": [
+        {
+          "a": 3,
+          "b": 2,
+          "expected": 6
+        },
+        {
+          "a": 7,
+          "b": 4,
+          "expected": 28
+        },
+        {
+          "a": -3,
+          "b": 5,
+          "expected": -15
+        },
+        {
+          "a": 0,
+          "b": 6,
+          "expected": 0
+        },
+        {
+          "a": 13,
+          "b": 7,
+          "expected": 91
+        }
+      ]
+    },
+    {
+      "id": "code-square_first",
+      "category": "restricted_code",
+      "prompt": "# Complete the function to compute a*a.\ndef square_first(a, b):\n    return ",
+      "reference_expression": "a*a",
+      "cases": [
+        {
+          "a": 3,
+          "b": 2,
+          "expected": 9
+        },
+        {
+          "a": 7,
+          "b": 4,
+          "expected": 49
+        },
+        {
+          "a": -3,
+          "b": 5,
+          "expected": 9
+        },
+        {
+          "a": 0,
+          "b": 6,
+          "expected": 0
+        },
+        {
+          "a": 13,
+          "b": 7,
+          "expected": 169
+        }
+      ]
+    },
+    {
+      "id": "code-twice_first_plus_second",
+      "category": "restricted_code",
+      "prompt": "# Complete the function to compute 2*a+b.\ndef twice_first_plus_second(a, b):\n    return ",
+      "reference_expression": "2*a+b",
+      "cases": [
+        {
+          "a": 3,
+          "b": 2,
+          "expected": 8
+        },
+        {
+          "a": 7,
+          "b": 4,
+          "expected": 18
+        },
+        {
+          "a": -3,
+          "b": 5,
+          "expected": -1
+        },
+        {
+          "a": 0,
+          "b": 6,
+          "expected": 6
+        },
+        {
+          "a": 13,
+          "b": 7,
+          "expected": 33
+        }
+      ]
+    },
+    {
+      "id": "code-difference_of_squares",
+      "category": "restricted_code",
+      "prompt": "# Complete the function to compute a*a-b*b.\ndef difference_of_squares(a, b):\n    return ",
+      "reference_expression": "a*a-b*b",
+      "cases": [
+        {
+          "a": 3,
+          "b": 2,
+          "expected": 5
+        },
+        {
+          "a": 7,
+          "b": 4,
+          "expected": 33
+        },
+        {
+          "a": -3,
+          "b": 5,
+          "expected": -16
+        },
+        {
+          "a": 0,
+          "b": 6,
+          "expected": -36
+        },
+        {
+          "a": 13,
+          "b": 7,
+          "expected": 120
+        }
+      ]
+    },
+    {
+      "id": "code-sum_plus_one",
+      "category": "restricted_code",
+      "prompt": "# Complete the function to compute a+b+1.\ndef sum_plus_one(a, b):\n    return ",
+      "reference_expression": "a+b+1",
+      "cases": [
+        {
+          "a": 3,
+          "b": 2,
+          "expected": 6
+        },
+        {
+          "a": 7,
+          "b": 4,
+          "expected": 12
+        },
+        {
+          "a": -3,
+          "b": 5,
+          "expected": 3
+        },
+        {
+          "a": 0,
+          "b": 6,
+          "expected": 7
+        },
+        {
+          "a": 13,
+          "b": 7,
+          "expected": 21
+        }
+      ]
+    },
+    {
+      "id": "code-remainder",
+      "category": "restricted_code",
+      "prompt": "# Complete the function to compute a%b.\ndef remainder(a, b):\n    return ",
+      "reference_expression": "a%b",
+      "cases": [
+        {
+          "a": 3,
+          "b": 2,
+          "expected": 1
+        },
+        {
+          "a": 7,
+          "b": 4,
+          "expected": 3
+        },
+        {
+          "a": -3,
+          "b": 5,
+          "expected": 2
+        },
+        {
+          "a": 0,
+          "b": 6,
+          "expected": 0
+        },
+        {
+          "a": 13,
+          "b": 7,
+          "expected": 6
+        }
+      ]
+    }
+  ],
+  "training_report_sha256": "bf282ab0e109f8706e64f3970760202e9ab72c79aa873a6be3b03404de2abe68",
+  "runs": [
+    {
+      "seed": 11,
+      "phase": "before",
+      "correct": 0,
+      "eos": 0,
+      "count": 28,
+      "results": [
+        {
+          "task": "arith-0",
+          "category": "arithmetic",
+          "passed": false,
+          "stopped_on_eos": false,
+          "raw_hex": "207468652073706563726970746f72207468652073706563726970746f72207468652073706563726970746f7220746865",
+          "text": " the specriptor the specriptor the specriptor the"
+        },
+        {
+          "task": "arith-1",
+          "category": "arithmetic",
+          "passed": false,
+          "stopped_on_eos": false,
+          "raw_hex": "20612061207265666572656e6365732061207265666572656e63657320746f2074686520726567697374657220",
+          "text": " a a references a references to the register "
+        },
+        {
+          "task": "arith-2",
+          "category": "arithmetic",
+          "passed": false,
+          "stopped_on_eos": false,
+          "raw_hex": "2074686520736f7274207468652073706563726970746f72207468652073706563726970746f7220746865207370656372",
+          "text": " the sort the specriptor the specriptor the specr"
+        },
+        {
+          "task": "arith-3",
+          "category": "arithmetic",
+          "passed": false,
+          "stopped_on_eos": false,
+          "raw_hex": "2074686520736f7274656420746865207265676973746572207468652073706563726970746f7220746865207370656372697074",
+          "text": " the sorted the register the specriptor the specript"
+        },
+        {
+          "task": "arith-4",
+          "category": "arithmetic",
+          "passed": false,
+          "stopped_on_eos": false,
+          "raw_hex": "2074686520726567697374657220746865207265676973746572207468652073706563726970746f722074686520737065637269",
+          "text": " the register the register the specriptor the specri"
+        },
+        {
+          "task": "arith-5",
+          "category": "arithmetic",
+          "passed": false,
+          "stopped_on_eos": false,
+          "raw_hex": "20746865206e20746865207265676973746572207468652072656769737465722074686520726567697374657220746865207265676973746572",
+          "text": " the n the register the register the register the register"
+        },
+        {
+          "task": "arith-6",
+          "category": "arithmetic",
+          "passed": false,
+          "stopped_on_eos": false,
+          "raw_hex": "207468652073706563726970746f72207468652073706563726970746f72207468652073706563726970746f7220746865",
+          "text": " the specriptor the specriptor the specriptor the"
+        },
+        {
+          "task": "arith-7",
+          "category": "arithmetic",
+          "passed": false,
+          "stopped_on_eos": false,
+          "raw_hex": "206120612061207265666572656e6365732061207265666572656e63657320746f2074686520726567697374",
+          "text": " a a a references a references to the regist"
+        },
+        {
+          "task": "arith-8",
+          "category": "arithmetic",
+          "passed": false,
+          "stopped_on_eos": false,
+          "raw_hex": "2074686520736f7274656420746865207265676973746572207468652073706563726970746f7220746865207370656372697074",
+          "text": " the sorted the register the specriptor the specript"
+        },
+        {
+          "task": "arith-9",
+          "category": "arithmetic",
+          "passed": false,
+          "stopped_on_eos": false,
+          "raw_hex": "20736f727465642831290a202020202020202020202020202020206966206e6f74206973206e6f74204e6f6e653a0a202020202020202020202020202020206966206e6f74206973206e6f74204e6f6e653a0a",
+          "text": " sorted(1)\n                if not is not None:\n                if not is not None:\n"
+        },
+        {
+          "task": "arith-10",
+          "category": "arithmetic",
+          "passed": false,
+          "stopped_on_eos": false,
+          "raw_hex": "2074686520736f7274656420746865207265676973746572207468652073706563726970746f7220746865207370656372697074",
+          "text": " the sorted the register the specriptor the specript"
+        },
+        {
+          "task": "arith-11",
+          "category": "arithmetic",
+          "passed": false,
+          "stopped_on_eos": false,
+          "raw_hex": "20736f72746564207468652073706563726970746f72207468652073706563726970746f722074686520737065637269",
+          "text": " sorted the specriptor the specriptor the specri"
+        },
+        {
+          "task": "copy-0",
+          "category": "exact_instruction",
+          "passed": false,
+          "stopped_on_eos": false,
+          "raw_hex": "20736f72746564206173207468652073706563726970746f72207468652073706563726970746f72207468652073706563",
+          "text": " sorted as the specriptor the specriptor the spec"
+        },
+        {
+          "task": "copy-1",
+          "category": "exact_instruction",
+          "passed": false,
+          "stopped_on_eos": false,
+          "raw_hex": "2073706563726970746f72207468652073706563726970746f72207468652073706563726970746f722073706563",
+          "text": " specriptor the specriptor the specriptor spec"
+        },
+        {
+          "task": "copy-2",
+          "category": "exact_instruction",
+          "passed": false,
+          "stopped_on_eos": false,
+          "raw_hex": "2073706563726970746f72207468652073706563726970746f72207468652073706563726970746f72207468652073",
+          "text": " specriptor the specriptor the specriptor the s"
+        },
+        {
+          "task": "copy-3",
+          "category": "exact_instruction",
+          "passed": false,
+          "stopped_on_eos": false,
+          "raw_hex": "20736f72746564206173207468652073706563726970746f72207468652073706563726970746f72207468652073706563",
+          "text": " sorted as the specriptor the specriptor the spec"
+        },
+        {
+          "task": "copy-4",
+          "category": "exact_instruction",
+          "passed": false,
+          "stopped_on_eos": false,
+          "raw_hex": "2073706563726970746f72207468652073706563726970746f72207468652073706563726970746f722073706563",
+          "text": " specriptor the specriptor the specriptor spec"
+        },
+        {
+          "task": "copy-5",
+          "category": "exact_instruction",
+          "passed": false,
+          "stopped_on_eos": false,
+          "raw_hex": "2073706563726970746f72207468652073706563726970746f72207468652073706563726970746f722073706563",
+          "text": " specriptor the specriptor the specriptor spec"
+        },
+        {
+          "task": "copy-6",
+          "category": "exact_instruction",
+          "passed": false,
+          "stopped_on_eos": false,
+          "raw_hex": "20736f72746564206173207468652073706563726970746f72207468652073706563726970746f72207468652073706563",
+          "text": " sorted as the specriptor the specriptor the spec"
+        },
+        {
+          "task": "copy-7",
+          "category": "exact_instruction",
+          "passed": false,
+          "stopped_on_eos": false,
+          "raw_hex": "2073706563726970746f72207468652073706563726970746f72207468652073706563726970746f722073706563",
+          "text": " specriptor the specriptor the specriptor spec"
+        },
+        {
+          "task": "code-add_values",
+          "category": "restricted_code",
+          "passed": false,
+          "stopped_on_eos": false,
+          "raw_hex": "207065726174696f6e20746f207468652073706563726970746f7220746865207370656372697074696f6e207468652073706563",
+          "text": " peration to the specriptor the specription the spec"
+        },
+        {
+          "task": "code-subtract_values",
+          "category": "restricted_code",
+          "passed": false,
+          "stopped_on_eos": false,
+          "raw_hex": "207065726174696f6e7320746f207468652073706563726970746f7220746865207370656372697074696f6e2074686520737065",
+          "text": " perations to the specriptor the specription the spe"
+        },
+        {
+          "task": "code-multiply_values",
+          "category": "restricted_code",
+          "passed": false,
+          "stopped_on_eos": false,
+          "raw_hex": "2070726f7065727479207468652073706563726970746f7220746865207370656372697074696f6e207468652073706563",
+          "text": " property the specriptor the specription the spec"
+        },
+        {
+          "task": "code-square_first",
+          "category": "restricted_code",
+          "passed": false,
+          "stopped_on_eos": false,
+          "raw_hex": "207065726174696f6e20746f207468652073706563726970746f7220746865207370656372697074696f6e207468652073706563",
+          "text": " peration to the specriptor the specription the spec"
+        },
+        {
+          "task": "code-twice_first_plus_second",
+          "category": "restricted_code",
+          "passed": false,
+          "stopped_on_eos": false,
+          "raw_hex": "2070726f706572747920746865207370656372697074696f6e207468652073706563726970746f72207468652073706563",
+          "text": " property the specription the specriptor the spec"
+        },
+        {
+          "task": "code-difference_of_squares",
+          "category": "restricted_code",
+          "passed": false,
+          "stopped_on_eos": false,
+          "raw_hex": "2070726f706572747920746865207370656372697074696f6e20746865207370656372697074696f6e207468652073706563",
+          "text": " property the specription the specription the spec"
+        },
+        {
+          "task": "code-sum_plus_one",
+          "category": "restricted_code",
+          "passed": false,
+          "stopped_on_eos": false,
+          "raw_hex": "2070726f7065727479207468652073706563726970746f7220746865207370656372697074696f6e207468652073706563",
+          "text": " property the specriptor the specription the spec"
+        },
+        {
+          "task": "code-remainder",
+          "category": "restricted_code",
+          "passed": false,
+          "stopped_on_eos": false,
+          "raw_hex": "207065726174696f6e20746f207468652073706563726970746f7220746865207370656372697074696f6e207468652073706563",
+          "text": " peration to the specriptor the specription the spec"
+        }
+      ]
+    },
+    {
+      "seed": 11,
+      "phase": "after",
+      "correct": 0,
+      "eos": 28,
+      "count": 28,
+      "results": [
+        {
+          "task": "arith-0",
+          "category": "arithmetic",
+          "passed": false,
+          "stopped_on_eos": true,
+          "raw_hex": "782a32",
+          "text": "x*2"
+        },
+        {
+          "task": "arith-1",
+          "category": "arithmetic",
+          "passed": false,
+          "stopped_on_eos": true,
+          "raw_hex": "782a32",
+          "text": "x*2"
+        },
+        {
+          "task": "arith-2",
+          "category": "arithmetic",
+          "passed": false,
+          "stopped_on_eos": true,
+          "raw_hex": "782a32",
+          "text": "x*2"
+        },
+        {
+          "task": "arith-3",
+          "category": "arithmetic",
+          "passed": false,
+          "stopped_on_eos": true,
+          "raw_hex": "782a32",
+          "text": "x*2"
+        },
+        {
+          "task": "arith-4",
+          "category": "arithmetic",
+          "passed": false,
+          "stopped_on_eos": true,
+          "raw_hex": "782a32",
+          "text": "x*2"
+        },
+        {
+          "task": "arith-5",
+          "category": "arithmetic",
+          "passed": false,
+          "stopped_on_eos": true,
+          "raw_hex": "782a32",
+          "text": "x*2"
+        },
+        {
+          "task": "arith-6",
+          "category": "arithmetic",
+          "passed": false,
+          "stopped_on_eos": true,
+          "raw_hex": "782a31",
+          "text": "x*1"
+        },
+        {
+          "task": "arith-7",
+          "category": "arithmetic",
+          "passed": false,
+          "stopped_on_eos": true,
+          "raw_hex": "782a32",
+          "text": "x*2"
+        },
+        {
+          "task": "arith-8",
+          "category": "arithmetic",
+          "passed": false,
+          "stopped_on_eos": true,
+          "raw_hex": "782a32",
+          "text": "x*2"
+        },
+        {
+          "task": "arith-9",
+          "category": "arithmetic",
+          "passed": false,
+          "stopped_on_eos": true,
+          "raw_hex": "782a32",
+          "text": "x*2"
+        },
+        {
+          "task": "arith-10",
+          "category": "arithmetic",
+          "passed": false,
+          "stopped_on_eos": true,
+          "raw_hex": "782a32",
+          "text": "x*2"
+        },
+        {
+          "task": "arith-11",
+          "category": "arithmetic",
+          "passed": false,
+          "stopped_on_eos": true,
+          "raw_hex": "782a32",
+          "text": "x*2"
+        },
+        {
+          "task": "copy-0",
+          "category": "exact_instruction",
+          "passed": false,
+          "stopped_on_eos": true,
+          "raw_hex": "62",
+          "text": "b"
+        },
+        {
+          "task": "copy-1",
+          "category": "exact_instruction",
+          "passed": false,
+          "stopped_on_eos": true,
+          "raw_hex": "62",
+          "text": "b"
+        },
+        {
+          "task": "copy-2",
+          "category": "exact_instruction",
+          "passed": false,
+          "stopped_on_eos": true,
+          "raw_hex": "45",
+          "text": "E"
+        },
+        {
+          "task": "copy-3",
+          "category": "exact_instruction",
+          "passed": false,
+          "stopped_on_eos": true,
+          "raw_hex": "62",
+          "text": "b"
+        },
+        {
+          "task": "copy-4",
+          "category": "exact_instruction",
+          "passed": false,
+          "stopped_on_eos": true,
+          "raw_hex": "62",
+          "text": "b"
+        },
+        {
+          "task": "copy-5",
+          "category": "exact_instruction",
+          "passed": false,
+          "stopped_on_eos": true,
+          "raw_hex": "62",
+          "text": "b"
+        },
+        {
+          "task": "copy-6",
+          "category": "exact_instruction",
+          "passed": false,
+          "stopped_on_eos": true,
+          "raw_hex": "62",
+          "text": "b"
+        },
+        {
+          "task": "copy-7",
+          "category": "exact_instruction",
+          "passed": false,
+          "stopped_on_eos": true,
+          "raw_hex": "62",
+          "text": "b"
+        },
+        {
+          "task": "code-add_values",
+          "category": "restricted_code",
+          "passed": false,
+          "stopped_on_eos": true,
+          "raw_hex": "43",
+          "text": "C"
+        },
+        {
+          "task": "code-subtract_values",
+          "category": "restricted_code",
+          "passed": false,
+          "stopped_on_eos": true,
+          "raw_hex": "43",
+          "text": "C"
+        },
+        {
+          "task": "code-multiply_values",
+          "category": "restricted_code",
+          "passed": false,
+          "stopped_on_eos": true,
+          "raw_hex": "43",
+          "text": "C"
+        },
+        {
+          "task": "code-square_first",
+          "category": "restricted_code",
+          "passed": false,
+          "stopped_on_eos": true,
+          "raw_hex": "43",
+          "text": "C"
+        },
+        {
+          "task": "code-twice_first_plus_second",
+          "category": "restricted_code",
+          "passed": false,
+          "stopped_on_eos": true,
+          "raw_hex": "6663",
+          "text": "fc"
+        },
+        {
+          "task": "code-difference_of_squares",
+          "category": "restricted_code",
+          "passed": false,
+          "stopped_on_eos": true,
+          "raw_hex": "6663",
+          "text": "fc"
+        },
+        {
+          "task": "code-sum_plus_one",
+          "category": "restricted_code",
+          "passed": false,
+          "stopped_on_eos": true,
+          "raw_hex": "43",
+          "text": "C"
+        },
+        {
+          "task": "code-remainder",
+          "category": "restricted_code",
+          "passed": false,
+          "stopped_on_eos": true,
+          "raw_hex": "43",
+          "text": "C"
+        }
+      ]
+    }
+  ],
+  "note": "Original v0.6 prompt/scorer only; v0.7 uses learned EOS and a 32-token cap versus original 48. Pair before/after here, not an identical rerun of the v0.6 protocol. No tools."
+}

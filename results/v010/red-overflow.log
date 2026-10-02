@@ -1,0 +1,14 @@
+...F.
+======================================================================
+FAIL: test_long_line_cannot_hide_overflow_after_carriage_return (test_v010_session.SearchSessionTests.test_long_line_cannot_hide_overflow_after_carriage_return)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/EdgeAI-Engine-v0.10/tests/test_v010_session.py", line 43, in test_long_line_cannot_hide_overflow_after_carriage_return
+    self.assertEqual(p.returncode,1)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+AssertionError: 0 != 1
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.013s
+
+FAILED (failures=1)

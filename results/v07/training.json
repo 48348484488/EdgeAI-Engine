@@ -1,0 +1,262 @@
+{
+  "protocol": "paired identical expanded checkpoint before and after response-only SFT",
+  "cpu_budget_seconds": 60.0,
+  "seeds": [
+    11,
+    22,
+    33
+  ],
+  "threads": 1,
+  "expected": 3,
+  "dataset_sha256": "648cc3be05fe6bb3d035077bed57fc2cf6313824fa8f9638c95b8ad05d473faa",
+  "runs": [
+    {
+      "seed": 11,
+      "identity": {
+        "protocol": "edge-sft-v07-1",
+        "seed": 11,
+        "cpu_budget": 60.0,
+        "threads": 1,
+        "source_checkpoint_sha256": "e4b131bc64f45c463e0915ccb45f87720c74c64bc8e55b77dbdf879c14bad259",
+        "dataset_sha256": "648cc3be05fe6bb3d035077bed57fc2cf6313824fa8f9638c95b8ad05d473faa",
+        "code": {
+          "benchmarks/instruction_v07.py": "0cbbe51205bd2e39e9ffc6715533b0134b43dcf3253799ec3fd94e137a44a9ac",
+          "tools/instruction_data.py": "37e2c091a0b62092da50c5c7ee327616a7303b63e4ad451d9ae2799d0e3f18b0",
+          "tools/sft_model.py": "717ca46b337e8857b8e85a2fb70fbfdbefaae88d16c1e8a29e313a15ec9c73f3",
+          "tools/transformer_model.py": "cfa9949b13acf9647e1f30d444704d20959ad6d4e9dc8e5f79d9ae669829d2d0",
+          "tools/byte_bpe.py": "b9c3a02c3ca6a79d851f3acdcfb7597b8c4b011cab04bfed86b0aeebae6c6ed9",
+          "tools/mixed_model.py": "1c5240e454271986d311a6db857b192373ff665b9242b6f315bb9fc408f69f9a",
+          "tools/hybrid_model.py": "37187a5fe67d743b79398ba9816e8becc2b1535b042cff789ae996f2781471e0",
+          "tools/train_tiny.py": "2a7a2564f913b93740fda9141acbc676b9f8934d7b692cc121d92bcdd622c667"
+        },
+        "torch": "2.10.0+cpu",
+        "hyperparameters": {
+          "batch": 16,
+          "lr": 0.001,
+          "weight_decay": 0.01,
+          "clip_norm": 1,
+          "max_length": 128,
+          "selection": "minimum response validation NLL at 25/50/75/100 percent"
+        },
+        "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+        "python": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]"
+      },
+      "parameters": 71827,
+      "steps": 4815,
+      "selected_step": 4815,
+      "train_cpu_seconds": 60.00645654399972,
+      "train_wall_seconds": 60.12130561500021,
+      "initialization_wall_seconds": 0.2860989509999854,
+      "validation_cpu_seconds": 0.1473478680000042,
+      "total_trial_wall_seconds": 60.959346724000056,
+      "total_trial_cpu_seconds": 60.869277321,
+      "before_validation_nll": 6.578135963722511,
+      "selected_validation_nll": 0.5850363934481585,
+      "validation_curve": [
+        {
+          "step": 1239,
+          "train_cpu_seconds": 15.009342994000034,
+          "validation_nll": 0.7063296247411657
+        },
+        {
+          "step": 2396,
+          "train_cpu_seconds": 30.001089617999956,
+          "validation_nll": 0.7140881255820946
+        },
+        {
+          "step": 3642,
+          "train_cpu_seconds": 45.00020119499978,
+          "validation_nll": 0.6314938492245145
+        },
+        {
+          "step": 4815,
+          "train_cpu_seconds": 60.00645654399972,
+          "validation_nll": 0.5850363934481585
+        }
+      ],
+      "examples_seen": {
+        "addition": 19251,
+        "copy": 19186,
+        "expression": 19218,
+        "uppercase": 19385
+      },
+      "batch_ids_sha256": "fdb9f745a0cd9912dd428a59bd63870b0b069c4b3431ab7c729ed316349b322d",
+      "before_path": "models/instructions_v07/seed11-before.edge",
+      "after_path": "models/instructions_v07/seed11-after.edge",
+      "file_bytes": 154400,
+      "artifacts": {
+        "models/instructions_v07/seed11-before.edge": "696614a429335c54af1e5c82820ad2fc610b40c97a0b9b17e424eedb432c8cbe",
+        "models/instructions_v07/seed11-before.pt": "2ecf96044a87e1635a4d8b3c541c4df42db00157f6dc61c4b97801aa298a7835",
+        "models/instructions_v07/seed11-after.edge": "3ab4a780e58f5dfc8054fc832a32dc5e7337e3fab433cdb1299b088afdfa7732",
+        "models/instructions_v07/seed11-after.pt": "99ad6e4f2c420feb5afa62f5e5cdc87ce0a85d97bc86940d947f913bacdb9f7e"
+      }
+    },
+    {
+      "seed": 22,
+      "identity": {
+        "protocol": "edge-sft-v07-1",
+        "seed": 22,
+        "cpu_budget": 60.0,
+        "threads": 1,
+        "source_checkpoint_sha256": "7fbe9609e65e2d54d149708f48a47700e241acab406c231b96b509fd7693f3f9",
+        "dataset_sha256": "648cc3be05fe6bb3d035077bed57fc2cf6313824fa8f9638c95b8ad05d473faa",
+        "code": {
+          "benchmarks/instruction_v07.py": "0cbbe51205bd2e39e9ffc6715533b0134b43dcf3253799ec3fd94e137a44a9ac",
+          "tools/instruction_data.py": "37e2c091a0b62092da50c5c7ee327616a7303b63e4ad451d9ae2799d0e3f18b0",
+          "tools/sft_model.py": "717ca46b337e8857b8e85a2fb70fbfdbefaae88d16c1e8a29e313a15ec9c73f3",
+          "tools/transformer_model.py": "cfa9949b13acf9647e1f30d444704d20959ad6d4e9dc8e5f79d9ae669829d2d0",
+          "tools/byte_bpe.py": "b9c3a02c3ca6a79d851f3acdcfb7597b8c4b011cab04bfed86b0aeebae6c6ed9",
+          "tools/mixed_model.py": "1c5240e454271986d311a6db857b192373ff665b9242b6f315bb9fc408f69f9a",
+          "tools/hybrid_model.py": "37187a5fe67d743b79398ba9816e8becc2b1535b042cff789ae996f2781471e0",
+          "tools/train_tiny.py": "2a7a2564f913b93740fda9141acbc676b9f8934d7b692cc121d92bcdd622c667"
+        },
+        "torch": "2.10.0+cpu",
+        "hyperparameters": {
+          "batch": 16,
+          "lr": 0.001,
+          "weight_decay": 0.01,
+          "clip_norm": 1,
+          "max_length": 128,
+          "selection": "minimum response validation NLL at 25/50/75/100 percent"
+        },
+        "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+        "python": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]"
+      },
+      "parameters": 71827,
+      "steps": 4796,
+      "selected_step": 2394,
+      "train_cpu_seconds": 60.003120597000674,
+      "train_wall_seconds": 60.04236354599266,
+      "initialization_wall_seconds": 0.3368987640000114,
+      "validation_cpu_seconds": 0.11915209599999343,
+      "total_trial_wall_seconds": 60.90640417999998,
+      "total_trial_cpu_seconds": 60.893017149,
+      "before_validation_nll": 6.495219590928819,
+      "selected_validation_nll": 0.39680254724290637,
+      "validation_curve": [
+        {
+          "step": 1188,
+          "train_cpu_seconds": 15.006749551000382,
+          "validation_nll": 0.504868906515616
+        },
+        {
+          "step": 2394,
+          "train_cpu_seconds": 30.01423042100042,
+          "validation_nll": 0.39680254724290637
+        },
+        {
+          "step": 3576,
+          "train_cpu_seconds": 45.008037959000475,
+          "validation_nll": 0.43112691508399115
+        },
+        {
+          "step": 4796,
+          "train_cpu_seconds": 60.003120597000674,
+          "validation_nll": 0.399656930676213
+        }
+      ],
+      "examples_seen": {
+        "addition": 19083,
+        "copy": 19143,
+        "expression": 19096,
+        "uppercase": 19414
+      },
+      "batch_ids_sha256": "6619833601cdb5191430bb9d58e902c9dccbbc51d2806821f3eeb70756b95620",
+      "before_path": "models/instructions_v07/seed22-before.edge",
+      "after_path": "models/instructions_v07/seed22-after.edge",
+      "file_bytes": 154400,
+      "artifacts": {
+        "models/instructions_v07/seed22-before.edge": "40d19ba32085445d2c415f69ff017df1d9fe7a304574d8a507f606a8e1cca694",
+        "models/instructions_v07/seed22-before.pt": "6178eb5c0d49eccbf9deabf440f17a5ee0cb8d3aa7c9aa6cf41e4a750f7ff87c",
+        "models/instructions_v07/seed22-after.edge": "3282e3f07da68146bf1519ff39cd6d522764b79b3aa5c946fbe88d63feb75811",
+        "models/instructions_v07/seed22-after.pt": "e2cd1c58a85aa74c81c7d52909077e454ef65d75c9c1eba8fe90cda06ffb71b9"
+      }
+    },
+    {
+      "seed": 33,
+      "identity": {
+        "protocol": "edge-sft-v07-1",
+        "seed": 33,
+        "cpu_budget": 60.0,
+        "threads": 1,
+        "source_checkpoint_sha256": "091d7b1159f59b83788e2c1bec325192c6b9cbfa57b4a01d2f8959eb0bff7c91",
+        "dataset_sha256": "648cc3be05fe6bb3d035077bed57fc2cf6313824fa8f9638c95b8ad05d473faa",
+        "code": {
+          "benchmarks/instruction_v07.py": "0cbbe51205bd2e39e9ffc6715533b0134b43dcf3253799ec3fd94e137a44a9ac",
+          "tools/instruction_data.py": "37e2c091a0b62092da50c5c7ee327616a7303b63e4ad451d9ae2799d0e3f18b0",
+          "tools/sft_model.py": "717ca46b337e8857b8e85a2fb70fbfdbefaae88d16c1e8a29e313a15ec9c73f3",
+          "tools/transformer_model.py": "cfa9949b13acf9647e1f30d444704d20959ad6d4e9dc8e5f79d9ae669829d2d0",
+          "tools/byte_bpe.py": "b9c3a02c3ca6a79d851f3acdcfb7597b8c4b011cab04bfed86b0aeebae6c6ed9",
+          "tools/mixed_model.py": "1c5240e454271986d311a6db857b192373ff665b9242b6f315bb9fc408f69f9a",
+          "tools/hybrid_model.py": "37187a5fe67d743b79398ba9816e8becc2b1535b042cff789ae996f2781471e0",
+          "tools/train_tiny.py": "2a7a2564f913b93740fda9141acbc676b9f8934d7b692cc121d92bcdd622c667"
+        },
+        "torch": "2.10.0+cpu",
+        "hyperparameters": {
+          "batch": 16,
+          "lr": 0.001,
+          "weight_decay": 0.01,
+          "clip_norm": 1,
+          "max_length": 128,
+          "selection": "minimum response validation NLL at 25/50/75/100 percent"
+        },
+        "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+        "python": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]"
+      },
+      "parameters": 71827,
+      "steps": 5292,
+      "selected_step": 5292,
+      "train_cpu_seconds": 60.006190253999804,
+      "train_wall_seconds": 60.06005616899438,
+      "initialization_wall_seconds": 0.23425698800008377,
+      "validation_cpu_seconds": 0.1201384409999946,
+      "total_trial_wall_seconds": 60.81615977699994,
+      "total_trial_cpu_seconds": 60.790914265,
+      "before_validation_nll": 6.705313449435764,
+      "selected_validation_nll": 0.41844847621741116,
+      "validation_curve": [
+        {
+          "step": 1316,
+          "train_cpu_seconds": 15.00122652600028,
+          "validation_nll": 0.5197768776505082
+        },
+        {
+          "step": 2692,
+          "train_cpu_seconds": 30.010150176000607,
+          "validation_nll": 0.43821128650947855
+        },
+        {
+          "step": 4022,
+          "train_cpu_seconds": 45.00431597800001,
+          "validation_nll": 0.4394354025522868
+        },
+        {
+          "step": 5292,
+          "train_cpu_seconds": 60.006190253999804,
+          "validation_nll": 0.41844847621741116
+        }
+      ],
+      "examples_seen": {
+        "addition": 21352,
+        "copy": 20953,
+        "expression": 21114,
+        "uppercase": 21253
+      },
+      "batch_ids_sha256": "f1f3504d99a79023f0088cea73094286d2e50dcd9b9034e94e570ba9acc8d4bb",
+      "before_path": "models/instructions_v07/seed33-before.edge",
+      "after_path": "models/instructions_v07/seed33-after.edge",
+      "file_bytes": 154400,
+      "artifacts": {
+        "models/instructions_v07/seed33-before.edge": "a220349bb3410bbc901b7344abdfb020468b80642cbd5fdf999b4ce07514ffcf",
+        "models/instructions_v07/seed33-before.pt": "c8e67c34297a932498733fd184fb76f20df95f07f014366552d7ffed780c1055",
+        "models/instructions_v07/seed33-after.edge": "f3d8e03145bc8d8c5e28ffb7abb2ef7f55dc55ce400b9505151065afc664e221",
+        "models/instructions_v07/seed33-after.pt": "6ce63b0ea39603057b5339257075c7a350e507e932ab786941926a4ea3000b22"
+      }
+    }
+  ],
+  "accounting": "training CPU includes batch creation, sampling, forward/backward, optimizer and batch hashing; initialization, validation, saving and inference excluded and reported separately",
+  "synthetic": true,
+  "energy_joules": null,
+  "completed": 3,
+  "invocation_wall_seconds": 0.028919745999928637
+}

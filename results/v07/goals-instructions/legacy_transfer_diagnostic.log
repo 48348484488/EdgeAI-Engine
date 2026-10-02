@@ -1,0 +1,6 @@
+{"seed": 11, "phase": "before", "correct": 0, "eos": 0, "count": 28}
+{"seed": 11, "phase": "after", "correct": 0, "eos": 28, "count": 28}
+{"seed": 22, "phase": "before", "correct": 0, "eos": 0, "count": 28}
+{"seed": 22, "phase": "after", "correct": 0, "eos": 28, "count": 28}
+{"seed": 33, "phase": "before", "correct": 0, "eos": 0, "count": 28}
+{"seed": 33, "phase": "after", "correct": 0, "eos": 28, "count": 28}

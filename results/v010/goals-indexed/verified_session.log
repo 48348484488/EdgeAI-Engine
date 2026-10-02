@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "task": "lexical CPython source search, not model quality",
+  "source_files": 18,
+  "positive_cases": 27,
+  "negative_cases": 8,
+  "top1": 16,
+  "top5": 18,
+  "correct_empty": 8,
+  "differential_cases": 35,
+  "median_session_ms": {
+    "v09": 348.9847700000155,
+    "v010": 25.034750999907374
+  },
+  "median_cold_ms": {
+    "v09": 12.190944999929343,
+    "v010": 17.96456700003546
+  },
+  "session_speed_ratio": 13.940013623515037,
+  "binaries": {
+    "v09": {
+      "file": "edgeai_code_search_v09_baseline",
+      "sha256": "49829606fcc656754e3aed50153512980f924a1b40b1b17e7f028ffcca92a83d"
+    },
+    "v010": {
+      "file": "edgeai_code_search",
+      "sha256": "9cf7d35c784ef1028ef6e4f0ef2736e7c2e9de52cdc9ee894342952626919fab"
+    }
+  },
+  "host": {
+    "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+    "python": "3.13.5",
+    "cpu_count": 5
+  },
+  "caveats": [
+    "OS filesystem caches not flushed",
+    "one process per session, one thread",
+    "source contents still read on every query",
+    "no neural training or generation",
+    "no comparison with ripgrep or energy measurement",
+    "not a weak-PC measurement"
+  ]
+}

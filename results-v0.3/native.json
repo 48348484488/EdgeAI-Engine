@@ -1,0 +1,418 @@
+{
+  "utc_time": "2026-09-25T08:54:07.923510+00:00",
+  "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+  "cpu": "INTEL(R) XEON(R) PLATINUM 8573C",
+  "logical_cpus": 5,
+  "cpu_quota": "400000 100000",
+  "threads_per_case": 1,
+  "compiler": "c++ (Debian 14.2.0-19) 14.2.0",
+  "kernel_cases": [
+    {
+      "dimension": 64,
+      "repetitions": 1024,
+      "rounds": 7,
+      "dense_weight_bytes": 16640,
+      "ternary_weight_bytes": 1536,
+      "lut_workspace_bytes": 2048,
+      "threads": 1,
+      "energy_joules": null,
+      "cases": [
+        {
+          "name": "dense_scalar",
+          "median_us_per_matvec": 1.533845703,
+          "min_us": 1.400822266,
+          "max_us": 2.729588867,
+          "max_abs_error": 2.384185791e-07,
+          "checksum": -26.63515364,
+          "raw_us": [
+            1.608694336,
+            1.400822266,
+            1.406303711,
+            1.46499707,
+            2.729588867,
+            1.587654297,
+            1.533845703
+          ]
+        },
+        {
+          "name": "ternary_scalar",
+          "median_us_per_matvec": 6.23721875,
+          "min_us": 5.207509766,
+          "max_us": 7.493188477,
+          "max_abs_error": 1.192092896e-07,
+          "checksum": -26.63515526,
+          "raw_us": [
+            7.12109668,
+            5.961410156,
+            5.207509766,
+            7.493188477,
+            6.740292969,
+            5.449611328,
+            6.23721875
+          ]
+        },
+        {
+          "name": "ternary_lookup2",
+          "median_us_per_matvec": 1.188018555,
+          "min_us": 0.9687363281,
+          "max_us": 2.011152344,
+          "max_abs_error": 1.192092896e-07,
+          "checksum": -26.6351568,
+          "raw_us": [
+            0.9687363281,
+            1.188018555,
+            2.011152344,
+            1.534412109,
+            1.516427734,
+            0.9772070312,
+            1.177170898
+          ]
+        },
+        {
+          "name": "dense_avx2",
+          "median_us_per_matvec": 0.3491660156,
+          "min_us": 0.32703125,
+          "max_us": 0.4250019531,
+          "max_abs_error": 1.192092896e-07,
+          "checksum": -26.63515417,
+          "raw_us": [
+            0.3491660156,
+            0.3411367187,
+            0.3496386719,
+            0.3782128906,
+            0.4250019531,
+            0.32703125,
+            0.3431933594
+          ]
+        },
+        {
+          "name": "ternary_avx2",
+          "median_us_per_matvec": 0.8310302734,
+          "min_us": 0.8105136719,
+          "max_us": 0.9746582031,
+          "max_abs_error": 1.192092896e-07,
+          "checksum": -26.63515753,
+          "raw_us": [
+            0.9746582031,
+            0.8603105469,
+            0.9479228516,
+            0.8169404297,
+            0.8251826172,
+            0.8310302734,
+            0.8105136719
+          ]
+        }
+      ]
+    },
+    {
+      "dimension": 256,
+      "repetitions": 128,
+      "rounds": 7,
+      "dense_weight_bytes": 263168,
+      "ternary_weight_bytes": 18432,
+      "lut_workspace_bytes": 8192,
+      "threads": 1,
+      "energy_joules": null,
+      "cases": [
+        {
+          "name": "dense_scalar",
+          "median_us_per_matvec": 33.68302344,
+          "min_us": 30.89736719,
+          "max_us": 35.91508594,
+          "max_abs_error": 9.536743164e-07,
+          "checksum": -72.11061869,
+          "raw_us": [
+            34.44334375,
+            34.0498125,
+            33.10428906,
+            31.10650781,
+            33.68302344,
+            30.89736719,
+            35.91508594
+          ]
+        },
+        {
+          "name": "ternary_scalar",
+          "median_us_per_matvec": 571.7739609,
+          "min_us": 541.6768125,
+          "max_us": 617.6089453,
+          "max_abs_error": 5.960464478e-07,
+          "checksum": -72.1105442,
+          "raw_us": [
+            617.6089453,
+            547.4581953,
+            591.3934844,
+            571.7739609,
+            541.6768125,
+            565.4098125,
+            582.6111172
+          ]
+        },
+        {
+          "name": "ternary_lookup2",
+          "median_us_per_matvec": 13.13947656,
+          "min_us": 12.21007812,
+          "max_us": 21.1866875,
+          "max_abs_error": 4.768371582e-07,
+          "checksum": -72.11057276,
+          "raw_us": [
+            13.18445312,
+            12.746625,
+            13.13947656,
+            12.21007812,
+            12.34886719,
+            13.458375,
+            21.1866875
+          ]
+        },
+        {
+          "name": "dense_avx2",
+          "median_us_per_matvec": 6.574070312,
+          "min_us": 6.25915625,
+          "max_us": 7.604289062,
+          "max_abs_error": 2.384185791e-07,
+          "checksum": -72.11055847,
+          "raw_us": [
+            6.25915625,
+            6.574070312,
+            6.350023437,
+            6.260507812,
+            7.604289062,
+            6.595390625,
+            7.540273437
+          ]
+        },
+        {
+          "name": "ternary_avx2",
+          "median_us_per_matvec": 11.70734375,
+          "min_us": 10.68884375,
+          "max_us": 19.66542969,
+          "max_abs_error": 2.086162567e-07,
+          "checksum": -72.1105544,
+          "raw_us": [
+            12.426,
+            19.66542969,
+            11.70734375,
+            10.88230469,
+            14.52251563,
+            10.68884375,
+            11.54009375
+          ]
+        }
+      ]
+    },
+    {
+      "dimension": 1024,
+      "repetitions": 16,
+      "rounds": 7,
+      "dense_weight_bytes": 4198400,
+      "ternary_weight_bytes": 270336,
+      "lut_workspace_bytes": 32768,
+      "threads": 1,
+      "energy_joules": null,
+      "cases": [
+        {
+          "name": "dense_scalar",
+          "median_us_per_matvec": 764.5845,
+          "min_us": 698.804125,
+          "max_us": 1083.598187,
+          "max_abs_error": 5.722045898e-06,
+          "checksum": 252.9495924,
+          "raw_us": [
+            816.0818125,
+            721.8654375,
+            820.54,
+            698.804125,
+            725.1659375,
+            764.5845,
+            1083.598187
+          ]
+        },
+        {
+          "name": "ternary_scalar",
+          "median_us_per_matvec": 9701.023,
+          "min_us": 9235.335625,
+          "max_us": 11772.03106,
+          "max_abs_error": 4.291534424e-06,
+          "checksum": 252.9496784,
+          "raw_us": [
+            10991.48619,
+            9701.023,
+            11772.03106,
+            9235.335625,
+            9503.788375,
+            9643.853875,
+            9911.28425
+          ]
+        },
+        {
+          "name": "ternary_lookup2",
+          "median_us_per_matvec": 207.574375,
+          "min_us": 196.2390625,
+          "max_us": 225.11975,
+          "max_abs_error": 1.668930054e-06,
+          "checksum": 252.9497998,
+          "raw_us": [
+            222.90525,
+            203.5059375,
+            207.574375,
+            204.4208125,
+            208.20825,
+            225.11975,
+            196.2390625
+          ]
+        },
+        {
+          "name": "dense_avx2",
+          "median_us_per_matvec": 183.6229375,
+          "min_us": 156.598375,
+          "max_us": 370.5054375,
+          "max_abs_error": 7.748603821e-07,
+          "checksum": 252.9498656,
+          "raw_us": [
+            167.2670625,
+            182.49725,
+            183.6229375,
+            202.772875,
+            156.598375,
+            241.3481875,
+            370.5054375
+          ]
+        },
+        {
+          "name": "ternary_avx2",
+          "median_us_per_matvec": 181.8195,
+          "min_us": 170.2726875,
+          "max_us": 213.7188125,
+          "max_abs_error": 7.748603821e-07,
+          "checksum": 252.9498493,
+          "raw_us": [
+            213.7188125,
+            170.2726875,
+            179.7163125,
+            182.6531875,
+            176.8285625,
+            181.8195,
+            185.08
+          ]
+        }
+      ]
+    },
+    {
+      "dimension": 2048,
+      "repetitions": 8,
+      "rounds": 7,
+      "dense_weight_bytes": 16785408,
+      "ternary_weight_bytes": 1064960,
+      "lut_workspace_bytes": 65536,
+      "threads": 1,
+      "energy_joules": null,
+      "cases": [
+        {
+          "name": "dense_scalar",
+          "median_us_per_matvec": 3330.829875,
+          "min_us": 2985.01275,
+          "max_us": 5985.51375,
+          "max_abs_error": 8.106231689e-06,
+          "checksum": 1530.30159,
+          "raw_us": [
+            2985.01275,
+            3607.698625,
+            3117.476,
+            3064.1055,
+            4371.453625,
+            3330.829875,
+            5985.51375
+          ]
+        },
+        {
+          "name": "ternary_scalar",
+          "median_us_per_matvec": 39041.02175,
+          "min_us": 37519.67287,
+          "max_us": 74577.11313,
+          "max_abs_error": 8.106231689e-06,
+          "checksum": 1530.301995,
+          "raw_us": [
+            39041.02175,
+            46107.8135,
+            37519.67287,
+            38798.4845,
+            37653.222,
+            74577.11313,
+            62921.4275
+          ]
+        },
+        {
+          "name": "ternary_lookup2",
+          "median_us_per_matvec": 892.8495,
+          "min_us": 845.101625,
+          "max_us": 1911.47925,
+          "max_abs_error": 3.337860107e-06,
+          "checksum": 1530.301894,
+          "raw_us": [
+            892.8495,
+            849.578,
+            894.2105,
+            883.9985,
+            1005.48225,
+            845.101625,
+            1911.47925
+          ]
+        },
+        {
+          "name": "dense_avx2",
+          "median_us_per_matvec": 1238.10325,
+          "min_us": 661.344625,
+          "max_us": 2567.62525,
+          "max_abs_error": 1.788139343e-06,
+          "checksum": 1530.301915,
+          "raw_us": [
+            862.665625,
+            1425.02925,
+            661.344625,
+            1238.10325,
+            696.967625,
+            2567.62525,
+            1801.408375
+          ]
+        },
+        {
+          "name": "ternary_avx2",
+          "median_us_per_matvec": 951.288375,
+          "min_us": 718.145625,
+          "max_us": 1901.16475,
+          "max_abs_error": 2.026557922e-06,
+          "checksum": 1530.302081,
+          "raw_us": [
+            779.786625,
+            951.288375,
+            718.145625,
+            1049.01725,
+            800.021625,
+            1901.16475,
+            1409.865125
+          ]
+        }
+      ]
+    }
+  ],
+  "runtime": {
+    "tokens": 20000,
+    "seconds": 0.0989784,
+    "byte_steps_per_second": 202064,
+    "weights_bytes": 70296,
+    "state_payload_bytes": 5120,
+    "numeric_working_bytes": 7884,
+    "checksum": -38456.3,
+    "energy_joules": null,
+    "note": "teacher-forced byte steps, includes all projections and readout, not useful answers per second"
+  },
+  "runtime_process_peak_rss_kib": 1924,
+  "limitations": [
+    "Virtualized shared host, not the user PC",
+    "Tiny model; byte steps are not subword tokens or useful responses",
+    "Dense comparison is our C++ implementation, not optimized BLAS or llama.cpp",
+    "Weights exclude workspace and process overhead; workspace is reported separately",
+    "No energy inference from timing"
+  ]
+}

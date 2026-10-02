@@ -1,0 +1,6 @@
+{"seed": 11, "phase": "before", "summary": {"count": 194, "exact": 0, "correct": 0, "eos": 0, "correct_and_eos": 0, "median_generated_tokens": 32.0, "median_internal_seconds": 0.0032983195}}
+{"seed": 11, "phase": "after", "summary": {"count": 194, "exact": 44, "correct": 44, "eos": 194, "correct_and_eos": 44, "median_generated_tokens": 4.0, "median_internal_seconds": 0.0028859124999999998}}
+{"seed": 22, "phase": "before", "summary": {"count": 194, "exact": 0, "correct": 0, "eos": 0, "correct_and_eos": 0, "median_generated_tokens": 32.0, "median_internal_seconds": 0.0033112805000000004}}
+{"seed": 22, "phase": "after", "summary": {"count": 194, "exact": 32, "correct": 32, "eos": 193, "correct_and_eos": 32, "median_generated_tokens": 4.0, "median_internal_seconds": 0.0028556025000000002}}
+{"seed": 33, "phase": "before", "summary": {"count": 194, "exact": 0, "correct": 0, "eos": 0, "correct_and_eos": 0, "median_generated_tokens": 32.0, "median_internal_seconds": 0.0033454735}}
+{"seed": 33, "phase": "after", "summary": {"count": 194, "exact": 41, "correct": 42, "eos": 194, "correct_and_eos": 42, "median_generated_tokens": 4.0, "median_internal_seconds": 0.0028012280000000002}}

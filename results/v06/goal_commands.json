@@ -1,0 +1,147 @@
+[
+  {
+    "stage": "configure",
+    "command": [
+      "cmake",
+      "-S",
+      "/mnt/data/EdgeAI-Engine-v0.6",
+      "-B",
+      "/mnt/data/EdgeAI-Engine-v0.6/build",
+      "-DCMAKE_BUILD_TYPE=Release"
+    ]
+  },
+  {
+    "stage": "build",
+    "command": [
+      "cmake",
+      "--build",
+      "/mnt/data/EdgeAI-Engine-v0.6/build",
+      "--config",
+      "Release",
+      "-j",
+      "2"
+    ]
+  },
+  {
+    "stage": "cpp_tests",
+    "command": [
+      "ctest",
+      "--test-dir",
+      "/mnt/data/EdgeAI-Engine-v0.6/build",
+      "-C",
+      "Release",
+      "--output-on-failure"
+    ]
+  },
+  {
+    "stage": "python_tests",
+    "command": [
+      "/opt/pyvenv/bin/python",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "/mnt/data/EdgeAI-Engine-v0.6/tests",
+      "-p",
+      "test_*.py",
+      "-v"
+    ]
+  },
+  {
+    "stage": "snapshot_integrity",
+    "command": [
+      "/opt/pyvenv/bin/python",
+      "/mnt/data/EdgeAI-Engine-v0.6/tools/external_data.py"
+    ]
+  },
+  {
+    "stage": "train_only_tokenizer",
+    "command": [
+      "/opt/pyvenv/bin/python",
+      "/mnt/data/EdgeAI-Engine-v0.6/tools/prepare_v06.py"
+    ]
+  },
+  {
+    "stage": "bpe_parity",
+    "command": [
+      "/opt/pyvenv/bin/python",
+      "/mnt/data/EdgeAI-Engine-v0.6/tools/verify_bpe.py",
+      "--build",
+      "/mnt/data/EdgeAI-Engine-v0.6/build",
+      "--out",
+      "/mnt/data/EdgeAI-Engine-v0.6/results/v06/parity.json"
+    ]
+  },
+  {
+    "stage": "equal_cpu_external_training",
+    "command": [
+      "/opt/pyvenv/bin/python",
+      "/mnt/data/EdgeAI-Engine-v0.6/benchmarks/tokenization_v06.py",
+      "--cpu-seconds",
+      "20",
+      "--seeds",
+      "11",
+      "22",
+      "33",
+      "--threads",
+      "1",
+      "--build",
+      "/mnt/data/EdgeAI-Engine-v0.6/build",
+      "--out",
+      "/mnt/data/EdgeAI-Engine-v0.6/results/v06/training.json",
+      "--model-dir",
+      "/mnt/data/EdgeAI-Engine-v0.6/models/external_v06",
+      "--resume"
+    ]
+  },
+  {
+    "stage": "native_external",
+    "command": [
+      "/opt/pyvenv/bin/python",
+      "/mnt/data/EdgeAI-Engine-v0.6/benchmarks/native_v06.py",
+      "--build",
+      "/mnt/data/EdgeAI-Engine-v0.6/build",
+      "--report",
+      "/mnt/data/EdgeAI-Engine-v0.6/results/v06/training.json",
+      "--out",
+      "/mnt/data/EdgeAI-Engine-v0.6/results/v06/native.json",
+      "--repeats",
+      "5"
+    ]
+  },
+  {
+    "stage": "capability_tasks",
+    "command": [
+      "/opt/pyvenv/bin/python",
+      "/mnt/data/EdgeAI-Engine-v0.6/benchmarks/capability_v06.py",
+      "--build",
+      "/mnt/data/EdgeAI-Engine-v0.6/build",
+      "--report",
+      "/mnt/data/EdgeAI-Engine-v0.6/results/v06/training.json",
+      "--out",
+      "/mnt/data/EdgeAI-Engine-v0.6/results/v06/capability.json"
+    ]
+  },
+  {
+    "stage": "energy_probe",
+    "command": [
+      "/opt/pyvenv/bin/python",
+      "/mnt/data/EdgeAI-Engine-v0.6/benchmarks/measure_energy.py",
+      "--out",
+      "/mnt/data/EdgeAI-Engine-v0.6/results/v06/energy.json",
+      "--",
+      "/mnt/data/EdgeAI-Engine-v0.6/build/edgeai_text_eval",
+      "/mnt/data/EdgeAI-Engine-v0.6/models/external_v06/bpe513-seed11.edge",
+      "/mnt/data/EdgeAI-Engine-v0.6/data/cpython_snapshot/test.rawblocks"
+    ]
+  },
+  {
+    "stage": "validate_reports",
+    "command": [
+      "/opt/pyvenv/bin/python",
+      "/mnt/data/EdgeAI-Engine-v0.6/tools/validate_v06.py",
+      "--directory",
+      "/mnt/data/EdgeAI-Engine-v0.6/results/v06"
+    ]
+  }
+]

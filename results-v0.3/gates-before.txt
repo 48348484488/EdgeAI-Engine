@@ -1,0 +1,14 @@
+F
+======================================================================
+FAIL: test_input_dependent_gates_are_trainable (__main__.GateContract.test_input_dependent_gates_are_trainable)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/EdgeAI-Engine-v0.3/tests/test_gate_contract.py", line 9, in test_input_dependent_gates_are_trainable
+    self.assertTrue(hasattr(model,"gates"),"No input-dependent gate projection")
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : No input-dependent gate projection
+
+----------------------------------------------------------------------
+Ran 1 test in 0.003s
+
+FAILED (failures=1)

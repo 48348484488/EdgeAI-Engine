@@ -1,0 +1,18 @@
+Examples from the shipped seed 11 model; not cherry-picked for fluency.
+
+PROMPT: 253 * 719
+181907
+[neural=0 loops=0 token_score=1]
+
+PROMPT: namespace edgeai {
+
+                                                                                                                               
+[neural=1 loops=1 token_score=0.785685]
+
+PROMPT: Explique como funciona uma CPU.
+
+
+
+
+```````````` ` ` ``mate ` ` ` ` ```` ` `````` ` `````` ``````` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` `
+[neural=1 loops=1 token_score=0.117569]

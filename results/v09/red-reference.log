@@ -1,0 +1,86 @@
+FFFFFFFFF
+======================================================================
+FAIL: test_bounds_before_request (test_local_reference.ReferenceTests.test_bounds_before_request)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/edgeai_work/EdgeAI-Engine-v0.9/tests/test_local_reference.py", line 18, in setUp
+    self.assertIsNotNone(LocalReferenceClient,'local reference adapter not implemented')
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unexpectedly None : local reference adapter not implemented
+
+======================================================================
+FAIL: test_explicit_model_sent (test_local_reference.ReferenceTests.test_explicit_model_sent)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/edgeai_work/EdgeAI-Engine-v0.9/tests/test_local_reference.py", line 18, in setUp
+    self.assertIsNotNone(LocalReferenceClient,'local reference adapter not implemented')
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unexpectedly None : local reference adapter not implemented
+
+======================================================================
+FAIL: test_http_contract_preserves_text_and_records_model (test_local_reference.ReferenceTests.test_http_contract_preserves_text_and_records_model)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/edgeai_work/EdgeAI-Engine-v0.9/tests/test_local_reference.py", line 18, in setUp
+    self.assertIsNotNone(LocalReferenceClient,'local reference adapter not implemented')
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unexpectedly None : local reference adapter not implemented
+
+======================================================================
+FAIL: test_http_failure_explicit (test_local_reference.ReferenceTests.test_http_failure_explicit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/edgeai_work/EdgeAI-Engine-v0.9/tests/test_local_reference.py", line 18, in setUp
+    self.assertIsNotNone(LocalReferenceClient,'local reference adapter not implemented')
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unexpectedly None : local reference adapter not implemented
+
+======================================================================
+FAIL: test_invalid_response_explicit (test_local_reference.ReferenceTests.test_invalid_response_explicit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/edgeai_work/EdgeAI-Engine-v0.9/tests/test_local_reference.py", line 18, in setUp
+    self.assertIsNotNone(LocalReferenceClient,'local reference adapter not implemented')
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unexpectedly None : local reference adapter not implemented
+
+======================================================================
+FAIL: test_localhost_resolves_to_literal_loopback (test_local_reference.ReferenceTests.test_localhost_resolves_to_literal_loopback)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/edgeai_work/EdgeAI-Engine-v0.9/tests/test_local_reference.py", line 18, in setUp
+    self.assertIsNotNone(LocalReferenceClient,'local reference adapter not implemented')
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unexpectedly None : local reference adapter not implemented
+
+======================================================================
+FAIL: test_no_proxy_inherited (test_local_reference.ReferenceTests.test_no_proxy_inherited)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/edgeai_work/EdgeAI-Engine-v0.9/tests/test_local_reference.py", line 18, in setUp
+    self.assertIsNotNone(LocalReferenceClient,'local reference adapter not implemented')
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unexpectedly None : local reference adapter not implemented
+
+======================================================================
+FAIL: test_redirect_never_followed (test_local_reference.ReferenceTests.test_redirect_never_followed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/edgeai_work/EdgeAI-Engine-v0.9/tests/test_local_reference.py", line 18, in setUp
+    self.assertIsNotNone(LocalReferenceClient,'local reference adapter not implemented')
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unexpectedly None : local reference adapter not implemented
+
+======================================================================
+FAIL: test_remote_endpoints_and_credentials_refused (test_local_reference.ReferenceTests.test_remote_endpoints_and_credentials_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/edgeai_work/EdgeAI-Engine-v0.9/tests/test_local_reference.py", line 18, in setUp
+    self.assertIsNotNone(LocalReferenceClient,'local reference adapter not implemented')
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unexpectedly None : local reference adapter not implemented
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.002s
+
+FAILED (failures=9)

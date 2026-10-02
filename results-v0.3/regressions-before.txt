@@ -1,0 +1,6 @@
+native_conf=0.00976043 reference_conf=0.0097456
+FAIL legacy state parity: readout state leaked into recurrence (training/inference mismatch)
+FAIL reject invalid ternary weight: weight outside -1,0,1 accepted
+FAIL reject NaN scale: NaN scale accepted
+FAIL reject zero loops: zero loops model accepted
+passed=0 failed=4

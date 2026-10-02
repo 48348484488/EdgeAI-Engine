@@ -1,0 +1,101 @@
+[  2%] Building CXX object CMakeFiles/edgeai.dir/src/CodeSearch.cpp.o
+[  2%] Building CXX object CMakeFiles/edgeai_code_search_v09_baseline.dir/benchmarks/v09_baseline/batch.cpp.o
+[  5%] Building CXX object CMakeFiles/edgeai.dir/src/Engine.cpp.o
+[  5%] Building CXX object CMakeFiles/edgeai_code_search_v09_baseline.dir/benchmarks/v09_baseline/CodeSearch.cpp.o
+[  6%] Building CXX object CMakeFiles/edgeai.dir/src/Router.cpp.o
+[  8%] Building CXX object CMakeFiles/edgeai.dir/src/Calculator.cpp.o
+[  9%] Building CXX object CMakeFiles/edgeai.dir/src/Memory.cpp.o
+[ 10%] Building CXX object CMakeFiles/edgeai.dir/src/Scheduler.cpp.o
+[ 12%] Building CXX object CMakeFiles/edgeai.dir/src/Hardware.cpp.o
+[ 13%] Building CXX object CMakeFiles/edgeai.dir/src/Backend.cpp.o
+[ 14%] Linking CXX executable edgeai_code_search_v09_baseline
+[ 16%] Building CXX object CMakeFiles/edgeai.dir/src/HybridMemory.cpp.o
+[ 16%] Built target edgeai_code_search_v09_baseline
+[ 17%] Building CXX object CMakeFiles/edgeai.dir/src/HybridModel.cpp.o
+[ 18%] Building CXX object CMakeFiles/edgeai.dir/src/HybridBackend.cpp.o
+[ 20%] Building CXX object CMakeFiles/edgeai.dir/src/ByteBPE.cpp.o
+[ 21%] Building CXX object CMakeFiles/edgeai.dir/src/TransformerModel.cpp.o
+[ 22%] Building CXX object CMakeFiles/edgeai.dir/src/TransformerBackend.cpp.o
+[ 24%] Building CXX object CMakeFiles/edgeai.dir/src/MixedMatrix.cpp.o
+[ 25%] Building CXX object CMakeFiles/edgeai.dir/src/Int8Kernel.cpp.o
+[ 27%] Building CXX object CMakeFiles/edgeai.dir/src/Ternary.cpp.o
+[ 28%] Building CXX object CMakeFiles/edgeai.dir/src/Kernels.cpp.o
+[ 29%] Building CXX object CMakeFiles/edgeai.dir/src/EdgeModel.cpp.o
+[ 31%] Building CXX object CMakeFiles/edgeai.dir/src/TernaryBackend.cpp.o
+[ 32%] Linking CXX static library libedgeai.a
+[ 32%] Built target edgeai
+[ 36%] Building CXX object CMakeFiles/edgeai_chat.dir/examples/chat.cpp.o
+[ 36%] Building CXX object CMakeFiles/edgeai_logits.dir/tools/logits.cpp.o
+[ 36%] Building CXX object CMakeFiles/edgeai_evaluate.dir/tools/evaluate.cpp.o
+[ 37%] Building CXX object CMakeFiles/edgeai_make_demo.dir/tools/make_demo_model.cpp.o
+[ 39%] Linking CXX executable edgeai_make_demo
+[ 39%] Built target edgeai_make_demo
+[ 40%] Building CXX object CMakeFiles/edgeai_inspect.dir/tools/inspect_model.cpp.o
+[ 41%] Linking CXX executable edgeai_chat
+[ 43%] Linking CXX executable edgeai_logits
+[ 43%] Built target edgeai_chat
+[ 44%] Linking CXX executable edgeai_evaluate
+[ 45%] Building CXX object CMakeFiles/edgeai_code_search.dir/tools/code_search.cpp.o
+[ 45%] Built target edgeai_logits
+[ 47%] Building CXX object CMakeFiles/edgeai_tokenize.dir/tools/tokenize.cpp.o
+[ 47%] Built target edgeai_evaluate
+[ 48%] Building CXX object CMakeFiles/edgeai_text_eval.dir/tools/text_eval.cpp.o
+[ 50%] Linking CXX executable edgeai_inspect
+[ 50%] Built target edgeai_inspect
+[ 51%] Building CXX object CMakeFiles/edgeai_generate.dir/tools/generate.cpp.o
+[ 52%] Linking CXX executable edgeai_code_search
+[ 52%] Built target edgeai_code_search
+[ 54%] Linking CXX executable edgeai_tokenize
+[ 55%] Building CXX object CMakeFiles/edgeai_token_logits.dir/tools/token_logits.cpp.o
+[ 55%] Built target edgeai_tokenize
+[ 56%] Building CXX object CMakeFiles/edgeai_tests.dir/tests/test_engine.cpp.o
+[ 58%] Linking CXX executable edgeai_text_eval
+[ 58%] Built target edgeai_text_eval
+[ 59%] Linking CXX executable edgeai_generate
+[ 60%] Building CXX object CMakeFiles/edgeai_regressions.dir/tests/test_regressions.cpp.o
+[ 62%] Linking CXX executable edgeai_token_logits
+[ 62%] Built target edgeai_generate
+[ 63%] Building CXX object CMakeFiles/edgeai_test_code_search.dir/tests/test_code_search.cpp.o
+[ 64%] Linking CXX executable edgeai_tests
+[ 64%] Built target edgeai_token_logits
+[ 66%] Building CXX object CMakeFiles/edgeai_test_code_cache.dir/tests/test_code_cache.cpp.o
+[ 66%] Built target edgeai_tests
+[ 67%] Building CXX object CMakeFiles/edgeai_test_memory.dir/tests/test_memory.cpp.o
+[ 68%] Linking CXX executable edgeai_regressions
+[ 68%] Built target edgeai_regressions
+[ 70%] Building CXX object CMakeFiles/edgeai_test_kernels.dir/tests/test_kernels.cpp.o
+[ 71%] Linking CXX executable edgeai_test_memory
+[ 72%] Linking CXX executable edgeai_test_code_search
+[ 72%] Built target edgeai_test_memory
+[ 74%] Building CXX object CMakeFiles/edgeai_test_hybrid.dir/tests/test_hybrid.cpp.o
+[ 75%] Linking CXX executable edgeai_test_code_cache
+[ 75%] Built target edgeai_test_code_search
+[ 77%] Linking CXX executable edgeai_test_kernels
+[ 78%] Building CXX object CMakeFiles/edgeai_test_tools.dir/tests/test_tools.cpp.o
+[ 78%] Built target edgeai_test_code_cache
+[ 79%] Building CXX object CMakeFiles/edgeai_test_precision.dir/tests/test_precision.cpp.o
+[ 79%] Built target edgeai_test_kernels
+[ 81%] Building CXX object CMakeFiles/edgeai_test_transformer.dir/tests/test_transformer.cpp.o
+[ 82%] Linking CXX executable edgeai_test_tools
+[ 83%] Linking CXX executable edgeai_test_hybrid
+[ 83%] Built target edgeai_test_tools
+[ 83%] Built target edgeai_test_hybrid
+[ 85%] Building CXX object CMakeFiles/edgeai_test_bpe.dir/tests/test_bpe.cpp.o
+[ 86%] Building CXX object CMakeFiles/edgeai_test_instruction.dir/tests/test_instruction.cpp.o
+[ 87%] Linking CXX executable edgeai_test_precision
+[ 87%] Built target edgeai_test_precision
+[ 89%] Building CXX object CMakeFiles/edgeai_benchmark.dir/benchmarks/benchmark.cpp.o
+[ 90%] Linking CXX executable edgeai_test_transformer
+[ 90%] Built target edgeai_test_transformer
+[ 91%] Building CXX object CMakeFiles/edgeai_runtime_benchmark.dir/benchmarks/runtime.cpp.o
+[ 93%] Linking CXX executable edgeai_benchmark
+[ 94%] Linking CXX executable edgeai_test_bpe
+[ 95%] Linking CXX executable edgeai_test_instruction
+[ 95%] Built target edgeai_benchmark
+[ 97%] Building CXX object CMakeFiles/edgeai_matrix_benchmark.dir/benchmarks/ternary_vs_dense.cpp.o
+[ 97%] Built target edgeai_test_bpe
+[ 97%] Built target edgeai_test_instruction
+[ 98%] Linking CXX executable edgeai_runtime_benchmark
+[ 98%] Built target edgeai_runtime_benchmark
+[100%] Linking CXX executable edgeai_matrix_benchmark
+[100%] Built target edgeai_matrix_benchmark

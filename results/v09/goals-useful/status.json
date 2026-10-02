@@ -1,0 +1,153 @@
+{
+  "profile": "useful",
+  "started": "2026-09-25T22:24:31.653171+00:00",
+  "status": "passed",
+  "stages": [
+    {
+      "name": "configure",
+      "command": [
+        "cmake",
+        "-S",
+        "/mnt/data/edgeai_work/EdgeAI-Engine-v0.9",
+        "-B",
+        "/mnt/data/edgeai_work/EdgeAI-Engine-v0.9/build",
+        "-DCMAKE_BUILD_TYPE=Release"
+      ],
+      "status": "passed",
+      "log": "results/v09/goals-useful/configure.log",
+      "exit_code": 0
+    },
+    {
+      "name": "build",
+      "command": [
+        "cmake",
+        "--build",
+        "/mnt/data/edgeai_work/EdgeAI-Engine-v0.9/build",
+        "--config",
+        "Release",
+        "-j",
+        "2"
+      ],
+      "status": "passed",
+      "log": "results/v09/goals-useful/build.log",
+      "exit_code": 0
+    },
+    {
+      "name": "cpp_tests",
+      "command": [
+        "ctest",
+        "--test-dir",
+        "/mnt/data/edgeai_work/EdgeAI-Engine-v0.9/build",
+        "--output-on-failure"
+      ],
+      "status": "passed",
+      "log": "results/v09/goals-useful/cpp_tests.log",
+      "exit_code": 0
+    },
+    {
+      "name": "python_tests",
+      "command": [
+        "/opt/pyvenv/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "/mnt/data/edgeai_work/EdgeAI-Engine-v0.9/tests",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "status": "passed",
+      "log": "results/v09/goals-useful/python_tests.log",
+      "exit_code": 0
+    },
+    {
+      "name": "source_retrieval",
+      "command": [
+        "/opt/pyvenv/bin/python",
+        "/mnt/data/edgeai_work/EdgeAI-Engine-v0.9/benchmarks/code_lookup_v09.py",
+        "--build",
+        "/mnt/data/edgeai_work/EdgeAI-Engine-v0.9/build",
+        "--out",
+        "/mnt/data/edgeai_work/EdgeAI-Engine-v0.9/results/v09/retrieval.json"
+      ],
+      "status": "passed",
+      "log": "results/v09/goals-useful/source_retrieval.log",
+      "exit_code": 0
+    },
+    {
+      "name": "native_diagnostic",
+      "command": [
+        "/opt/pyvenv/bin/python",
+        "/mnt/data/edgeai_work/EdgeAI-Engine-v0.9/tools/workbench.py",
+        "compare",
+        "--build",
+        "/mnt/data/edgeai_work/EdgeAI-Engine-v0.9/build",
+        "--out",
+        "/mnt/data/edgeai_work/EdgeAI-Engine-v0.9/results/v09/native_diagnostic.json"
+      ],
+      "status": "passed",
+      "log": "results/v09/goals-useful/native_diagnostic.log",
+      "exit_code": 0
+    },
+    {
+      "name": "reference_contracts",
+      "command": [
+        "/opt/pyvenv/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "/mnt/data/edgeai_work/EdgeAI-Engine-v0.9/tests",
+        "-p",
+        "test_local_reference.py",
+        "-v"
+      ],
+      "status": "passed",
+      "log": "results/v09/goals-useful/reference_contracts.log",
+      "exit_code": 0
+    },
+    {
+      "name": "preserved_model_parity",
+      "command": [
+        "/opt/pyvenv/bin/python",
+        "/mnt/data/edgeai_work/EdgeAI-Engine-v0.9/tools/verify_instructions.py",
+        "--build",
+        "/mnt/data/edgeai_work/EdgeAI-Engine-v0.9/build",
+        "--out",
+        "/mnt/data/edgeai_work/EdgeAI-Engine-v0.9/results/v09/parity.json"
+      ],
+      "status": "passed",
+      "log": "results/v09/goals-useful/preserved_model_parity.log",
+      "exit_code": 0
+    },
+    {
+      "name": "energy_probe",
+      "command": [
+        "/opt/pyvenv/bin/python",
+        "/mnt/data/edgeai_work/EdgeAI-Engine-v0.9/benchmarks/measure_energy.py",
+        "--out",
+        "/mnt/data/edgeai_work/EdgeAI-Engine-v0.9/results/v09/energy.json",
+        "--",
+        "/mnt/data/edgeai_work/EdgeAI-Engine-v0.9/build/edgeai_code_search",
+        "/mnt/data/edgeai_work/EdgeAI-Engine-v0.9",
+        "greedy_token",
+        "--json"
+      ],
+      "status": "passed",
+      "log": "results/v09/goals-useful/energy_probe.log",
+      "exit_code": 0
+    },
+    {
+      "name": "package_smoke",
+      "command": [
+        "/opt/pyvenv/bin/python",
+        "/mnt/data/edgeai_work/EdgeAI-Engine-v0.9/tools/package_smoke.py"
+      ],
+      "status": "passed",
+      "log": "results/v09/goals-useful/package_smoke.log",
+      "exit_code": 0
+    }
+  ],
+  "finished": "2026-09-25T22:24:50.165948+00:00"
+}

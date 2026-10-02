@@ -1,0 +1,98 @@
+{
+  "protocol": "paired identical expanded checkpoint before and after response-only SFT",
+  "cpu_budget_seconds": 2.0,
+  "seeds": [
+    11
+  ],
+  "threads": 1,
+  "expected": 1,
+  "dataset_sha256": "648cc3be05fe6bb3d035077bed57fc2cf6313824fa8f9638c95b8ad05d473faa",
+  "runs": [
+    {
+      "seed": 11,
+      "identity": {
+        "protocol": "edge-sft-v07-1",
+        "seed": 11,
+        "cpu_budget": 2.0,
+        "threads": 1,
+        "source_checkpoint_sha256": "e4b131bc64f45c463e0915ccb45f87720c74c64bc8e55b77dbdf879c14bad259",
+        "dataset_sha256": "648cc3be05fe6bb3d035077bed57fc2cf6313824fa8f9638c95b8ad05d473faa",
+        "code": {
+          "benchmarks/instruction_v07.py": "0cbbe51205bd2e39e9ffc6715533b0134b43dcf3253799ec3fd94e137a44a9ac",
+          "tools/instruction_data.py": "37e2c091a0b62092da50c5c7ee327616a7303b63e4ad451d9ae2799d0e3f18b0",
+          "tools/sft_model.py": "717ca46b337e8857b8e85a2fb70fbfdbefaae88d16c1e8a29e313a15ec9c73f3",
+          "tools/transformer_model.py": "cfa9949b13acf9647e1f30d444704d20959ad6d4e9dc8e5f79d9ae669829d2d0",
+          "tools/byte_bpe.py": "b9c3a02c3ca6a79d851f3acdcfb7597b8c4b011cab04bfed86b0aeebae6c6ed9",
+          "tools/mixed_model.py": "1c5240e454271986d311a6db857b192373ff665b9242b6f315bb9fc408f69f9a",
+          "tools/hybrid_model.py": "37187a5fe67d743b79398ba9816e8becc2b1535b042cff789ae996f2781471e0",
+          "tools/train_tiny.py": "2a7a2564f913b93740fda9141acbc676b9f8934d7b692cc121d92bcdd622c667"
+        },
+        "torch": "2.10.0+cpu",
+        "hyperparameters": {
+          "batch": 16,
+          "lr": 0.001,
+          "weight_decay": 0.01,
+          "clip_norm": 1,
+          "max_length": 128,
+          "selection": "minimum response validation NLL at 25/50/75/100 percent"
+        },
+        "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+        "python": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]"
+      },
+      "parameters": 71827,
+      "steps": 159,
+      "selected_step": 159,
+      "train_cpu_seconds": 2.006949648000001,
+      "train_wall_seconds": 2.008064716001172,
+      "initialization_wall_seconds": 0.24891768799989222,
+      "validation_cpu_seconds": 0.1339967910000004,
+      "total_trial_wall_seconds": 2.4679477869999573,
+      "total_trial_cpu_seconds": 2.4678135890000004,
+      "before_validation_nll": 6.578135963722511,
+      "selected_validation_nll": 1.5721935484144423,
+      "validation_curve": [
+        {
+          "step": 41,
+          "train_cpu_seconds": 0.5083245190000003,
+          "validation_nll": 2.7484934912787544
+        },
+        {
+          "step": 80,
+          "train_cpu_seconds": 1.0049479989999988,
+          "validation_nll": 1.849745997676143
+        },
+        {
+          "step": 118,
+          "train_cpu_seconds": 1.5058429669999986,
+          "validation_nll": 1.6834351857503256
+        },
+        {
+          "step": 159,
+          "train_cpu_seconds": 2.006949648000001,
+          "validation_nll": 1.5721935484144423
+        }
+      ],
+      "examples_seen": {
+        "addition": 619,
+        "copy": 624,
+        "expression": 662,
+        "uppercase": 639
+      },
+      "batch_ids_sha256": "0e1faa04d375d5959ca3307824adb762fd1005eb00f1996bfa994ecca2efc754",
+      "before_path": "models/quick_v07/seed11-before.edge",
+      "after_path": "models/quick_v07/seed11-after.edge",
+      "file_bytes": 154400,
+      "artifacts": {
+        "models/quick_v07/seed11-before.edge": "696614a429335c54af1e5c82820ad2fc610b40c97a0b9b17e424eedb432c8cbe",
+        "models/quick_v07/seed11-before.pt": "2b871127a67c0d380c403b74f0d2c4996a79b164bec0eba245cab30ae2cb7d06",
+        "models/quick_v07/seed11-after.edge": "dfd6247f8524a15ebbf056820c8c982eed27ee591d733d65fb80377325690b94",
+        "models/quick_v07/seed11-after.pt": "87c62cabfc1704f516a01c1c843172c5c0c9c78315f666a0d23735f7e304dac5"
+      }
+    }
+  ],
+  "accounting": "training CPU includes batch creation, sampling, forward/backward, optimizer and batch hashing; initialization, validation, saving and inference excluded and reported separately",
+  "synthetic": true,
+  "energy_joules": null,
+  "completed": 1,
+  "invocation_wall_seconds": 2.4793904929999826
+}

@@ -1,0 +1,47 @@
+[  1%] Building CXX object CMakeFiles/edgeai.dir/src/ByteBPE.cpp.o
+[  3%] Linking CXX static library libedgeai.a
+[ 31%] Built target edgeai
+[ 32%] Linking CXX executable edgeai_chat
+[ 34%] Linking CXX executable edgeai_make_demo
+[ 35%] Built target edgeai_chat
+[ 37%] Built target edgeai_make_demo
+[ 39%] Linking CXX executable edgeai_logits
+[ 40%] Linking CXX executable edgeai_evaluate
+[ 42%] Built target edgeai_logits
+[ 43%] Built target edgeai_evaluate
+[ 45%] Linking CXX executable edgeai_inspect
+[ 46%] Linking CXX executable edgeai_tokenize
+[ 48%] Built target edgeai_tokenize
+[ 50%] Built target edgeai_inspect
+[ 51%] Linking CXX executable edgeai_text_eval
+[ 53%] Linking CXX executable edgeai_generate
+[ 54%] Built target edgeai_text_eval
+[ 56%] Built target edgeai_generate
+[ 57%] Linking CXX executable edgeai_token_logits
+[ 59%] Linking CXX executable edgeai_tests
+[ 60%] Built target edgeai_token_logits
+[ 62%] Built target edgeai_tests
+[ 64%] Linking CXX executable edgeai_regressions
+[ 65%] Linking CXX executable edgeai_test_memory
+[ 67%] Built target edgeai_regressions
+[ 68%] Built target edgeai_test_memory
+[ 70%] Linking CXX executable edgeai_test_kernels
+[ 71%] Linking CXX executable edgeai_test_hybrid
+[ 73%] Built target edgeai_test_kernels
+[ 75%] Built target edgeai_test_hybrid
+[ 76%] Linking CXX executable edgeai_test_tools
+[ 78%] Linking CXX executable edgeai_test_precision
+[ 79%] Built target edgeai_test_tools
+[ 81%] Built target edgeai_test_precision
+[ 82%] Linking CXX executable edgeai_test_transformer
+[ 84%] Linking CXX executable edgeai_test_bpe
+[ 85%] Built target edgeai_test_transformer
+[ 87%] Built target edgeai_test_bpe
+[ 89%] Linking CXX executable edgeai_test_instruction
+[ 90%] Linking CXX executable edgeai_benchmark
+[ 92%] Built target edgeai_test_instruction
+[ 93%] Built target edgeai_benchmark
+[ 95%] Linking CXX executable edgeai_runtime_benchmark
+[ 96%] Linking CXX executable edgeai_matrix_benchmark
+[ 98%] Built target edgeai_runtime_benchmark
+[100%] Built target edgeai_matrix_benchmark

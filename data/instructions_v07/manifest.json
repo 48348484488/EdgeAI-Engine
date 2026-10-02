@@ -1,0 +1,45 @@
+{
+  "format": "edge-sft-synthetic-1",
+  "synthetic": true,
+  "source": "deterministic local rules; no external LLM or user data",
+  "license": "CC0-1.0",
+  "generator_sha256": "37e2c091a0b62092da50c5c7ee327616a7303b63e4ad451d9ae2799d0e3f18b0",
+  "files": {
+    "train.jsonl": {
+      "sha256": "23b0bbbbf99c15b4da1ba722686f562884e1879187be1907c5145a5a817019f6",
+      "rows": 4960,
+      "bytes": 782342
+    },
+    "valid.jsonl": {
+      "sha256": "afdcbab2bf1c8575ca08ee0e07d358fa30d67b9091259126f45106c9b6bb05ea",
+      "rows": 128,
+      "bytes": 20498
+    },
+    "test_id.jsonl": {
+      "sha256": "44b81f2ddb367d439c1a976e40068e7ab32c10e340eae75364be52685e83a7e2",
+      "rows": 54,
+      "bytes": 8520
+    },
+    "test_template.jsonl": {
+      "sha256": "0826e28e8faf58a37ef5e277f5cb69ee2584b4f10e1200d78b1ea2c06c697c4a",
+      "rows": 60,
+      "bytes": 10260
+    },
+    "test_range.jsonl": {
+      "sha256": "e2978b9ac1f022f5ed91aaceb04d919013d1214bafa7402d86c8591ba6a92433",
+      "rows": 64,
+      "bytes": 10624
+    },
+    "test_family.jsonl": {
+      "sha256": "50c18f65690cd9dff4945fbd6d30e6d7bb0491736d1fde46c9275d5efe0223f9",
+      "rows": 16,
+      "bytes": 2388
+    }
+  },
+  "limitations": [
+    "few templates and task families; not a standardized benchmark",
+    "test_family holds out reversal; not a claim of general intelligence",
+    "base checkpoints previously pretrained on CPython, not on these prompts",
+    "labels may repeat across splits; input groups and exact prompts do not"
+  ]
+}

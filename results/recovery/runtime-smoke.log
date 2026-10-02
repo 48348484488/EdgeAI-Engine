@@ -1,0 +1,11 @@
+EdgeAI Engine v0.7 | threads=5 sse2=1 avx=1 avx2=1 | backend=edge-transformer-rope-v0.7
+Modelo experimental: nao e um assistente conversacional avancado.
+Score do token nao representa chance de a resposta estar correta.
+Digite 'sair' para fechar.
+> aaeb
+[neural=1 loops=1 token_score=0.981951]
+> EDD
+[neural=1 loops=1 token_score=0.698739]
+> 181907
+[neural=0 loops=0 token_score=1]
+> 

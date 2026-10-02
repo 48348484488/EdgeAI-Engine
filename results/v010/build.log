@@ -1,0 +1,58 @@
+[  2%] Building CXX object CMakeFiles/edgeai_code_search_v09_baseline.dir/benchmarks/v09_baseline/batch.cpp.o
+[  2%] Building CXX object CMakeFiles/edgeai_code_search_v09_baseline.dir/benchmarks/v09_baseline/CodeSearch.cpp.o
+[  4%] Building CXX object CMakeFiles/edgeai.dir/src/CodeSearch.cpp.o
+[  5%] Linking CXX executable edgeai_code_search_v09_baseline
+[  5%] Built target edgeai_code_search_v09_baseline
+[  6%] Linking CXX static library libedgeai.a
+[ 32%] Built target edgeai
+[ 33%] Linking CXX executable edgeai_make_demo
+[ 35%] Building CXX object CMakeFiles/edgeai_chat.dir/examples/chat.cpp.o
+[ 36%] Linking CXX executable edgeai_evaluate
+[ 37%] Linking CXX executable edgeai_logits
+[ 39%] Built target edgeai_evaluate
+[ 40%] Built target edgeai_make_demo
+[ 41%] Built target edgeai_logits
+[ 43%] Linking CXX executable edgeai_inspect
+[ 44%] Linking CXX executable edgeai_code_search
+[ 45%] Linking CXX executable edgeai_tokenize
+[ 48%] Built target edgeai_code_search
+[ 48%] Built target edgeai_inspect
+[ 50%] Built target edgeai_tokenize
+[ 51%] Linking CXX executable edgeai_generate
+[ 52%] Linking CXX executable edgeai_text_eval
+[ 54%] Linking CXX executable edgeai_token_logits
+[ 56%] Built target edgeai_generate
+[ 56%] Built target edgeai_text_eval
+[ 58%] Built target edgeai_token_logits
+[ 59%] Linking CXX executable edgeai_tests
+[ 60%] Linking CXX executable edgeai_regressions
+[ 62%] Linking CXX executable edgeai_test_code_search
+[ 63%] Built target edgeai_tests
+[ 64%] Built target edgeai_regressions
+[ 66%] Built target edgeai_test_code_search
+[ 67%] Linking CXX executable edgeai_test_code_cache
+[ 68%] Linking CXX executable edgeai_test_memory
+[ 70%] Linking CXX executable edgeai_test_kernels
+[ 71%] Built target edgeai_test_code_cache
+[ 72%] Built target edgeai_test_memory
+[ 74%] Built target edgeai_test_kernels
+[ 75%] Linking CXX executable edgeai_test_hybrid
+[ 77%] Linking CXX executable edgeai_test_tools
+[ 78%] Linking CXX executable edgeai_test_precision
+[ 79%] Built target edgeai_test_hybrid
+[ 81%] Built target edgeai_test_tools
+[ 82%] Linking CXX executable edgeai_test_transformer
+[ 83%] Built target edgeai_test_precision
+[ 85%] Linking CXX executable edgeai_test_bpe
+[ 86%] Linking CXX executable edgeai_test_instruction
+[ 87%] Linking CXX executable edgeai_chat
+[ 89%] Built target edgeai_test_transformer
+[ 90%] Built target edgeai_test_bpe
+[ 91%] Linking CXX executable edgeai_benchmark
+[ 93%] Linking CXX executable edgeai_runtime_benchmark
+[ 94%] Built target edgeai_test_instruction
+[ 94%] Built target edgeai_chat
+[ 95%] Linking CXX executable edgeai_matrix_benchmark
+[ 97%] Built target edgeai_benchmark
+[ 98%] Built target edgeai_runtime_benchmark
+[100%] Built target edgeai_matrix_benchmark

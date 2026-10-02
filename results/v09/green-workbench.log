@@ -1,0 +1,13 @@
+test_case_validation (test_workbench_v09.WorkbenchTests.test_case_validation) ... ok
+test_cli_errors_nonzero_no_shell (test_workbench_v09.WorkbenchTests.test_cli_errors_nonzero_no_shell) ... ok
+test_native_answer_and_runtime_metadata (test_workbench_v09.WorkbenchTests.test_native_answer_and_runtime_metadata) ... ok
+test_no_reference_is_reported_as_not_requested (test_workbench_v09.WorkbenchTests.test_no_reference_is_reported_as_not_requested) ... ok
+test_raw_scoring_does_not_turn_errors_into_success (test_workbench_v09.WorkbenchTests.test_raw_scoring_does_not_turn_errors_into_success) ... ok
+test_reference_unavailable_is_not_scored_as_wrong_answer (test_workbench_v09.WorkbenchTests.test_reference_unavailable_is_not_scored_as_wrong_answer) ... ok
+test_search_cli_limits_and_json (test_workbench_v09.WorkbenchTests.test_search_cli_limits_and_json) ... ok
+test_search_json_real_lines (test_workbench_v09.WorkbenchTests.test_search_json_real_lines) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.760s
+
+OK

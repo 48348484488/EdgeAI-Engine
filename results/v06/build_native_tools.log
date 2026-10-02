@@ -1,0 +1,37 @@
+[ 33%] Built target edgeai
+[ 36%] Built target edgeai_make_demo
+[ 38%] Building CXX object CMakeFiles/edgeai_chat.dir/examples/chat.cpp.o
+[ 40%] Building CXX object CMakeFiles/edgeai_logits.dir/tools/logits.cpp.o
+[ 41%] Linking CXX executable edgeai_chat
+[ 41%] Built target edgeai_chat
+[ 43%] Building CXX object CMakeFiles/edgeai_evaluate.dir/tools/evaluate.cpp.o
+[ 45%] Linking CXX executable edgeai_logits
+[ 45%] Built target edgeai_logits
+[ 46%] Building CXX object CMakeFiles/edgeai_inspect.dir/tools/inspect_model.cpp.o
+[ 48%] Linking CXX executable edgeai_inspect
+[ 48%] Built target edgeai_inspect
+[ 50%] Building CXX object CMakeFiles/edgeai_tokenize.dir/tools/tokenize.cpp.o
+[ 51%] Linking CXX executable edgeai_evaluate
+[ 51%] Built target edgeai_evaluate
+[ 53%] Building CXX object CMakeFiles/edgeai_text_eval.dir/tools/text_eval.cpp.o
+[ 55%] Linking CXX executable edgeai_tokenize
+[ 55%] Built target edgeai_tokenize
+[ 56%] Building CXX object CMakeFiles/edgeai_generate.dir/tools/generate.cpp.o
+[ 58%] Linking CXX executable edgeai_text_eval
+[ 58%] Built target edgeai_text_eval
+[ 61%] Built target edgeai_tests
+[ 65%] Built target edgeai_regressions
+[ 68%] Built target edgeai_test_memory
+[ 71%] Built target edgeai_test_kernels
+[ 75%] Built target edgeai_test_hybrid
+[ 78%] Built target edgeai_test_tools
+[ 81%] Built target edgeai_test_precision
+[ 85%] Built target edgeai_test_transformer
+[ 88%] Built target edgeai_test_bpe
+[ 91%] Built target edgeai_benchmark
+[ 93%] Building CXX object CMakeFiles/edgeai_runtime_benchmark.dir/benchmarks/runtime.cpp.o
+[ 95%] Linking CXX executable edgeai_generate
+[ 95%] Built target edgeai_generate
+[ 98%] Built target edgeai_matrix_benchmark
+[100%] Linking CXX executable edgeai_runtime_benchmark
+[100%] Built target edgeai_runtime_benchmark

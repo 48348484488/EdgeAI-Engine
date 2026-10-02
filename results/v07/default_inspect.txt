@@ -1,0 +1,8 @@
+format=EDGEAI7
+vocab_size=515
+parameters=71827
+resident_numeric_weights_bytes=152168
+sequence_state_payload_bytes=24576
+numeric_working_bytes=29228
+window=64
+output_precision=int8_w8a32

@@ -1,0 +1,19 @@
+[configure] started
+[configure] passed
+[build] started
+[build] passed
+[cpp_tests] started
+[cpp_tests] passed
+[python_tests] started
+[python_tests] passed
+[original_lookup] started
+[original_lookup] passed
+[verified_session] started
+[verified_session] passed
+[model_parity] started
+[model_parity] passed
+[energy_probe] started
+[energy_probe] passed
+[package_smoke] started
+[package_smoke] passed
+Metas desta execução concluídas. Status: /mnt/data/EdgeAI-Engine-v0.10/results/v010/goals-indexed/status.json

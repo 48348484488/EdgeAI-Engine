@@ -1,0 +1,11 @@
+{
+  "available": false,
+  "package_energy_joules": null,
+  "elapsed_seconds": 0.17082402199980606,
+  "exit_code": 0,
+  "domains": [],
+  "stdout": "{\"blocks\":116,\"raw_bytes\":29480,\"target_tokens\":15633,\"nll_sum\":63106.940990478,\"bits_per_byte\":3.08833347397,\"token_accuracy\":0.2398132156336,\"load_seconds\":0.000343197,\"tokenization_seconds\":0.001328358,\"forward_and_scoring_seconds\":0.166449722,\"total_seconds\":0.168384468,\"cpu_seconds\":0.16835,\"weights_bytes\":151672,\"state_bytes\":24576,\"working_bytes\":29220,\"bos_scored_as_byte\":false,\"energy_joules\":null}\n",
+  "stderr": "",
+  "limitations": "Package energy, not process-isolated or whole-wall energy. At most one wrap can be corrected. No extrapolation from latency.",
+  "reason": "No readable package RAPL counters in this environment"
+}

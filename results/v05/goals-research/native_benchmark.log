@@ -1,0 +1,52 @@
+{
+  "hybrid_fp32": {
+    "median_us_per_byte": 6.9036913,
+    "median_cpu_us_per_byte": 6.8992,
+    "min_us_per_byte": 6.830420199999999,
+    "max_us_per_byte": 7.8468686000000005,
+    "median_rss_kib": 2180,
+    "weights_bytes": 249112,
+    "state_payload_bytes": 32768,
+    "numeric_working_bytes": 37388
+  },
+  "hybrid_int8": {
+    "median_us_per_byte": 7.473302900000001,
+    "median_cpu_us_per_byte": 7.4709,
+    "min_us_per_byte": 7.2541399,
+    "max_us_per_byte": 9.9060844,
+    "median_rss_kib": 2052,
+    "weights_bytes": 116504,
+    "state_payload_bytes": 32768,
+    "numeric_working_bytes": 37388
+  },
+  "hybrid_mixed": {
+    "median_us_per_byte": 8.5640389,
+    "median_cpu_us_per_byte": 8.5609,
+    "min_us_per_byte": 8.4361283,
+    "max_us_per_byte": 12.4316565,
+    "median_rss_kib": 2052,
+    "weights_bytes": 104216,
+    "state_payload_bytes": 32768,
+    "numeric_working_bytes": 37388
+  },
+  "transformer_fp32": {
+    "median_us_per_byte": 7.2955739,
+    "median_cpu_us_per_byte": 7.294,
+    "min_us_per_byte": 7.0476194,
+    "max_us_per_byte": 8.7724731,
+    "median_rss_kib": 2180,
+    "weights_bytes": 248448,
+    "state_payload_bytes": 32768,
+    "numeric_working_bytes": 36864
+  },
+  "transformer_int8": {
+    "median_us_per_byte": 7.8324234000000015,
+    "median_cpu_us_per_byte": 7.8319,
+    "min_us_per_byte": 7.612725500000001,
+    "max_us_per_byte": 9.0753767,
+    "median_rss_kib": 2052,
+    "weights_bytes": 115968,
+    "state_payload_bytes": 32768,
+    "numeric_working_bytes": 36864
+  }
+}

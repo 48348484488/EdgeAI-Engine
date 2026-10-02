@@ -1,0 +1,8 @@
+{
+  "os": "Linux-6.18.44-x86_64-with-glibc2.41",
+  "python": "3.13.5",
+  "cpu": "INTEL(R) XEON(R) PLATINUM 8573C",
+  "tests_on_weak_pc": false,
+  "windows_tested": false,
+  "gpu_required_for_native_inference": false
+}

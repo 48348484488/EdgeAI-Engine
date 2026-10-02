@@ -1,0 +1,8 @@
+{
+  "selection": "lowest validation response NLL across seeds, not test performance",
+  "seed": 22,
+  "source": "models/instructions_v07/seed22-after.edge",
+  "validation_nll": 0.39680254724290637,
+  "release_snapshot": true,
+  "sha256": "3282e3f07da68146bf1519ff39cd6d522764b79b3aa5c946fbe88d63feb75811"
+}

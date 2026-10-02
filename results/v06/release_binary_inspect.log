@@ -1,0 +1,8 @@
+format=EDGEAI6
+vocab_size=513
+parameters=71633
+resident_numeric_weights_bytes=151672
+sequence_state_payload_bytes=24576
+numeric_working_bytes=29220
+window=64
+output_precision=int8_w8a32

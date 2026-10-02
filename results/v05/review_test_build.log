@@ -1,0 +1,4 @@
+[ 90%] Built target edgeai
+[ 95%] Building CXX object CMakeFiles/edgeai_test_transformer.dir/tests/test_transformer.cpp.o
+[100%] Linking CXX executable edgeai_test_transformer
+[100%] Built target edgeai_test_transformer

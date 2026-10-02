@@ -1,0 +1,10 @@
+{
+  "utc": "2026-09-26T00:12:25.501669+00:00",
+  "cpu": [
+    "model name\t: AMD EPYC 9V74 80-Core Processor"
+  ],
+  "network": "curl HEAD to github.com and huggingface.co failed: Could not resolve host",
+  "external_llm_executed": false,
+  "windows_tested": false,
+  "weak_pc_tested": false
+}

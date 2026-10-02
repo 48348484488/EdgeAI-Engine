@@ -1,0 +1,14 @@
+F.....
+======================================================================
+FAIL: test_identity_version_is_plain_string_for_weights_only_load (test_external_training.CheckpointSafeMetadataContract.test_identity_version_is_plain_string_for_weights_only_load)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/EdgeAI-Engine-v0.6/tests/test_external_training.py", line 37, in test_identity_version_is_plain_string_for_weights_only_load
+    self.assertIs(type(key['torch']),str,'TorchVersion pickles a class rejected by weights_only=True')
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: <class 'torch.torch_version.TorchVersion'> is not <class 'str'> : TorchVersion pickles a class rejected by weights_only=True
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.008s
+
+FAILED (failures=1)

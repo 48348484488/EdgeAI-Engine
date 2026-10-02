@@ -1,0 +1,27 @@
+[ 30%] Built target edgeai
+[ 33%] Built target edgeai_logits
+[ 36%] Built target edgeai_chat
+[ 39%] Built target edgeai_make_demo
+[ 42%] Built target edgeai_inspect
+[ 44%] Built target edgeai_evaluate
+[ 47%] Built target edgeai_tokenize
+[ 50%] Built target edgeai_text_eval
+[ 53%] Built target edgeai_token_logits
+[ 56%] Built target edgeai_tests
+[ 59%] Built target edgeai_regressions
+[ 60%] Building CXX object CMakeFiles/edgeai_test_code_search.dir/tests/test_code_search.cpp.o
+[ 63%] Built target edgeai_test_memory
+[ 69%] Built target edgeai_generate
+[ 69%] Built target edgeai_code_search
+[ 72%] Built target edgeai_test_kernels
+[ 75%] Built target edgeai_test_tools
+[ 78%] Built target edgeai_test_hybrid
+[ 81%] Built target edgeai_test_precision
+[ 84%] Built target edgeai_test_transformer
+[ 86%] Built target edgeai_test_bpe
+[ 89%] Built target edgeai_test_instruction
+[ 92%] Built target edgeai_runtime_benchmark
+[ 95%] Built target edgeai_benchmark
+[ 98%] Built target edgeai_matrix_benchmark
+[100%] Linking CXX executable edgeai_test_code_search
+[100%] Built target edgeai_test_code_search

@@ -1,0 +1,4 @@
+# Optional only. Native C++ inference requires neither of these packages.
+# Tested with torch 2.10.0+cpu; select the CPU wheel from PyTorch's official index.
+torch==2.10.0
+numpy>=1.26,<3

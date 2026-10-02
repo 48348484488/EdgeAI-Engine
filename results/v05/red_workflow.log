@@ -1,0 +1,18 @@
+test_cache_checks_identity_and_artifact_content (test_v05_workflow.WorkflowTests.test_cache_checks_identity_and_artifact_content) ... ok
+test_goal_definitions_and_no_shell (test_v05_workflow.WorkflowTests.test_goal_definitions_and_no_shell) ... FAIL
+test_native_evaluator_count_and_reset (test_v05_workflow.WorkflowTests.test_native_evaluator_count_and_reset) ... ok
+test_native_evaluator_rejects_malformed_blocks (test_v05_workflow.WorkflowTests.test_native_evaluator_rejects_malformed_blocks) ... ok
+
+======================================================================
+FAIL: test_goal_definitions_and_no_shell (test_v05_workflow.WorkflowTests.test_goal_definitions_and_no_shell)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/EdgeAI-Engine-v0.5/tests/test_v05_workflow.py", line 13, in test_goal_definitions_and_no_shell
+    self.assertIsNotNone(importlib.util.find_spec('run_goals'),'run_goals must exist')
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unexpectedly None : run_goals must exist
+
+----------------------------------------------------------------------
+Ran 4 tests in 1.324s
+
+FAILED (failures=1)

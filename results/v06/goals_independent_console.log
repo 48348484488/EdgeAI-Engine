@@ -1,0 +1,25 @@
+[configure] started
+[configure] passed
+[build] started
+[build] passed
+[cpp_tests] started
+[cpp_tests] passed
+[python_tests] started
+[python_tests] passed
+[snapshot_integrity] started
+[snapshot_integrity] passed
+[train_only_tokenizer] started
+[train_only_tokenizer] passed
+[bpe_parity] started
+[bpe_parity] passed
+[equal_cpu_external_training] started
+[equal_cpu_external_training] passed
+[native_external] started
+[native_external] passed
+[capability_tasks] started
+[capability_tasks] passed
+[energy_probe] started
+[energy_probe] passed
+[validate_reports] started
+[validate_reports] passed
+Metas desta execução concluídas. Status: /mnt/data/EdgeAI-Engine-v0.6/results/v06/goals-independent/status.json
