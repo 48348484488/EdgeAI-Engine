@@ -124,3 +124,8 @@ O benchmark neural usa tarefas sintéticas. Energia e pico de RSS não foram med
 ---
 
 **EdgeAI Engine é um projeto de pesquisa experimental.** Cada avanço deve vir acompanhado de teste, benchmark ou evidência reproduzível.
+
+
+No mesmo orçamento de CPU, 2 blocos completou apenas **68,6%** dos passos de otimização de 1 bloco na mediana e sua latência interna mediana foi **21,1% maior**. Isso é uma hipótese concreta para a diferença, não prova de causalidade; essa hipótese foi testada numa ablação posterior de igual número de atualizações.
+
+Na ablação **equal-update**, o modelo de 2 blocos foi treinado até os mesmos totais de passos observados no baseline de 1 bloco por seed (11.269 / 11.286 / 9.661). Na geração nativa, 2 blocos obteve **55 + 37 + 46 = 138/582** corretos, contra **149/582** do baseline de 1 bloco. Portanto, dar ao modelo profundo o mesmo número de atualizações **não eliminou a diferença agregada**. Seed 11 melhorou para 55, seed 22 empatou em 37 e seed 33 ficou em 46 contra 59. Isso enfraquece a hipótese de que a perda vinha apenas do menor número de optimizer steps; treinamento/seleção/arquitetura ainda precisam ser investigados.
