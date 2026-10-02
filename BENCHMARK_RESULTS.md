@@ -1,4 +1,78 @@
-# EdgeAI Engine v0.11 — ranking estrutural de busca de codigo
+# EdgeAI Engine v0.12 — Transformer multi-bloco nativo
+
+Base: v0.11. A v0.12 adiciona suporte real a múltiplos blocos do Python ao runtime C++, mantendo compatibilidade com modelos antigos.
+
+## O que mudou
+
+- Novo formato `EDGEAI8` para modelos com mais de um bloco.
+- `TinyTransformer` aceita de 1 a 8 blocos.
+- Runtime C++ executa todos os blocos em sequência com cache KV independente por bloco.
+- `EDGEAI5/6/7` continuam carregando como modelos de um bloco.
+- Exportação de um bloco continua usando o formato legado correspondente.
+- `edgeai_inspect` distingue corretamente `EDGEAI7` e `EDGEAI8`.
+
+## Paridade Python ↔ C++
+
+O verificador usa 1 e 2 blocos, kernels `scalar` e `auto`, sequência de 11 tokens e janela 4 para forçar wrap do cache KV.
+
+| Medida | Resultado |
+|---|---:|
+| Casos | 4/4 |
+| Maior erro absoluto | 3,5763e-7 |
+| Tolerância absoluta | 6e-5 |
+| Tolerância relativa | 6e-5 |
+
+## Experimento controlado — 60 s de CPU por arquitetura/seed
+
+Mesmo dataset congelado, tokenizer, `dim=48`, `hidden=128`, janela 64, batch 16, AdamW e uma thread. Seeds 11, 22 e 33. Seleção apenas por validation NLL; os testes ficam fora da seleção.
+
+| Medida | 1 bloco | 2 blocos |
+|---|---:|---:|
+| Parâmetros | 71.827 | 93.699 |
+| Arquivo `.edge` | 154.400 B | 178.976 B |
+| Pesos numéricos residentes | 152.168 B | 176.616 B |
+| Estado KV | 24.576 B | 49.152 B |
+| Working memory numérica | 29.420 B | 56.300 B |
+| Mediana de steps em 60 s | 11.269 | 6.897 |
+| Mediana validation NLL | **0,4101** | 0,4352 |
+| Geração nativa exata | **147/582 (25,26%)** | 138/582 (23,71%) |
+| Respostas corretas pela métrica do dataset | **149/582 (25,60%)** | 138/582 (23,71%) |
+| Mediana de tempo interno por caso | **0,650 ms** | 0,779 ms |
+
+Por seed, 2 blocos melhorou o exact-match apenas na seed 22 (37 → 46). Nas seeds 11 e 33, caiu de 53 → 48 e 57 → 44. Portanto, o ganho não foi consistente.
+
+Custos do segundo bloco nesse modelo:
+
+- +30,45% de parâmetros;
+- +15,92% no arquivo `.edge`;
+- +100% de estado KV;
+- +91,37% de working memory numérica;
+- cerca de 38,80% menos steps no mesmo orçamento de CPU;
+- cerca de 19,82% mais tempo interno mediano por caso.
+
+## Diagnóstico curto anterior
+
+O ensaio de 12 s registrado em `results/v012/blocks.json`, com avaliação teacher-forced, favoreceu 2 blocos em NLL e acurácia de tokens. Esse sinal continua útil, mas não é a decisão final: no protocolo principal de 60 s com geração nativa livre, 2 blocos não melhorou de forma consistente.
+
+## Decisão
+
+**1 bloco permanece o padrão.** O suporte multi-bloco continua disponível como infraestrutura de pesquisa, porque funciona e passa paridade, mas 2 blocos não justificou o custo extra neste protocolo.
+
+## Verificação final
+
+- Release CTest: **15/15**.
+- Python: **130/130**.
+- Sem SIMD: **15/15 CTest**.
+- ASan + UBSan: **15/15 CTest**.
+- 142 modelos/checkpoints legados permaneceram sem alteração.
+- 24 novos arquivos de modelo/checkpoint v0.12 foram preservados.
+- Energia e pico de RSS não foram medidos: `null`.
+
+Limite: o dataset é sintético e pequeno. Estes números medem este protocolo; não demonstram inteligência geral, desempenho em PC fraco real, Windows/ARM ou superioridade sobre grandes LLMs.
+
+---
+
+## Histórico: EdgeAI Engine v0.11 — ranking estrutural de busca de codigo
 
 Base efetiva: v0.10. **Sem novo treinamento, sem LLM externo real e sem alteracao dos modelos neurais.**
 
