@@ -16,18 +16,9 @@ from sft_model import expand_checkpoint,make_batch,response_loss,validation_loss
 from transformer_model import export_transformer
 from instruction_blocks_v012 import promote_blocks,repo_path
 from instruction_blocks_equal_steps_v012 import baseline_plan,target_steps
-from instruction_blocks_generation_select_v012 import select_checkpoint,generation_metrics_from_outputs
+from instruction_blocks_generation_select_v012 import (select_checkpoint,validation_generation,build_identity,assert_fair_pair)
 
 SEED=33
-
-def validation_generation(model,tok,rows):
-    outputs={}
-    for row in rows:
-        if row['prompt'] in outputs:
-            raise ValueError('validation prompts must be unique for deterministic selection')
-        text,_,eos=greedy(model,tok,row['prompt'],max_tokens=32)
-        outputs[row['prompt']]=(text.encode('utf-8'),bool(eos))
-    return generation_metrics_from_outputs(rows,outputs)
 
 def main():
     torch.set_num_threads(1);torch.use_deterministic_algorithms(True)
@@ -39,6 +30,11 @@ def main():
     if sha(base_path.read_bytes())!=plan['source_checkpoint_sha256']: raise ValueError('source checkpoint changed')
     cp=torch.load(base_path,map_location='cpu',weights_only=True)
     base,tok=expand_checkpoint(cp,SEED);model=promote_blocks(base,2,SEED)
+    dataset_digest=sha((data_dir/'manifest.json').read_bytes())
+    config=model.export_config()
+    identity_one=build_identity(SEED,1,plan['target_steps'],1,dataset_digest,tok.fingerprint(),config)
+    identity_two=build_identity(SEED,2,plan['target_steps'],1,dataset_digest,tok.fingerprint(),config)
+    fairness_verified=assert_fair_pair(identity_one,identity_two)
     groups={}
     for row in data['train']: groups.setdefault(row['task'],[]).append(row)
     rng=random.Random(7700+SEED);tasks=sorted(groups);opt=torch.optim.AdamW(model.parameters(),lr=.001,weight_decay=.01)
@@ -68,14 +64,14 @@ def main():
     model_dir=repo_path(ROOT/'models/v012_generation_selection');model_dir.mkdir(parents=True,exist_ok=True)
     edge=model_dir/'seed33-b2-generation-selected.edge';export_transformer(model,edge,tokenizer=tok,max_generate=32)
     rel=str(edge.relative_to(ROOT))
-    dataset_digest=sha((data_dir/'manifest.json').read_bytes())
     run=dict(seed=SEED,blocks=2,steps=plan['target_steps'],selected_step=selected_row['step'],
              selected_validation_nll=selected_row['validation_nll'],validation_selection=selected_row,
              validation_candidates=candidates,train_cpu_seconds=cpu,train_wall_seconds=wall,
              after_path=rel,artifacts={rel:sha(edge.read_bytes())},parameters=sum(p.numel() for p in model.parameters()),
-             file_bytes=edge.stat().st_size,batch_ids_sha256=digest.hexdigest(),examples_seen=seen)
+             file_bytes=edge.stat().st_size,batch_ids_sha256=digest.hexdigest(),examples_seen=seen,
+             fairness_identity_one=identity_one,fairness_identity_two=identity_two)
     report=dict(protocol='seed33 two-block equal-update replay; checkpoint selected by validation greedy correct/exact then NLL',
-                expected=1,completed=1,architectures=[1,2],fairness_verified=True,dataset_sha256=dataset_digest,runs=[run])
+                expected=1,completed=1,architectures=[1,2],fairness_verified=fairness_verified,dataset_sha256=dataset_digest,runs=[run])
     out=repo_path(ROOT/'results/v012_generation_selection/training.json');out.parent.mkdir(parents=True,exist_ok=True)
     out.write_text(json.dumps(report,indent=2)+'\n')
     print(json.dumps(dict(selected=selected_row,out=str(out))),flush=True)
