@@ -1,14 +1,15 @@
 name: EdgeAI v0.12 1x2 Experiment
 
 on:
-  push:
-    branches: [v0.12-multiblock]
   workflow_dispatch:
     inputs:
       cpu_seconds:
         description: "Process CPU seconds per architecture/seed"
         required: true
         default: "60"
+
+permissions:
+  contents: read
 
 jobs:
   experiment:
@@ -25,16 +26,16 @@ jobs:
           cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
           cmake --build build -j2
           ctest --test-dir build --output-on-failure
+      - name: Run Python tests
+        run: python3 -m unittest discover -s tests -p 'test_*.py'
+      - name: Verify Python/native parity
+        run: python3 tools/verify_multiblock.py --build build --out results/v012/multiblock_parity.json
       - name: Run controlled training
         run: |
-          python3 benchmarks/instruction_blocks_v012.py \
-            --cpu-seconds "${{ inputs.cpu_seconds }}" \
-            --seeds 11 22 33 --threads 1 --architectures 1 2
+          python3 benchmarks/instruction_blocks_v012.py             --cpu-seconds "${{ inputs.cpu_seconds }}"             --seeds 11 22 33 --threads 1 --architectures 1 2
       - name: Evaluate selected checkpoints with native C++
         run: |
-          python3 benchmarks/instruction_blocks_eval_v012.py \
-            --build build --report results/v012/training.json \
-            --data data/instructions_v07 --out results/v012/evaluation.json
+          python3 benchmarks/instruction_blocks_eval_v012.py             --build build --report results/v012/training.json             --data data/instructions_v07 --out results/v012/evaluation.json
       - name: Upload reproducibility artifact
         uses: actions/upload-artifact@v4
         with:
@@ -42,7 +43,5 @@ jobs:
           if-no-files-found: error
           retention-days: 30
           path: |
-            results/v012/training.json
-            results/v012/evaluation.json
-            models/v012/*.edge
-            models/v012/*.pt
+            results/v012/
+            models/v012/
