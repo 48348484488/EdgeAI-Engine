@@ -82,4 +82,6 @@ jobs:
           git add results/v012 models/v012
           git diff --cached --quiet && exit 0
           git commit -m "bench: record v0.12 one versus two block results"
+          git fetch origin v0.12-multiblock
+          git rebase origin/v0.12-multiblock
           git push origin HEAD:v0.12-multiblock
