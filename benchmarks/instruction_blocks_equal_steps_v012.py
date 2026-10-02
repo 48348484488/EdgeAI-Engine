@@ -56,7 +56,7 @@ def baseline_plan(report,seed):
                 batch_ids_sha256=row['batch_ids_sha256'],examples_seen=row['examples_seen'],
                 source_checkpoint_sha256=row['source_checkpoint_sha256'],
                 selected_step=row['selected_step'],selected_validation_nll=row['selected_validation_nll'],
-                train_cpu_seconds=row['train_cpu_seconds'],train_wall_seconds=row['train_wall_seconds'])
+                train_cpu_seconds=row.get('train_cpu_seconds'),train_wall_seconds=row.get('train_wall_seconds'))
 
 def save(path,obj):
     path=repo_path(path);path.parent.mkdir(parents=True,exist_ok=True)
