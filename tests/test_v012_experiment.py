@@ -84,5 +84,30 @@ class V012ExperimentContractTests(unittest.TestCase):
             torch.testing.assert_close(one.state_dict()[key],value,rtol=0,atol=0)
 
 
+    def test_build_identity_differs_only_by_blocks(self):
+        config=dict(dim=64,hidden=96,window=64,precision='int8',vocab_size=515,blocks=1)
+        one=exp.build_identity(
+            seed=33,blocks=1,cpu_budget=60.0,threads=1,
+            dataset_sha256='dataset',tokenizer_fingerprint='tokenizer',config=config)
+        two=exp.build_identity(
+            seed=33,blocks=2,cpu_budget=60.0,threads=1,
+            dataset_sha256='dataset',tokenizer_fingerprint='tokenizer',config=config)
+        exp.assert_fair_pair(one,two)
+        changed={k for k in set(one)|set(two) if one.get(k)!=two.get(k)}
+        self.assertEqual(changed,{'blocks'})
+
+    def test_build_identity_pins_v07_sft_hyperparameters(self):
+        config=dict(dim=64,hidden=96,window=64,precision='int8',vocab_size=515,blocks=1)
+        row=exp.build_identity(
+            seed=11,blocks=1,cpu_budget=60.0,threads=1,
+            dataset_sha256='d',tokenizer_fingerprint='t',config=config)
+        self.assertEqual(row['batch'],16)
+        self.assertEqual(row['lr'],.001)
+        self.assertEqual(row['weight_decay'],.01)
+        self.assertEqual(row['clip_norm'],1.0)
+        self.assertEqual(row['max_length'],128)
+        self.assertEqual(row['selection'],'minimum response validation NLL at 25/50/75/100 percent')
+
+
 if __name__=='__main__':
     unittest.main()
