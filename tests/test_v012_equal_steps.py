@@ -1,10 +1,13 @@
 import sys
 import unittest
+import torch
 from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'benchmarks'))
 import instruction_blocks_equal_steps_v012 as eq
+sys.path.insert(0,str(ROOT/'tools'))
+from transformer_model import TinyTransformer
 
 class EqualStepsV012Tests(unittest.TestCase):
     def test_protocol_constants_are_pinned(self):
@@ -42,6 +45,25 @@ class EqualStepsV012Tests(unittest.TestCase):
     def test_baseline_plan_rejects_unverified_source(self):
         with self.assertRaises(ValueError):
             eq.baseline_plan(dict(fairness_verified=False,runs=[]),11)
+
+
+    def test_copy_inner_identity_preserves_function_and_copies_features(self):
+        torch.manual_seed(123)
+        base=TinyTransformer(dim=8,hidden=12,window=4,precision='fp32',vocab_size=256,blocks=1).eval()
+        tokens=torch.tensor([[1,2,3,4]],dtype=torch.long)
+        before=base(tokens).detach().clone()
+        two=eq.promote_for_init(base,77,'copy_inner_identity').eval()
+        torch.testing.assert_close(two(tokens),before,rtol=0,atol=0)
+        for name in ('query','key','value','up'):
+            for key,value in getattr(base.blocks[0],name).state_dict().items():
+                torch.testing.assert_close(getattr(two.blocks[1],name).state_dict()[key],value,rtol=0,atol=0)
+        self.assertEqual(float(two.blocks[1].project.weight.abs().sum()),0.0)
+        self.assertEqual(float(two.blocks[1].down.weight.abs().sum()),0.0)
+
+    def test_unknown_init_mode_is_rejected(self):
+        base=TinyTransformer(dim=8,hidden=12,window=4,precision='fp32',vocab_size=256,blocks=1)
+        with self.assertRaises(ValueError):
+            eq.promote_for_init(base,11,'nope')
 
 if __name__=='__main__':
     unittest.main()
