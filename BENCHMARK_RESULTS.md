@@ -1,3 +1,34 @@
+# EdgeAI Engine v0.11 — ranking de definições e múltiplas ocorrências
+
+Base: v0.10. **Sem novo treinamento, sem LLM externo, sem alegação de inteligência geral.**
+
+## Mudança
+
+A busca lexical agora mantém múltiplas ocorrências relevantes por arquivo e classifica linhas para priorizar definições sobre comentários, strings e chamadas. O conteúdo citado continua sendo conferido contra o arquivo real.
+
+## Benchmark CPython preservado
+
+Mesmo corpus e 35 consultas da v0.10 (27 definições top-level + 8 símbolos ausentes), 5 execuções.
+
+| Métrica | v0.10 | v0.11 |
+|---|---:|---:|
+| Definição correta top-1 | 16/27 | **24/27** |
+| Definição correta top-5 | 18/27 | **26/27** |
+| Ausentes retornam vazio | 8/8 | **8/8** |
+| Mediana da sessão (35 consultas) | 25.035 ms | **27.683 ms** |
+
+A v0.11 melhorou recuperação nesse corpus, com ~10,6% de aumento de latência sobre a mediana publicada da v0.10. Isso continua sendo busca lexical/heurística, não compreensão semântica nem benchmark neural.
+
+## Validação
+
+Teste RED observado na v0.10: a busca retornava apenas uma ocorrência por arquivo. Após a mudança, definição, chamada e demais ocorrências relevantes podem coexistir, com a definição priorizada.
+
+Validação local final: 13/13 CTest e 108/108 testes Python. O teste de code search também passou com Clang ASan+UBSan. Os 142 arquivos .edge/.pt foram comparados por SHA-256 contra a v0.10 e permaneceram idênticos.
+
+---
+
+## Relatório histórico v0.10
+
 # EdgeAI Engine v0.10 — busca reutilizável com conferência de conteúdo
 
 Base efetiva: ZIP v0.9. **Sem novo treinamento, sem LLM externo real, sem medição de energia.**
