@@ -24,7 +24,9 @@ def summarize(rows):
         correct_and_eos=sum(bool(r['correct']) and bool(r['stopped_on_eos']) for r in rows),
         median_generated_tokens=statistics.median(r['generated_tokens'] for r in rows) if count else None,
         median_internal_seconds=statistics.median(r['total_seconds'] for r in rows) if count else None,
-        median_external_wall_seconds=statistics.median(r['external_wall_seconds'] for r in rows) if count else None,
+        median_external_wall_seconds=(statistics.median(
+            r['external_wall_seconds'] for r in rows if 'external_wall_seconds' in r)
+            if any('external_wall_seconds' in r for r in rows) else None),
     )
 
 
