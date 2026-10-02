@@ -67,6 +67,31 @@ std::set<std::string> query_tokens(const std::string& q){
  if(t.size()>32)throw std::invalid_argument("query has more than 32 terms");
  return t;
 }
+std::string trim_left(const std::string& s){
+ const auto p=s.find_first_not_of(" \t");return p==std::string::npos?std::string():s.substr(p);
+}
+double structural_score(const std::string& raw,const std::set<std::string>& terms){
+ const auto line=lower(trim_left(raw));if(line.empty())return 0.0;
+ if(line.rfind("//",0)==0||line[0]=='#'||line.rfind("/*",0)==0||line.rfind("*",0)==0)return -24.0;
+ double score=0.0;
+ for(const auto& term:terms){
+  const auto pos=line.find(term);if(pos==std::string::npos)continue;
+  const auto quoted=[&]{
+   auto before=line.substr(0,pos);std::size_t single=std::count(before.begin(),before.end(),'\'');
+   std::size_t dbl=std::count(before.begin(),before.end(),'"');return (single%2)||(dbl%2);
+  }();
+  if(quoted){score-=12.0;continue;}
+  const std::vector<std::string> strong={"def "+term,"class "+term,"function "+term,"fn "+term,"func "+term,"stock "+term,"public "+term,"forward "+term};
+  for(const auto& p:strong)if(line.find(p)!=std::string::npos){score+=28.0;break;}
+  auto paren=line.find('(',pos+term.size());
+  if(paren!=std::string::npos){
+   const auto before=line.substr(0,pos);
+   if(line.find('{',paren)!=std::string::npos)score+=18.0;
+   else if(before.find(' ')!=std::string::npos||before.find('\t')!=std::string::npos)score+=7.0;
+  }
+ }
+ return score;
+}
 std::string json_string(const std::string& s){
  std::ostringstream o;o<<'"';
  for(unsigned char c:s){switch(c){case '"':o<<"\\\"";break;case '\\':o<<"\\\\";break;case '\n':o<<"\\n";break;case '\r':o<<"\\r";break;case '\t':o<<"\\t";break;default:if(c<32)o<<"\\u"<<std::hex<<std::setw(4)<<std::setfill('0')<<int(c)<<std::dec;else o<<char(c);}}
@@ -230,7 +255,6 @@ CodeSearchResult CodeIndex::search(const std::string& query,std::size_t limit,st
    for(const auto&term:terms){auto f=src.postings.find(term);if(f!=src.postings.end())from_paths.insert(from_paths.end(),f->second.begin(),f->second.end());}
    std::sort(from_paths.begin(),from_paths.end());from_paths.erase(std::unique(from_paths.begin(),from_paths.end()),from_paths.end());rarest=&from_paths;
   }
-  std::vector<CodeHit> local_hits;
   for(auto i:*rarest){
    ++result.candidate_lines;bool all=true;std::size_t matched_row=0;
    for(const auto&term:terms){auto f=src.postings.find(term);
@@ -238,23 +262,14 @@ CodeSearchResult CodeIndex::search(const std::string& query,std::size_t limit,st
     else if(!src.path_terms.count(term)){all=false;break;}
    }
    if(!all||!matched_row)continue;
-   double score=double(matched_row)*10.0;const auto line_lower=lower(src.lines[i]);
-   const auto& code=src.code_lines[i];const auto code_lower=lower(code);std::size_t code_matches=0;
-   for(const auto&term:terms){
-    auto pos=line_lower.find(term);if(pos!=std::string::npos){auto paren=line_lower.find('(',pos);if(paren!=std::string::npos&&pos<paren)score+=2;}
-    if(code_lower.find(term)!=std::string::npos)++code_matches;
-   }
-   if(!code_matches)score-=8;else score+=double(code_matches);
-   if(explicit_definition(code,terms))score+=12;else if(declaration_like(code,terms))score+=6;
-   const auto first=line_lower.find_first_not_of(" \t");
-   if(first!=std::string::npos&&(line_lower.compare(first,2,"//")==0||line_lower[first]=='#'))score-=3;
+   double score=double(matched_row)*10.0+structural_score(src.lines[i],terms);const auto line_lower=lower(src.lines[i]);
+   auto paren=line_lower.find('(');
+   for(const auto&term:terms){auto pos=line_lower.find(term);if(pos!=std::string::npos&&paren!=std::string::npos&&pos<paren)score+=2;}
+   if(line_lower.find('{')!=std::string::npos)score+=1;
    CodeHit hit;hit.path=src.path;hit.match_line=i+1;hit.start_line=(i>context?i-context:0)+1;hit.end_line=std::min(src.lines.size(),i+context+1);hit.score=score;
    for(std::size_t n=hit.start_line-1;n<hit.end_line;++n){if(n>hit.start_line-1)hit.text+='\n';hit.text+=src.lines[n];}
-   local_hits.push_back(std::move(hit));
+   result.hits.push_back(std::move(hit));
   }
-  std::sort(local_hits.begin(),local_hits.end(),[](const CodeHit&a,const CodeHit&b){if(a.score!=b.score)return a.score>b.score;return a.match_line<b.match_line;});
-  const auto per_file=std::min<std::size_t>(3,limit);if(local_hits.size()>per_file)local_hits.resize(per_file);
-  for(auto& hit:local_hits)result.hits.push_back(std::move(hit));
  }
  std::sort(result.hits.begin(),result.hits.end(),[](const CodeHit&a,const CodeHit&b){if(a.score!=b.score)return a.score>b.score;if(a.path!=b.path)return a.path<b.path;return a.match_line<b.match_line;});
  if(result.hits.size()>limit)result.hits.resize(limit);
