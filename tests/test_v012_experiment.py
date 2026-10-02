@@ -8,6 +8,7 @@ ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'benchmarks'))
 
 import instruction_blocks_v012 as exp
+import instruction_blocks_eval_v012 as eval12
 sys.path.insert(0,str(ROOT/'tools'))
 from transformer_model import TinyTransformer
 
@@ -107,6 +108,24 @@ class V012ExperimentContractTests(unittest.TestCase):
         self.assertEqual(row['clip_norm'],1.0)
         self.assertEqual(row['max_length'],128)
         self.assertEqual(row['selection'],'minimum response validation NLL at 25/50/75/100 percent')
+
+
+    def test_eval_summary_counts_exact_correct_and_eos(self):
+        rows=[
+            dict(exact=True,correct=True,stopped_on_eos=True,generated_tokens=2,total_seconds=.01),
+            dict(exact=False,correct=True,stopped_on_eos=False,generated_tokens=4,total_seconds=.03),
+        ]
+        summary=eval12.summarize(rows)
+        self.assertEqual(summary['count'],2)
+        self.assertEqual(summary['exact'],1)
+        self.assertEqual(summary['correct'],2)
+        self.assertEqual(summary['eos'],1)
+        self.assertEqual(summary['correct_and_eos'],1)
+        self.assertEqual(summary['median_generated_tokens'],3.0)
+
+    def test_eval_rejects_incomplete_training_report(self):
+        with self.assertRaises(ValueError):
+            eval12.validate_training_report(dict(expected=6,completed=5,runs=[]))
 
 
 if __name__=='__main__':
