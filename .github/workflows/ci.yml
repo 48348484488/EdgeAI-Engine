@@ -16,5 +16,7 @@ jobs:
         run: cmake --build build -j2
       - name: C++ tests
         run: ctest --test-dir build --output-on-failure
+      - name: Install Python test dependencies
+        run: python3 -m pip install --disable-pip-version-check -r requirements-training.txt
       - name: Python tests
         run: python3 -m unittest discover -s tests -p 'test_*.py'
