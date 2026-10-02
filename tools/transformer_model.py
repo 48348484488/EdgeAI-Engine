@@ -127,12 +127,13 @@ def numeric_weight_bytes(model):
 def export_transformer(model,path,max_generate=128,tokenizer=None):
     if not isinstance(model,TinyTransformer) or not 1<=max_generate<=4096:
         raise ValueError('invalid model/export limit')
-    if len(model.blocks)!=1:
-        raise ValueError('multi-block export requires EDGEAI8 support')
+    if not 1<=len(model.blocks)<=8:
+        raise ValueError('invalid block count')
     for name,p in model.named_parameters():
         if p.device.type!='cpu' or p.dtype!=torch.float32 or not torch.isfinite(p).all():
             raise ValueError('export needs finite FP32 CPU masters: '+name)
-    if any(layer_precision(getattr(model,n))!=model.precision for n in NAMES):
+    layers=[getattr(block,name) for block in model.blocks for name in BLOCK_NAMES]+[model.out]
+    if any(layer_precision(layer)!=model.precision for layer in layers):
         raise ValueError('precision metadata disagrees with actual layers')
     if tokenizer is None and model.vocab_size!=256:
         raise ValueError('dynamic vocabulary needs embedded tokenizer')
@@ -141,18 +142,37 @@ def export_transformer(model,path,max_generate=128,tokenizer=None):
     path=Path(path);path.parent.mkdir(parents=True,exist_ok=True);tmp=None
     try:
         with tempfile.NamedTemporaryFile(dir=path.parent,delete=False) as f:
-            tmp=Path(f.name);version=(7 if tokenizer.instruction else 6) if tokenizer is not None else 5
-            f.write(('EDGEAI'+str(version)+'\0').encode('ascii'));w_u32(f,version)
-            for n in (model.dim,model.hidden,model.window,max_generate):
-                w_u32(f,n)
-            w_f32(f,model.rope_base)
-            if tokenizer is not None:
-                w_u32(f,len(tokenizer.merges))
-                for a,b in tokenizer.merges:
+            tmp=Path(f.name)
+            if len(model.blocks)==1:
+                version=(7 if tokenizer.instruction else 6) if tokenizer is not None else 5
+                f.write(('EDGEAI'+str(version)+'\\0').encode('ascii'));w_u32(f,version)
+                for n in (model.dim,model.hidden,model.window,max_generate):
+                    w_u32(f,n)
+                w_f32(f,model.rope_base)
+                if tokenizer is not None:
+                    w_u32(f,len(tokenizer.merges))
+                    for a,b in tokenizer.merges:
+                        w_u32(f,a);w_u32(f,b)
+                w_u64(f,model.emb.weight.numel());write_floats(f,model.emb.weight)
+                for name in BLOCK_NAMES:
+                    write_mixed(f,getattr(model.blocks[0],name))
+                write_mixed(f,model.out)
+            else:
+                f.write(b'EDGEAI8\\0');w_u32(f,8)
+                for n in (model.dim,model.hidden,model.window,max_generate):
+                    w_u32(f,n)
+                w_f32(f,model.rope_base);w_u32(f,len(model.blocks))
+                mode=0 if tokenizer is None else (2 if tokenizer.instruction else 1)
+                w_u32(f,mode)
+                merges=() if tokenizer is None else tokenizer.merges
+                w_u32(f,len(merges))
+                for a,b in merges:
                     w_u32(f,a);w_u32(f,b)
-            w_u64(f,model.emb.weight.numel());write_floats(f,model.emb.weight)
-            for name in NAMES:
-                write_mixed(f,getattr(model,name))
+                w_u64(f,model.emb.weight.numel());write_floats(f,model.emb.weight)
+                for block in model.blocks:
+                    for name in BLOCK_NAMES:
+                        write_mixed(f,getattr(block,name))
+                write_mixed(f,model.out)
         os.replace(tmp,path)
     finally:
         if tmp is not None and tmp.exists():
