@@ -35,7 +35,7 @@ int main(){using namespace edgeai;
     TransformerBackend single_backend(m,Kernel::Scalar);CHECK(multi_bytes>single_backend.numeric_working_bytes());
     auto altered=multi_loaded;
     altered.blocks_data[1].project=MixedMatrix(DenseMatrix(16,16));
-    TransformerBackend altered_backend(altered,Kernel::Scalar);auto original_logits=multi_backend.step(1);auto altered_logits=altered_backend.step(1);
+    TransformerBackend altered_backend(altered,Kernel::Scalar);altered_backend.step(0);auto original_logits=multi_backend.step(1);auto altered_logits=altered_backend.step(1);
     CHECK(original_logits!=altered_logits);
     std::ifstream multi_in("transformer-multi.edge",std::ios::binary);std::string multi_raw((std::istreambuf_iterator<char>(multi_in)),{});
     CHECK(multi_raw.substr(0,7)=="EDGEAI8");
