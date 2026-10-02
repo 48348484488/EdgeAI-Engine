@@ -3,7 +3,7 @@ name: Import EdgeAI package
 on:
   push:
     paths:
-      - 'EdgeAI-Engine-v0.10.zip'
+      - 'EdgeAI-Engine-v*.zip'
   workflow_dispatch:
 
 permissions:
@@ -18,19 +18,17 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Extract package
+      - name: Extract newest package
         shell: bash
         run: |
           set -euo pipefail
-          ZIP="EdgeAI-Engine-v0.10.zip"
-          if [ ! -f "$ZIP" ]; then
-            echo "Package not present; nothing to import."
+          ZIP="$(ls -1 EdgeAI-Engine-v*.zip 2>/dev/null | sort -V | tail -1 || true)"
+          if [ -z "$ZIP" ]; then
+            echo "No EdgeAI package present; nothing to import."
             exit 0
           fi
-
           TMP="$(mktemp -d)"
           unzip -q "$ZIP" -d "$TMP"
-
           shopt -s dotglob nullglob
           entries=("$TMP"/*)
           if [ "${#entries[@]}" -eq 1 ] && [ -d "${entries[0]}" ]; then
@@ -38,8 +36,7 @@ jobs:
           else
             cp -a "$TMP"/. .
           fi
-
-          rm -f "$ZIP"
+          rm -f EdgeAI-Engine-v*.zip
           rm -rf "$TMP"
 
       - name: Commit imported project
@@ -53,5 +50,5 @@ jobs:
             echo "No changes to commit."
             exit 0
           fi
-          git commit -m "Import EdgeAI Engine v0.10"
+          git commit -m "Import latest EdgeAI Engine package"
           git push
