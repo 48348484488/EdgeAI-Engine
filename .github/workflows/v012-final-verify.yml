@@ -23,15 +23,18 @@ jobs:
 
       - name: Release build and CTest
         run: |
-          cmake -S . -B build-v012-final -DCMAKE_BUILD_TYPE=Release
-          cmake --build build-v012-final -j2
-          ctest --test-dir build-v012-final --output-on-failure | tee /tmp/ctest-release.txt
+          cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+          cmake --build build -j2
+          ctest --test-dir build --output-on-failure | tee /tmp/ctest-release.txt
 
       - name: Python suite
-        run: python3 -m unittest discover -s tests -p 'test_*.py' 2>&1 | tee /tmp/python-tests.txt
+        shell: bash
+        run: |
+          set -o pipefail
+          python3 -m unittest discover -s tests -p 'test_*.py' 2>&1 | tee /tmp/python-tests.txt
 
       - name: Final Python native parity
-        run: python3 tools/verify_multiblock.py --build build-v012-final --out results/v012/multiblock_parity-final.json
+        run: python3 tools/verify_multiblock.py --build build --out results/v012/multiblock_parity-final.json
 
       - name: Portable no-SIMD build and CTest
         run: |
@@ -62,8 +65,8 @@ jobs:
 
       - name: Inspect one and two block memory
         run: |
-          build-v012-final/edgeai_inspect models/v012/seed11-b1-after.edge | tee /tmp/inspect-b1.txt
-          build-v012-final/edgeai_inspect models/v012/seed11-b2-after.edge | tee /tmp/inspect-b2.txt
+          build/edgeai_inspect models/v012/seed11-b1-after.edge | tee /tmp/inspect-b1.txt
+          build/edgeai_inspect models/v012/seed11-b2-after.edge | tee /tmp/inspect-b2.txt
           grep -q '^format=EDGEAI7$' /tmp/inspect-b1.txt
           grep -q '^format=EDGEAI8$' /tmp/inspect-b2.txt
 
