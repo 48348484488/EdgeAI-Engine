@@ -1,11 +1,10 @@
 name: EdgeAI v0.13 Curriculum Smoke
 on:
   push:
-    branches: [v0.12-multiblock]
+    branches: [v0.13-curriculum]
     paths:
       - tools/instruction_data_v013.py
       - tests/test_v013_curriculum.py
-      - .github/workflows/v013-curriculum-smoke.yml
   workflow_dispatch:
 jobs:
   validate:
