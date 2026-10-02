@@ -7,8 +7,10 @@
 - Experimento principal: 3 seeds, 60 s de CPU por arquitetura/seed, mesma configuração exceto número de blocos.
 - Geração nativa exata agregada: 1 bloco 147/582 (25,26%); 2 blocos 138/582 (23,71%).
 - 2 blocos aumentou parâmetros em 30,45%, estado KV em 100% e working memory numérica em 91,37%.
+- Blocos adicionais agora começam como identidade residual; o protocolo foi versionado para separar essa inicialização dos resultados históricos.
+- Ablação equal-update: mesmo stream e número de updates do baseline; `correct` ficou 149/582 (1 bloco) vs. 138/582 (2 blocos), com 1,197× CPU de treino e 1,048× latência mediana para 2 blocos.
 - Decisão: 1 bloco permanece padrão; multi-bloco fica disponível para pesquisa.
-- Verificação: Release 15/15, Python 130/130, no-SIMD 15/15, ASan+UBSan 15/15; 142 artefatos legados intactos.
+- Verificação: Release 15/15, Python 138/138, no-SIMD 15/15, ASan+UBSan 15/15; 142 artefatos legados intactos.
 
 ## v0.11
 - Code search ranking now prioritizes common definition forms over comments, strings and calls.
