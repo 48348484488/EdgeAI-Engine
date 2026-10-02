@@ -22,7 +22,7 @@ class V012BlockDynamicsTests(unittest.TestCase):
             m.blocks[1].down.weight.zero_();m.blocks[1].down.bias.zero_()
         x=torch.tensor([[1,2,3]],dtype=torch.long);loss=m(x).square().mean();loss.backward()
         g=d.grad_norms(m)
-        self.assertGreater(g['block1_output'],0.0)
-        self.assertEqual(g['block1_inner'],0.0)
+        self.assertGreater(g['block1_output']['rms'],0.0)
+        self.assertEqual(g['block1_inner']['rms'],0.0)
 
 if __name__=='__main__':unittest.main()
