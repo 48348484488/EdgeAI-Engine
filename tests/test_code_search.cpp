@@ -61,6 +61,17 @@ int main(){
   CHECK(idx.search("totallyMissingSymbol",3,1).hits.empty());
   CHECK(idx.search("secretToken",3,1).hits.empty());
   CHECK(idx.search("dependencySecret",3,1).hits.empty());
+  // v0.11 RED: a real definition must outrank earlier comments, strings and calls.
+  put(root/"ranking/defs.py", "# TargetThing mentioned in a comment\nlabel = \"TargetThing\"\nTargetThing()\ndef TargetThing():\n    return 1\nTargetThing()\n");
+  edgeai::CodeIndex ranked(root.string());
+  auto definition=ranked.search("TargetThing",5,0);
+  CHECK(!definition.hits.empty());
+  CHECK(definition.hits[0].path=="ranking/defs.py");
+  CHECK(definition.hits[0].match_line==4);
+  // v0.11 RED: preserve multiple useful occurrences from the same file.
+  std::size_t same_file=0;
+  for(const auto& hit:definition.hits) if(hit.path=="ranking/defs.py") ++same_file;
+  CHECK(same_file>=2);
   CHECK(idx.search("onde fica a função",3,1).hits.empty());
   fails([&]{idx.search("x",0,0);});fails([&]{idx.search("x",100,0);});
   fails([&]{idx.search(std::string(513,'a'),1,0);});
