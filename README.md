@@ -6,8 +6,8 @@
 
 O projeto combina um **modelo neural próprio e pequeno** com ferramentas determinísticas, memória local e busca de código. O foco é medir ganhos reais — não fingir que o modelo atual já é comparável a ChatGPT ou Claude.
 
-**Versão estável atual: v0.11**  
-**Experimento mais recente: 2 blocos (candidato v0.12)**
+**Versão em validação: v0.12**  
+**Resultado atual: suporte multi-bloco validado; 2 blocos ainda não substituem 1 bloco como padrão**
 
 ## O que ela já sabe fazer
 
@@ -118,24 +118,27 @@ A estratégia é combinar modelos pequenos com memória, ferramentas e kernels e
 
 ### Experimento mais recente
 
-Testamos **1 bloco vs. 2 blocos Transformer** com os mesmos dados, três seeds e o mesmo orçamento de CPU.
+A v0.12 adiciona suporte real a múltiplos blocos no Python, no formato **EDGEAI8** e no runtime C++. A paridade Python/C++ passou para 1 e 2 blocos, inclusive com sequência maior que a janela de atenção; o maior erro absoluto observado foi **3,58e-7** para tolerância de **6e-5**.
 
-| Medida | 1 bloco | 2 blocos |
+No teste controlado de **geração nativa** foram usados os mesmos dados, seeds 11/22/33, uma thread e 60 segundos de CPU por arquitetura/seed. Cada checkpoint foi escolhido apenas pela validation NLL e depois avaliado em 194 casos de teste.
+
+| Seed | 1 bloco | 2 blocos |
 |---|---:|---:|
-| Parâmetros | 71.827 | 93.699 |
-| NLL mediano nos 194 testes | 2,8149 | **2,4919** |
-| Acurácia de tokens | 57,27% | **60,20%** |
-| Linhas corretas com teacher forcing | 18,21% | **20,96%** |
+| 11 | **54/194** | 43/194 |
+| 22 | 37/194 | **49/194** |
+| 33 | **54/194** | 37/194 |
 
-O modelo de 2 blocos melhorou o NLL de teste em **3/3 seeds**, mesmo executando menos passos no mesmo tempo de CPU. Porém, continuou com **0 linhas completas corretas** nos testes de extrapolação e na tarefa nova.
+Somando as três seeds, foram **145/582** respostas corretas para 1 bloco e **129/582** para 2 blocos. Portanto, neste protocolo, aumentar a profundidade para 2 blocos **não produziu ganho consistente de geração**.
 
-Isso é evidência de ganho de capacidade neste protocolo, **não** prova de inteligência geral e ainda não muda o runtime padrão.
+O modelo de 2 blocos também custa mais: **93.699 vs. 71.827 parâmetros**, arquivo `.edge` de **178.976 vs. 154.400 bytes** e cache KV calculado de **49.152 vs. 24.576 bytes**. A mediana interna de geração também foi maior nos três pares medidos.
 
-Relatório completo: [docs/v012/BLOCKS_EXPERIMENT.md](docs/v012/BLOCKS_EXPERIMENT.md)
+Um benchmark teacher-forced anterior mostrou melhora de NLL/tokens para 2 blocos, mas a avaliação posterior de geração nativa é o critério mais próximo do uso real e não confirmou essa vantagem. Por isso, **1 bloco permanece como padrão** enquanto investigamos treinamento/arquitetura melhores.
+
+Os JSONs reproduzíveis estão em `results/v012/`. Os checkpoints completos permanecem preservados no artefato do GitHub Actions do benchmark.
 
 ### Próximo passo
 
-Adicionar suporte nativo opcional a múltiplos blocos no runtime C++, manter compatibilidade com os modelos de 1 bloco e então medir geração real, RAM e latência antes de promover 2 blocos como padrão.
+Em vez de simplesmente adicionar profundidade, a próxima etapa deve investigar por que o segundo bloco melhora algumas métricas intermediárias mas não a geração final de forma consistente, mantendo o mesmo protocolo controlado.
 
 ## Mais detalhes
 
