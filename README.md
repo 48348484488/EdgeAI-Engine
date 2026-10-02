@@ -4,8 +4,8 @@
 
 O projeto combina um **modelo neural próprio e pequeno** com ferramentas determinísticas, memória local e busca de código. O foco é medir ganhos reais — não fingir que o modelo atual já é comparável a ChatGPT ou Claude.
 
-**Versão verificada nesta branch: v0.12.0**  
-**`main` permanece em v0.11 até a integração desta branch.**
+**Versão estável atual: v0.12.0**  
+**`main` já contém a v0.12 verificada.**
 
 ## O que já funciona
 
