@@ -1,10 +1,11 @@
+import os
 import subprocess
 import sys
 import unittest
 from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[1]
-BINARY=(ROOT/'build'/'edgeai_inspect')
+BINARY=Path(os.environ.get('EDGEAI_BUILD_DIR',str(ROOT/'build')))/'edgeai_inspect'
 
 
 def inspect(path):
