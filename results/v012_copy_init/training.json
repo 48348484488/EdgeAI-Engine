@@ -1,0 +1,314 @@
+{
+  "protocol": "two-block equal-update ablation against frozen one-block v0.12 baseline",
+  "init_mode": "copy_inner_identity",
+  "seeds": [
+    11,
+    22,
+    33
+  ],
+  "architectures": [
+    1,
+    2
+  ],
+  "threads": 1,
+  "expected": 3,
+  "completed": 3,
+  "dataset_sha256": "648cc3be05fe6bb3d035077bed57fc2cf6313824fa8f9638c95b8ad05d473faa",
+  "baseline_training_sha256": "664de07031a4c49d26cdde145bb73258aa5c775d2fe01005d2fb8e35a6414f72",
+  "fairness_verified": true,
+  "runs": [
+    {
+      "seed": 11,
+      "blocks": 2,
+      "init_mode": "copy_inner_identity",
+      "target_steps": 11269,
+      "steps": 11269,
+      "validation_steps": [
+        2652,
+        5387,
+        8273,
+        11269
+      ],
+      "selected_step": 2652,
+      "selected_validation_nll": 0.5333842595418294,
+      "validation_curve": [
+        {
+          "step": 2652,
+          "validation_nll": 0.5333842595418294,
+          "train_cpu_seconds": 26.514678142999983
+        },
+        {
+          "step": 5387,
+          "validation_nll": 0.55797172387441,
+          "train_cpu_seconds": 53.775051035999844
+        },
+        {
+          "step": 8273,
+          "validation_nll": 0.6191778630018234,
+          "train_cpu_seconds": 82.65645234699998
+        },
+        {
+          "step": 11269,
+          "validation_nll": 0.6319499078724119,
+          "train_cpu_seconds": 112.60643868399993
+        }
+      ],
+      "train_cpu_seconds": 112.60643868399993,
+      "train_wall_seconds": 112.6521443220007,
+      "parameters": 93699,
+      "file_bytes": 178976,
+      "numeric_weight_bytes": 176616,
+      "batch_ids_sha256": "ee399a273986ae39461d007b1e340611ed1066b95955060694fa59d3cb480b3d",
+      "examples_seen": {
+        "addition": 45100,
+        "copy": 45138,
+        "expression": 44815,
+        "uppercase": 45251
+      },
+      "model_path": "models/v012_copy_init/seed11-b2-copy_inner_identity.edge",
+      "model_sha256": "51193838ea899faa3341f50bd0c743a7679c67caf0cb9966241b845518dc8d74",
+      "pt_path": "models/v012_copy_init/seed11-b2-copy_inner_identity.pt",
+      "pt_sha256": "3408fc31325a2b703c3e2ed3b83f2910ed5f242b7c6d66907808395b4e4ae245",
+      "baseline_one_selected_step": 8273,
+      "baseline_one_selected_validation_nll": 0.43132522812596075,
+      "baseline_one_train_cpu_seconds": 60.001466202999666,
+      "baseline_one_train_wall_seconds": 60.029194211998984,
+      "fairness_identity_one": {
+        "protocol": "edge-sft-v012-equal-updates-1",
+        "seed": 11,
+        "target_steps": 11269,
+        "threads": 1,
+        "dataset_sha256": "648cc3be05fe6bb3d035077bed57fc2cf6313824fa8f9638c95b8ad05d473faa",
+        "tokenizer_fingerprint": "f78e8590a28d3b442ab763afe8cc9ad54af9f1dd9078c6005e7fa9461b1ff4c5",
+        "dim": 48,
+        "hidden": 128,
+        "window": 64,
+        "precision": "int8",
+        "vocab_size": 515,
+        "batch": 16,
+        "lr": 0.001,
+        "weight_decay": 0.01,
+        "clip_norm": 1.0,
+        "max_length": 128,
+        "selection": "minimum response validation NLL at the frozen one-block validation steps",
+        "blocks": 1
+      },
+      "fairness_identity_two": {
+        "protocol": "edge-sft-v012-equal-updates-1",
+        "seed": 11,
+        "target_steps": 11269,
+        "threads": 1,
+        "dataset_sha256": "648cc3be05fe6bb3d035077bed57fc2cf6313824fa8f9638c95b8ad05d473faa",
+        "tokenizer_fingerprint": "f78e8590a28d3b442ab763afe8cc9ad54af9f1dd9078c6005e7fa9461b1ff4c5",
+        "dim": 48,
+        "hidden": 128,
+        "window": 64,
+        "precision": "int8",
+        "vocab_size": 515,
+        "batch": 16,
+        "lr": 0.001,
+        "weight_decay": 0.01,
+        "clip_norm": 1.0,
+        "max_length": 128,
+        "selection": "minimum response validation NLL at the frozen one-block validation steps",
+        "blocks": 2
+      }
+    },
+    {
+      "seed": 22,
+      "blocks": 2,
+      "init_mode": "copy_inner_identity",
+      "target_steps": 11286,
+      "steps": 11286,
+      "validation_steps": [
+        2896,
+        5740,
+        8536,
+        11286
+      ],
+      "selected_step": 11286,
+      "selected_validation_nll": 0.16331933151792596,
+      "validation_curve": [
+        {
+          "step": 2896,
+          "validation_nll": 0.31973345279693605,
+          "train_cpu_seconds": 28.796850177000294
+        },
+        {
+          "step": 5740,
+          "validation_nll": 0.2874651990554951,
+          "train_cpu_seconds": 57.15053843600032
+        },
+        {
+          "step": 8536,
+          "validation_nll": 0.29608592413089896,
+          "train_cpu_seconds": 84.89545751200083
+        },
+        {
+          "step": 11286,
+          "validation_nll": 0.16331933151792596,
+          "train_cpu_seconds": 112.19440279500012
+        }
+      ],
+      "train_cpu_seconds": 112.19440279500012,
+      "train_wall_seconds": 112.2278934400023,
+      "parameters": 93699,
+      "file_bytes": 178976,
+      "numeric_weight_bytes": 176616,
+      "batch_ids_sha256": "774f16b48ca9d9aa115e05ba2de0454d3710fb94644a7f4860c8d73a1f03d3d6",
+      "examples_seen": {
+        "addition": 45330,
+        "copy": 45086,
+        "expression": 44825,
+        "uppercase": 45335
+      },
+      "model_path": "models/v012_copy_init/seed22-b2-copy_inner_identity.edge",
+      "model_sha256": "5dbcd2e2d54ca1b47c0fae346a2a7a3c7f4fae2bb7870a426f93a9712280e353",
+      "pt_path": "models/v012_copy_init/seed22-b2-copy_inner_identity.pt",
+      "pt_sha256": "7343d6625e0bf6f2690be3c4cfb527b06cac6de9c455988fb60c2b62edba2041",
+      "baseline_one_selected_step": 2896,
+      "baseline_one_selected_validation_nll": 0.4101134070643672,
+      "baseline_one_train_cpu_seconds": 60.00452566899928,
+      "baseline_one_train_wall_seconds": 60.03009124499994,
+      "fairness_identity_one": {
+        "protocol": "edge-sft-v012-equal-updates-1",
+        "seed": 22,
+        "target_steps": 11286,
+        "threads": 1,
+        "dataset_sha256": "648cc3be05fe6bb3d035077bed57fc2cf6313824fa8f9638c95b8ad05d473faa",
+        "tokenizer_fingerprint": "f78e8590a28d3b442ab763afe8cc9ad54af9f1dd9078c6005e7fa9461b1ff4c5",
+        "dim": 48,
+        "hidden": 128,
+        "window": 64,
+        "precision": "int8",
+        "vocab_size": 515,
+        "batch": 16,
+        "lr": 0.001,
+        "weight_decay": 0.01,
+        "clip_norm": 1.0,
+        "max_length": 128,
+        "selection": "minimum response validation NLL at the frozen one-block validation steps",
+        "blocks": 1
+      },
+      "fairness_identity_two": {
+        "protocol": "edge-sft-v012-equal-updates-1",
+        "seed": 22,
+        "target_steps": 11286,
+        "threads": 1,
+        "dataset_sha256": "648cc3be05fe6bb3d035077bed57fc2cf6313824fa8f9638c95b8ad05d473faa",
+        "tokenizer_fingerprint": "f78e8590a28d3b442ab763afe8cc9ad54af9f1dd9078c6005e7fa9461b1ff4c5",
+        "dim": 48,
+        "hidden": 128,
+        "window": 64,
+        "precision": "int8",
+        "vocab_size": 515,
+        "batch": 16,
+        "lr": 0.001,
+        "weight_decay": 0.01,
+        "clip_norm": 1.0,
+        "max_length": 128,
+        "selection": "minimum response validation NLL at the frozen one-block validation steps",
+        "blocks": 2
+      }
+    },
+    {
+      "seed": 33,
+      "blocks": 2,
+      "init_mode": "copy_inner_identity",
+      "target_steps": 9661,
+      "steps": 9661,
+      "validation_steps": [
+        2502,
+        4946,
+        7326,
+        9661
+      ],
+      "selected_step": 9661,
+      "selected_validation_nll": 0.2413313850208565,
+      "validation_curve": [
+        {
+          "step": 2502,
+          "validation_nll": 0.3060213593973054,
+          "train_cpu_seconds": 24.9592300409999
+        },
+        {
+          "step": 4946,
+          "validation_nll": 0.388127034433462,
+          "train_cpu_seconds": 49.318705747999815
+        },
+        {
+          "step": 7326,
+          "validation_nll": 0.29654627205045136,
+          "train_cpu_seconds": 72.99196244500118
+        },
+        {
+          "step": 9661,
+          "validation_nll": 0.2413313850208565,
+          "train_cpu_seconds": 96.2269458670024
+        }
+      ],
+      "train_cpu_seconds": 96.2269458670024,
+      "train_wall_seconds": 96.2625175720022,
+      "parameters": 93699,
+      "file_bytes": 178976,
+      "numeric_weight_bytes": 176616,
+      "batch_ids_sha256": "0f839f44d4d04dafb108b7204a29020d0e180777b5b01ed2746e33241e924e8e",
+      "examples_seen": {
+        "addition": 38752,
+        "copy": 38550,
+        "expression": 38805,
+        "uppercase": 38469
+      },
+      "model_path": "models/v012_copy_init/seed33-b2-copy_inner_identity.edge",
+      "model_sha256": "58554dd6ae177ab1e3137a26aa62abbb08d29b977c925609aeefef3d32a59cda",
+      "pt_path": "models/v012_copy_init/seed33-b2-copy_inner_identity.pt",
+      "pt_sha256": "7f8b4fc27fe1567f4c04416d7444114f3d8de11d97adf7f4eb2ca99a28ddb790",
+      "baseline_one_selected_step": 9661,
+      "baseline_one_selected_validation_nll": 0.3103827942300726,
+      "baseline_one_train_cpu_seconds": 60.00725253200184,
+      "baseline_one_train_wall_seconds": 60.03784029299783,
+      "fairness_identity_one": {
+        "protocol": "edge-sft-v012-equal-updates-1",
+        "seed": 33,
+        "target_steps": 9661,
+        "threads": 1,
+        "dataset_sha256": "648cc3be05fe6bb3d035077bed57fc2cf6313824fa8f9638c95b8ad05d473faa",
+        "tokenizer_fingerprint": "f78e8590a28d3b442ab763afe8cc9ad54af9f1dd9078c6005e7fa9461b1ff4c5",
+        "dim": 48,
+        "hidden": 128,
+        "window": 64,
+        "precision": "int8",
+        "vocab_size": 515,
+        "batch": 16,
+        "lr": 0.001,
+        "weight_decay": 0.01,
+        "clip_norm": 1.0,
+        "max_length": 128,
+        "selection": "minimum response validation NLL at the frozen one-block validation steps",
+        "blocks": 1
+      },
+      "fairness_identity_two": {
+        "protocol": "edge-sft-v012-equal-updates-1",
+        "seed": 33,
+        "target_steps": 9661,
+        "threads": 1,
+        "dataset_sha256": "648cc3be05fe6bb3d035077bed57fc2cf6313824fa8f9638c95b8ad05d473faa",
+        "tokenizer_fingerprint": "f78e8590a28d3b442ab763afe8cc9ad54af9f1dd9078c6005e7fa9461b1ff4c5",
+        "dim": 48,
+        "hidden": 128,
+        "window": 64,
+        "precision": "int8",
+        "vocab_size": 515,
+        "batch": 16,
+        "lr": 0.001,
+        "weight_decay": 0.01,
+        "clip_norm": 1.0,
+        "max_length": 128,
+        "selection": "minimum response validation NLL at the frozen one-block validation steps",
+        "blocks": 2
+      }
+    }
+  ],
+  "wall_seconds": 323.76038346,
+  "energy_joules": null
+}
