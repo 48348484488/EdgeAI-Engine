@@ -18,6 +18,19 @@ int main(){
   put(root/"web/app.js","function renderMenu() {\n  return 'menu';\n}\n");
   put(root/"script/login.pwn","stock CarregarConta(playerid) {\n return 1;\n}\n");
   put(root/"unicode/ação.py", "def ola():\n    return 'ação 😊'\n");
+  put(root/"ranking/quality.py",
+      "# target_fn should not outrank code\n"
+      "label = \"target_fn()\"\n"
+      "target_fn()\n"
+      "def target_fn(value):\n"
+      "    return value\n");
+  put(root/"ranking/docstring.py",
+      "\"\"\"documentation\n"
+      "doc_target()\n"
+      "\"\"\"\n"
+      "doc_target()\n"
+      "def doc_target(value):\n"
+      "    return value\n");
   put(root/".env","SpawnPlayer=hidden\n");put(root/".git/index.cpp","secretToken();\n");
   put(root/"node_modules/dep.js","function dependencySecret() {}\n");
   put(root/"secret_keys.py","def secretToken(): pass\n");
@@ -28,12 +41,23 @@ int main(){
   CHECK(r.hits.size()==2);CHECK(r.hits[0].path=="src/player.cpp");CHECK(r.hits[0].match_line==2);
   CHECK(r.hits[0].start_line==1&&r.hits[0].end_line==3);
   CHECK(r.hits[0].text=="// spawn logic\nvoid SpawnPlayer(int id) {\n    set_health(id, 100);");
-  CHECK(!r.neural_used&&!r.partial);CHECK(r.scanned_files==5);CHECK(r.skipped_files>=3);
+  CHECK(!r.neural_used&&!r.partial);CHECK(r.scanned_files==7);CHECK(r.skipped_files>=3);
   CHECK(idx.search("`SpawnPlay`",3,0).hits.empty());
   CHECK(idx.search("Procure set health",3,0).hits[0].match_line==3);
   CHECK(idx.search("render menu",3,0).hits[0].path=="web/app.js");
   CHECK(idx.search("CarregarConta",3,0).hits[0].path=="script/login.pwn");
   CHECK(idx.search("`ola`",3,1).hits[0].text.find("ação")!=std::string::npos);
+  auto ranked=idx.search("target_fn",5,0);
+  CHECK(ranked.hits.size()>=2);
+  CHECK(ranked.hits[0].path=="ranking/quality.py");
+  CHECK(ranked.hits[0].match_line==4);
+  bool saw_call=false;for(const auto& h:ranked.hits)if(h.path=="ranking/quality.py"&&h.match_line==3)saw_call=true;
+  CHECK(saw_call);
+  auto doc_ranked=idx.search("doc_target",5,0);
+  CHECK(doc_ranked.hits.size()>=3);
+  CHECK(doc_ranked.hits[0].path=="ranking/docstring.py"&&doc_ranked.hits[0].match_line==5);
+  CHECK(doc_ranked.hits[1].path=="ranking/docstring.py"&&doc_ranked.hits[1].match_line==4);
+  CHECK(doc_ranked.hits[2].path=="ranking/docstring.py"&&doc_ranked.hits[2].match_line==2);
   CHECK(idx.search("totallyMissingSymbol",3,1).hits.empty());
   CHECK(idx.search("secretToken",3,1).hits.empty());
   CHECK(idx.search("dependencySecret",3,1).hits.empty());
