@@ -75,6 +75,14 @@ class V012ExperimentContractTests(unittest.TestCase):
         for key,value in before.items():
             torch.testing.assert_close(base.state_dict()[key],value,rtol=0,atol=0)
 
+    def test_promote_two_blocks_starts_as_same_function(self):
+        torch.manual_seed(321)
+        base=TinyTransformer(dim=8,hidden=12,window=4,precision='fp32',blocks=1)
+        base.eval()
+        two=exp.promote_blocks(base,2,seed=77).eval()
+        tokens=torch.tensor([[1,2,3,4,5,6]],dtype=torch.long)
+        torch.testing.assert_close(two(tokens),base(tokens),rtol=0,atol=0)
+
     def test_promote_one_block_returns_independent_copy(self):
         torch.manual_seed(456)
         base=TinyTransformer(dim=8,hidden=12,window=4,precision='fp32',blocks=1)
