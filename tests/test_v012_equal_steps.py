@@ -31,7 +31,8 @@ class EqualStepsV012Tests(unittest.TestCase):
         report=dict(fairness_verified=True,runs=[
             dict(seed=11,blocks=1,steps=100,selected_step=50,selected_validation_nll=.4,
                  validation_curve=[dict(step=25),dict(step=50),dict(step=75),dict(step=100)],
-                 batch_ids_sha256='abc',examples_seen={'copy':1600},source_checkpoint_sha256='def')
+                 batch_ids_sha256='abc',examples_seen={'copy':1600},source_checkpoint_sha256='def',
+                 train_cpu_seconds=1.0,train_wall_seconds=1.1)
         ])
         p=eq.baseline_plan(report,11)
         self.assertEqual(p['target_steps'],100)
