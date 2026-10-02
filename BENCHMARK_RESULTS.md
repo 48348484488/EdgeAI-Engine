@@ -13,11 +13,13 @@ Mesmo corpus e 35 consultas da v0.10 (27 definições top-level + 8 símbolos au
 | Métrica | v0.10 | v0.11 |
 |---|---:|---:|
 | Definição correta top-1 | 16/27 | **24/27** |
-| Definição correta top-5 | 18/27 | **26/27** |
+| Definição correta top-5 | 18/27 | **27/27** |
 | Ausentes retornam vazio | 8/8 | **8/8** |
 | Mediana da sessão (35 consultas) | 25.035 ms | **27.683 ms** |
 
 A v0.11 melhorou recuperação nesse corpus, com ~10,6% de aumento de latência sobre a mediana publicada da v0.10. Isso continua sendo busca lexical/heurística, não compreensão semântica nem benchmark neural.
+
+Validação final adicional no GitHub Actions do HEAD integrado (recompilando a v0.10 a partir do commit `d2735c6` no mesmo runner): v0.10 = 16/27 top-1, 18/27 top-5, 8/8 ausentes, 36.930 ms; v0.11 = **24/27 top-1, 27/27 top-5, 8/8 ausentes, 40.084 ms**. Os tempos variam por runner; a comparação válida é dentro da mesma execução.
 
 ## Validação
 
