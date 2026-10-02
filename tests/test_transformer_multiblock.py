@@ -75,7 +75,7 @@ class MultiBlockTransformerTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as td:
             path = Path(td) / "two.edge"
             export_transformer(model, path, max_generate=16)
-            self.assertEqual(path.read_bytes()[:8], b"EDGEAI8\\0")
+            self.assertEqual(path.read_bytes()[:8], b"EDGEAI8\0")
 
     def test_one_block_instruction_export_stays_edgeai7(self):
         tok = ByteBPE((), instruction=True)
@@ -84,7 +84,7 @@ class MultiBlockTransformerTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as td:
             path = Path(td) / "one.edge"
             export_transformer(model, path, max_generate=16, tokenizer=tok)
-            self.assertEqual(path.read_bytes()[:8], b"EDGEAI7\\0")
+            self.assertEqual(path.read_bytes()[:8], b"EDGEAI7\0")
 
 
 if __name__ == "__main__":
