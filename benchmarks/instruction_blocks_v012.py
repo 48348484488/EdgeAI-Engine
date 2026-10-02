@@ -22,7 +22,7 @@ ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'tools'))
 from instruction_data import load_dataset,sha
 from sft_model import expand_checkpoint,make_batch,response_loss,validation_loss
-from transformer_model import TinyTransformer,export_transformer
+from transformer_model import TinyTransformer,export_transformer,numeric_weight_bytes
 
 SEEDS=(11,22,33)
 ARCHITECTURES=(1,2)
@@ -195,7 +195,7 @@ def train_trial(seed,blocks,cpu_seconds,threads,data,groups,dataset_digest,model
         validation_curve=curve,examples_seen=seen,batch_ids_sha256=digest.hexdigest(),
         before_path=str(before.relative_to(ROOT)),after_path=str(after.relative_to(ROOT)),
         file_bytes=after.stat().st_size,
-        numeric_weight_bytes=None,
+        numeric_weight_bytes=numeric_weight_bytes(model),
         cache_payload_bytes=8*blocks*model.window*model.dim,
         artifacts=artifacts,
     )
