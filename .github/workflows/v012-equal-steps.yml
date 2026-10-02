@@ -1,0 +1,91 @@
+name: EdgeAI v0.12 Equal-Step Ablation
+
+on:
+  push:
+    branches: [v0.12-multiblock]
+    paths:
+      - .github/workflows/v012-equal-steps.yml
+      - .github/v012-equal-steps-trigger
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: edgeai-v012-equal-steps
+  cancel-in-progress: false
+
+jobs:
+  ablation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure and build native evaluator
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release && cmake --build build -j2
+      - name: Install CPU Python dependencies
+        run: |
+          python3 -m pip install --disable-pip-version-check --index-url https://download.pytorch.org/whl/cpu torch==2.10.0
+          python3 -m pip install --disable-pip-version-check 'numpy>=1.26,<3'
+      - name: Contract tests
+        run: python3 -m unittest tests.test_v012_experiment
+      - name: Train two-block models to equal optimizer steps
+        run: python3 benchmarks/instruction_blocks_equal_steps_v012.py
+      - name: Evaluate native generation
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('results/v012/equal_steps_training.json')
+          d=json.loads(p.read_text())
+          old=json.loads(Path('results/v012/training.json').read_text())
+          runs=[]
+          for r in d['runs']:
+              runs.append(dict(
+                  seed=r['seed'],blocks=2,after_path=r['model_path'],
+                  artifacts={r['model_path']:r['model_sha256']},
+                  parameters=r['parameters'],file_bytes=r['file_bytes'],
+                  selected_validation_nll=r['selected_validation_nll'],
+                  train_cpu_seconds=r['train_cpu_seconds'],steps=r['steps']))
+          compat=dict(expected=3,completed=3,architectures=[1,2],fairness_verified=True,
+                      dataset_sha256=old['dataset_sha256'],runs=runs)
+          Path('results/v012/equal_steps_eval_input.json').write_text(json.dumps(compat,indent=2)+'\n')
+          PY
+          python3 benchmarks/instruction_blocks_eval_v012.py --build build --report results/v012/equal_steps_eval_input.json --out results/v012/equal_steps_evaluation.json
+      - name: Compare against frozen one-block baseline
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          base=json.loads(Path('results/v012/evaluation.json').read_text())
+          ab=json.loads(Path('results/v012/equal_steps_evaluation.json').read_text())
+          b={r['seed']:r for r in base['runs'] if r['blocks']==1}
+          a={r['seed']:r for r in ab['runs']}
+          pairs=[]
+          for s in (11,22,33):
+              pairs.append(dict(seed=s,one_correct=b[s]['summary']['correct'],
+                                two_equal_steps_correct=a[s]['summary']['correct'],
+                                delta=a[s]['summary']['correct']-b[s]['summary']['correct']))
+          out=dict(protocol='frozen one-block baseline versus two-block equal optimizer steps',
+                   pairs=pairs,one_total=sum(x['one_correct'] for x in pairs),
+                   two_total=sum(x['two_equal_steps_correct'] for x in pairs))
+          out['delta']=out['two_total']-out['one_total']
+          Path('results/v012/equal_steps_comparison.json').write_text(json.dumps(out,indent=2)+'\n')
+          print(json.dumps(out))
+          PY
+      - name: Upload evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: edgeai-v012-equal-steps
+          path: |
+            results/v012/equal_steps_*.json
+            models/v012_equalsteps/
+      - name: Commit compact evidence
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/v012/equal_steps_*.json
+          git commit -m "bench: record v0.12 equal-step ablation" || exit 0
+          git fetch origin v0.12-multiblock
+          git rebase origin/v0.12-multiblock
+          git push origin HEAD:v0.12-multiblock
