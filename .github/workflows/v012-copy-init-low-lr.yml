@@ -1,0 +1,77 @@
+name: EdgeAI v0.12 Copy-Inner Low-LR Ablation
+
+on:
+  push:
+    branches: [v0.12-multiblock]
+    paths:
+      - .github/workflows/v012-copy-init-low-lr.yml
+      - .github/v012-copy-init-low-lr-trigger
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: edgeai-v012-copy-init-low-lr
+  cancel-in-progress: false
+
+jobs:
+  ablation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure and build
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release && cmake --build build -j2
+      - name: Native tests
+        run: ctest --test-dir build --output-on-failure
+      - name: Install CPU Python dependencies
+        run: |
+          python3 -m pip install --disable-pip-version-check --index-url https://download.pytorch.org/whl/cpu torch==2.10.0
+          python3 -m pip install --disable-pip-version-check 'numpy>=1.26,<3'
+      - name: Python tests
+        run: python3 -m unittest tests.test_v012_equal_steps
+      - name: Train copy-inner models with 0.25x inner LR
+        run: |
+          python3 benchmarks/instruction_blocks_equal_steps_v012.py             --seeds 11 22 33 --threads 1             --baseline results/v012/training.json             --init-mode copy_inner_identity             --block1-inner-lr-scale 0.25             --out results/v012_copy_init_low_lr/training.json             --model-dir models/v012_copy_init_low_lr
+      - name: Native generation evaluation
+        run: |
+          python3 benchmarks/instruction_blocks_equal_steps_eval_v012.py             --build build             --training results/v012_copy_init_low_lr/training.json             --baseline-eval results/v012/evaluation.json             --out results/v012_copy_init_low_lr/evaluation.json
+      - name: Validate and print result
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          t=json.loads(Path('results/v012_copy_init_low_lr/training.json').read_text())
+          e=json.loads(Path('results/v012_copy_init_low_lr/evaluation.json').read_text())
+          assert t['init_mode']=='copy_inner_identity'
+          assert t['block1_inner_lr_scale']==0.25
+          assert t['completed']==3 and t['fairness_verified'] is True and e['completed']==3
+          print(json.dumps(dict(one_correct=e['one_correct'],two_correct=e['two_correct'],
+                                delta=e['correct_delta'],two_wins=e['two_wins'],
+                                one_wins=e['one_wins'],ties=e['ties'],
+                                cpu_ratio=e['median_train_cpu_ratio'],
+                                latency_ratio=e['median_latency_ratio'])))
+          PY
+      - name: Upload evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: edgeai-v012-copy-inner-low-lr
+          retention-days: 30
+          if-no-files-found: error
+          path: |
+            results/v012_copy_init_low_lr/
+            models/v012_copy_init_low_lr/
+      - name: Commit compact evidence
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/v012_copy_init_low_lr
+          git diff --cached --quiet && exit 0
+          git commit -m "bench: record v0.12 copy-inner low-lr ablation"
+          for attempt in 1 2 3; do
+            git fetch origin v0.12-multiblock
+            git rebase origin/v0.12-multiblock
+            if git push origin HEAD:v0.12-multiblock; then exit 0; fi
+          done
+          exit 1
