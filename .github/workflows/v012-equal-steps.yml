@@ -28,47 +28,26 @@ jobs:
           python3 -m pip install --disable-pip-version-check --index-url https://download.pytorch.org/whl/cpu torch==2.10.0
           python3 -m pip install --disable-pip-version-check 'numpy>=1.26,<3'
       - name: Contract tests
-        run: python3 -m unittest tests.test_v012_experiment
+        run: python3 -m unittest tests.test_v012_experiment tests.test_v012_equal_steps
       - name: Train two-block models to equal optimizer steps
         run: python3 benchmarks/instruction_blocks_equal_steps_v012.py
       - name: Evaluate native generation
         run: |
-          python3 - <<'PY'
-          import json
-          from pathlib import Path
-          p=Path('results/v012/equal_steps_training.json')
-          d=json.loads(p.read_text())
-          old=json.loads(Path('results/v012/training.json').read_text())
-          runs=[]
-          for r in d['runs']:
-              runs.append(dict(
-                  seed=r['seed'],blocks=2,after_path=r['model_path'],
-                  artifacts={r['model_path']:r['model_sha256']},
-                  parameters=r['parameters'],file_bytes=r['file_bytes'],
-                  selected_validation_nll=r['selected_validation_nll'],
-                  train_cpu_seconds=r['train_cpu_seconds'],steps=r['steps']))
-          compat=dict(expected=3,completed=3,architectures=[1,2],fairness_verified=True,
-                      dataset_sha256=old['dataset_sha256'],runs=runs)
-          Path('results/v012/equal_steps_eval_input.json').write_text(json.dumps(compat,indent=2)+'\n')
-          PY
-          python3 benchmarks/instruction_blocks_eval_v012.py --build build --report results/v012/equal_steps_eval_input.json --out results/v012/equal_steps_evaluation.json
-      - name: Compare against frozen one-block baseline
+          python3 benchmarks/instruction_blocks_eval_v012.py --build build --report results/v012/equal_steps_training.json --out results/v012/equal_steps_evaluation.json
+      - name: Compare paired architectures
         run: |
           python3 - <<'PY'
           import json
           from pathlib import Path
-          base=json.loads(Path('results/v012/evaluation.json').read_text())
-          ab=json.loads(Path('results/v012/equal_steps_evaluation.json').read_text())
-          b={r['seed']:r for r in base['runs'] if r['blocks']==1}
-          a={r['seed']:r for r in ab['runs']}
+          e=json.loads(Path('results/v012/equal_steps_evaluation.json').read_text())
+          by={(r['seed'],r['blocks']):r for r in e['runs']}
           pairs=[]
           for s in (11,22,33):
-              pairs.append(dict(seed=s,one_correct=b[s]['summary']['correct'],
-                                two_equal_steps_correct=a[s]['summary']['correct'],
-                                delta=a[s]['summary']['correct']-b[s]['summary']['correct']))
-          out=dict(protocol='frozen one-block baseline versus two-block equal optimizer steps',
-                   pairs=pairs,one_total=sum(x['one_correct'] for x in pairs),
-                   two_total=sum(x['two_equal_steps_correct'] for x in pairs))
+              a,b=by[(s,1)],by[(s,2)]
+              pairs.append(dict(seed=s,one_correct=a['summary']['correct'],two_correct=b['summary']['correct'],
+                                delta=b['summary']['correct']-a['summary']['correct']))
+          out=dict(protocol='paired 9000 optimizer-step ablation',pairs=pairs,
+                   one_total=sum(x['one_correct'] for x in pairs),two_total=sum(x['two_correct'] for x in pairs))
           out['delta']=out['two_total']-out['one_total']
           Path('results/v012/equal_steps_comparison.json').write_text(json.dumps(out,indent=2)+'\n')
           print(json.dumps(out))
