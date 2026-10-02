@@ -1,0 +1,43 @@
+{
+  "format": "edge-sft-synthetic-1",
+  "synthetic": true,
+  "source": "v0.13 curriculum plus deterministic train-only 5-char string bridge",
+  "license": "CC0-1.0",
+  "files": {
+    "train.jsonl": {
+      "sha256": "12df9a50a3e9771ec3f8d4e0c544fdf2f0324993ce10612515534083fa973ff4",
+      "rows": 7668,
+      "bytes": 1232362
+    },
+    "valid.jsonl": {
+      "sha256": "afdcbab2bf1c8575ca08ee0e07d358fa30d67b9091259126f45106c9b6bb05ea",
+      "rows": 128,
+      "bytes": 20498
+    },
+    "test_id.jsonl": {
+      "sha256": "44b81f2ddb367d439c1a976e40068e7ab32c10e340eae75364be52685e83a7e2",
+      "rows": 54,
+      "bytes": 8520
+    },
+    "test_template.jsonl": {
+      "sha256": "0826e28e8faf58a37ef5e277f5cb69ee2584b4f10e1200d78b1ea2c06c697c4a",
+      "rows": 60,
+      "bytes": 10260
+    },
+    "test_range.jsonl": {
+      "sha256": "e2978b9ac1f022f5ed91aaceb04d919013d1214bafa7402d86c8591ba6a92433",
+      "rows": 64,
+      "bytes": 10624
+    },
+    "test_family.jsonl": {
+      "sha256": "50c18f65690cd9dff4945fbd6d30e6d7bb0491736d1fde46c9275d5efe0223f9",
+      "rows": 16,
+      "bytes": 2388
+    }
+  },
+  "limitations": [
+    "diagnostic curriculum, not a standardized benchmark",
+    "all v0.12 validation/test rows remain unchanged",
+    "length-6 strings remain unseen in training"
+  ]
+}
