@@ -1,7 +1,7 @@
 {
   "version": "0.12.0",
-  "commit": "936cbc230c55e649bbb47760f91a45f910778859",
-  "workflow_run_id": 37000089965,
+  "commit": "66ff284654c5c570617b0235d06e184f84054ec7",
+  "workflow_run_id": 37001132796,
   "release_ctest_passed": 15,
   "nosimd_ctest_passed": 15,
   "asan_ubsan_ctest_passed": 15,
@@ -36,7 +36,7 @@
   "sha256": {
     "training_json": "664de07031a4c49d26cdde145bb73258aa5c775d2fe01005d2fb8e35a6414f72",
     "evaluation_json": "151209bd9e43710ffeaccef0af5e1254f1e2b47825f7a69ae16836be2d35c507",
-    "parity_final_json": "89fecbc7f23aae62ba9bdba00c4e2291e79a8963ca5da2ccadaec697334b5c17"
+    "parity_final_json": "4f62be7b5f976796fc48221ffffcb398364ae2ab929cf7ef91eb16a4cb97cc9b"
   },
   "rss_peak_bytes": null,
   "energy_joules": null
