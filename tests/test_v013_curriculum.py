@@ -17,4 +17,11 @@ class CurriculumV013Tests(unittest.TestCase):
         self.assertIn('Add: 29 + 29',prompts);self.assertNotIn('Add: 30 + 30',prompts)
         self.assertIn('Expression for x + 39:',prompts);self.assertNotIn('Expression for x + 40:',prompts)
 
+    def test_all_sealed_splits_are_byte_identical_to_v012_source(self):
+        d=v13.build_v013()
+        for split in ('test_id','test_template','test_range','test_family'):
+            generated=('\\n'.join(v13.dumps(r) for r in d[split])+'\\n').encode()
+            original=(ROOT/'data/instructions_v07'/f'{split}.jsonl').read_bytes()
+            self.assertEqual(generated,original)
+
 if __name__=='__main__':unittest.main()
