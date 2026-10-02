@@ -9,6 +9,7 @@ sys.path.insert(0,str(ROOT/'benchmarks'))
 
 import instruction_blocks_v012 as exp
 import instruction_blocks_eval_v012 as eval12
+import analyze_v012_depth as depth12
 sys.path.insert(0,str(ROOT/'tools'))
 from transformer_model import TinyTransformer
 
@@ -155,6 +156,25 @@ class V012ExperimentContractTests(unittest.TestCase):
     def test_repo_path_preserves_absolute_repository_path(self):
         expected=ROOT/'results/v012/training.json'
         self.assertEqual(exp.repo_path(expected),expected)
+
+
+    def test_depth_diagnosis_exposes_compute_and_generation_tradeoff(self):
+        training=dict(runs=[
+            dict(seed=11,blocks=1,steps=100,selected_validation_nll=.5),
+            dict(seed=11,blocks=2,steps=65,selected_validation_nll=.4),
+        ])
+        evaluation=dict(runs=[
+            dict(seed=11,blocks=1,summary=dict(count=10,correct=6,median_internal_seconds=.001)),
+            dict(seed=11,blocks=2,summary=dict(count=10,correct=5,median_internal_seconds=.0012)),
+        ])
+        d=depth12.diagnose(training,evaluation)
+        self.assertEqual(d['one_correct'],6)
+        self.assertEqual(d['two_correct'],5)
+        self.assertEqual(d['correct_delta'],-1)
+        self.assertEqual(d['validation_prefers_two'],1)
+        self.assertEqual(d['generation_prefers_two'],0)
+        self.assertAlmostEqual(d['median_two_step_ratio'],.65)
+        self.assertAlmostEqual(d['median_latency_ratio'],1.2)
 
 
 if __name__=='__main__':
