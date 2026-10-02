@@ -50,6 +50,23 @@ Custos do segundo bloco nesse modelo:
 - cerca de 38,80% menos steps no mesmo orçamento de CPU;
 - cerca de 19,82% mais tempo interno mediano por caso.
 
+## Ablação equal-update com inicialização identidade
+
+Depois do experimento de 60 s, a inicialização do bloco extra foi alterada para começar como **identidade residual**, de forma que adicionar o segundo bloco não mude a função do modelo antes do treino. Os artefatos históricos de `results/v012/` foram gerados pelo protocolo anterior (`edge-sft-v012-blocks-1`); o código atual usa o protocolo versionado de inicialização por identidade. Portanto, uma nova execução no HEAD atual não deve ser tratada como reprodução bit a bit daqueles artefatos antigos.
+
+Para separar profundidade de quantidade de updates, a ablação `results/v012_equal_steps/` congelou o baseline de 1 bloco e deu ao modelo atual de 2 blocos exatamente o mesmo stream de minibatches, os mesmos pontos de validação e o mesmo número de optimizer updates por seed.
+
+| Seed | 1 bloco correct | 2 blocos equal-update correct | Steps pareados |
+|---:|---:|---:|---:|
+| 11 | 53/194 | **55/194** | 11.269 |
+| 22 | 37/194 | 37/194 | 11.286 |
+| 33 | **59/194** | 46/194 | 9.661 |
+| **Total** | **149/582** | 138/582 | — |
+
+No agregado exato, o baseline ficou em **147/582** e 2 blocos em **138/582**. A mediana de validation NLL favoreceu 2 blocos (**0,2725** contra 0,4101), mas isso não se converteu em melhor geração livre. Para receber os mesmos updates, 2 blocos consumiu **1,197×** o CPU de treino na mediana e teve **1,048×** a latência nativa mediana.
+
+Assim, “2 blocos perdeu apenas porque completou menos steps em 60 s” não explica o resultado. O próximo diagnóstico relevante é de dinâmica de otimização por bloco (gradientes, mudança funcional, warm-up/congelamento), não apenas mais orçamento.
+
 ## Diagnóstico curto anterior
 
 O ensaio de 12 s registrado em `results/v012/blocks.json`, com avaliação teacher-forced, favoreceu 2 blocos em NLL e acurácia de tokens. Esse sinal continua útil, mas não é a decisão final: no protocolo principal de 60 s com geração nativa livre, 2 blocos não melhorou de forma consistente.
@@ -61,7 +78,7 @@ O ensaio de 12 s registrado em `results/v012/blocks.json`, com avaliação teach
 ## Verificação final
 
 - Release CTest: **15/15**.
-- Python: **130/130**.
+- Python: **138/138**.
 - Sem SIMD: **15/15 CTest**.
 - ASan + UBSan: **15/15 CTest**.
 - 142 modelos/checkpoints legados permaneceram sem alteração.
