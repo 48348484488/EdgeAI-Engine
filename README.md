@@ -6,7 +6,8 @@
 
 O projeto combina um **modelo neural próprio e pequeno** com ferramentas determinísticas, memória local e busca de código. O foco é medir ganhos reais — não fingir que o modelo atual já é comparável a ChatGPT ou Claude.
 
-**Versão atual: v0.11**
+**Versão estável atual: v0.11**  
+**Experimento mais recente: 2 blocos (candidato v0.12)**
 
 ## O que ela já sabe fazer
 
@@ -115,9 +116,26 @@ O objetivo de longo prazo é aumentar a capacidade útil mantendo o sistema:
 
 A estratégia é combinar modelos pequenos com memória, ferramentas e kernels eficientes em vez de simplesmente aumentar o número de parâmetros.
 
-### Próximo experimento
+### Experimento mais recente
 
-Comparar **Transformer de 1 bloco vs. 2 blocos** usando o mesmo conjunto de dados e orçamento de CPU para descobrir quanto de capacidade adicional realmente compensa o custo.
+Testamos **1 bloco vs. 2 blocos Transformer** com os mesmos dados, três seeds e o mesmo orçamento de CPU.
+
+| Medida | 1 bloco | 2 blocos |
+|---|---:|---:|
+| Parâmetros | 71.827 | 93.699 |
+| NLL mediano nos 194 testes | 2,8149 | **2,4919** |
+| Acurácia de tokens | 57,27% | **60,20%** |
+| Linhas corretas com teacher forcing | 18,21% | **20,96%** |
+
+O modelo de 2 blocos melhorou o NLL de teste em **3/3 seeds**, mesmo executando menos passos no mesmo tempo de CPU. Porém, continuou com **0 linhas completas corretas** nos testes de extrapolação e na tarefa nova.
+
+Isso é evidência de ganho de capacidade neste protocolo, **não** prova de inteligência geral e ainda não muda o runtime padrão.
+
+Relatório completo: [docs/v012/BLOCKS_EXPERIMENT.md](docs/v012/BLOCKS_EXPERIMENT.md)
+
+### Próximo passo
+
+Adicionar suporte nativo opcional a múltiplos blocos no runtime C++, manter compatibilidade com os modelos de 1 bloco e então medir geração real, RAM e latência antes de promover 2 blocos como padrão.
 
 ## Mais detalhes
 
