@@ -46,6 +46,16 @@ class GenerationSelectionV012Tests(unittest.TestCase):
         changed={k for k in set(one)|set(two) if one.get(k)!=two.get(k)}
         self.assertEqual(changed,{'blocks'})
         self.assertEqual(one['selection'],'greedy validation correct; exact, NLL, then earlier-step tiebreaks')
+        self.assertEqual(one['protocol'],'edge-sft-v012-generation-selection-1')
+
+
+    def test_validation_generation_keeps_greedy_bytes_and_scores_them(self):
+        rows=[dict(task='copy',prompt='p',answer='a',id='v')]
+        def fake_greedy(model,tok,prompt,max_tokens=32):
+            self.assertEqual(prompt,'p')
+            return b'a',[1,2],True
+        got=gs.validation_generation(None,None,rows,greedy_fn=fake_greedy)
+        self.assertEqual(got,dict(count=1,correct=1,exact=1,eos=1))
 
 
 if __name__=='__main__':
