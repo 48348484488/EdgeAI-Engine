@@ -10,6 +10,7 @@ sys.path.insert(0,str(ROOT/'benchmarks'))
 import instruction_blocks_v012 as exp
 import instruction_blocks_eval_v012 as eval12
 import analyze_v012_depth as depth12
+import instruction_blocks_equal_steps_v012 as equal12
 sys.path.insert(0,str(ROOT/'tools'))
 from transformer_model import TinyTransformer
 
@@ -182,6 +183,14 @@ class V012ExperimentContractTests(unittest.TestCase):
         self.assertEqual(d['generation_prefers_two'],0)
         self.assertAlmostEqual(d['median_two_step_ratio'],.65)
         self.assertAlmostEqual(d['median_latency_ratio'],1.2)
+
+
+    def test_equal_step_ablation_uses_frozen_one_block_counts(self):
+        self.assertEqual(equal12.target_steps(11),11269)
+        self.assertEqual(equal12.target_steps(22),11286)
+        self.assertEqual(equal12.target_steps(33),9661)
+        with self.assertRaises(ValueError):
+            equal12.target_steps(44)
 
 
 if __name__=='__main__':
