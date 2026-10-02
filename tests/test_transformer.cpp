@@ -22,6 +22,21 @@ int main(){using namespace edgeai;
     auto multi_loaded=TransformerModel::load("transformer-multi.edge");
     CHECK(multi_loaded.valid());CHECK(multi_loaded.config.blocks==2);CHECK(multi_loaded.blocks_data.size()==2);
     CHECK(multi_loaded.parameter_count()==multi.parameter_count());CHECK(multi_loaded.weight_bytes()==multi.weight_bytes());
+    TransformerBackend multi_backend(multi_loaded,Kernel::Scalar);
+    const auto multi_bytes=multi_backend.numeric_working_bytes();
+    std::vector<float> multi_first;
+    for(unsigned i=0;i<40;++i){
+        auto z=multi_backend.step(i%256);for(float v:z)CHECK(std::isfinite(v));if(i==0)multi_first=z;
+        auto sizes=multi_backend.block_cache_sizes();CHECK(sizes.size()==2);for(auto n:sizes)CHECK(n<=7);
+    }
+    auto wrapped=multi_backend.block_cache_sizes();CHECK(wrapped[0]==7&&wrapped[1]==7);
+    multi_backend.reset();auto reset_sizes=multi_backend.block_cache_sizes();CHECK(reset_sizes==std::vector<std::size_t>({0,0}));
+    CHECK(multi_backend.step(0)==multi_first);
+    TransformerBackend single_backend(m,Kernel::Scalar);CHECK(multi_bytes>single_backend.numeric_working_bytes());
+    auto altered=multi_loaded;
+    altered.blocks_data[1].project=MixedMatrix(DenseMatrix(16,16));
+    TransformerBackend altered_backend(altered,Kernel::Scalar);auto original_logits=multi_backend.step(1);auto altered_logits=altered_backend.step(1);
+    CHECK(original_logits!=altered_logits);
     std::ifstream multi_in("transformer-multi.edge",std::ios::binary);std::string multi_raw((std::istreambuf_iterator<char>(multi_in)),{});
     CHECK(multi_raw.substr(0,7)=="EDGEAI8");
     auto corrupt_blocks=[&](std::uint32_t count){
