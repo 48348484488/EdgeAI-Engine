@@ -1,0 +1,26 @@
+name: EdgeAI CI
+
+on:
+  push:
+    branches:
+      - v0.11-definition-ranking
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+      - name: Build
+        run: cmake --build build -j2
+      - name: C++ tests
+        run: ctest --test-dir build --output-on-failure
+      - name: Python tests
+        env:
+          EDGEAI_BUILD_DIR: ${{ github.workspace }}/build
+        run: python3 -m unittest discover -s tests -p 'test_*.py'
