@@ -17,6 +17,6 @@ int main(int argc,char**argv){try{
  if(!code_root.empty())engine.set_code_root(code_root);
  auto answer=[&](const std::string& question){try{auto r=engine.ask(question);std::cout<<r.text<<"\n[neural="<<r.neural_used<<" loops="<<r.loops_used<<" token_score="<<r.confidence<<"]\n";}catch(const std::exception&e){std::cout<<"Erro: "<<e.what()<<"\n";}};
  if(once){auto r=engine.ask(prompt);std::cout<<r.text<<"\n[neural="<<r.neural_used<<" loops="<<r.loops_used<<" token_score="<<r.confidence<<"]\n";return 0;}
- std::cout<<"EdgeAI Engine v0.12 (model formats through v0.7) | "<<engine.hardware().summary()<<" | backend="<<backend->name()<<"\nModelo experimental: nao e um assistente conversacional avancado.\nScore do token nao representa chance de a resposta estar correta.\nDigite 'sair' para fechar.\n";
+ std::cout<<"EdgeAI Engine v0.12 (model formats through EDGEAI8) | "<<engine.hardware().summary()<<" | backend="<<backend->name()<<"\nModelo experimental: nao e um assistente conversacional avancado.\nScore do token nao representa chance de a resposta estar correta.\nDigite 'sair' para fechar.\n";
  std::string s;while(std::cout<<"> "&&std::getline(std::cin,s)){if(s=="sair")break;answer(s);}return 0;
  }catch(const std::exception&e){std::cerr<<"Erro: "<<e.what()<<"\n";return 1;}}
