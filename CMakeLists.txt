@@ -68,6 +68,8 @@ if(EDGEAI_BUILD_TESTS AND TARGET edgeai_runtime_benchmark)
   if(Python3_Interpreter_FOUND)
     add_test(NAME edgeai_runtime_cli COMMAND ${Python3_EXECUTABLE}
       ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_runtime_cli.py $<TARGET_FILE:edgeai_runtime_benchmark>)
+    add_test(NAME edgeai_inspect_cli COMMAND ${Python3_EXECUTABLE}
+      ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_inspect_cli.py $<TARGET_FILE:edgeai_inspect>)
   endif()
 endif()
 
