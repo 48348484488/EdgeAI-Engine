@@ -63,7 +63,7 @@ def build_v015():
         add('test_range','expression',g,f'Expression for x {op} {k}:',f'x{op}{k}','en','expression_en_v015_holdout')
         add('test_range','expression',g,f'Expressao para x {op} {k}:',f'x{op}{k}','pt','expression_pt_v015_holdout')
 
-    for split in data:
+    for split in ('train','test_range'):
         data[split]=sorted(data[split],key=lambda r:r['id'])
     validate_dataset(data)
     return data
