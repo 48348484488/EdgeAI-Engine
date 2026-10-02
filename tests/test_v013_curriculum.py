@@ -20,7 +20,7 @@ class CurriculumV013Tests(unittest.TestCase):
     def test_all_sealed_splits_are_byte_identical_to_v012_source(self):
         d=v13.build_v013()
         for split in ('test_id','test_template','test_range','test_family'):
-            generated=('\\n'.join(v13.dumps(r) for r in d[split])+'\\n').encode()
+            generated=('\n'.join(v13.dumps(r) for r in d[split])+'\n').encode()
             original=(ROOT/'data/instructions_v07'/f'{split}.jsonl').read_bytes()
             self.assertEqual(generated,original)
 
