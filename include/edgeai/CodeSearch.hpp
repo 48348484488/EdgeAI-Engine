@@ -35,7 +35,7 @@ public:
 private:
     struct Source {
         std::string path, raw;
-        std::vector<std::string> lines;
+        std::vector<std::string> lines, code_lines;
         std::set<std::string> path_terms;
         std::unordered_map<std::string,std::vector<std::size_t>> postings;
         std::size_t entries=0;
