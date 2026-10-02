@@ -17,6 +17,20 @@ static bool mathish(const std::string& s){
     }
     return digit;
 }
+static bool natural_sum(const std::string& raw,const std::string& low,
+                        const std::string& prefix,const std::string& separator,
+                        std::string& expression){
+    if(low.rfind(prefix,0)!=0)return false;
+    std::string tail=trim(raw.substr(prefix.size()));
+    if(!tail.empty()&&tail.back()=='?')tail=trim(tail.substr(0,tail.size()-1));
+    std::string low_tail=lower_ascii(tail);
+    auto at=low_tail.find(separator);
+    if(at==std::string::npos)return false;
+    std::string left=trim(tail.substr(0,at)),right=trim(tail.substr(at+separator.size()));
+    if(!mathish(left)||!mathish(right))return false;
+    expression="("+left+")+("+right+")";
+    return true;
+}
 Route route(const std::string& text){
     std::string raw=trim(text), low=lower_ascii(raw);
     for(const std::string p:{"buscar codigo:","buscar código:","/code "}) if(low.rfind(p,0)==0) return {RouteKind::CodeSearch,trim(raw.substr(p.size())),1.0};
@@ -26,8 +40,12 @@ Route route(const std::string& text){
     if(low.rfind(search1,0)==0) return {RouteKind::MemorySearch,trim(raw.substr(search1.size())),1.0};
     if(low.rfind(search2,0)==0) return {RouteKind::MemorySearch,trim(raw.substr(search2.size())),1.0};
     std::string expr=raw;
-    const char* prefixes[]={"calcule ","calcular ","compute ","quanto e ","quanto é "};
+    const char* prefixes[]={"calcule ","calcular ","compute ","quanto e ","quanto é ","add:","some:"};
     for(auto p:prefixes){ std::string lp=p; if(low.rfind(lp,0)==0){ expr=trim(raw.substr(lp.size())); break; } }
+    std::string natural;
+    if(natural_sum(raw,low,"what is the sum of "," and ",natural) ||
+       natural_sum(raw,low,"quanto vale a soma de "," e ",natural))
+        return {RouteKind::Calculator,natural,0.999};
     if(mathish(expr)) return {RouteKind::Calculator,expr,0.999};
     return {RouteKind::Neural,raw,0.5};
 }
