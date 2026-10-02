@@ -51,6 +51,21 @@ Três seeds, 60 s de CPU por arquitetura/seed e avaliação final por geração 
 
 O ensaio curto teacher-forced de 12 s havia favorecido 2 blocos, mas a avaliação principal de 60 s com geração livre não reproduziu um ganho consistente: 2 blocos venceu apenas 1 das 3 seeds. Por isso, **1 bloco continua sendo o padrão**, enquanto o suporte multi-bloco permanece disponível para pesquisa.
 
+### Ablação equal-updates
+
+Para testar se 2 blocos perdia apenas porque conseguia menos updates dentro dos mesmos 60 s de CPU, repetimos o lado de 2 blocos usando **exatamente o mesmo stream de minibatches, os mesmos checkpoints de validação e o mesmo número de optimizer updates do baseline de 1 bloco** em cada seed.
+
+| Seed | 1 bloco baseline (exato) | 2 blocos equal-updates (exato) |
+|---|---:|---:|
+| 11 | 53/194 | **55/194** |
+| 22 | 37/194 | 37/194 |
+| 33 | **57/194** | 46/194 |
+| **Total** | **147/582** | 138/582 |
+
+Pela métrica `correct` usada para expressões, o baseline soma **149/582** e 2 blocos **138/582**. Portanto, igualar a exposição ao treinamento **não removeu a diferença de geração**. O modelo de 2 blocos precisou de cerca de **1,197×** o CPU de treino para receber os mesmos updates. Isso descarta “menos passos no mesmo orçamento de CPU” como explicação principal, mas não prova qual mecanismo de otimização causa a instabilidade entre seeds.
+
+O próximo diagnóstico deve medir gradientes e mudança funcional por bloco durante o treino e testar warm-up/congelamento do segundo bloco, em vez de simplesmente aumentar o orçamento.
+
 Paridade Python/C++: 4/4 casos passaram, com maior erro absoluto de **3,5763e-7**.
 
 ## Verificação v0.12
