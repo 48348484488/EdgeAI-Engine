@@ -106,6 +106,13 @@ class V012ExperimentContractTests(unittest.TestCase):
         changed={k for k in set(one)|set(two) if one.get(k)!=two.get(k)}
         self.assertEqual(changed,{'blocks'})
 
+    def test_build_identity_versions_identity_initialized_protocol(self):
+        config=dict(dim=64,hidden=96,window=64,precision='int8',vocab_size=515,blocks=2)
+        row=exp.build_identity(
+            seed=11,blocks=2,cpu_budget=60.0,threads=1,
+            dataset_sha256='d',tokenizer_fingerprint='t',config=config)
+        self.assertEqual(row['protocol'],'edge-sft-v012-blocks-identity-v2')
+
     def test_build_identity_pins_v07_sft_hyperparameters(self):
         config=dict(dim=64,hidden=96,window=64,precision='int8',vocab_size=515,blocks=1)
         row=exp.build_identity(
