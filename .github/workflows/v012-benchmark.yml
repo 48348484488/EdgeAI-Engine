@@ -5,6 +5,7 @@ on:
     branches: [v0.12-multiblock]
     paths:
       - .github/workflows/v012-benchmark.yml
+      - .github/v012-benchmark-trigger
   workflow_dispatch:
 
 permissions:
