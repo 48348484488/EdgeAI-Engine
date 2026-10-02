@@ -14,6 +14,7 @@ from instruction_blocks_v012 import promote_blocks,repo_path
 SEEDS=(11,22,33)
 ARCHITECTURES=(1,2)
 DEFAULT_THREADS=1
+INIT_MODES=('random_identity','copy_inner_identity')
 FROZEN_ONE_BLOCK_STEPS={11:11269,22:11286,33:9661}
 
 def target_steps(seed):
@@ -21,6 +22,15 @@ def target_steps(seed):
         return FROZEN_ONE_BLOCK_STEPS[int(seed)]
     except (KeyError,ValueError,TypeError):
         raise ValueError('published equal-step ablation is pinned to seeds 11/22/33')
+
+
+def promote_for_init(base,seed,mode):
+    if mode not in INIT_MODES: raise ValueError('unknown init mode')
+    model=promote_blocks(base,2,seed)
+    if mode=='copy_inner_identity':
+        for name in ('query','key','value','up'):
+            getattr(model.blocks[1],name).load_state_dict(getattr(base.blocks[0],name).state_dict())
+    return model
 
 
 _CONTROL_KEYS=('protocol','seed','target_steps','threads','dataset_sha256','tokenizer_fingerprint',
@@ -63,12 +73,12 @@ def save(path,obj):
     tmp=path.with_suffix(path.suffix+'.tmp');tmp.write_text(json.dumps(obj,indent=2)+'\n')
     tmp.replace(path)
 
-def train(seed,plan,threads,data,groups,dataset_digest,model_dir):
+def train(seed,plan,threads,data,groups,dataset_digest,model_dir,init_mode='random_identity'):
     base_path=ROOT/f'models/external_v06/bpe513-seed{seed}.pt'
     if sha(base_path.read_bytes())!=plan['source_checkpoint_sha256']:
         raise ValueError('baseline source checkpoint changed')
     cp=torch.load(base_path,map_location='cpu',weights_only=True)
-    base,tok=expand_checkpoint(cp,seed);model=promote_blocks(base,2,seed)
+    base,tok=expand_checkpoint(cp,seed);model=promote_for_init(base,seed,init_mode)
     config=model.export_config()
     one_identity=build_identity(seed,1,plan['target_steps'],threads,dataset_digest,tok.fingerprint(),config)
     two_identity=build_identity(seed,2,plan['target_steps'],threads,dataset_digest,tok.fingerprint(),config)
@@ -100,12 +110,12 @@ def train(seed,plan,threads,data,groups,dataset_digest,model_dir):
     if seen!=plan['examples_seen']: raise RuntimeError('task exposure differs from one-block baseline')
     if best_state is None: raise RuntimeError('no validation checkpoint')
     model.load_state_dict(best_state);model.eval();model_dir.mkdir(parents=True,exist_ok=True)
-    edge=model_dir/f'seed{seed}-b2-equalupdates.edge';pt=edge.with_suffix('.pt')
+    edge=model_dir/f'seed{seed}-b2-{init_mode}.edge';pt=edge.with_suffix('.pt')
     export_transformer(model,edge,tokenizer=tok,max_generate=32)
     torch.save(dict(config=model.export_config(),state_dict=best_state,tokenizer=tok.payload(),
                     seed=seed,blocks=2,phase='equal_updates',selected_step=best_step,
                     identity=two_identity),pt)
-    return dict(seed=seed,blocks=2,target_steps=plan['target_steps'],steps=plan['target_steps'],
+    return dict(seed=seed,blocks=2,init_mode=init_mode,target_steps=plan['target_steps'],steps=plan['target_steps'],
                 validation_steps=plan['validation_steps'],selected_step=best_step,
                 selected_validation_nll=best,validation_curve=curve,train_cpu_seconds=train_cpu,
                 train_wall_seconds=train_wall,parameters=sum(p.numel() for p in model.parameters()),
@@ -124,7 +134,8 @@ def main():
     p.add_argument('--data',type=Path,default=ROOT/'data/instructions_v07')
     p.add_argument('--baseline',type=Path,default=ROOT/'results/v012/training.json')
     p.add_argument('--model-dir',type=Path,default=ROOT/'models/v012_equalsteps')
-    p.add_argument('--out',type=Path,default=ROOT/'results/v012_equal_steps/training.json');a=p.parse_args()
+    p.add_argument('--out',type=Path,default=ROOT/'results/v012_equal_steps/training.json')
+    p.add_argument('--init-mode',choices=INIT_MODES,default='random_identity');a=p.parse_args()
     if tuple(a.seeds)!=SEEDS or a.threads!=1: p.error('published ablation is pinned to seeds 11/22/33 and one thread')
     torch.set_num_threads(a.threads);torch.use_deterministic_algorithms(True)
     baseline=json.loads(a.baseline.read_text());data,_=load_dataset(a.data)
@@ -137,8 +148,8 @@ def main():
         plan=baseline_plan(baseline,seed)
         if plan['target_steps']!=target_steps(seed):
             raise ValueError('frozen one-block step count differs from published v0.12 baseline')
-        runs.append(train(seed,plan,a.threads,data,groups,digest,model_dir))
-    report=dict(protocol='two-block equal-update ablation against frozen one-block v0.12 baseline',
+        runs.append(train(seed,plan,a.threads,data,groups,digest,model_dir,a.init_mode))
+    report=dict(protocol='two-block equal-update ablation against frozen one-block v0.12 baseline',init_mode=a.init_mode,
                 seeds=a.seeds,architectures=[1,2],threads=a.threads,expected=3,completed=len(runs),
                 dataset_sha256=digest,baseline_training_sha256=sha(a.baseline.read_bytes()),
                 fairness_verified=all(assert_fair_pair(r['fairness_identity_one'],r['fairness_identity_two']) for r in runs),
