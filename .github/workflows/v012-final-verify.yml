@@ -1,8 +1,11 @@
 name: EdgeAI v0.12 Final Verification
 
 on:
-  workflow_dispatch:
+  push:
+    branches: [v0.12-multiblock]
+    paths:
       - .github/v012-final-verify-trigger
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -23,18 +26,15 @@ jobs:
 
       - name: Release build and CTest
         run: |
-          cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
-          cmake --build build -j2
-          ctest --test-dir build --output-on-failure | tee /tmp/ctest-release.txt
+          cmake -S . -B build-v012-final -DCMAKE_BUILD_TYPE=Release
+          cmake --build build-v012-final -j2
+          ctest --test-dir build-v012-final --output-on-failure | tee /tmp/ctest-release.txt
 
       - name: Python suite
-        shell: bash
-        run: |
-          set -o pipefail
-          python3 -m unittest discover -s tests -p 'test_*.py' 2>&1 | tee /tmp/python-tests.txt
+        run: python3 -m unittest discover -s tests -p 'test_*.py' 2>&1 | tee /tmp/python-tests.txt
 
       - name: Final Python native parity
-        run: python3 tools/verify_multiblock.py --build build --out results/v012/multiblock_parity-final.json
+        run: python3 tools/verify_multiblock.py --build build-v012-final --out results/v012/multiblock_parity-final.json
 
       - name: Portable no-SIMD build and CTest
         run: |
@@ -65,8 +65,8 @@ jobs:
 
       - name: Inspect one and two block memory
         run: |
-          build/edgeai_inspect models/v012/seed11-b1-after.edge | tee /tmp/inspect-b1.txt
-          build/edgeai_inspect models/v012/seed11-b2-after.edge | tee /tmp/inspect-b2.txt
+          build-v012-final/edgeai_inspect models/v012/seed11-b1-after.edge | tee /tmp/inspect-b1.txt
+          build-v012-final/edgeai_inspect models/v012/seed11-b2-after.edge | tee /tmp/inspect-b2.txt
           grep -q '^format=EDGEAI7$' /tmp/inspect-b1.txt
           grep -q '^format=EDGEAI8$' /tmp/inspect-b2.txt
 
@@ -76,14 +76,16 @@ jobs:
           import hashlib,json,re,subprocess
           from pathlib import Path
 
-          root=Path('.')
           def digest(path):
               return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
           def ctest_count(path):
               text=Path(path).read_text(errors='replace')
               m=re.search(r'100% tests passed, 0 tests failed out of (\d+)',text)
-              if not m: raise RuntimeError('could not parse '+path)
+              if not m:
+                  raise RuntimeError('could not parse '+path)
               return int(m.group(1))
+
           def inspect(path):
               out={}
               for line in Path(path).read_text().splitlines():
@@ -92,69 +94,20 @@ jobs:
               for key in ('parameters','resident_numeric_weights_bytes','sequence_state_payload_bytes','numeric_working_bytes','window'):
                   out[key]=int(out[key])
               return out
+
           py=Path('/tmp/python-tests.txt').read_text(errors='replace')
           m=re.search(r'Ran (\d+) tests',py)
-          if not m or not re.search(r'(?m)^OK\\s*
+          if not m or 'OK' not in [line.strip() for line in py.splitlines()]:
               raise RuntimeError('Python suite did not report OK')
-          parity=json.loads(Path('results/v012/multiblock_parity-final.json').read_text())
-          if parity.get('all_passed') is not True:
-              raise RuntimeError('final parity failed')
-          manifest={
-              'version':'0.12.0',
-              'commit':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),
-              'release_ctest_passed':ctest_count('/tmp/ctest-release.txt'),
-              'nosimd_ctest_passed':ctest_count('/tmp/ctest-nosimd.txt'),
-              'asan_ubsan_ctest_passed':ctest_count('/tmp/ctest-san.txt'),
-              'python_tests_passed':int(m.group(1)),
-              'parity_all_passed':True,
-              'parity_max_abs_error':parity['max_abs_error'],
-              'parity_atol':parity['atol'],
-              'parity_rtol':parity['rtol'],
-              'legacy_model_files_unchanged':int(Path('/tmp/legacy-count.txt').read_text())==142,
-              'legacy_model_file_count':int(Path('/tmp/legacy-count.txt').read_text()),
-              'v012_model_file_count':int(Path('/tmp/v012-count.txt').read_text()),
-              'one_block_inspect':inspect('/tmp/inspect-b1.txt'),
-              'two_block_inspect':inspect('/tmp/inspect-b2.txt'),
-              'sha256':{
-                  'training_json':digest('results/v012/training.json'),
-                  'evaluation_json':digest('results/v012/evaluation.json'),
-                  'parity_final_json':digest('results/v012/multiblock_parity-final.json'),
-              },
-              'rss_peak_bytes':None,
-              'energy_joules':None,
-              'commands':[
-                  'cmake Release + ctest',
-                  'python unittest discover',
-                  'verify_multiblock.py',
-                  'cmake Release EDGEAI_DISABLE_SIMD=ON + ctest',
-                  'cmake Debug EDGEAI_SANITIZERS=ON + ctest',
-              ],
-          }
-          Path('results/v012/verification.json').write_text(json.dumps(manifest,indent=2)+'\n')
-          print(json.dumps(manifest,indent=2))
-          PY
 
-      - name: Commit verification evidence
-        run: |
-          set -euo pipefail
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add results/v012/verification.json results/v012/multiblock_parity-final.json
-          git commit -m "test: record v0.12 final verification"
-          for attempt in 1 2 3; do
-            git fetch origin v0.12-multiblock
-            git rebase origin/v0.12-multiblock
-            if git push origin HEAD:v0.12-multiblock; then exit 0; fi
-          done
-          exit 1
-,py):
-              raise RuntimeError('Python suite did not report OK')
           parity=json.loads(Path('results/v012/multiblock_parity-final.json').read_text())
           if parity.get('all_passed') is not True:
               raise RuntimeError('final parity failed')
+
           manifest={
               'version':'0.12.0',
               'commit':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),
+              'workflow_run_id':${{ github.run_id }},
               'release_ctest_passed':ctest_count('/tmp/ctest-release.txt'),
               'nosimd_ctest_passed':ctest_count('/tmp/ctest-nosimd.txt'),
               'asan_ubsan_ctest_passed':ctest_count('/tmp/ctest-san.txt'),
@@ -175,13 +128,6 @@ jobs:
               },
               'rss_peak_bytes':None,
               'energy_joules':None,
-              'commands':[
-                  'cmake Release + ctest',
-                  'python unittest discover',
-                  'verify_multiblock.py',
-                  'cmake Release EDGEAI_DISABLE_SIMD=ON + ctest',
-                  'cmake Debug EDGEAI_SANITIZERS=ON + ctest',
-              ],
           }
           Path('results/v012/verification.json').write_text(json.dumps(manifest,indent=2)+'\n')
           print(json.dumps(manifest,indent=2))
