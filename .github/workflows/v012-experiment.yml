@@ -32,7 +32,7 @@ jobs:
         run: python3 tools/verify_multiblock.py --build build --out results/v012/multiblock_parity.json
       - name: Run controlled training
         run: |
-          python3 benchmarks/instruction_blocks_v012.py             --cpu-seconds "${{ inputs.cpu_seconds }}"             --seeds 11 22 33 --threads 1 --architectures 1 2
+          python3 benchmarks/instruction_blocks_v012.py             --cpu-seconds "${{ inputs.cpu_seconds || '60' }}"             --seeds 11 22 33 --threads 1 --architectures 1 2
       - name: Evaluate selected checkpoints with native C++
         run: |
           python3 benchmarks/instruction_blocks_eval_v012.py             --build build --report results/v012/training.json             --data data/instructions_v07 --out results/v012/evaluation.json
