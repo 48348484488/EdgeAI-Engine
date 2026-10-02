@@ -1,0 +1,52 @@
+name: EdgeAI v0.13 Stabilized Length Candidate
+on:
+  push:
+    branches: [v0.13-curriculum]
+    paths:
+      - .github/v013-length-stabilized-trigger
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: edgeai-v013-length-stabilized
+  cancel-in-progress: true
+jobs:
+  candidate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build sealed curriculum and contract tests
+        run: |
+          python3 tools/instruction_data_v013_length.py
+          for s in valid test_id test_template test_range test_family; do
+            cmp "data/instructions_v07/$s.jsonl" "data/instructions_v013_length/$s.jsonl"
+          done
+      - name: Build native evaluator
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release && cmake --build build -j2
+      - name: Install CPU Python dependencies
+        run: |
+          python3 -m pip install --disable-pip-version-check --index-url https://download.pytorch.org/whl/cpu torch==2.10.0
+          python3 -m pip install --disable-pip-version-check 'numpy>=1.26,<3'
+      - name: Candidate contract tests
+        run: python3 -m unittest tests.test_v013_length_stabilized tests.test_v012_equal_steps
+      - name: Train stabilized two-block candidates
+        run: python3 benchmarks/v013_length_stabilized.py
+      - name: Native sealed-test evaluation
+        run: python3 benchmarks/evaluate_v013_length_stabilized.py --build build
+      - name: Upload evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: edgeai-v013-length-stabilized
+          path: |
+            results/v013_length_stabilized/
+            models/v013_length_stabilized/
+      - name: Commit compact evidence
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/v013_length_stabilized/
+          git commit -m "bench: record stabilized v0.13 length candidate" || exit 0
+          git fetch origin v0.13-curriculum
+          git rebase origin/v0.13-curriculum
+          git push origin HEAD:v0.13-curriculum
