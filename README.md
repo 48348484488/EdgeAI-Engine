@@ -1,65 +1,83 @@
-# EdgeAI Engine v0.10 — consulta de código com índice reutilizável
+# EdgeAI Engine
 
-Base: **v0.9**, preservada. Sem novo treinamento. Binários Linux x86-64 incluídos; Windows não testado.
+**EdgeAI Engine** é um motor experimental de IA local em C++ criado para pesquisar uma pergunta importante:
 
-## Usar a melhoria
+> Quanto de capacidade útil conseguimos colocar em uma IA que roda localmente, usando pouca CPU, RAM e energia?
 
-No chat, o índice da pasta permanece em RAM entre perguntas:
+O projeto combina um **modelo neural próprio e pequeno** com ferramentas determinísticas, memória local e busca de código. O foco é medir ganhos reais — não fingir que o modelo atual já é comparável a ChatGPT ou Claude.
+
+**Versão atual: v0.11**
+
+## O que ela já sabe fazer
+
+| Recurso | Estado atual |
+|---|---|
+| Buscar funções, classes e símbolos em código local | ✅ Funciona |
+| Priorizar definições sobre comentários, strings e chamadas | ✅ v0.11 |
+| Reutilizar índice em RAM entre consultas | ✅ Funciona |
+| Detectar arquivos alterados/adicionados/removidos | ✅ Funciona |
+| Memória local simples | ✅ Funciona |
+| Calculadora determinística | ✅ Funciona |
+| Roteamento automático entre busca, memória, cálculo e modelo neural | ✅ Funciona |
+| Executar modelos próprios `.edge` em CPU | ✅ Experimental |
+| Conversa e raciocínio geral no nível de grandes LLMs | ❌ Ainda não |
+
+A busca de código suporta C/C++, Python, Pawn, JavaScript/TypeScript, Rust, Go e outras extensões listadas em `src/CodeSearch.cpp`.
+
+## Dados reais da v0.11
+
+Benchmark controlado usando 18 módulos do CPython e 35 consultas:
+
+| Medida | Resultado |
+|---|---:|
+| Definição correta em 1º lugar | **24/27 (88,9%)** |
+| Definição correta no Top 5 | **26/27 (96,3%)** |
+| Nomes inexistentes corretamente vazios | **8/8** |
+| 35 consultas na mesma sessão | **27,659 ms** |
+| Testes C++ Release | **13/13** |
+| Testes Python | **108/108** |
+| Modelos/checkpoints preservados | **142/142** |
+
+A v0.10 acertava 16/27 definições em primeiro lugar. A v0.11 chegou a 24/27 com cerca de **6% de aumento no tempo da sessão** nesse mesmo teste.
+
+Esses números medem **busca de código**, não inteligência geral.
+
+## Como funciona
+
+```text
+Pergunta
+   ↓
+Router
+   ├── cálculo     → Calculator
+   ├── memória     → LocalMemory
+   ├── código      → CodeIndex
+   └── outros      → modelo neural
+```
+
+A ideia é simples: não gastar rede neural em tarefas que podem ser resolvidas de forma mais barata e confiável.
+
+## Testar rapidamente
+
+Linux x86-64:
 
 ```bash
 ./bin/linux-x86_64/edgeai_chat --code-root . --memory :memory:
 ```
 
-Digite `buscar codigo: greedy_token`, depois outra consulta. O retorno mostra quantos arquivos foram reutilizados/reindexados. Todo o conteúdo aprovado ainda é relido para conferir alterações, mesmo se tamanho e data não mudarem. Nenhum índice é gravado em disco.
+Dentro do chat:
 
-Consultas em lote (JSON por linha, mesma sessão):
-
-```bash
-printf 'greedy_token\ncalculate\n' | ./bin/linux-x86_64/edgeai_code_search . --batch --json
+```text
+buscar codigo: greedy_token
+calcule 128 * 32
+lembrar: EdgeAI usa busca local
+buscar memoria: EdgeAI
 ```
 
-Arquivos alterados são reindexados; inclusões/remoções aparecem na consulta seguinte. Erros são explícitos, não repetem a resposta anterior. Consultas em lote inválidas produzem uma linha JSON de erro e exit code 1 no final; consultas válidas seguintes continuam. A primeira consulta também é conferida após a abertura.
-
-A aceleração medida beneficia consultas repetidas. **A primeira consulta é mais lenta e o cache usa mais RAM**; veja `BENCHMARK_RESULTS.md` para os dois lados da comparação. Isso não acelera o cérebro neural nem demonstra economia de energia.
-
-Ciclo de verificação sem treinamento:
+Busca direta:
 
 ```bash
-python tools/run_goals.py --profile indexed
+./bin/linux-x86_64/edgeai_code_search . "greedy_token" --limit 5
 ```
-
-## O que funciona agora
-
-Consulta lexical em C++17 que retorna arquivo relativo, linha da ocorrência e trecho
-real, sem rede neural, internet ou GPU. Suporta fontes C/C++, Python, Pawn (.pwn/.inc),
-JavaScript/TypeScript, Rust, Go e extensões listadas em `src/CodeSearch.cpp`.
-Não é resolução semântica de símbolos, AST, compilador, corretor de bugs nem LLM.
-Usa nomes/palavras presentes no código e uma heurística simples de ordenação.
-
-Os modelos `.edge` e checkpoints da base permanecem byte a byte idênticos. Não houve
-treinamento neste ciclo. O modelo próprio continua experimental e muito limitado.
-
-## Usar no Linux x86-64
-
-Do diretório extraído (binários incluídos):
-
-```bash
-chmod +x bin/linux-x86_64/*
-./bin/linux-x86_64/edgeai_code_search . "Onde fica a função greedy_token?" --limit 3
-./bin/linux-x86_64/edgeai_code_search data/code_demo CarregarConta --json
-./bin/linux-x86_64/edgeai_chat --code-root . --memory :memory:
-```
-
-No chat, digite `buscar codigo: greedy_token` ou `/code greedy_token`.
-A pasta é escolhida explicitamente por `--code-root`; não há varredura automática do
-computador. O chat pode receber o modelo por caminho como nas versões anteriores:
-
-```bash
-./bin/linux-x86_64/edgeai_chat models/instructions_v07/default.edge --code-root . --memory :memory:
-```
-
-Resultados mostram `neural=0` para a consulta de código. Não existe chance calibrada
-de acerto: o score de ordenação lexical não é confiança de uma resposta.
 
 ## Compilar
 
@@ -69,92 +87,44 @@ cmake --build build -j2
 ctest --test-dir build --output-on-failure
 ```
 
-Windows: fonte C++17 e `build_windows.bat` preservados, com CMake + compilador C++.
-**Não foi compilado/executado no Windows neste ciclo, e não há .exe incluído.**
-O binário Linux foi compilado numa VM moderna; um PC antigo pode exigir recompilar
-na distribuição dele. Não há garantia de compatibilidade universal de CPU/glibc.
-`-DEDGEAI_DISABLE_SIMD=ON` foi testado para o caminho portável dos kernels.
+O código é C++17. O caminho Linux x86-64 foi testado. Windows/ARM e PCs realmente fracos ainda precisam de validação prática.
 
-## Escopo, limites e privacidade da busca
+## O que o projeto ainda não é
 
-Cada consulta via Engine/CLI em lote atualiza um snapshot limitado e somente leitura. Arquivos byte a byte idênticos reutilizam um índice em RAM; o programa não cria índice em disco nem altera fontes. Usa no máximo 2.000 arquivos, 256 KiB por arquivo, 8 MiB de
-texto no total, 100.000 linhas, profundidade 20 e 500.000 entradas termo/linha. Linhas acima de 4.096 bytes fazem
-o arquivo ser ignorado. Esses limites são de entrada, **não garantias de RSS**.
-Há custos de strings, containers, processo e bibliotecas além do tamanho do texto.
+O EdgeAI **não é atualmente um substituto para Claude, ChatGPT ou outros LLMs grandes**. O modelo neural próprio ainda é pequeno e limitado.
 
-Não segue links simbólicos dentro da árvore. Ignora arquivos/pastas ocultos,
-`node_modules`, `vendor`, `build`, `dist`, `target`, `bin`, `models`, `results`, `data`,
-`third_party`, entre outros; extensões não reconhecidas, binários e UTF-8 inválido
-também não entram. Uma pasta como `data/code_demo` pode ser escolhida diretamente
-como raiz. Não implementa todas as regras de `.gitignore`.
+Também não há, por enquanto, evidência de:
 
-Alguns nomes comuns de credenciais são excluídos, mas **não é detector de segredos**.
-Nada da busca é enviado automaticamente ao modelo externo. Não use uma árvore que
-outro processo hostil possa modificar ao mesmo tempo como fronteira de segurança;
-não é um sandbox contra trocas concorrentes de caminhos.
+- inteligência geral comparável a grandes modelos;
+- correção autônoma confiável de bugs;
+- compreensão semântica completa de um repositório;
+- menor consumo de energia que grandes LLMs;
+- desempenho confirmado em Windows, ARM ou hardware muito fraco.
 
-`partial=true` informa limite/erro de leitura. Exclusões normais são contadas à parte,
-mesmo com `partial=false`. Resultado vazio significa apenas: nenhum trecho nos
-arquivos inspecionados. Não prova que a função inexiste ou que a implementação é segura.
-A saída inclui a melhor linha por arquivo; múltiplos arquivos podem ter ocorrências. Na API C++, `search()` consulta o snapshot corrente: chame `refresh()` antes para ver alterações. Engine e CLI em lote já fazem isso. Não há thread-safety garantida nem snapshot transacional da árvore.
+Quando algo não foi medido, o projeto não trata como resultado.
 
-## Workbench opcional: Python padrão, sem PyTorch
+## Objetivo
 
-```bash
-python tools/workbench.py search . greedy_token
-python tools/workbench.py ask "Copie exatamente: aaeb" --backend edge
-python tools/workbench.py compare --out results/minha-comparacao.json
-```
+O objetivo de longo prazo é aumentar a capacidade útil mantendo o sistema:
 
-`compare` sem servidor executa somente o modelo próprio e marca a referência como
-`not_requested`, com acurácia `null`. Os 12 prompts são um pequeno diagnóstico
-sintético conhecido, não benchmark independente de inteligência geral.
+- **local**;
+- **CPU-first**;
+- **leve em memória**;
+- **rápido para tarefas comuns**;
+- **mensurável e reproduzível**.
 
-## Referência externa opcional (llama.cpp)
+A estratégia é combinar modelos pequenos com memória, ferramentas e kernels eficientes em vez de simplesmente aumentar o número de parâmetros.
 
-O cliente usa o endpoint documentado `/v1/chat/completions` de um `llama-server`
-rodando no mesmo computador. **O executável llama-server e o modelo GGUF não estão
-incluídos.** Esta integração foi testada com um servidor HTTP de contrato, não com
-um modelo externo real nesta sessão: downloads do runtime falharam por DNS.
+### Próximo experimento
 
-Após obter por conta própria um llama-server e um GGUF compatível, um comando CPU
-é (os argumentos estão documentados pelo projeto; não foi executado aqui):
+Comparar **Transformer de 1 bloco vs. 2 blocos** usando o mesmo conjunto de dados e orçamento de CPU para descobrir quanto de capacidade adicional realmente compensa o custo.
 
-```bash
-llama-server -m /caminho/modelo.gguf --host 127.0.0.1 --port 8080 -ngl 0 -c 2048 -t 2
-python tools/workbench.py ask "Explique uma função simples." --backend reference
-python tools/workbench.py compare --reference-url http://127.0.0.1:8080/v1 --out results/comparacao-local.json
-```
+## Mais detalhes
 
-Escolha `--reference-model ID` quando o servidor expuser mais de um modelo.
-O cliente aceita somente endereços loopback, ignora proxies, não segue redirecionamentos,
-não baixa nada, não executa tool calls e não faz fallback para serviços externos.
-Respostas HTTP têm limite de 2 MiB e timeout de socket. Falhas não são contabilizadas
-como respostas erradas de modelo; ficam indisponíveis e o CLI retorna código 2.
+- [BENCHMARK_RESULTS.md](BENCHMARK_RESULTS.md) — resultados e metodologia da versão atual
+- [CHANGELOG.md](CHANGELOG.md) — histórico de mudanças
+- [METAS.md](METAS.md) — metas técnicas do projeto
 
-Essa ponte é uma ferramenta Python separada; não é um novo IModelBackend HTTP em C++.
-A inferência `.edge` e a busca nativa não dependem dela. Os custos de pré-treinamento,
-parâmetros e tokenizadores diferem: comparar aplicações não prova superioridade de
-arquitetura. A latência nativa inclui carregar um processo/modelo por pergunta; a
-referência usa servidor já iniciado. O relatório declara essa diferença.
+---
 
-## Ciclo verificável, sem treinamento longo
-
-```bash
-python tools/run_goals.py --profile useful
-```
-
-Dez etapas: compilação, testes C++/Python, busca, diagnóstico neural, contrato HTTP,
-paridade Python/C++, tentativa de energia e pacote temporário validado. Esse perfil
-usa PyTorch instalado apenas para revalidar a paridade dos modelos antigos. Não
-instala dependências automaticamente nem exige um modelo externo.
-
-Recuperação de artefatos preservada:
-
-```bash
-python tools/release_bundle.py pack --source . --output ../EdgeAI-backup.zip
-python tools/release_bundle.py verify ../EdgeAI-backup.zip
-```
-
-Resultados, falhas históricas esperadas de testes RED e limitações:
-`BENCHMARK_RESULTS.md`, `METAS.md`, `results/v09/`, `docs/v09/REVIEW.md`.
+**EdgeAI Engine é um projeto de pesquisa experimental.** Cada avanço deve vir acompanhado de teste, benchmark ou evidência reproduzível.
