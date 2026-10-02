@@ -23,7 +23,7 @@ jobs:
         run: python3 benchmarks/instruction_blocks_lr_ablation_v012.py
       - name: Native generation evaluation
         run: |
-          python3 benchmarks/instruction_blocks_eval_v012.py --build build --report results/v012_lr_ablation/training.json --out results/v012_lr_ablation/evaluation.json
+          python3 benchmarks/evaluate_v012_lr_variants.py --build build --training results/v012_lr_ablation/training.json --out results/v012_lr_ablation/evaluation.json
       - name: Upload evidence
         uses: actions/upload-artifact@v4
         with:
