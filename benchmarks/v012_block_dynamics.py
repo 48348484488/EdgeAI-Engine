@@ -23,17 +23,30 @@ def group_name(name):
 def l2(values):
     return math.sqrt(sum(float((v.float()*v.float()).sum().item()) for v in values)) if values else 0.0
 
+def group_counts(model):
+    out={}
+    for name,p in model.named_parameters():
+        out[group_name(name)]=out.get(group_name(name),0)+p.numel()
+    return out
+
 def grad_norms(model):
-    groups={}
+    groups={};counts=group_counts(model)
     for name,p in model.named_parameters():
         if p.grad is not None: groups.setdefault(group_name(name),[]).append(p.grad.detach())
-    return {k:l2(v) for k,v in groups.items()}
+    out={}
+    for k,v in groups.items():
+        z=l2(v);out[k]=dict(l2=z,rms=z/math.sqrt(counts[k]),parameters=counts[k])
+    return out
 
 def drift_norms(model,initial):
-    groups={}
+    groups={};initial_groups={};counts=group_counts(model)
     for name,p in model.named_parameters():
-        groups.setdefault(group_name(name),[]).append(p.detach()-initial[name])
-    return {k:l2(v) for k,v in groups.items()}
+        k=group_name(name);groups.setdefault(k,[]).append(p.detach()-initial[name]);initial_groups.setdefault(k,[]).append(initial[name])
+    out={}
+    for k,v in groups.items():
+        d=l2(v);base=l2(initial_groups[k])
+        out[k]=dict(l2=d,rms=d/math.sqrt(counts[k]),relative=d/base if base else None,parameters=counts[k])
+    return out
 
 def run_seed(seed,steps,data,groups):
     cp=torch.load(ROOT/f'models/external_v06/bpe513-seed{seed}.pt',map_location='cpu',weights_only=True)
@@ -61,9 +74,9 @@ def summarize(runs):
     first=[r['probes'][0] for r in runs]
     return dict(
         seeds=[r['seed'] for r in runs],
-        first_step_block1_inner_grad=[p['gradient_l2'].get('block1_inner',0.0) for p in first],
-        first_step_block1_output_grad=[p['gradient_l2'].get('block1_output',0.0) for p in first],
-        first_step_block0_grad=[p['gradient_l2'].get('block0',0.0) for p in first],
+        first_step_block1_inner_grad_rms=[p['gradient_l2'].get('block1_inner',{}).get('rms',0.0) for p in first],
+        first_step_block1_output_grad_rms=[p['gradient_l2'].get('block1_output',{}).get('rms',0.0) for p in first],
+        first_step_block0_grad_rms=[p['gradient_l2'].get('block0',{}).get('rms',0.0) for p in first],
         note='project/down are zero-initialized to preserve the original function; inner second-block gradients can therefore start at zero',
     )
 
