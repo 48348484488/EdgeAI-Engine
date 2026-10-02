@@ -38,5 +38,15 @@ class GenerationSelectionV012Tests(unittest.TestCase):
         self.assertEqual(got['eos'],1)
 
 
+    def test_identity_differs_only_by_blocks_and_pins_greedy_selection(self):
+        config=dict(dim=48,hidden=128,window=64,precision='int8',vocab_size=515)
+        one=gs.build_identity(11,1,11269,1,'dataset','tok',config)
+        two=gs.build_identity(11,2,11269,1,'dataset','tok',config)
+        gs.assert_fair_pair(one,two)
+        changed={k for k in set(one)|set(two) if one.get(k)!=two.get(k)}
+        self.assertEqual(changed,{'blocks'})
+        self.assertEqual(one['selection'],'greedy validation correct; exact, NLL, then earlier-step tiebreaks')
+
+
 if __name__=='__main__':
     unittest.main()
