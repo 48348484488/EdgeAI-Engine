@@ -34,6 +34,10 @@ int main(){
   CHECK(idx.search("render menu",3,0).hits[0].path=="web/app.js");
   CHECK(idx.search("CarregarConta",3,0).hits[0].path=="script/login.pwn");
   CHECK(idx.search("`ola`",3,1).hits[0].text.find("ação")!=std::string::npos);
+  put(root/"ranking/sample.py", "# RankTarget mentioned in comment\nmessage = \"RankTarget()\"\nRankTarget()\ndef RankTarget():\n    return 1\n");
+  edgeai::CodeIndex ranked(root.string());auto ranked_hits=ranked.search("RankTarget",4,0);
+  CHECK(ranked_hits.hits.size()>=2);CHECK(ranked_hits.hits[0].path=="ranking/sample.py");CHECK(ranked_hits.hits[0].match_line==4);
+  bool saw_call=false;for(const auto& h:ranked_hits.hits)if(h.path=="ranking/sample.py"&&h.match_line==3)saw_call=true;CHECK(saw_call);
   CHECK(idx.search("totallyMissingSymbol",3,1).hits.empty());
   CHECK(idx.search("secretToken",3,1).hits.empty());
   CHECK(idx.search("dependencySecret",3,1).hits.empty());
