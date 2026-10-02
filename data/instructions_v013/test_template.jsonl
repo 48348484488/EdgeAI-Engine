@@ -1,0 +1,60 @@
+{"answer":"28","group":"pair:9:19","id":"47c9ff791f4d00abf8a4","language":"en","prompt":"What is the sum of 19 and 9?","task":"addition","template":"addition_en_new"}
+{"answer":"4","group":"pair:0:4","id":"0428c0c2ea2aafae02af","language":"en","prompt":"What is the sum of 0 and 4?","task":"addition","template":"addition_en_new"}
+{"answer":"25","group":"pair:12:13","id":"b3aaf3758d637e83e0db","language":"en","prompt":"What is the sum of 13 and 12?","task":"addition","template":"addition_en_new"}
+{"answer":"25","group":"pair:12:13","id":"57bb1275b2fa920160a1","language":"en","prompt":"What is the sum of 12 and 13?","task":"addition","template":"addition_en_new"}
+{"answer":"22","group":"pair:6:16","id":"02ac435ab69a482ad2a0","language":"en","prompt":"What is the sum of 6 and 16?","task":"addition","template":"addition_en_new"}
+{"answer":"11","group":"pair:4:7","id":"b494f306e2e4e57dc221","language":"en","prompt":"What is the sum of 4 and 7?","task":"addition","template":"addition_en_new"}
+{"answer":"11","group":"pair:5:6","id":"d3fd1c432c65cfdfd971","language":"en","prompt":"What is the sum of 5 and 6?","task":"addition","template":"addition_en_new"}
+{"answer":"21","group":"pair:5:16","id":"6a711ec2aeb931424b29","language":"en","prompt":"What is the sum of 16 and 5?","task":"addition","template":"addition_en_new"}
+{"answer":"7","group":"pair:3:4","id":"f2df49d0ddd50d2287b2","language":"pt","prompt":"Quanto vale a soma de 4 e 3?","task":"addition","template":"addition_pt_new"}
+{"answer":"21","group":"pair:5:16","id":"4bccc186079c8dad198f","language":"pt","prompt":"Quanto vale a soma de 16 e 5?","task":"addition","template":"addition_pt_new"}
+{"answer":"22","group":"pair:6:16","id":"827bc45306732654a2cb","language":"pt","prompt":"Quanto vale a soma de 16 e 6?","task":"addition","template":"addition_pt_new"}
+{"answer":"0","group":"pair:0:0","id":"563dc758fe061a44f5f5","language":"pt","prompt":"Quanto vale a soma de 0 e 0?","task":"addition","template":"addition_pt_new"}
+{"answer":"11","group":"pair:5:6","id":"cccfa3db1ce7e0562e9b","language":"pt","prompt":"Quanto vale a soma de 6 e 5?","task":"addition","template":"addition_pt_new"}
+{"answer":"28","group":"pair:9:19","id":"16d29d6a6c2b573af332","language":"pt","prompt":"Quanto vale a soma de 9 e 19?","task":"addition","template":"addition_pt_new"}
+{"answer":"18","group":"pair:0:18","id":"9330ca26e29037e7cc29","language":"pt","prompt":"Quanto vale a soma de 0 e 18?","task":"addition","template":"addition_pt_new"}
+{"answer":"21","group":"pair:5:16","id":"6e76b22bd5020231d0da","language":"pt","prompt":"Quanto vale a soma de 5 e 16?","task":"addition","template":"addition_pt_new"}
+{"answer":"dfce","group":"string:dfce","id":"7b26cc28147b776de949","language":"en","prompt":"Repeat unchanged: dfce","task":"copy","template":"copy_en_new"}
+{"answer":"aadd","group":"string:aadd","id":"9c531b77e0a4da772441","language":"en","prompt":"Repeat unchanged: aadd","task":"copy","template":"copy_en_new"}
+{"answer":"dbce","group":"string:dbce","id":"c9dfa5a6882079d08af6","language":"en","prompt":"Repeat unchanged: dbce","task":"copy","template":"copy_en_new"}
+{"answer":"abca","group":"string:abca","id":"f679c9338f55ea921fdc","language":"en","prompt":"Repeat unchanged: abca","task":"copy","template":"copy_en_new"}
+{"answer":"acbf","group":"string:acbf","id":"16db73fb4a8c2f8aa26e","language":"en","prompt":"Repeat unchanged: acbf","task":"copy","template":"copy_en_new"}
+{"answer":"eaf","group":"string:eaf","id":"fa9b1132886601f4b949","language":"en","prompt":"Repeat unchanged: eaf","task":"copy","template":"copy_en_new"}
+{"answer":"aeaa","group":"string:aeaa","id":"0d7c8911f75d02a76e39","language":"en","prompt":"Repeat unchanged: aeaa","task":"copy","template":"copy_en_new"}
+{"answer":"beff","group":"string:beff","id":"9970f99fb7d56709e033","language":"en","prompt":"Repeat unchanged: beff","task":"copy","template":"copy_en_new"}
+{"answer":"dee","group":"string:dee","id":"b951c0a4f10a3551f768","language":"pt","prompt":"Repita sem alterar: dee","task":"copy","template":"copy_pt_new"}
+{"answer":"ddbc","group":"string:ddbc","id":"d885216572e2d5d84f54","language":"pt","prompt":"Repita sem alterar: ddbc","task":"copy","template":"copy_pt_new"}
+{"answer":"be","group":"string:be","id":"4412afed43c94a55853b","language":"pt","prompt":"Repita sem alterar: be","task":"copy","template":"copy_pt_new"}
+{"answer":"abbc","group":"string:abbc","id":"35806136a187c7a7159a","language":"pt","prompt":"Repita sem alterar: abbc","task":"copy","template":"copy_pt_new"}
+{"answer":"ffca","group":"string:ffca","id":"316440c0b21a49f2b0a9","language":"pt","prompt":"Repita sem alterar: ffca","task":"copy","template":"copy_pt_new"}
+{"answer":"ecdb","group":"string:ecdb","id":"3b56097c0eec815859c9","language":"pt","prompt":"Repita sem alterar: ecdb","task":"copy","template":"copy_pt_new"}
+{"answer":"fefe","group":"string:fefe","id":"b28fd77451bd404bb1b4","language":"pt","prompt":"Repita sem alterar: fefe","task":"copy","template":"copy_pt_new"}
+{"answer":"deae","group":"string:deae","id":"ae335d315f775c650bdb","language":"pt","prompt":"Repita sem alterar: deae","task":"copy","template":"copy_pt_new"}
+{"answer":"x*1","group":"coefficient:1","id":"9062f99a851a217e85bb","language":"en","prompt":"Return only the Python expression x * 1.","task":"expression","template":"expression_en_new"}
+{"answer":"x*14","group":"coefficient:14","id":"44007558913e9b7037c5","language":"en","prompt":"Return only the Python expression x * 14.","task":"expression","template":"expression_en_new"}
+{"answer":"x-1","group":"coefficient:1","id":"75389f61728b32a4cf4e","language":"en","prompt":"Return only the Python expression x - 1.","task":"expression","template":"expression_en_new"}
+{"answer":"x+1","group":"coefficient:1","id":"fd3b294a8fe0dc13fe64","language":"en","prompt":"Return only the Python expression x + 1.","task":"expression","template":"expression_en_new"}
+{"answer":"x-14","group":"coefficient:14","id":"76a9a1bea281729fb163","language":"en","prompt":"Return only the Python expression x - 14.","task":"expression","template":"expression_en_new"}
+{"answer":"x+14","group":"coefficient:14","id":"bc7a807c86d56b1e85d4","language":"en","prompt":"Return only the Python expression x + 14.","task":"expression","template":"expression_en_new"}
+{"answer":"x*14","group":"coefficient:14","id":"baadade18d3671c391ea","language":"pt","prompt":"Retorne apenas a expressao Python x * 14.","task":"expression","template":"expression_pt_new"}
+{"answer":"x+14","group":"coefficient:14","id":"7e553e81acfeaa479217","language":"pt","prompt":"Retorne apenas a expressao Python x + 14.","task":"expression","template":"expression_pt_new"}
+{"answer":"x+1","group":"coefficient:1","id":"a0a77a85018c0690f1cb","language":"pt","prompt":"Retorne apenas a expressao Python x + 1.","task":"expression","template":"expression_pt_new"}
+{"answer":"x-14","group":"coefficient:14","id":"d17473bcdd4c542963fc","language":"pt","prompt":"Retorne apenas a expressao Python x - 14.","task":"expression","template":"expression_pt_new"}
+{"answer":"x*1","group":"coefficient:1","id":"587fc1bb055c76fcc25e","language":"pt","prompt":"Retorne apenas a expressao Python x * 1.","task":"expression","template":"expression_pt_new"}
+{"answer":"x-1","group":"coefficient:1","id":"3d577c1794862ad66dfa","language":"pt","prompt":"Retorne apenas a expressao Python x - 1.","task":"expression","template":"expression_pt_new"}
+{"answer":"EEA","group":"string:eea","id":"b0df43a34bbe127213d1","language":"en","prompt":"Convert to capital letters: eea","task":"uppercase","template":"uppercase_en_new"}
+{"answer":"FDFD","group":"string:fdfd","id":"107738b952249bf715f6","language":"en","prompt":"Convert to capital letters: fdfd","task":"uppercase","template":"uppercase_en_new"}
+{"answer":"CFB","group":"string:cfb","id":"f11b0f768320069682d1","language":"en","prompt":"Convert to capital letters: cfb","task":"uppercase","template":"uppercase_en_new"}
+{"answer":"AFEE","group":"string:afee","id":"ca14e90dad31fe69f8a6","language":"en","prompt":"Convert to capital letters: afee","task":"uppercase","template":"uppercase_en_new"}
+{"answer":"EEFB","group":"string:eefb","id":"abd74161449605b1cde9","language":"en","prompt":"Convert to capital letters: eefb","task":"uppercase","template":"uppercase_en_new"}
+{"answer":"BFB","group":"string:bfb","id":"23f81f7683ca2067eece","language":"en","prompt":"Convert to capital letters: bfb","task":"uppercase","template":"uppercase_en_new"}
+{"answer":"BAFE","group":"string:bafe","id":"71d0f29738b83e31bad0","language":"en","prompt":"Convert to capital letters: bafe","task":"uppercase","template":"uppercase_en_new"}
+{"answer":"ADCF","group":"string:adcf","id":"ffb8a351f32c1a24b97b","language":"en","prompt":"Convert to capital letters: adcf","task":"uppercase","template":"uppercase_en_new"}
+{"answer":"BFB","group":"string:bfb","id":"77f16ba7eaffbb0f2b1f","language":"pt","prompt":"Converta para maiusculas: bfb","task":"uppercase","template":"uppercase_pt_new"}
+{"answer":"ADCF","group":"string:adcf","id":"9fd0ed1d34bd59f97c6d","language":"pt","prompt":"Converta para maiusculas: adcf","task":"uppercase","template":"uppercase_pt_new"}
+{"answer":"DAED","group":"string:daed","id":"1008745eaef17e563ad7","language":"pt","prompt":"Converta para maiusculas: daed","task":"uppercase","template":"uppercase_pt_new"}
+{"answer":"FDBB","group":"string:fdbb","id":"f22759bd07a61ac16eb1","language":"pt","prompt":"Converta para maiusculas: fdbb","task":"uppercase","template":"uppercase_pt_new"}
+{"answer":"DDFF","group":"string:ddff","id":"6ddc2c6c41b9d516e8e9","language":"pt","prompt":"Converta para maiusculas: ddff","task":"uppercase","template":"uppercase_pt_new"}
+{"answer":"EBDB","group":"string:ebdb","id":"33b8d4718390e11a46be","language":"pt","prompt":"Converta para maiusculas: ebdb","task":"uppercase","template":"uppercase_pt_new"}
+{"answer":"FFAD","group":"string:ffad","id":"cf2c98b3f5268471f1c6","language":"pt","prompt":"Converta para maiusculas: ffad","task":"uppercase","template":"uppercase_pt_new"}
+{"answer":"CAA","group":"string:caa","id":"d590c4f1fd18f9fa4abc","language":"pt","prompt":"Converta para maiusculas: caa","task":"uppercase","template":"uppercase_pt_new"}

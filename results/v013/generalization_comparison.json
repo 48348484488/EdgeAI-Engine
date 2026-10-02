@@ -1,0 +1,89 @@
+{
+  "protocol": "v0.12 frozen baseline versus v0.13 train-only curriculum expansion; sealed tests byte-identical",
+  "rows": [
+    {
+      "seed": 11,
+      "blocks": 1,
+      "old_total": 53,
+      "new_total": 58,
+      "old_range": 0,
+      "new_range": 0,
+      "old_family": 0,
+      "new_family": 0,
+      "old_template": 15,
+      "new_template": 15,
+      "old_iid": 38,
+      "new_iid": 43
+    },
+    {
+      "seed": 11,
+      "blocks": 2,
+      "old_total": 48,
+      "new_total": 64,
+      "old_range": 0,
+      "new_range": 0,
+      "old_family": 0,
+      "new_family": 0,
+      "old_template": 14,
+      "new_template": 14,
+      "old_iid": 34,
+      "new_iid": 50
+    },
+    {
+      "seed": 22,
+      "blocks": 1,
+      "old_total": 37,
+      "new_total": 61,
+      "old_range": 0,
+      "new_range": 0,
+      "old_family": 0,
+      "new_family": 0,
+      "old_template": 9,
+      "new_template": 12,
+      "old_iid": 28,
+      "new_iid": 49
+    },
+    {
+      "seed": 22,
+      "blocks": 2,
+      "old_total": 46,
+      "new_total": 59,
+      "old_range": 1,
+      "new_range": 2,
+      "old_family": 0,
+      "new_family": 0,
+      "old_template": 11,
+      "new_template": 10,
+      "old_iid": 34,
+      "new_iid": 47
+    },
+    {
+      "seed": 33,
+      "blocks": 1,
+      "old_total": 59,
+      "new_total": 59,
+      "old_range": 0,
+      "new_range": 0,
+      "old_family": 0,
+      "new_family": 0,
+      "old_template": 16,
+      "new_template": 9,
+      "old_iid": 43,
+      "new_iid": 50
+    },
+    {
+      "seed": 33,
+      "blocks": 2,
+      "old_total": 44,
+      "new_total": 57,
+      "old_range": 0,
+      "new_range": 0,
+      "old_family": 0,
+      "new_family": 0,
+      "old_template": 14,
+      "new_template": 12,
+      "old_iid": 30,
+      "new_iid": 45
+    }
+  ]
+}
