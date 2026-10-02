@@ -14,6 +14,14 @@ from instruction_blocks_v012 import promote_blocks,repo_path
 SEEDS=(11,22,33)
 ARCHITECTURES=(1,2)
 DEFAULT_THREADS=1
+FROZEN_ONE_BLOCK_STEPS={11:11269,22:11286,33:9661}
+
+def target_steps(seed):
+    try:
+        return FROZEN_ONE_BLOCK_STEPS[int(seed)]
+    except (KeyError,ValueError,TypeError):
+        raise ValueError('published equal-step ablation is pinned to seeds 11/22/33')
+
 
 _CONTROL_KEYS=('protocol','seed','target_steps','threads','dataset_sha256','tokenizer_fingerprint',
                'dim','hidden','window','precision','batch','lr','weight_decay','clip_norm',
@@ -125,7 +133,11 @@ def main():
     groups={}
     for row in data['train']: groups.setdefault(row['task'],[]).append(row)
     model_dir=repo_path(a.model_dir);started=time.perf_counter();runs=[]
-    for seed in a.seeds: runs.append(train(seed,baseline_plan(baseline,seed),a.threads,data,groups,digest,model_dir))
+    for seed in a.seeds:
+        plan=baseline_plan(baseline,seed)
+        if plan['target_steps']!=target_steps(seed):
+            raise ValueError('frozen one-block step count differs from published v0.12 baseline')
+        runs.append(train(seed,plan,a.threads,data,groups,digest,model_dir))
     report=dict(protocol='two-block equal-update ablation against frozen one-block v0.12 baseline',
                 seeds=a.seeds,architectures=[1,2],threads=a.threads,expected=3,completed=len(runs),
                 dataset_sha256=digest,baseline_training_sha256=sha(a.baseline.read_bytes()),
