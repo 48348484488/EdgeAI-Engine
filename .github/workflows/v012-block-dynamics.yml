@@ -1,0 +1,46 @@
+name: EdgeAI v0.12 Block Dynamics
+
+on:
+  push:
+    branches: [v0.12-multiblock]
+    paths:
+      - benchmarks/v012_block_dynamics.py
+      - tests/test_v012_block_dynamics.py
+      - .github/workflows/v012-block-dynamics.yml
+      - .github/v012-block-dynamics-trigger
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: edgeai-v012-block-dynamics
+  cancel-in-progress: true
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install CPU Python dependencies
+        run: |
+          python3 -m pip install --disable-pip-version-check --index-url https://download.pytorch.org/whl/cpu torch==2.10.0
+          python3 -m pip install --disable-pip-version-check 'numpy>=1.26,<3'
+      - name: Probe tests
+        run: python3 -m unittest tests.test_v012_block_dynamics
+      - name: Run dynamics probe
+        run: python3 benchmarks/v012_block_dynamics.py --steps 128 --seeds 11 22 33 --threads 1
+      - name: Commit compact evidence
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/v012/block_dynamics.json
+          git diff --cached --quiet && exit 0
+          git commit -m "bench: record v0.12 block dynamics"
+          for attempt in 1 2 3; do
+            git fetch origin v0.12-multiblock
+            git rebase origin/v0.12-multiblock
+            if git push origin HEAD:v0.12-multiblock; then exit 0; fi
+          done
+          exit 1
