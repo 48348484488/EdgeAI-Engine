@@ -32,7 +32,9 @@ jobs:
           ctest --test-dir build --output-on-failure | tee /tmp/ctest-release.txt
 
       - name: Python suite
-        run: EDGEAI_BUILD_DIR=build python3 -m unittest discover -s tests -p 'test_*.py' 2>&1 | tee /tmp/python-tests.txt
+        run: |
+          set -o pipefail
+          EDGEAI_BUILD_DIR=build python3 -m unittest discover -s tests -p 'test_*.py' 2>&1 | tee /tmp/python-tests.txt
 
       - name: Final Python native parity
         run: python3 tools/verify_multiblock.py --build build --out results/v012/multiblock_parity-final.json
