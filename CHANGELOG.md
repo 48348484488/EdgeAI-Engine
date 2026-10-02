@@ -1,3 +1,10 @@
+## Pesquisa pós-v0.11 — candidato v0.12
+- Experimento controlado de 1 vs. 2 blocos Transformer, com 3 seeds e orçamento igual de CPU.
+- 2 blocos: 93.699 parâmetros vs. 71.827; NLL mediano de teste 2,4919 vs. 2,8149.
+- Acurácia teacher-forced de tokens: 60,20% vs. 57,27%.
+- Ganho consistente em NLL nos 3/3 seeds, mas 0 linhas exatas em extrapolação e tarefa nova.
+- Resultado ainda experimental; runtime C++ padrão continua com um bloco.
+
 
 ## v0.11
 - Code search ranking now prioritizes common definition forms over comments, strings and calls.
