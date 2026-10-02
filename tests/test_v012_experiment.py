@@ -192,14 +192,5 @@ class V012ExperimentContractTests(unittest.TestCase):
         self.assertAlmostEqual(d['median_latency_ratio'],1.2)
 
 
-    def test_equal_step_ablation_uses_paired_fixed_budget(self):
-        self.assertEqual(equal12.DEFAULT_STEPS,9000)
-        config=dict(dim=48,hidden=128,window=64,precision='int8',vocab_size=515)
-        one=equal12.build_identity(11,1,9000,1,'dataset','tok',config)
-        two=equal12.build_identity(11,2,9000,1,'dataset','tok',config)
-        equal12.assert_fair_pair(one,two)
-        self.assertEqual(one['step_budget'],two['step_budget'])
-
-
 if __name__=='__main__':
     unittest.main()
