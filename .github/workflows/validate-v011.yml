@@ -1,0 +1,62 @@
+name: Validate v0.11
+
+on:
+  push:
+    paths:
+      - 'src/CodeSearch.cpp'
+      - 'tests/test_code_search.cpp'
+      - 'CMakeLists.txt'
+      - '.github/workflows/validate-v011.yml'
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Build and C++ tests
+        run: |
+          cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+          cmake --build build -j2
+          ctest --test-dir build --output-on-failure
+      - name: Python tests
+        run: python3 -m unittest discover -s tests -p 'test_*.py'
+      - name: Compare v0.10 and current ranking
+        run: |
+          git worktree add /tmp/v010 d2735c6e0744f86b228130c1eeeb1f540de3b993
+          cmake -S /tmp/v010 -B /tmp/v010/build -DCMAKE_BUILD_TYPE=Release
+          cmake --build /tmp/v010/build --target edgeai_code_search -j2
+          python3 - <<'PY'
+          import ast,json,subprocess,time,statistics
+          from pathlib import Path
+          root=Path('data/cpython_snapshot/documents').resolve()
+          cases=[]
+          for p in sorted(root.rglob('*.py')):
+              t=ast.parse(p.read_bytes())
+              for n in [x for x in t.body if isinstance(x,(ast.FunctionDef,ast.AsyncFunctionDef))][:2]:
+                  cases.append((f'`{n.name}`',p.relative_to(root).as_posix(),n.lineno))
+          for i in range(8): cases.append((f'NoSuchEdgeAIRegressionSymbolV010_{i}',None,None))
+          payload='\n'.join(q for q,_,_ in cases)+'\n'
+          def measure(exe):
+              times=[]; rows=None
+              for _ in range(5):
+                  t=time.perf_counter()
+                  p=subprocess.run([str(exe),str(root),'--batch','--json'],input=payload,text=True,capture_output=True,check=True)
+                  times.append((time.perf_counter()-t)*1000)
+                  rows=[json.loads(x) for x in p.stdout.splitlines()]
+              top1=top5=neg=0
+              for (_,ep,el),r in zip(cases,rows):
+                  if ep is None:
+                      neg+=not r['hits']; continue
+                  m=[h['path']==ep and h['match_line']==el for h in r['hits']]
+                  top1+=bool(m and m[0]); top5+=any(m)
+              return dict(top1=top1,top5=top5,negative=neg,median_ms=statistics.median(times))
+          out={'v010':measure(Path('/tmp/v010/build/edgeai_code_search')),'current':measure(Path('build/edgeai_code_search').resolve())}
+          print(json.dumps(out,indent=2))
+          assert out['current']['top1']>=22
+          assert out['current']['top5']>=22
+          assert out['current']['negative']==8
+          assert out['current']['median_ms'] <= out['v010']['median_ms']*2
+          PY
