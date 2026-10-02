@@ -1,0 +1,141 @@
+{
+  "protocol": "v0.13 length bridge; two-block copy-inner identity with 0.25x inner LR; 60 CPU seconds",
+  "seeds": [
+    11,
+    22,
+    33
+  ],
+  "blocks": 2,
+  "threads": 1,
+  "cpu_budget_seconds": 60.0,
+  "init_mode": "copy_inner_identity",
+  "block1_inner_lr_scale": 0.25,
+  "dataset_sha256": "accb0f0d38cb23905af7f6e97c712cc8ecff565262f85a2f5d032a16d0a9e6f0",
+  "expected": 3,
+  "completed": 3,
+  "runs": [
+    {
+      "seed": 11,
+      "blocks": 2,
+      "init_mode": "copy_inner_identity",
+      "block1_inner_lr_scale": 0.25,
+      "cpu_budget_seconds": 60.0,
+      "steps": 5354,
+      "selected_step": 5354,
+      "selected_validation_nll": 0.3661892537717466,
+      "validation_curve": [
+        {
+          "step": 1393,
+          "train_cpu_seconds": 15.007193402999983,
+          "validation_nll": 0.5063294304741753
+        },
+        {
+          "step": 2741,
+          "train_cpu_seconds": 30.010025351000063,
+          "validation_nll": 0.3832358996073405
+        },
+        {
+          "step": 4091,
+          "train_cpu_seconds": 45.008181554999894,
+          "validation_nll": 0.3720249229007297
+        },
+        {
+          "step": 5354,
+          "train_cpu_seconds": 60.00876672199986,
+          "validation_nll": 0.3661892537717466
+        }
+      ],
+      "train_cpu_seconds": 60.00876672199986,
+      "train_wall_seconds": 60.02831739999935,
+      "parameters": 93699,
+      "file_bytes": 178976,
+      "numeric_weight_bytes": 176616,
+      "model_path": "models/v013_length_stabilized/seed11-b2-copy-inner-lr025.edge",
+      "model_sha256": "e6d955be688d24f66aedf8cd7c68174254420dd9f50356951c98a086fdf5da5e",
+      "source_checkpoint_sha256": "e4b131bc64f45c463e0915ccb45f87720c74c64bc8e55b77dbdf879c14bad259",
+      "dataset_sha256": "accb0f0d38cb23905af7f6e97c712cc8ecff565262f85a2f5d032a16d0a9e6f0"
+    },
+    {
+      "seed": 22,
+      "blocks": 2,
+      "init_mode": "copy_inner_identity",
+      "block1_inner_lr_scale": 0.25,
+      "cpu_budget_seconds": 60.0,
+      "steps": 5438,
+      "selected_step": 5438,
+      "selected_validation_nll": 0.16801476666220913,
+      "validation_curve": [
+        {
+          "step": 1346,
+          "train_cpu_seconds": 15.008736529000089,
+          "validation_nll": 0.3514098697238498
+        },
+        {
+          "step": 2747,
+          "train_cpu_seconds": 30.006847036000423,
+          "validation_nll": 0.3128373527968371
+        },
+        {
+          "step": 4048,
+          "train_cpu_seconds": 45.00663216700025,
+          "validation_nll": 0.23935834539157372
+        },
+        {
+          "step": 5438,
+          "train_cpu_seconds": 60.00494181799988,
+          "validation_nll": 0.16801476666220913
+        }
+      ],
+      "train_cpu_seconds": 60.00494181799988,
+      "train_wall_seconds": 60.028006311999434,
+      "parameters": 93699,
+      "file_bytes": 178976,
+      "numeric_weight_bytes": 176616,
+      "model_path": "models/v013_length_stabilized/seed22-b2-copy-inner-lr025.edge",
+      "model_sha256": "a89f550faa5949da3d6d67d376e9be5f60e6f692494b5f58d98b242e03445585",
+      "source_checkpoint_sha256": "7fbe9609e65e2d54d149708f48a47700e241acab406c231b96b509fd7693f3f9",
+      "dataset_sha256": "accb0f0d38cb23905af7f6e97c712cc8ecff565262f85a2f5d032a16d0a9e6f0"
+    },
+    {
+      "seed": 33,
+      "blocks": 2,
+      "init_mode": "copy_inner_identity",
+      "block1_inner_lr_scale": 0.25,
+      "cpu_budget_seconds": 60.0,
+      "steps": 5456,
+      "selected_step": 5456,
+      "selected_validation_nll": 0.42214004905135544,
+      "validation_curve": [
+        {
+          "step": 1342,
+          "train_cpu_seconds": 15.002199749999647,
+          "validation_nll": 0.6424716172394929
+        },
+        {
+          "step": 2697,
+          "train_cpu_seconds": 30.00807927900007,
+          "validation_nll": 0.48525535000695125
+        },
+        {
+          "step": 4113,
+          "train_cpu_seconds": 45.01046469199977,
+          "validation_nll": 0.4746297496336478
+        },
+        {
+          "step": 5456,
+          "train_cpu_seconds": 60.00291671799971,
+          "validation_nll": 0.42214004905135544
+        }
+      ],
+      "train_cpu_seconds": 60.00291671799971,
+      "train_wall_seconds": 60.02088672699924,
+      "parameters": 93699,
+      "file_bytes": 178976,
+      "numeric_weight_bytes": 176616,
+      "model_path": "models/v013_length_stabilized/seed33-b2-copy-inner-lr025.edge",
+      "model_sha256": "178a1aea114114e71d594dbee58ae4e68be4926893b9f8a7853a9daed617463c",
+      "source_checkpoint_sha256": "091d7b1159f59b83788e2c1bec325192c6b9cbfa57b4a01d2f8959eb0bff7c91",
+      "dataset_sha256": "accb0f0d38cb23905af7f6e97c712cc8ecff565262f85a2f5d032a16d0a9e6f0"
+    }
+  ]
+}
