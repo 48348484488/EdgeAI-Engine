@@ -1,0 +1,82 @@
+--- a/src/CodeSearch.cpp
++++ b/src/CodeSearch.cpp
+@@ -152,42 +152,37 @@
+  auto result=stats_;auto terms=query_tokens(query);if(terms.empty())return result;
+  for(const auto& ptr:sources_){
+   const auto& src=*ptr;const std::vector<std::size_t>* rarest=nullptr;bool impossible=false;
+-  for(const auto&term:terms){
+-   if(src.path_terms.count(term))continue;
+-   auto found=src.postings.find(term);
+-   if(found==src.postings.end()){impossible=true;break;}
+-   if(!rarest||found->second.size()<rarest->size())rarest=&found->second;
+-  }
++  for(const auto&term:terms){if(src.path_terms.count(term))continue;auto found=src.postings.find(term);if(found==src.postings.end()){impossible=true;break;}if(!rarest||found->second.size()<rarest->size())rarest=&found->second;}
+   if(impossible)continue;
+   std::vector<std::size_t> from_paths;
+-  if(!rarest){
+-   for(const auto&term:terms){auto f=src.postings.find(term);if(f!=src.postings.end())from_paths.insert(from_paths.end(),f->second.begin(),f->second.end());}
+-   std::sort(from_paths.begin(),from_paths.end());from_paths.erase(std::unique(from_paths.begin(),from_paths.end()),from_paths.end());rarest=&from_paths;
+-  }
+-  CodeHit best;
++  if(!rarest){for(const auto&term:terms){auto f=src.postings.find(term);if(f!=src.postings.end())from_paths.insert(from_paths.end(),f->second.begin(),f->second.end());}std::sort(from_paths.begin(),from_paths.end());from_paths.erase(std::unique(from_paths.begin(),from_paths.end()),from_paths.end());rarest=&from_paths;}
++  std::vector<CodeHit> local_hits;
+   for(auto i:*rarest){
+    ++result.candidate_lines;bool all=true;std::size_t matched_row=0;
+-   for(const auto&term:terms){auto f=src.postings.find(term);
+-    if(f!=src.postings.end()&&std::binary_search(f->second.begin(),f->second.end(),i))++matched_row;
+-    else if(!src.path_terms.count(term)){all=false;break;}
+-   }
++   for(const auto&term:terms){auto f=src.postings.find(term);if(f!=src.postings.end()&&std::binary_search(f->second.begin(),f->second.end(),i))++matched_row;else if(!src.path_terms.count(term)){all=false;break;}}
+    if(!all||!matched_row)continue;
+-   double score=double(matched_row)*10.0;const auto line_lower=lower(src.lines[i]);
+-   auto paren=line_lower.find('(');
+-   for(const auto&term:terms){auto pos=line_lower.find(term);if(pos!=std::string::npos&&paren!=std::string::npos&&pos<paren)score+=2;}
++   const auto line_lower=lower(src.lines[i]);const auto first=line_lower.find_first_not_of(" \t");
++   const bool comment=first!=std::string::npos&&(line_lower.compare(first,2,"//")==0||line_lower[first]=='#'||line_lower.compare(first,2,"/*")==0||line_lower[first]=='*');
++   double score=double(matched_row)*10.0;bool definition=false;
++   for(const auto&term:terms){
++    auto pos=line_lower.find(term);if(pos==std::string::npos)continue;auto paren=line_lower.find('(',pos+term.size());if(paren!=std::string::npos)score+=2;
++    const auto before=line_lower.substr(0,pos);const bool py=before.find("def ")!=std::string::npos||before.find("class ")!=std::string::npos;
++    const bool named=before.find("function ")!=std::string::npos||before.find("stock ")!=std::string::npos||before.find("public ")!=std::string::npos||before.find("forward ")!=std::string::npos;
++    bool c_like=false;if(paren!=std::string::npos&&!comment){const auto trimmed=before.find_first_not_of(" \t");const std::string prefix=trimmed==std::string::npos?std::string():before.substr(trimmed);const bool control=prefix.rfind("if",0)==0||prefix.rfind("for",0)==0||prefix.rfind("while",0)==0||prefix.rfind("switch",0)==0||prefix.rfind("return",0)==0;const bool earlier_body=before.find('{')!=std::string::npos||before.find(';')!=std::string::npos||before.find(')')!=std::string::npos;c_like=!prefix.empty()&&!control&&!earlier_body&&(line_lower.find('{',paren)!=std::string::npos||line_lower.find(';',paren)!=std::string::npos);}
++    if(py||named||c_like)definition=true;
++    const auto quote=line_lower.find_first_of("\"'");
++    if(quote!=std::string::npos&&quote<pos)score-=8;
++   }
++   if(definition)score+=12;
+    if(line_lower.find('{')!=std::string::npos)score+=1;
+-   const auto first=line_lower.find_first_not_of(" \t");
+-   if(first!=std::string::npos&&(line_lower.compare(first,2,"//")==0||line_lower[first]=='#'))score-=3;
+-   if(best.match_line&&score<=best.score)continue;
+-   best.path=src.path;best.match_line=i+1;best.start_line=(i>context?i-context:0)+1;best.end_line=std::min(src.lines.size(),i+context+1);best.score=score;best.text.clear();
+-   for(std::size_t n=best.start_line-1;n<best.end_line;++n){if(n>best.start_line-1)best.text+='\n';best.text+=src.lines[n];}
++   if(comment)score-=12;
++   CodeHit hit;hit.path=src.path;hit.match_line=i+1;hit.start_line=(i>context?i-context:0)+1;hit.end_line=std::min(src.lines.size(),i+context+1);hit.score=score;for(std::size_t n=hit.start_line-1;n<hit.end_line;++n){if(n>hit.start_line-1)hit.text+='\n';hit.text+=src.lines[n];}local_hits.push_back(std::move(hit));
+   }
+-  if(best.match_line)result.hits.push_back(std::move(best));
++  std::sort(local_hits.begin(),local_hits.end(),[](const CodeHit&a,const CodeHit&b){if(a.score!=b.score)return a.score>b.score;return a.match_line<b.match_line;});const auto keep=std::min<std::size_t>(local_hits.size(),limit);for(std::size_t n=0;n<keep;++n)result.hits.push_back(std::move(local_hits[n]));
+  }
+- std::sort(result.hits.begin(),result.hits.end(),[](const CodeHit&a,const CodeHit&b){if(a.score!=b.score)return a.score>b.score;if(a.path!=b.path)return a.path<b.path;return a.match_line<b.match_line;});
+- if(result.hits.size()>limit)result.hits.resize(limit);
+- return result;
++ std::sort(result.hits.begin(),result.hits.end(),[](const CodeHit&a,const CodeHit&b){if(a.score!=b.score)return a.score>b.score;if(a.path!=b.path)return a.path<b.path;return a.match_line<b.match_line;});if(result.hits.size()>limit)result.hits.resize(limit);return result;
+ }
++
+ std::string format_code_result(const CodeSearchResult&r){
+--- a/tests/test_code_search.cpp
++++ b/tests/test_code_search.cpp
+@@ -33,6 +33,14 @@
+   CHECK(idx.search("Procure set health",3,0).hits[0].match_line==3);
+   CHECK(idx.search("render menu",3,0).hits[0].path=="web/app.js");
+   CHECK(idx.search("CarregarConta",3,0).hits[0].path=="script/login.pwn");
++  put(root/"rank/definition.cpp", "// TargetSymbol() appears in docs\nconst char* note = \"TargetSymbol()\";\nvoid use() { TargetSymbol(); }\nvoid TargetSymbol() { }\n");
++  put(root/"rank/python_case.py", "\"\"\"PyTarget docs mention PyTarget()\"\"\"\ntext = 'PyTarget()'\nPyTarget()\ndef PyTarget():\n    return 1\n");
++  edgeai::CodeIndex ranked(root.string());
++  auto cpp_rank=ranked.search("TargetSymbol",5,0);
++  CHECK(!cpp_rank.hits.empty());CHECK(cpp_rank.hits[0].path=="rank/definition.cpp");CHECK(cpp_rank.hits[0].match_line==4);
++  bool saw_cpp_call=false;for(const auto& h:cpp_rank.hits)if(h.path=="rank/definition.cpp"&&h.match_line==3)saw_cpp_call=true;CHECK(saw_cpp_call);
++  auto py_rank=ranked.search("PyTarget",5,0);
++  CHECK(!py_rank.hits.empty());CHECK(py_rank.hits[0].path=="rank/python_case.py");CHECK(py_rank.hits[0].match_line==4);
+   CHECK(idx.search("`ola`",3,1).hits[0].text.find("ação")!=std::string::npos);
+   CHECK(idx.search("totallyMissingSymbol",3,1).hits.empty());
+   CHECK(idx.search("secretToken",3,1).hits.empty());
