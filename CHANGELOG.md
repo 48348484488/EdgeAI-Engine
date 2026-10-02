@@ -1,3 +1,9 @@
+
+## v0.11
+- Code search ranking now prioritizes common definition forms over comments, strings and calls.
+- Multiple relevant occurrences from the same file can be returned.
+- CPython benchmark: top-1 16/27 -> 24/27; top-5 18/27 -> 26/27; negatives remain 8/8.
+- Neural model/checkpoint files unchanged from v0.10.
 # v0.10
 
 - Cache por conteúdo e postings em RAM, com limites explícitos.
