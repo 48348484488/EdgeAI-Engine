@@ -14,6 +14,25 @@ int main(){using namespace edgeai;
     CHECK(display_utf8("ação\n")=="ação\n");
     CHECK(display_utf8(std::string("\xf0\x9f",2))==std::string("\xef\xbf\xbd\xef\xbf\xbd"));
     auto m=make_transformer_demo(16,23,7);CHECK(m.valid());
+    auto multi=make_transformer_demo(16,23,7,2);CHECK(multi.valid());
+    CHECK(multi.config.blocks==2);CHECK(multi.blocks_data.size()==2);
+    CHECK(multi.state_payload_bytes()==2*m.state_payload_bytes());
+    CHECK(multi.parameter_count()>m.parameter_count());CHECK(multi.weight_bytes()>m.weight_bytes());
+    multi.save("transformer-multi.edge");
+    auto multi_loaded=TransformerModel::load("transformer-multi.edge");
+    CHECK(multi_loaded.valid());CHECK(multi_loaded.config.blocks==2);CHECK(multi_loaded.blocks_data.size()==2);
+    CHECK(multi_loaded.parameter_count()==multi.parameter_count());CHECK(multi_loaded.weight_bytes()==multi.weight_bytes());
+    std::ifstream multi_in("transformer-multi.edge",std::ios::binary);std::string multi_raw((std::istreambuf_iterator<char>(multi_in)),{});
+    CHECK(multi_raw.substr(0,7)=="EDGEAI8");
+    auto corrupt_blocks=[&](std::uint32_t count){
+        std::string bad=multi_raw;for(int j=0;j<4;++j)bad[32+j]=char((count>>(8*j))&0xff);
+        std::ofstream o("transformer-bad.edge",std::ios::binary);o.write(bad.data(),bad.size());o.close();
+        rejected([&]{TransformerModel::load("transformer-bad.edge");});
+    };
+    corrupt_blocks(0);corrupt_blocks(9);
+    for(auto n:{0ul,8ul,36ul,multi_raw.size()-1}){std::ofstream o("transformer-bad.edge",std::ios::binary);o.write(multi_raw.data(),n);o.close();rejected([&]{TransformerModel::load("transformer-bad.edge");});}
+    {std::ofstream o("transformer-bad.edge",std::ios::binary);o<<multi_raw<<"extra";o.close();rejected([&]{TransformerModel::load("transformer-bad.edge");});}
+    rejected([&]{make_transformer_demo(16,23,7,0);});rejected([&]{make_transformer_demo(16,23,7,9);});
     m.save("transformer-test.edge");auto reloaded=TransformerModel::load("transformer-test.edge");
     CHECK(reloaded.weight_bytes()==m.weight_bytes());CHECK(reloaded.parameter_count()==m.parameter_count());
     TransformerBackend a(m,Kernel::Scalar),b(reloaded,Kernel::Scalar);
@@ -32,6 +51,6 @@ int main(){using namespace edgeai;
     for(auto n:{0ul,8ul,30ul,raw.size()-1}){std::ofstream o("transformer-bad.edge",std::ios::binary);o.write(raw.data(),n);o.close();rejected([&]{TransformerModel::load("transformer-bad.edge");});}
     {std::ofstream o("transformer-bad.edge",std::ios::binary);o<<raw<<"extra";o.close();rejected([&]{TransformerModel::load("transformer-bad.edge");});}
     rejected([&]{make_transformer_demo(7,9,2);});
-    std::remove("transformer-test.edge");std::remove("transformer-bad.edge");
+    std::remove("transformer-test.edge");std::remove("transformer-multi.edge");std::remove("transformer-bad.edge");
     std::cout<<"Transformer bounded cache, reset, finite forward, serialization and rejection passed\n";
 }
