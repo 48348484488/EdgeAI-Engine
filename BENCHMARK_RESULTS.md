@@ -1,4 +1,119 @@
-# EdgeAI Engine v0.11 — ranking estrutural de busca de codigo
+# EdgeAI Engine v0.12 — Transformer multi-bloco nativo
+
+Base: v0.11. A v0.12 adiciona suporte real a múltiplos blocos do Python ao runtime C++, mantendo compatibilidade com modelos antigos.
+
+## O que mudou
+
+- Novo formato `EDGEAI8` para modelos com mais de um bloco.
+- `TinyTransformer` aceita de 1 a 8 blocos.
+- Runtime C++ executa todos os blocos em sequência com cache KV independente por bloco.
+- `EDGEAI5/6/7` continuam carregando como modelos de um bloco.
+- Exportação de um bloco continua usando o formato legado correspondente.
+- `edgeai_inspect` distingue corretamente `EDGEAI7` e `EDGEAI8`.
+
+## Paridade Python ↔ C++
+
+O verificador usa 1 e 2 blocos, kernels `scalar` e `auto`, sequência de 11 tokens e janela 4 para forçar wrap do cache KV.
+
+| Medida | Resultado |
+|---|---:|
+| Casos | 4/4 |
+| Maior erro absoluto | 3,5763e-7 |
+| Tolerância absoluta | 6e-5 |
+| Tolerância relativa | 6e-5 |
+
+## Experimento controlado — 60 s de CPU por arquitetura/seed
+
+Mesmo dataset congelado, tokenizer, `dim=48`, `hidden=128`, janela 64, batch 16, AdamW e uma thread. Seeds 11, 22 e 33. Seleção apenas por validation NLL; os testes ficam fora da seleção.
+
+| Medida | 1 bloco | 2 blocos |
+|---|---:|---:|
+| Parâmetros | 71.827 | 93.699 |
+| Arquivo `.edge` | 154.400 B | 178.976 B |
+| Pesos numéricos residentes | 152.168 B | 176.616 B |
+| Estado KV | 24.576 B | 49.152 B |
+| Working memory numérica | 29.420 B | 56.300 B |
+| Mediana de steps em 60 s | 11.269 | 6.897 |
+| Mediana validation NLL | **0,4101** | 0,4352 |
+| Geração nativa exata | **147/582 (25,26%)** | 138/582 (23,71%) |
+| Respostas corretas pela métrica do dataset | **149/582 (25,60%)** | 138/582 (23,71%) |
+| Mediana de tempo interno por caso | **0,650 ms** | 0,779 ms |
+
+Por seed, 2 blocos melhorou o exact-match apenas na seed 22 (37 → 46). Nas seeds 11 e 33, caiu de 53 → 48 e 57 → 44. Portanto, o ganho não foi consistente.
+
+Custos do segundo bloco nesse modelo:
+
+- +30,45% de parâmetros;
+- +15,92% no arquivo `.edge`;
+- +100% de estado KV;
+- +91,37% de working memory numérica;
+- cerca de 38,80% menos steps no mesmo orçamento de CPU;
+- cerca de 19,82% mais tempo interno mediano por caso.
+
+## Ablação equal-update com inicialização identidade
+
+Depois do experimento de 60 s, a inicialização do bloco extra foi alterada para começar como **identidade residual**, de forma que adicionar o segundo bloco não mude a função do modelo antes do treino. Os artefatos históricos de `results/v012/` foram gerados pelo protocolo anterior (`edge-sft-v012-blocks-1`); o código atual usa o protocolo versionado de inicialização por identidade. Portanto, uma nova execução no HEAD atual não deve ser tratada como reprodução bit a bit daqueles artefatos antigos.
+
+Para separar profundidade de quantidade de updates, a ablação `results/v012_equal_steps/` congelou o baseline de 1 bloco e deu ao modelo atual de 2 blocos exatamente o mesmo stream de minibatches, os mesmos pontos de validação e o mesmo número de optimizer updates por seed.
+
+| Seed | 1 bloco correct | 2 blocos equal-update correct | Steps pareados |
+|---:|---:|---:|---:|
+| 11 | 53/194 | **55/194** | 11.269 |
+| 22 | 37/194 | 37/194 | 11.286 |
+| 33 | **59/194** | 46/194 | 9.661 |
+| **Total** | **149/582** | 138/582 | — |
+
+No agregado exato, o baseline ficou em **147/582** e 2 blocos em **138/582**. A mediana de validation NLL favoreceu 2 blocos (**0,2725** contra 0,4101), mas isso não se converteu em melhor geração livre. Para receber os mesmos updates, 2 blocos consumiu **1,197×** o CPU de treino na mediana e teve **1,048×** a latência nativa mediana.
+
+Assim, “2 blocos perdeu apenas porque completou menos steps em 60 s” não explica o resultado. O próximo diagnóstico relevante é de dinâmica de otimização por bloco (gradientes, mudança funcional, warm-up/congelamento), não apenas mais orçamento.
+
+## Dinâmica do segundo bloco e estabilização
+
+O diagnóstico de 128 updates mostrou que a inicialização identidade evita mudança funcional no instante zero, mas o miolo aleatório do segundo bloco sofre drift relativo muito maior logo no início. Aos 128 updates, o drift do bloco herdado ficou em aproximadamente **11–12%** de sua norma, contra **48–55%** para `Q/K/V/up` do bloco novo.
+
+Três intervenções foram testadas com a mesma exposição de treino:
+
+| Variante | Geração native `correct` | Resultado |
+|---|---:|---|
+| random-identity equal-update | 138/582 | não recupera o baseline |
+| warm-up 1024 updates só no bloco novo | 157/582 | melhora agregado, mas seed 33 cai para 39 |
+| copy-inner, LR normal | 145/582 | reduz o gap |
+| **copy-inner, LR interno 0,25×** | **163/582** | melhor agregado observado |
+
+No candidato final da rodada, `Q/K/V/up` do segundo bloco são copiados do bloco 0 e treinados a 0,25× do learning rate principal; `project/down` continuam zerados na inicialização para que a função inicial permaneça idêntica ao modelo de um bloco. No teste original ele obteve **163/582 exatos/corretos**, contra **147/582 exatos** e **149/582 `correct`** para o baseline de um bloco.
+
+A melhora do teste original ainda é heterogênea por seed: 50 vs. 53, 57 vs. 37 e 56 vs. 59 pela métrica `correct`. Uma tentativa de selecionar checkpoint usando geração de validação na seed 33 recuperou apenas **+2** respostas (46→48), portanto seleção por NLL não explica sozinha a diferença.
+
+## Holdout fresco com modelos congelados
+
+Para evitar continuar ajustando diretamente ao teste original, foi criado um holdout pós-hoc usando faixas que não aparecem em nenhum split congelado do v0.7: strings de tamanho 5, somas 20–29 e coeficientes de expressão 30–39. Os modelos foram **congelados**; não houve retreino após construir o holdout.
+
+| Seed | 1 bloco | 2 blocos copy-inner + LR 0,25× |
+|---:|---:|---:|
+| 11 | 7/128 | **10/128** |
+| 22 | 4/128 | **41/128** |
+| 33 | 4/128 | **9/128** |
+| **Total** | **15/384** | **60/384** |
+
+O candidato venceu em **3/3 seeds**. No mesmo run, a mediana interna ficou ~18–21% maior para 2 blocos. Como esse holdout foi construído depois de observar os resultados anteriores, ele é evidência de replicação dentro do currículo sintético, não um benchmark pré-registrado nem evidência de inteligência geral.
+
+## Decisão atual
+
+**1 bloco permanece o padrão de runtime** por custo e robustez. O melhor candidato neural experimental passa a ser **2 blocos com copy-inner + LR interno 0,25×**, porque superou o baseline no agregado do teste original e no holdout fresco 3/3 seeds. A promoção para padrão exige uma rodada futura pré-registrada e/ou tarefas mais amplas.
+
+## Diagnóstico curto anterior
+
+O ensaio de 12 s registrado em `results/v012/blocks.json`, com avaliação teacher-forced, favoreceu 2 blocos em NLL e acurácia de tokens. Esse sinal continua útil, mas não é a decisão final: no protocolo principal de 60 s com geração nativa livre, 2 blocos não melhorou de forma consistente.
+
+## Verificação final
+
+A verificação final reproduzível é executada pela workflow dedicada e registrada em `results/v012/verification.json`: Release CTest, suíte Python, paridade final, no-SIMD, ASan+UBSan e auditoria dos modelos. Energia e pico de RSS permanecem não medidos (`null`).
+
+Limite: o dataset é sintético e pequeno. Estes números medem este protocolo; não demonstram inteligência geral, desempenho em PC fraco real, Windows/ARM ou superioridade sobre grandes LLMs.
+
+---
+
+## Histórico: EdgeAI Engine v0.11 — ranking estrutural de busca de codigo
 
 Base efetiva: v0.10. **Sem novo treinamento, sem LLM externo real e sem alteracao dos modelos neurais.**
 

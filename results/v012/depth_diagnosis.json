@@ -1,0 +1,70 @@
+{
+  "seeds": [
+    11,
+    22,
+    33
+  ],
+  "cases_per_architecture": 582,
+  "one_correct": 149,
+  "two_correct": 138,
+  "correct_delta": -11,
+  "two_wins": 1,
+  "one_wins": 2,
+  "ties": 0,
+  "median_two_step_ratio": 0.6859538350067281,
+  "median_latency_ratio": 1.2107529083734376,
+  "validation_prefers_two": 1,
+  "generation_prefers_two": 1,
+  "pairs": [
+    {
+      "seed": 11,
+      "one_correct": 53,
+      "two_correct": 48,
+      "correct_delta": -5,
+      "one_validation_nll": 0.43132522812596075,
+      "two_validation_nll": 0.4891955241009041,
+      "validation_nll_delta": 0.057870295974943364,
+      "one_steps": 11269,
+      "two_steps": 7878,
+      "two_step_ratio": 0.6990859881089715,
+      "one_internal_seconds": 0.0006502735,
+      "two_internal_seconds": 0.0007893735000000001,
+      "latency_ratio": 1.2139099932566837
+    },
+    {
+      "seed": 22,
+      "one_correct": 37,
+      "two_correct": 46,
+      "correct_delta": 9,
+      "one_validation_nll": 0.4101134070643672,
+      "two_validation_nll": 0.3170297684492888,
+      "validation_nll_delta": -0.0930836386150784,
+      "one_steps": 11286,
+      "two_steps": 6897,
+      "two_step_ratio": 0.6111111111111112,
+      "one_internal_seconds": 0.000652566,
+      "two_internal_seconds": 0.0007791675,
+      "latency_ratio": 1.1940056637949266
+    },
+    {
+      "seed": 33,
+      "one_correct": 59,
+      "two_correct": 44,
+      "correct_delta": -15,
+      "one_validation_nll": 0.3103827942300726,
+      "two_validation_nll": 0.43523319650579384,
+      "validation_nll_delta": 0.12485040227572125,
+      "one_steps": 9661,
+      "two_steps": 6627,
+      "two_step_ratio": 0.6859538350067281,
+      "one_internal_seconds": 0.000634805,
+      "two_internal_seconds": 0.000768592,
+      "latency_ratio": 1.2107529083734376
+    }
+  ],
+  "findings": [
+    "equal CPU time does not imply equal optimizer updates: the two-block model completes fewer steps",
+    "validation NLL and greedy exact/correct generation are not interchangeable selection objectives",
+    "the second block starts function-preserving, so the comparison isolates learned depth rather than an initial output shift"
+  ]
+}

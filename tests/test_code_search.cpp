@@ -63,8 +63,8 @@ int main(){
   CHECK(idx.search("dependencySecret",3,1).hits.empty());
   // v0.11 RED: a real definition must outrank earlier comments, strings and calls.
   put(root/"ranking/defs.py", "# TargetThing mentioned in a comment\nlabel = \"TargetThing\"\nTargetThing()\ndef TargetThing():\n    return 1\nTargetThing()\n");
-  edgeai::CodeIndex ranked(root.string());
-  auto definition=ranked.search("TargetThing",5,0);
+  edgeai::CodeIndex defs_index(root.string());
+  auto definition=defs_index.search("TargetThing",5,0);
   CHECK(!definition.hits.empty());
   CHECK(definition.hits[0].path=="ranking/defs.py");
   CHECK(definition.hits[0].match_line==4);

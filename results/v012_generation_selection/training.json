@@ -1,0 +1,112 @@
+{
+  "protocol": "seed33 two-block equal-update replay; checkpoint selected by validation greedy correct/exact then NLL",
+  "expected": 1,
+  "completed": 1,
+  "architectures": [
+    1,
+    2
+  ],
+  "fairness_verified": true,
+  "dataset_sha256": "648cc3be05fe6bb3d035077bed57fc2cf6313824fa8f9638c95b8ad05d473faa",
+  "runs": [
+    {
+      "seed": 33,
+      "blocks": 2,
+      "steps": 9661,
+      "selected_step": 7326,
+      "selected_validation_nll": 0.45648291117891115,
+      "validation_selection": {
+        "step": 7326,
+        "validation_nll": 0.45648291117891115,
+        "greedy_correct": 77,
+        "greedy_exact": 77,
+        "greedy_eos": 128
+      },
+      "validation_candidates": [
+        {
+          "step": 2502,
+          "validation_nll": 0.580840688612726,
+          "greedy_correct": 62,
+          "greedy_exact": 62,
+          "greedy_eos": 128
+        },
+        {
+          "step": 4946,
+          "validation_nll": 0.6389368058630713,
+          "greedy_correct": 69,
+          "greedy_exact": 69,
+          "greedy_eos": 128
+        },
+        {
+          "step": 7326,
+          "validation_nll": 0.45648291117891115,
+          "greedy_correct": 77,
+          "greedy_exact": 77,
+          "greedy_eos": 128
+        },
+        {
+          "step": 9661,
+          "validation_nll": 0.4735725928235937,
+          "greedy_correct": 72,
+          "greedy_exact": 72,
+          "greedy_eos": 128
+        }
+      ],
+      "train_cpu_seconds": 104.32293810700011,
+      "train_wall_seconds": 104.38033575700028,
+      "after_path": "models/v012_generation_selection/seed33-b2-generation-selected.edge",
+      "artifacts": {
+        "models/v012_generation_selection/seed33-b2-generation-selected.edge": "94a49c559193e09c6c60b3f92e0009cc5bf924fabfd974e8b1caa836aa97ebb7"
+      },
+      "parameters": 93699,
+      "file_bytes": 178976,
+      "batch_ids_sha256": "0f839f44d4d04dafb108b7204a29020d0e180777b5b01ed2746e33241e924e8e",
+      "examples_seen": {
+        "addition": 38752,
+        "copy": 38550,
+        "expression": 38805,
+        "uppercase": 38469
+      },
+      "fairness_identity_one": {
+        "protocol": "edge-sft-v012-generation-selection-1",
+        "seed": 33,
+        "target_steps": 9661,
+        "threads": 1,
+        "dataset_sha256": "648cc3be05fe6bb3d035077bed57fc2cf6313824fa8f9638c95b8ad05d473faa",
+        "tokenizer_fingerprint": "f78e8590a28d3b442ab763afe8cc9ad54af9f1dd9078c6005e7fa9461b1ff4c5",
+        "dim": 48,
+        "hidden": 128,
+        "window": 64,
+        "precision": "int8",
+        "vocab_size": 515,
+        "batch": 16,
+        "lr": 0.001,
+        "weight_decay": 0.01,
+        "clip_norm": 1.0,
+        "max_length": 128,
+        "selection": "greedy validation correct; exact, NLL, then earlier-step tiebreaks",
+        "blocks": 1
+      },
+      "fairness_identity_two": {
+        "protocol": "edge-sft-v012-generation-selection-1",
+        "seed": 33,
+        "target_steps": 9661,
+        "threads": 1,
+        "dataset_sha256": "648cc3be05fe6bb3d035077bed57fc2cf6313824fa8f9638c95b8ad05d473faa",
+        "tokenizer_fingerprint": "f78e8590a28d3b442ab763afe8cc9ad54af9f1dd9078c6005e7fa9461b1ff4c5",
+        "dim": 48,
+        "hidden": 128,
+        "window": 64,
+        "precision": "int8",
+        "vocab_size": 515,
+        "batch": 16,
+        "lr": 0.001,
+        "weight_decay": 0.01,
+        "clip_norm": 1.0,
+        "max_length": 128,
+        "selection": "greedy validation correct; exact, NLL, then earlier-step tiebreaks",
+        "blocks": 2
+      }
+    }
+  ]
+}

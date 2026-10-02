@@ -1,0 +1,70 @@
+{
+  "protocol": "targeted seed33 two-block LR ablation; same data/stream/steps; LR only variable",
+  "seed": 33,
+  "steps": 9661,
+  "lrs": [
+    0.0005,
+    0.00075
+  ],
+  "dataset_sha256": "648cc3be05fe6bb3d035077bed57fc2cf6313824fa8f9638c95b8ad05d473faa",
+  "runs": [
+    {
+      "seed": 33,
+      "blocks": 2,
+      "lr": 0.0005,
+      "steps": 9661,
+      "selected_step": 2502,
+      "selected_validation_nll": 0.5727594633897145,
+      "validation_curve": [
+        {
+          "step": 2502,
+          "validation_nll": 0.5727594633897145
+        },
+        {
+          "step": 4946,
+          "validation_nll": 0.7069580963916249
+        },
+        {
+          "step": 7326,
+          "validation_nll": 0.7631170581888269
+        },
+        {
+          "step": 9661,
+          "validation_nll": 0.9039483563767539
+        }
+      ],
+      "train_cpu_seconds": 81.23498607499967,
+      "model_path": "models/v012_lr_ablation/seed33-b2-lr0p0005.edge",
+      "model_sha256": "18ec5c2066a984d67a8c368e67792453f142950f9099c6a5d9891c933c4ee7e3"
+    },
+    {
+      "seed": 33,
+      "blocks": 2,
+      "lr": 0.00075,
+      "steps": 9661,
+      "selected_step": 2502,
+      "selected_validation_nll": 0.5873233486104894,
+      "validation_curve": [
+        {
+          "step": 2502,
+          "validation_nll": 0.5873233486104894
+        },
+        {
+          "step": 4946,
+          "validation_nll": 0.7899807422249405
+        },
+        {
+          "step": 7326,
+          "validation_nll": 0.6616430837247107
+        },
+        {
+          "step": 9661,
+          "validation_nll": 0.6619039550561596
+        }
+      ],
+      "train_cpu_seconds": 80.59790560200095,
+      "model_path": "models/v012_lr_ablation/seed33-b2-lr0p00075.edge",
+      "model_sha256": "2a7afc022a2a17b4dc3d4aa291e1ff4cc2c05c8c8eb5cd195c83ff10c7dfb636"
+    }
+  ]
+}

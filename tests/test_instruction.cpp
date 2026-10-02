@@ -17,6 +17,7 @@ int main(){using namespace edgeai;
     DenseMatrix output(259,8);output.bias(256)=100;output.bias(257)=90;output.bias(258)=80;m.output=MixedMatrix(output);
     CHECK(m.valid());m.save("instruction-test.edge");
     auto loaded=TransformerModel::load("instruction-test.edge");CHECK(loaded.tokenizer.has_eos());CHECK(is_transformer_file("instruction-test.edge"));
+    CHECK(loaded.config.blocks==1);CHECK(loaded.blocks_data.size()==1);
     TransformerBackend b(loaded,Kernel::Scalar);CHECK(b.infer("anything",Budget{1,128,1,1}).text.empty());
     CHECK(b.tokens_seen()==tok.encode_prompt("anything").size());
     std::ifstream in("instruction-test.edge",std::ios::binary);std::string raw((std::istreambuf_iterator<char>(in)),{});

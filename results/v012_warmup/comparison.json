@@ -1,0 +1,34 @@
+{
+  "protocol": "1024-step new-block-only warmup then joint fine-tuning",
+  "pairs": [
+    {
+      "seed": 11,
+      "one_correct": 53,
+      "two_equal_updates_correct": 55,
+      "two_warmup_correct": 58,
+      "warmup_vs_equal_delta": 3,
+      "warmup_vs_one_delta": 5
+    },
+    {
+      "seed": 22,
+      "one_correct": 37,
+      "two_equal_updates_correct": 37,
+      "two_warmup_correct": 60,
+      "warmup_vs_equal_delta": 23,
+      "warmup_vs_one_delta": 23
+    },
+    {
+      "seed": 33,
+      "one_correct": 59,
+      "two_equal_updates_correct": 46,
+      "two_warmup_correct": 39,
+      "warmup_vs_equal_delta": -7,
+      "warmup_vs_one_delta": -20
+    }
+  ],
+  "one_total": 149,
+  "equal_updates_total": 138,
+  "warmup_total": 157,
+  "warmup_vs_equal_delta": 19,
+  "warmup_vs_one_delta": 8
+}

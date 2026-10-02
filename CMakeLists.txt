@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-project(EdgeAIEngine VERSION 0.11.0 LANGUAGES CXX)
+project(EdgeAIEngine VERSION 0.12.0 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
@@ -68,6 +68,10 @@ if(EDGEAI_BUILD_TESTS AND TARGET edgeai_runtime_benchmark)
   if(Python3_Interpreter_FOUND)
     add_test(NAME edgeai_runtime_cli COMMAND ${Python3_EXECUTABLE}
       ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_runtime_cli.py $<TARGET_FILE:edgeai_runtime_benchmark>)
+    add_test(NAME edgeai_inspect_cli COMMAND ${Python3_EXECUTABLE}
+      ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_inspect_cli.py $<TARGET_FILE:edgeai_inspect>)
+    add_test(NAME edgeai_chat_banner COMMAND ${Python3_EXECUTABLE}
+      ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_chat_banner.py $<TARGET_FILE:edgeai_chat>)
   endif()
 endif()
 

@@ -1,68 +1,126 @@
-# Experimento estrutural: 1 bloco vs. 2 blocos
+# Experimento estrutural v0.12: 1 bloco vs. 2 blocos
 
-Este experimento testa se um segundo bloco Transformer adiciona capacidade útil ao EdgeAI quando o orçamento de CPU permanece igual.
+Objetivo: verificar se um segundo bloco Transformer melhora a capacidade útil do EdgeAI quando o orçamento de CPU permanece igual.
 
-## Protocolo
+## Infraestrutura validada
 
-- Base: os mesmos checkpoints congelados `seed11`, `seed22` e `seed33` da v0.6, expandidos para o tokenizer de instruções.
-- Dados: o mesmo conjunto sintético congelado `data/instructions_v07`.
-- Otimizador: AdamW, `lr=0.001`, `weight_decay=0.01`, batch 16, uma thread.
-- Orçamento: **12 s de CPU de otimização por arquitetura/seed**.
-- Seleção: menor NLL de validação entre 25/50/75/100% do orçamento.
-- Avaliação final: todos os **194 casos de teste** por NLL de resposta e acurácia com *teacher forcing*.
-- O segundo bloco começa como residual identidade. Antes do treino, 1 bloco e 2 blocos tiveram **diferença máxima de logits = 0.0** nos probes de paridade.
+- Python `TinyTransformer`: 1..8 blocos.
+- Runtime C++: execução multi-bloco sequencial.
+- Formato `EDGEAI8` para modelos multi-bloco.
+- `EDGEAI5/6/7` continuam compatíveis como um bloco.
+- Cache KV independente por bloco.
+- Paridade Python/C++ em scalar e auto, incluindo wrap de janela.
 
-`teacher forcing` mede previsão dos tokens corretos quando o prefixo correto é fornecido. **Não é a mesma coisa que acerto em geração livre.**
+## Fase A — diagnóstico curto teacher-forced
 
-## Resultado agregado — 3 seeds
+O primeiro diagnóstico usou 12 s de CPU por arquitetura/seed e avaliação teacher-forced. Nesse protocolo, 2 blocos mostrou sinal positivo:
 
-| Métrica | 1 bloco | 2 blocos |
+| Medida | 1 bloco | 2 blocos |
+|---|---:|---:|
+| Mediana NLL de teste | 2,8149 | **2,4919** |
+| Acurácia de tokens | 57,27% | **60,20%** |
+| Linhas exatas teacher-forced | 106/582 (18,21%) | **122/582 (20,96%)** |
+
+Esse teste fornece o prefixo correto ao prever o próximo token. Portanto, ele não mede sozinho a capacidade de gerar uma resposta completa sem ajuda.
+
+## Fase B — protocolo principal de 60 s + geração nativa
+
+Controle:
+
+- seeds 11, 22 e 33;
+- 60 s de process CPU por arquitetura/seed;
+- uma thread;
+- mesmo dataset `data/instructions_v07`;
+- mesmo tokenizer, dimensão, hidden, janela, optimizer, loss e política de seleção;
+- checkpoint escolhido por validation NLL;
+- testes não usados para seleção;
+- avaliação final por `edgeai_generate` C++.
+
+### Resultado por seed
+
+| Seed | Exact 1 bloco | Exact 2 blocos | Val NLL 1 bloco | Val NLL 2 blocos |
+|---:|---:|---:|---:|---:|
+| 11 | **53/194** | 48/194 | **0,4313** | 0,4892 |
+| 22 | 37/194 | **46/194** | 0,4101 | **0,3170** |
+| 33 | **57/194** | 44/194 | **0,3104** | 0,4352 |
+
+### Resultado agregado
+
+| Medida | 1 bloco | 2 blocos |
 |---|---:|---:|
 | Parâmetros | 71.827 | 93.699 |
-| Mediana de passos em 12 s CPU | 2.231 | 1.355 |
-| Mediana NLL de validação | 0,4760 | **0,3625** |
-| Mediana NLL nos 194 testes | 2,8149 | **2,4919** |
-| Acurácia de tokens nos testes | 57,27% | **60,20%** |
-| Linhas inteiras corretas com teacher forcing | 106/582 (18,21%) | **122/582 (20,96%)** |
-| CPU total de treino | 36,007 s | 36,014 s |
+| `.edge` | 154.400 B | 178.976 B |
+| Pesos numéricos | 152.168 B | 176.616 B |
+| Estado KV | 24.576 B | 49.152 B |
+| Working memory numérica | 29.420 B | 56.300 B |
+| Mediana de steps | 11.269 | 6.897 |
+| Mediana validation NLL | **0,4101** | 0,4352 |
+| Exact generation | **147/582 (25,26%)** | 138/582 (23,71%) |
+| Correct generation | **149/582 (25,60%)** | 138/582 (23,71%) |
+| EOS | 578/582 | **582/582** |
+| Mediana interna por caso | **0,650 ms** | 0,779 ms |
+| Mediana externa por caso | **1,863 ms** | 2,040 ms |
 
-O modelo de 2 blocos tem **30,45% mais parâmetros** e, no mesmo tempo de CPU, executou cerca de **39,26% menos passos**. Mesmo assim:
+2 blocos aumentou parâmetros em 30,45%, arquivo em 15,92%, cache KV em 100% e working memory em 91,37%. No mesmo orçamento, completou cerca de 38,80% menos steps.
 
-- NLL mediano de validação caiu **23,86%**;
-- NLL mediano de teste caiu **11,47%**;
-- acurácia de tokens subiu **2,93 pontos percentuais**;
-- linhas completas corretas com teacher forcing subiram **2,75 pontos percentuais**.
+**Nota de protocolo:** os artefatos da Fase B em `results/v012/` foram gerados antes da mudança que inicializa blocos adicionais como identidade residual. Eles registram `edge-sft-v012-blocks-1`. O HEAD atual versiona a inicialização por identidade; portanto, rerodar o comando da Fase B no código atual é um novo ensaio, não uma reprodução bit a bit dos arquivos armazenados.
 
-O NLL de teste do modelo de 2 blocos foi menor em **3/3 seeds**. A acurácia de tokens também foi maior em **3/3 seeds**.
+## Fase C — equal-update com bloco extra inicialmente identidade
 
-## Onde melhorou — e onde não resolveu
+Para testar a hipótese de que o modelo profundo perdeu apenas por executar menos optimizer updates no mesmo orçamento de CPU, congelamos o lado de 1 bloco da Fase B e treinamos apenas o lado de 2 blocos atual com:
 
-| Grupo | 1 bloco | 2 blocos |
-|---|---:|---:|
-| Teste ID — linhas exatas | 43,83% | **50,62%** |
-| Novos templates — linhas exatas | 19,44% | **22,22%** |
-| Faixa extrapolada — linhas exatas | **0%** | **0%** |
-| Tarefa nova — linhas exatas | **0%** | **0%** |
-| Faixa extrapolada — tokens | 40,35% | **42,20%** |
-| Tarefa nova — tokens | 32,35% | **34,31%** |
+- mesma seed e checkpoint de origem;
+- mesmo tokenizer/dataset;
+- mesmo stream de minibatches;
+- mesmos pontos de validação;
+- exatamente o mesmo número de updates do baseline de 1 bloco em cada seed;
+- bloco adicional inicializado como identidade residual.
 
-Portanto, dois blocos demonstraram **mais capacidade sob este protocolo**, mas não resolveram extrapolação nem transferência para uma tarefa nova.
+| Seed | Steps | Correct 1 bloco | Correct 2 blocos | Val NLL 1 bloco | Val NLL 2 blocos |
+|---:|---:|---:|---:|---:|---:|
+| 11 | 11.269 | 53/194 | **55/194** | 0,4313 | **0,2152** |
+| 22 | 11.286 | 37/194 | 37/194 | 0,4101 | **0,2725** |
+| 33 | 9.661 | **59/194** | 46/194 | **0,3104** | 0,4058 |
+| **Total** | — | **149/582** | 138/582 | **mediana 0,4101** | **mediana 0,2725** |
+
+O exact agregado foi **147/582** para o baseline de 1 bloco e **138/582** para 2 blocos. O lado de 2 blocos consumiu **1,197×** o CPU de treino na mediana para receber os mesmos updates e teve **1,048×** a latência nativa mediana.
+
+A Fase C elimina “menos updates” como explicação principal para a diferença agregada. Também mostra uma divergência importante: validation NLL pode melhorar sem melhorar geração greedy final.
+
+Dados: `results/v012_equal_steps/training.json` e `results/v012_equal_steps/evaluation.json`.
 
 ## Decisão
 
-O resultado justifica continuar investigando 2 blocos. Ele **não justifica ainda substituir o runtime padrão** porque:
+**1 bloco permanece o modelo padrão.**
 
-1. o runtime C++ atual exporta/executa o formato de um bloco;
-2. a avaliação final deste ensaio é teacher-forced, não um benchmark completo de geração livre;
-3. Windows/ARM, energia e PC fraco real não foram medidos;
-4. extrapolação e tarefa nova continuam com 0 linhas completas corretas.
+Motivo: 2 blocos não apresentou ganho consistente entre seeds no teste final de geração livre, perdeu o agregado de exact/correct e aumentou todos os custos principais. O suporte multi-bloco permanece no runtime porque está correto e é útil para novos experimentos.
 
-Próxima etapa técnica: implementar suporte nativo opcional a múltiplos blocos, preservar compatibilidade com modelos antigos e então repetir geração nativa, memória e latência antes de promover um modelo de 2 blocos como padrão.
+O diagnóstico curto teacher-forced não foi descartado: ele mostra que profundidade extra pode melhorar representação/local token prediction em certas condições. A v0.12 apenas conclui que, com este orçamento e este treino, isso não se converteu em melhor geração final.
+
+## Verificação
+
+- 15/15 CTests Release.
+- 138/138 testes Python.
+- 15/15 CTests com SIMD desativado.
+- 15/15 CTests com ASan + UBSan.
+- Paridade: 4/4, erro absoluto máximo 3,5763e-7.
+- 142 artefatos legados intactos.
+- 24 artefatos v0.12 adicionados.
+
+## Limites
+
+Dataset sintético e pequeno; Linux x86-64. Pico de RSS, energia, Windows, ARM e PC fraco real não foram medidos. Nenhum resultado deste documento implica inteligência geral ou comparação direta com grandes LLMs.
 
 ## Reproduzir
 
+A Fase B armazenada pertence ao código usado na execução original (commit `50f2b5760ecb6691ae93b7e3bd6310028be63c38`). O HEAD atual usa inicialização por identidade e não deve ser apresentado como reprodução idêntica daquela rodada.
+
+A ablação equal-update do protocolo atual pode ser executada com:
+
 ```bash
-python benchmarks/blocks_v012.py --cpu-seconds 12 --seeds 11 22 33 --out results/v012/blocks.json
+python benchmarks/instruction_blocks_equal_steps_v012.py --seeds 11 22 33 --threads 1 --baseline results/v012/training.json --out results/v012_equal_steps/training.json --model-dir models/v012_equalsteps
+python benchmarks/instruction_blocks_equal_steps_eval_v012.py --build build --training results/v012_equal_steps/training.json --baseline-eval results/v012/evaluation.json --out results/v012_equal_steps/evaluation.json
+python tools/verify_multiblock.py --build build --out results/v012/multiblock_parity.json
 ```
 
-Resultados brutos: `results/v012/blocks.json`.
+Dados brutos: `results/v012/` e `results/v012_equal_steps/`.

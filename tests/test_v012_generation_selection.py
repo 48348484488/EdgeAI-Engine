@@ -1,0 +1,62 @@
+import sys
+import unittest
+from pathlib import Path
+
+ROOT=Path(__file__).resolve().parents[1]
+sys.path.insert(0,str(ROOT/'benchmarks'))
+
+import instruction_blocks_generation_select_v012 as gs
+
+
+class GenerationSelectionV012Tests(unittest.TestCase):
+    def test_selection_prefers_more_greedy_correct_over_lower_nll(self):
+        rows=[
+            dict(step=100,greedy_correct=7,greedy_exact=7,validation_nll=.20),
+            dict(step=200,greedy_correct=8,greedy_exact=6,validation_nll=.40),
+        ]
+        self.assertEqual(gs.select_checkpoint(rows)['step'],200)
+
+    def test_selection_tiebreaks_exact_then_nll_then_earlier_step(self):
+        rows=[
+            dict(step=400,greedy_correct=8,greedy_exact=6,validation_nll=.20),
+            dict(step=300,greedy_correct=8,greedy_exact=7,validation_nll=.50),
+            dict(step=200,greedy_correct=8,greedy_exact=7,validation_nll=.30),
+            dict(step=100,greedy_correct=8,greedy_exact=7,validation_nll=.30),
+        ]
+        self.assertEqual(gs.select_checkpoint(rows)['step'],100)
+
+    def test_generation_metrics_uses_validation_rows_only_as_given(self):
+        rows=[
+            dict(task='copy',prompt='p1',answer='a',id='v1'),
+            dict(task='copy',prompt='p2',answer='b',id='v2'),
+        ]
+        outputs={'p1':(b'a',True),'p2':(b'x',False)}
+        got=gs.generation_metrics_from_outputs(rows,outputs)
+        self.assertEqual(got['count'],2)
+        self.assertEqual(got['correct'],1)
+        self.assertEqual(got['exact'],1)
+        self.assertEqual(got['eos'],1)
+
+
+    def test_identity_differs_only_by_blocks_and_pins_greedy_selection(self):
+        config=dict(dim=48,hidden=128,window=64,precision='int8',vocab_size=515)
+        one=gs.build_identity(11,1,11269,1,'dataset','tok',config)
+        two=gs.build_identity(11,2,11269,1,'dataset','tok',config)
+        gs.assert_fair_pair(one,two)
+        changed={k for k in set(one)|set(two) if one.get(k)!=two.get(k)}
+        self.assertEqual(changed,{'blocks'})
+        self.assertEqual(one['selection'],'greedy validation correct; exact, NLL, then earlier-step tiebreaks')
+        self.assertEqual(one['protocol'],'edge-sft-v012-generation-selection-1')
+
+
+    def test_validation_generation_keeps_greedy_bytes_and_scores_them(self):
+        rows=[dict(task='copy',prompt='p',answer='a',id='v')]
+        def fake_greedy(model,tok,prompt,max_tokens=32):
+            self.assertEqual(prompt,'p')
+            return b'a',[1,2],True
+        got=gs.validation_generation(None,None,rows,greedy_fn=fake_greedy)
+        self.assertEqual(got,dict(count=1,correct=1,exact=1,eos=1))
+
+
+if __name__=='__main__':
+    unittest.main()

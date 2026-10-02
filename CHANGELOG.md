@@ -1,10 +1,17 @@
-## Pesquisa pós-v0.11 — candidato v0.12
-- Experimento controlado de 1 vs. 2 blocos Transformer, com 3 seeds e orçamento igual de CPU.
-- 2 blocos: 93.699 parâmetros vs. 71.827; NLL mediano de teste 2,4919 vs. 2,8149.
-- Acurácia teacher-forced de tokens: 60,20% vs. 57,27%.
-- Ganho consistente em NLL nos 3/3 seeds, mas 0 linhas exatas em extrapolação e tarefa nova.
-- Resultado ainda experimental; runtime C++ padrão continua com um bloco.
-
+## v0.12 — 2026-10-02
+- Transformer Python e runtime C++ agora suportam múltiplos blocos (1..8).
+- Novo formato `EDGEAI8`; `EDGEAI5/6/7` continuam compatíveis e carregam como um bloco.
+- Cache KV independente por bloco, reset completo e contabilização de memória multi-bloco.
+- Exportação Python EDGEAI8 e paridade Python/C++ em kernels scalar/auto.
+- Experimento principal de 60 s/seed: 1 bloco 147/582 exatos (149 `correct`) vs. 2 blocos random-identity 138/582.
+- Ablação equal-update confirmou que a diferença não vinha apenas do menor número de optimizer updates de 2 blocos.
+- Probe de dinâmica encontrou drift relativo muito maior no miolo aleatório do bloco novo (~48–55% vs. ~11–12% no bloco herdado após 128 updates).
+- Inicialização copy-inner (`Q/K/V/up` copiados, `project/down` zerados) elevou o 2-blocos equal-update para 145/582.
+- Com LR interno do bloco novo em 0,25×, o candidato chegou a **163/582** no teste original.
+- Holdout pós-hoc em faixas não usadas, com modelos congelados: 2 blocos 60/384 vs. 1 bloco 15/384, vencendo em 3/3 seeds.
+- Warm-up isolado e seleção de checkpoint por geração foram testados e ajudaram parcialmente, mas ficaram menos estáveis que copy-inner + LR 0,25×.
+- 1 bloco permanece o padrão de runtime; copy-inner + LR interno 0,25× é o candidato neural experimental preferido.
+- Limites preservados: tarefas sintéticas estreitas, sem alegação de inteligência geral; energia/RSS de pico não medidos.
 
 ## v0.11
 - Code search ranking now prioritizes common definition forms over comments, strings and calls.
