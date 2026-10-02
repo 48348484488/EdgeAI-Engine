@@ -1,10 +1,14 @@
-## Pesquisa pós-v0.11 — candidato v0.12
-- Experimento controlado de 1 vs. 2 blocos Transformer, com 3 seeds e orçamento igual de CPU.
-- 2 blocos: 93.699 parâmetros vs. 71.827; NLL mediano de teste 2,4919 vs. 2,8149.
-- Acurácia teacher-forced de tokens: 60,20% vs. 57,27%.
-- Ganho consistente em NLL nos 3/3 seeds, mas 0 linhas exatas em extrapolação e tarefa nova.
-- Resultado ainda experimental; runtime C++ padrão continua com um bloco.
-
+## v0.12 — 2026-10-02
+- Transformer Python e runtime C++ agora suportam múltiplos blocos (1..8).
+- Novo formato `EDGEAI8`; `EDGEAI5/6/7` continuam compatíveis e carregam como um bloco.
+- Cache KV independente por bloco, reset completo e contabilização de memória multi-bloco.
+- Exportação Python EDGEAI8 e paridade Python/C++ em kernels scalar/auto.
+- `edgeai_inspect` e banner do chat atualizados para EDGEAI8/v0.12.
+- Experimento principal: 3 seeds, 60 s de CPU por arquitetura/seed, mesma configuração exceto número de blocos.
+- Geração nativa exata agregada: 1 bloco 147/582 (25,26%); 2 blocos 138/582 (23,71%).
+- 2 blocos aumentou parâmetros em 30,45%, estado KV em 100% e working memory numérica em 91,37%.
+- Decisão: 1 bloco permanece padrão; multi-bloco fica disponível para pesquisa.
+- Verificação: Release 15/15, Python 130/130, no-SIMD 15/15, ASan+UBSan 15/15; 142 artefatos legados intactos.
 
 ## v0.11
 - Code search ranking now prioritizes common definition forms over comments, strings and calls.
