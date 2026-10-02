@@ -1,33 +1,31 @@
 # EdgeAI Engine
 
-**EdgeAI Engine** é um motor experimental de IA local em C++ criado para pesquisar uma pergunta importante:
-
-> Quanto de capacidade útil conseguimos colocar em uma IA que roda localmente, usando pouca CPU, RAM e energia?
+**EdgeAI Engine** é um motor experimental de IA local em C++ para pesquisar quanta capacidade útil pode rodar localmente com pouca CPU, RAM e energia.
 
 O projeto combina um **modelo neural próprio e pequeno** com ferramentas determinísticas, memória local e busca de código. O foco é medir ganhos reais — não fingir que o modelo atual já é comparável a ChatGPT ou Claude.
 
-**Versão em validação: v0.12**  
-**Resultado atual: suporte multi-bloco validado; 2 blocos ainda não substituem 1 bloco como padrão**
+**Versão verificada nesta branch: v0.12.0**  
+**`main` permanece em v0.11 até a integração desta branch.**
 
-## O que ela já sabe fazer
+## O que já funciona
 
-| Recurso | Estado atual |
+| Recurso | Estado |
 |---|---|
-| Buscar funções, classes e símbolos em código local | ✅ Funciona |
-| Priorizar definições sobre comentários, strings e chamadas | ✅ v0.11 |
-| Reutilizar índice em RAM entre consultas | ✅ Funciona |
-| Detectar arquivos alterados/adicionados/removidos | ✅ Funciona |
-| Memória local simples | ✅ Funciona |
-| Calculadora determinística | ✅ Funciona |
-| Roteamento automático entre busca, memória, cálculo e modelo neural | ✅ Funciona |
-| Executar modelos próprios `.edge` em CPU | ✅ Experimental |
-| Conversa e raciocínio geral no nível de grandes LLMs | ❌ Ainda não |
+| Busca local de funções, classes e símbolos | ✅ |
+| Ranking que prioriza definições sobre comentários/strings/chamadas | ✅ v0.11 |
+| Índice de código reutilizado em RAM e atualização de arquivos | ✅ |
+| Memória local e calculadora determinística | ✅ |
+| Roteamento entre ferramentas e modelo neural | ✅ |
+| Modelos próprios `.edge` em CPU | ✅ Experimental |
+| Transformer nativo com 1..8 blocos | ✅ v0.12 |
+| Formato multi-bloco `EDGEAI8` | ✅ v0.12 |
+| Conversa/raciocínio geral no nível de grandes LLMs | ❌ |
 
 A busca de código suporta C/C++, Python, Pawn, JavaScript/TypeScript, Rust, Go e outras extensões listadas em `src/CodeSearch.cpp`.
 
-## Dados reais da v0.11
+## Dados reais
 
-Benchmark controlado usando 18 módulos do CPython e 35 consultas:
+### Busca de código v0.11
 
 | Medida | Resultado |
 |---|---:|
@@ -35,13 +33,34 @@ Benchmark controlado usando 18 módulos do CPython e 35 consultas:
 | Definição correta no Top 5 | **26/27 (96,3%)** |
 | Nomes inexistentes corretamente vazios | **8/8** |
 | 35 consultas na mesma sessão | **27,659 ms** |
-| Testes C++ Release | **13/13** |
-| Testes Python | **108/108** |
-| Modelos/checkpoints preservados | **142/142** |
 
-A v0.10 acertava 16/27 definições em primeiro lugar. A v0.11 chegou a 24/27 com cerca de **6% de aumento no tempo da sessão** nesse mesmo teste.
+### Transformer v0.12 — 1 bloco vs. 2 blocos
 
-Esses números medem **busca de código**, não inteligência geral.
+Três seeds, 60 s de CPU por arquitetura/seed e avaliação final por geração C++ nativa nos mesmos 194 casos por seed.
+
+| Medida | 1 bloco | 2 blocos |
+|---|---:|---:|
+| Parâmetros | 71.827 | 93.699 |
+| Arquivo `.edge` | 154.400 B | 178.976 B |
+| Estado KV | 24.576 B | 49.152 B |
+| Working memory numérica | 29.420 B | 56.300 B |
+| Mediana de steps em 60 s | 11.269 | 6.897 |
+| Mediana validation NLL | **0,4101** | 0,4352 |
+| Geração nativa exata | **147/582 (25,26%)** | 138/582 (23,71%) |
+| Mediana de tempo interno por caso | **0,650 ms** | 0,779 ms |
+
+O ensaio curto teacher-forced de 12 s havia favorecido 2 blocos, mas a avaliação principal de 60 s com geração livre não reproduziu um ganho consistente: 2 blocos venceu apenas 1 das 3 seeds. Por isso, **1 bloco continua sendo o padrão**, enquanto o suporte multi-bloco permanece disponível para pesquisa.
+
+Paridade Python/C++: 4/4 casos passaram, com maior erro absoluto de **3,5763e-7**.
+
+## Verificação v0.12
+
+- Release CTest: **15/15**
+- Python: **130/130**
+- Sem SIMD: **15/15 CTest**
+- ASan + UBSan: **15/15 CTest**
+- Modelos/checkpoints legados preservados: **142/142**
+- Novos artefatos v0.12: **24**
 
 ## Como funciona
 
@@ -55,30 +74,7 @@ Router
    └── outros      → modelo neural
 ```
 
-A ideia é simples: não gastar rede neural em tarefas que podem ser resolvidas de forma mais barata e confiável.
-
-## Testar rapidamente
-
-Linux x86-64:
-
-```bash
-./bin/linux-x86_64/edgeai_chat --code-root . --memory :memory:
-```
-
-Dentro do chat:
-
-```text
-buscar codigo: greedy_token
-calcule 128 * 32
-lembrar: EdgeAI usa busca local
-buscar memoria: EdgeAI
-```
-
-Busca direta:
-
-```bash
-./bin/linux-x86_64/edgeai_code_search . "greedy_token" --limit 5
-```
+A estratégia é não gastar rede neural em tarefas que uma ferramenta determinística pode resolver de forma mais barata e confiável.
 
 ## Compilar
 
@@ -88,63 +84,27 @@ cmake --build build -j2
 ctest --test-dir build --output-on-failure
 ```
 
-O código é C++17. O caminho Linux x86-64 foi testado. Windows/ARM e PCs realmente fracos ainda precisam de validação prática.
+O código é C++17. Linux x86-64 foi validado. Windows, ARM e PCs realmente fracos ainda precisam de teste prático.
 
-## O que o projeto ainda não é
+## Limites atuais
 
-O EdgeAI **não é atualmente um substituto para Claude, ChatGPT ou outros LLMs grandes**. O modelo neural próprio ainda é pequeno e limitado.
+O EdgeAI **não é um substituto para Claude, ChatGPT ou outros LLMs grandes**. Ainda não há evidência de inteligência geral comparável, correção autônoma confiável de bugs, compreensão semântica completa de repositórios ou menor consumo de energia que grandes modelos.
 
-Também não há, por enquanto, evidência de:
+O benchmark neural usa tarefas sintéticas. Energia e pico de RSS não foram medidos nesta rodada. Quando algo não foi medido, o projeto não trata como resultado.
 
-- inteligência geral comparável a grandes modelos;
-- correção autônoma confiável de bugs;
-- compreensão semântica completa de um repositório;
-- menor consumo de energia que grandes LLMs;
-- desempenho confirmado em Windows, ARM ou hardware muito fraco.
+## Próximos focos
 
-Quando algo não foi medido, o projeto não trata como resultado.
-
-## Objetivo
-
-O objetivo de longo prazo é aumentar a capacidade útil mantendo o sistema:
-
-- **local**;
-- **CPU-first**;
-- **leve em memória**;
-- **rápido para tarefas comuns**;
-- **mensurável e reproduzível**.
-
-A estratégia é combinar modelos pequenos com memória, ferramentas e kernels eficientes em vez de simplesmente aumentar o número de parâmetros.
-
-### Experimento mais recente
-
-A v0.12 adiciona suporte real a múltiplos blocos no Python, no formato **EDGEAI8** e no runtime C++. A paridade Python/C++ passou para 1 e 2 blocos, inclusive com sequência maior que a janela de atenção; o maior erro absoluto observado foi **3,58e-7** para tolerância de **6e-5**.
-
-No teste controlado de **geração nativa** foram usados os mesmos dados, seeds 11/22/33, uma thread e 60 segundos de CPU por arquitetura/seed. Cada checkpoint foi escolhido apenas pela validation NLL e depois avaliado em 194 casos de teste.
-
-| Seed | 1 bloco | 2 blocos |
-|---|---:|---:|
-| 11 | **54/194** | 43/194 |
-| 22 | 37/194 | **49/194** |
-| 33 | **54/194** | 37/194 |
-
-Somando as três seeds, foram **145/582** respostas corretas para 1 bloco e **129/582** para 2 blocos. Portanto, neste protocolo, aumentar a profundidade para 2 blocos **não produziu ganho consistente de geração**.
-
-O modelo de 2 blocos também custa mais: **93.699 vs. 71.827 parâmetros**, arquivo `.edge` de **178.976 vs. 154.400 bytes** e cache KV calculado de **49.152 vs. 24.576 bytes**. A mediana interna de geração também foi maior nos três pares medidos.
-
-Um benchmark teacher-forced anterior mostrou melhora de NLL/tokens para 2 blocos, mas a avaliação posterior de geração nativa é o critério mais próximo do uso real e não confirmou essa vantagem. Por isso, **1 bloco permanece como padrão** enquanto investigamos treinamento/arquitetura melhores.
-
-Os JSONs reproduzíveis estão em `results/v012/`. Os checkpoints completos permanecem preservados no artefato do GitHub Actions do benchmark.
-
-### Próximo passo
-
-Em vez de simplesmente adicionar profundidade, a próxima etapa deve investigar por que o segundo bloco melhora algumas métricas intermediárias mas não a geração final de forma consistente, mantendo o mesmo protocolo controlado.
+- melhorar capacidade por unidade de CPU em vez de apenas aumentar profundidade;
+- medir ARM/Windows e hardware fraco real;
+- testar mudanças de dados/treino que melhorem geração livre sem dobrar o cache KV;
+- continuar combinando modelos pequenos com ferramentas e memória.
 
 ## Mais detalhes
 
-- [BENCHMARK_RESULTS.md](BENCHMARK_RESULTS.md) — resultados e metodologia da versão atual
-- [CHANGELOG.md](CHANGELOG.md) — histórico de mudanças
-- [METAS.md](METAS.md) — metas técnicas do projeto
+- [BENCHMARK_RESULTS.md](BENCHMARK_RESULTS.md) — resultados e metodologia atuais
+- [docs/v012/BLOCKS_EXPERIMENT.md](docs/v012/BLOCKS_EXPERIMENT.md) — experimento 1×2 blocos
+- [CHANGELOG.md](CHANGELOG.md) — histórico
+- [METAS.md](METAS.md) — metas técnicas
 
 ---
 
