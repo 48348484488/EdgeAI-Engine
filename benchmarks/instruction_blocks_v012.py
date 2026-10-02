@@ -56,3 +56,32 @@ def promote_blocks(base,blocks,seed):
     promoted.blocks[0].load_state_dict(base.blocks[0].state_dict())
     promoted.train(base.training)
     return promoted
+
+
+def build_identity(seed,blocks,cpu_budget,threads,dataset_sha256,tokenizer_fingerprint,config):
+    """Build the immutable comparison identity used by both architectures."""
+    if blocks not in ARCHITECTURES:
+        raise ValueError('v0.12 experiment supports blocks=1 or blocks=2')
+    required=('dim','hidden','window','precision')
+    if any(key not in config for key in required):
+        raise ValueError('incomplete Transformer config')
+    return dict(
+        protocol='edge-sft-v012-blocks-1',
+        seed=int(seed),
+        cpu_budget=float(cpu_budget),
+        threads=int(threads),
+        dataset_sha256=str(dataset_sha256),
+        tokenizer_fingerprint=str(tokenizer_fingerprint),
+        dim=int(config['dim']),
+        hidden=int(config['hidden']),
+        window=int(config['window']),
+        precision=str(config['precision']),
+        vocab_size=int(config['vocab_size']) if 'vocab_size' in config else None,
+        batch=16,
+        lr=.001,
+        weight_decay=.01,
+        clip_norm=1.0,
+        max_length=128,
+        selection='minimum response validation NLL at 25/50/75/100 percent',
+        blocks=int(blocks),
+    )
