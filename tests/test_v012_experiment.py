@@ -139,5 +139,15 @@ class V012ExperimentContractTests(unittest.TestCase):
             eval12.validate_training_report(dict(expected=6,completed=5,runs=[]))
 
 
+    def test_repo_path_resolves_relative_cli_paths_under_repository(self):
+        resolved=exp.repo_path(Path('models/v012'))
+        self.assertTrue(resolved.is_absolute())
+        self.assertEqual(resolved,ROOT/'models/v012')
+
+    def test_repo_path_preserves_absolute_repository_path(self):
+        expected=ROOT/'results/v012/training.json'
+        self.assertEqual(exp.repo_path(expected),expected)
+
+
 if __name__=='__main__':
     unittest.main()
