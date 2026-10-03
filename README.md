@@ -153,6 +153,15 @@ O workflow Android usa o **Android NDK**, `arm64-v8a`, API 24 e `c++_shared`. O 
 
 Também existe um APK mínimo de smoke com Activity Java + JNI. O build reproduzível `37105947328` passou e gerou `app-debug.apk` com **2.256.337 bytes**, SHA-256 `cb1a5c47c36937216fdb10531363ccc9312f540eefa8c27e0c13529c6eac9c1d`. O APK contém apenas `arm64-v8a` e empacota `libc++_shared.so`, `libedgeai.so` e `libedgeai_android_jni.so`. A tela permite enviar prompts ao `Engine`; o backend neural de smoke usa um modelo ternário demo em memória. O APK ainda precisa ser instalado e executado num aparelho físico para validar runtime Android real.
 
+### Android runtime automático
+
+O CI agora também executa o APK dentro de um **Android API 29 x86_64 emulado**, instala o app com ADB, abre a `MainActivity`, verifica logcat/crash e exercita o Engine via JNI. No run `37109722956`, os dois caminhos passaram:
+
+- `Subtract 17 from 42` → **`25`**, `route=calculator`, `neural=0`, `loops=0`;
+- `neural smoke` → `route=neural`, `neural=1`, `loops=96`.
+
+O `dumpsys meminfo` do processo completo do APK reportou **40.363 KB PSS total**, com **14.760 KB Native Heap**, **10.380 KB Java Heap** e **0 KB de swap**. Esses números incluem Activity/JVM/runtime Android e foram medidos em x86_64 emulado; não são RSS do modelo isolado nem estimativa de desempenho no Poco X6. Evidência compacta: `results/android/emulator_smoke.json`.
+
 ## Limites atuais
 
 O EdgeAI **não é um substituto para Claude, ChatGPT ou outros LLMs grandes**. Ainda não há evidência de inteligência geral comparável, correção autônoma confiável de bugs, compreensão semântica completa de repositórios ou menor consumo de energia que grandes modelos.

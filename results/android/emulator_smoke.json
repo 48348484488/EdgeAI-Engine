@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-10-03",
+  "workflow": "EdgeAI Android Emulator CI",
+  "run_id": 37109722956,
+  "head_sha": "34f91af2353528eced3a7f02639c9128862521cf",
+  "environment": {
+    "android_api": 29,
+    "abi": "x86_64",
+    "device_type": "GitHub Actions Android emulator",
+    "physical_device": false
+  },
+  "result": "pass",
+  "cases": [
+    {
+      "name": "calculator",
+      "prompt": "Subtract 17 from 42",
+      "text": "25",
+      "route": "calculator",
+      "neural_used": false,
+      "loops": 0
+    },
+    {
+      "name": "neural",
+      "prompt": "neural smoke",
+      "route": "neural",
+      "neural_used": true,
+      "loops": 96
+    }
+  ],
+  "process_memory_kb": {
+    "total_pss": 40363,
+    "java_heap": 10380,
+    "native_heap": 14760,
+    "code": 2108,
+    "stack": 52,
+    "private_other": 984,
+    "system": 12079,
+    "total_swap": 0
+  },
+  "artifact": {
+    "name": "edgeai-android-emulator-evidence",
+    "id": 11269955246,
+    "size_bytes": 75545,
+    "sha256": "5961cd0bd92f30d943a7f158631e207475f688c71abc3cdc41949f1382dc6ea9"
+  },
+  "caveats": [
+    "Memory is dumpsys meminfo for the complete APK process, not model-only RSS.",
+    "This validates Android runtime behavior in an x86_64 emulator, not ARM64 physical-device performance.",
+    "The neural smoke only verifies the native neural execution path; it is not a quality benchmark."
+  ]
+}

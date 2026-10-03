@@ -11,6 +11,7 @@
 - Linux ARM64 nativo adicionado ao CI: runner `aarch64`, build Release, 15/15 CTest e smoke híbrido passam sem emulação x86.
 - Android NDK `arm64-v8a` adicionado ao CI: Release cross-compila `libedgeai.so`, `edgeai_chat`, `edgeai_generate` e `edgeai_make_demo`; ELF AArch64 verificado, `libc++_shared.so` empacotado e smoke ADB fornecido. O smoke preparado cobre Calculator e geração/carregamento de `demo.edge` com rota neural. Execução física continua pendente.
 - APK Android ARM64 mínimo adicionado: Activity Java + JNI sobre o `Engine`, backend neural demo em memória e build Gradle reproduzível. O APK final contém apenas `arm64-v8a` com `libc++_shared.so`, `libedgeai.so` e `libedgeai_android_jni.so`; CI `37105947328` passou. Instalação física continua pendente.
+- Runtime Android automatizado adicionado ao CI com emulador API 29 x86_64. Run `37109722956` instalou/abriu o APK e validou Calculator (`25`, `route=calculator`, `neural=0`) e caminho neural (`route=neural`, `neural=1`, `loops=96`). `dumpsys meminfo`: 40.363 KB PSS total do processo, 14.760 KB Native Heap, 10.380 KB Java Heap, swap 0. Evidência: `results/android/emulator_smoke.json`.
 - Limite preservado: resultados de ferramentas medem capacidade do sistema híbrido e não devem ser apresentados como generalização do Transformer.
 
 ## v0.12 — 2026-10-02
