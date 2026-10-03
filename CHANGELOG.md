@@ -1,3 +1,14 @@
+## Pesquisa pós-v0.12 — v0.13–v0.15
+- v0.13 ampliou apenas o currículo de treino mantendo os testes selados; melhorou interpolação, mas não resolveu `test_range`/`test_family`.
+- v0.14 comparou BPE com tokenização byte pura; byte puro não eliminou os cliffs de generalização.
+- v0.15 deslocou explicitamente a fronteira de treino e avaliou um holdout novo definido antes do treino. Em `addition`, o neural permaneceu em 0/96 no novo range; 2 blocos mostrou algum ganho em `expression` e `copy`.
+- O runtime híbrido passou a rotear operações estruturadas para ferramentas determinísticas, mantendo os benchmarks neural-only separados.
+- Sistema híbrido: 128/128 no `test_range` v0.15, 128/128 em paráfrases e 16/16 no family holdout de reversão; todos esses acertos foram tool-routed, não neurais.
+- Fronteira adversarial do Router: 128 true positives + 128 true negatives, 0 false positives e 0 false negatives no corpus sintético balanceado.
+- Novas formas naturais bilíngues de subtração, multiplicação e divisão: 96/96 corretas via `Calculator`, 0 casos neurais.
+- Provenance de rota agora é exposta no CLI (`route=...`) e registrada nos benchmarks do sistema.
+- Limite preservado: resultados de ferramentas medem capacidade do sistema híbrido e não devem ser apresentados como generalização do Transformer.
+
 ## v0.12 — 2026-10-02
 - Transformer Python e runtime C++ agora suportam múltiplos blocos (1..8).
 - Novo formato `EDGEAI8`; `EDGEAI5/6/7` continuam compatíveis e carregam como um bloco.
