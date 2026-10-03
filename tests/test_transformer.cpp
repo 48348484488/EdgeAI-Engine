@@ -45,7 +45,7 @@ int main(){using namespace edgeai;
         rejected([&]{TransformerModel::load("transformer-bad.edge");});
     };
     corrupt_blocks(0);corrupt_blocks(9);
-    for(auto n:{0ul,8ul,36ul,multi_raw.size()-1}){std::ofstream o("transformer-bad.edge",std::ios::binary);o.write(multi_raw.data(),n);o.close();rejected([&]{TransformerModel::load("transformer-bad.edge");});}
+    const std::vector<std::size_t> multi_truncations{0u,8u,36u,multi_raw.size()-1};\n    for(std::size_t n:multi_truncations){std::ofstream o("transformer-bad.edge",std::ios::binary);o.write(multi_raw.data(),n);o.close();rejected([&]{TransformerModel::load("transformer-bad.edge");});}
     {std::ofstream o("transformer-bad.edge",std::ios::binary);o<<multi_raw<<"extra";o.close();rejected([&]{TransformerModel::load("transformer-bad.edge");});}
     rejected([&]{make_transformer_demo(16,23,7,0);});rejected([&]{make_transformer_demo(16,23,7,9);});
     m.save("transformer-test.edge");auto reloaded=TransformerModel::load("transformer-test.edge");
@@ -63,7 +63,7 @@ int main(){using namespace edgeai;
     auto bad=m;bad.config.dim=15;CHECK(!bad.valid());rejected([&]{TransformerBackend broken(bad);});
     bad=m;bad.embedding[0]=std::numeric_limits<float>::quiet_NaN();CHECK(!bad.valid());
     std::ifstream in("transformer-test.edge",std::ios::binary);std::string raw((std::istreambuf_iterator<char>(in)),{});
-    for(auto n:{0ul,8ul,30ul,raw.size()-1}){std::ofstream o("transformer-bad.edge",std::ios::binary);o.write(raw.data(),n);o.close();rejected([&]{TransformerModel::load("transformer-bad.edge");});}
+    const std::vector<std::size_t> legacy_truncations{0u,8u,30u,raw.size()-1};\n    for(std::size_t n:legacy_truncations){std::ofstream o("transformer-bad.edge",std::ios::binary);o.write(raw.data(),n);o.close();rejected([&]{TransformerModel::load("transformer-bad.edge");});}
     {std::ofstream o("transformer-bad.edge",std::ios::binary);o<<raw<<"extra";o.close();rejected([&]{TransformerModel::load("transformer-bad.edge");});}
     rejected([&]{make_transformer_demo(7,9,2);});
     std::remove("transformer-test.edge");std::remove("transformer-multi.edge");std::remove("transformer-bad.edge");
