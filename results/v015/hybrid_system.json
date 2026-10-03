@@ -53,7 +53,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0012530889999879946
+      "wall_seconds": 0.0018798660000101108
     },
     {
       "id": "0201c4d9c532aa491677",
@@ -64,7 +64,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.001119557999970766
+      "wall_seconds": 0.0014563480000049367
     },
     {
       "id": "02a2d68cde5157c5dcdc",
@@ -75,7 +75,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.000937931999999364
+      "wall_seconds": 0.0014234780000066394
     },
     {
       "id": "080068e94a0c4068eabe",
@@ -86,7 +86,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0009219770000186145
+      "wall_seconds": 0.0014543140000000676
     },
     {
       "id": "096793501ead581af7ba",
@@ -97,7 +97,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0009001669999975093
+      "wall_seconds": 0.0013899679999980208
     },
     {
       "id": "09c21bf220b4c0994771",
@@ -108,7 +108,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008609210000258827
+      "wall_seconds": 0.001484320000002981
     },
     {
       "id": "0b1fce94a4cde6a88a8b",
@@ -119,7 +119,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008698959999833278
+      "wall_seconds": 0.0015303539999962368
     },
     {
       "id": "0e42985d0407f6a2cfd9",
@@ -130,7 +130,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0009403139999903942
+      "wall_seconds": 0.0014495969999899216
     },
     {
       "id": "0ebcd40f45cc83a2a226",
@@ -141,7 +141,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.000903440000001865
+      "wall_seconds": 0.0013865919999886955
     },
     {
       "id": "0f848196680a399e6f84",
@@ -152,7 +152,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008764689999907205
+      "wall_seconds": 0.0014205730000043104
     },
     {
       "id": "1287373d5cd1112f1aff",
@@ -163,7 +163,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008812510000097973
+      "wall_seconds": 0.0013938830000057578
     },
     {
       "id": "13c3e94878a0fa2338fb",
@@ -174,7 +174,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008635289999574525
+      "wall_seconds": 0.001479767999995829
     },
     {
       "id": "155eb148c488cfc60cff",
@@ -185,7 +185,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0009207200000105331
+      "wall_seconds": 0.0014053010000054655
     },
     {
       "id": "174b6cceea46b85e9d7c",
@@ -196,7 +196,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008827679999967586
+      "wall_seconds": 0.001405070000004116
     },
     {
       "id": "18e351e32bfccd94e25d",
@@ -207,7 +207,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0009320749999801592
+      "wall_seconds": 0.0013897070000012945
     },
     {
       "id": "1a2d412eec03731c72bd",
@@ -218,7 +218,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008726140000021587
+      "wall_seconds": 0.0014007039999910376
     },
     {
       "id": "1c9573cddf5742053140",
@@ -229,7 +229,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008981579999840505
+      "wall_seconds": 0.001389365999997949
     },
     {
       "id": "1d9fd157431b3c12433f",
@@ -240,7 +240,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.000850360000015371
+      "wall_seconds": 0.0014860619999979008
     },
     {
       "id": "1e90ae31d20e6fd335f4",
@@ -251,7 +251,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008913530000427272
+      "wall_seconds": 0.0014484910000049922
     },
     {
       "id": "1f0d01b2c4c03aa3f3d3",
@@ -262,7 +262,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008607080000047063
+      "wall_seconds": 0.0014286960000049476
     },
     {
       "id": "222f464590f9247b0ba3",
@@ -273,7 +273,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008398819999797524
+      "wall_seconds": 0.0013868119999926876
     },
     {
       "id": "229f473d863f381a23e6",
@@ -284,7 +284,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0012107489999948484
+      "wall_seconds": 0.0013975890000068603
     },
     {
       "id": "22b87464a1e1d0575cc5",
@@ -295,7 +295,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0010828149999611014
+      "wall_seconds": 0.0014104480000014519
     },
     {
       "id": "233f0de0f74995f081dd",
@@ -306,7 +306,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0011029929999608612
+      "wall_seconds": 0.0014001130000025341
     },
     {
       "id": "29570bb5725cc3e985df",
@@ -317,7 +317,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008787689999962822
+      "wall_seconds": 0.0014884560000041347
     },
     {
       "id": "2a38b37f0ce0cbe5da24",
@@ -328,7 +328,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0009164709999822662
+      "wall_seconds": 0.0014010040000016488
     },
     {
       "id": "2b63e51cee6686f7af55",
@@ -339,7 +339,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008645169999681457
+      "wall_seconds": 0.0014282949999966377
     },
     {
       "id": "2f569483f57bbffeb018",
@@ -350,7 +350,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0009016089999818178
+      "wall_seconds": 0.0013881040000001121
     },
     {
       "id": "2f66b960556cfe93eb55",
@@ -361,7 +361,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0009600930000033259
+      "wall_seconds": 0.0014674539999930403
     },
     {
       "id": "388a72645267629fdc05",
@@ -372,7 +372,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0009088130000236561
+      "wall_seconds": 0.001388175000002434
     },
     {
       "id": "3c090a375cb0f00d0b4f",
@@ -383,7 +383,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008524840000063705
+      "wall_seconds": 0.0014006529999903705
     },
     {
       "id": "3e7d073275f1c0000841",
@@ -394,7 +394,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008452470000293033
+      "wall_seconds": 0.001413071999991189
     },
     {
       "id": "3f0f44161a20663f6d58",
@@ -405,7 +405,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008510700000101679
+      "wall_seconds": 0.0013899570000006634
     },
     {
       "id": "448bf7a2eaebd6e925e4",
@@ -416,7 +416,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008485420000283739
+      "wall_seconds": 0.0013885959999981878
     },
     {
       "id": "45a1df5d65d01c2390a8",
@@ -427,7 +427,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008568350000359715
+      "wall_seconds": 0.0015200440000029403
     },
     {
       "id": "47e37116f1a48fb32536",
@@ -438,7 +438,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0009132359999739492
+      "wall_seconds": 0.0014141539999883435
     },
     {
       "id": "49443006e019dabf2778",
@@ -449,7 +449,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008639690000222799
+      "wall_seconds": 0.0013862620000111292
     },
     {
       "id": "497a1f8327f1629952b0",
@@ -460,7 +460,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008965210000155821
+      "wall_seconds": 0.0014333419999985608
     },
     {
       "id": "4b0525c0d4dd2e3c56b5",
@@ -471,7 +471,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008637779999958184
+      "wall_seconds": 0.001373723000000382
     },
     {
       "id": "4e1492acdd50ec415784",
@@ -482,7 +482,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008981259999814029
+      "wall_seconds": 0.0014227759999982936
     },
     {
       "id": "50c11990215098250b9c",
@@ -493,7 +493,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.000855820000026597
+      "wall_seconds": 0.0014037979999983463
     },
     {
       "id": "544b3fc329d68faf511b",
@@ -504,7 +504,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008953779999956168
+      "wall_seconds": 0.0013972689999945942
     },
     {
       "id": "57e5d540683df4df53a2",
@@ -515,7 +515,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008550089999630472
+      "wall_seconds": 0.0013742229999991196
     },
     {
       "id": "5800ec019481d887d1f0",
@@ -526,7 +526,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.000827993999962473
+      "wall_seconds": 0.0015146549999940362
     },
     {
       "id": "58d15fb6262bd70d8b80",
@@ -537,7 +537,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008670189999975264
+      "wall_seconds": 0.0014756270000049199
     },
     {
       "id": "59c9bb064122bb7f6f73",
@@ -548,7 +548,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008473880000110512
+      "wall_seconds": 0.0013902280000053224
     },
     {
       "id": "5c638609ab70e66dcfd2",
@@ -559,7 +559,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008482739999635669
+      "wall_seconds": 0.0013960360000027094
     },
     {
       "id": "5dbab86c31ce94079b4d",
@@ -570,7 +570,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.000851457000010214
+      "wall_seconds": 0.0013972579999972368
     },
     {
       "id": "5fa6e1975559da2d1a69",
@@ -581,7 +581,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0009392999999704443
+      "wall_seconds": 0.0014008530000069186
     },
     {
       "id": "5fae79f0daadcc6dccab",
@@ -592,7 +592,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008973839999839583
+      "wall_seconds": 0.0015097579999974187
     },
     {
       "id": "60e4cce63f64ded14c33",
@@ -603,7 +603,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0009061929999916174
+      "wall_seconds": 0.001480107999995539
     },
     {
       "id": "60f0b40cbb0133f425c5",
@@ -614,7 +614,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.002209071999971002
+      "wall_seconds": 0.0014203730000019732
     },
     {
       "id": "616ff01281bce19fd496",
@@ -625,7 +625,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008976489999668047
+      "wall_seconds": 0.0014024159999905805
     },
     {
       "id": "64e61d96259d5b5ba897",
@@ -636,7 +636,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.000942704000010508
+      "wall_seconds": 0.0014152850000073158
     },
     {
       "id": "6be07ee60e43ee23a9cb",
@@ -647,7 +647,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008741290000102708
+      "wall_seconds": 0.0014168379999972558
     },
     {
       "id": "6ce28c0bdfff875aaf20",
@@ -658,7 +658,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0009181789999956891
+      "wall_seconds": 0.001758668999997326
     },
     {
       "id": "6cffc6fc150d5d22c77f",
@@ -669,7 +669,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0009263819999887346
+      "wall_seconds": 0.001494570000005524
     },
     {
       "id": "6df1f2713f8e884d8dbd",
@@ -680,7 +680,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008659920000013699
+      "wall_seconds": 0.0014241089999984524
     },
     {
       "id": "6e3fda70c45b46339da6",
@@ -691,7 +691,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008782840000094438
+      "wall_seconds": 0.0013646590000035985
     },
     {
       "id": "7004e9426034b9913f47",
@@ -702,7 +702,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008607409999967786
+      "wall_seconds": 0.0014613350000018954
     },
     {
       "id": "70f8106a468d6014bf98",
@@ -713,7 +713,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008902750000174819
+      "wall_seconds": 0.0013867019999906915
     },
     {
       "id": "7472a0e9d016ff356d93",
@@ -724,7 +724,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008758449999959339
+      "wall_seconds": 0.0014866180000012719
     },
     {
       "id": "757af5da30f58feebf02",
@@ -735,7 +735,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.000859714000000622
+      "wall_seconds": 0.0014200220000049057
     },
     {
       "id": "757fb996bc89a92571b7",
@@ -746,7 +746,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008421230000408286
+      "wall_seconds": 0.0014271630000024516
     },
     {
       "id": "7781c53e08caf5653c2d",
@@ -757,7 +757,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008477279999965504
+      "wall_seconds": 0.001384138000005919
     },
     {
       "id": "7c013bffa258719e3db7",
@@ -768,7 +768,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.000866029000007984
+      "wall_seconds": 0.001569497999994951
     },
     {
       "id": "7ea7841d078c86fb7b93",
@@ -779,7 +779,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008632230000102936
+      "wall_seconds": 0.0013834780000081537
     },
     {
       "id": "7f0ec2c729a8e6d6ece8",
@@ -790,7 +790,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008820759999821348
+      "wall_seconds": 0.0014493670000064185
     },
     {
       "id": "7f9c777ab1cd00449dc0",
@@ -801,7 +801,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008564160000332777
+      "wall_seconds": 0.001403187000008188
     },
     {
       "id": "818bcb0c5ef8175ea1b7",
@@ -812,7 +812,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.000928487999999561
+      "wall_seconds": 0.0014466530000021294
     },
     {
       "id": "81f6ac116468b8ad2120",
@@ -823,7 +823,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.000852323999993132
+      "wall_seconds": 0.0013863519999972596
     },
     {
       "id": "822033857c378676ecf5",
@@ -834,7 +834,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.00087446899999577
+      "wall_seconds": 0.0014381700000001274
     },
     {
       "id": "83f5f3af437f8958f0ea",
@@ -845,7 +845,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008561960000292856
+      "wall_seconds": 0.0014932330000050342
     },
     {
       "id": "858db1dee0bdda4182a5",
@@ -856,7 +856,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008390680000047723
+      "wall_seconds": 0.001462016000004951
     },
     {
       "id": "86f032420c8aa83cc220",
@@ -867,7 +867,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008618410000167387
+      "wall_seconds": 0.0014332129999985455
     },
     {
       "id": "881b22ad19b82df7cb51",
@@ -878,7 +878,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008602849999874707
+      "wall_seconds": 0.001389957999990088
     },
     {
       "id": "8acc4c47af52a70ce7e4",
@@ -889,7 +889,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008598100000085651
+      "wall_seconds": 0.0014377789999997503
     },
     {
       "id": "8c8b944d03749ec1aeac",
@@ -900,7 +900,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008798929999898064
+      "wall_seconds": 0.0014059819999943102
     },
     {
       "id": "918508906d1d985a94a3",
@@ -911,7 +911,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008540430000039123
+      "wall_seconds": 0.0014352250000086997
     },
     {
       "id": "92b2e2ef028105c91d7e",
@@ -922,7 +922,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0009424849999959406
+      "wall_seconds": 0.001408214999997881
     },
     {
       "id": "963fed7d47d7580dfd6c",
@@ -933,7 +933,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008736510000062481
+      "wall_seconds": 0.0013975490000035506
     },
     {
       "id": "98434543eedee209e7e5",
@@ -944,7 +944,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008935189999874638
+      "wall_seconds": 0.0014135229999965304
     },
     {
       "id": "98f39d130ffd005a3cef",
@@ -955,7 +955,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008553839999763113
+      "wall_seconds": 0.0014202230000108784
     },
     {
       "id": "997a1fd82ce2e2024f6f",
@@ -966,7 +966,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008899850000148035
+      "wall_seconds": 0.0013956659999934118
     },
     {
       "id": "9ac0e1535ba84de09f3c",
@@ -977,7 +977,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008545299999695999
+      "wall_seconds": 0.0014743939999988243
     },
     {
       "id": "9cd7880c9ff2d8a8bf1a",
@@ -988,7 +988,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008827339999584183
+      "wall_seconds": 0.0014283050000045705
     },
     {
       "id": "9e6eaef87aa1805c283c",
@@ -999,7 +999,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.000840647999950761
+      "wall_seconds": 0.0014429579999983844
     },
     {
       "id": "9ee12d9a129c0cab5f8b",
@@ -1010,7 +1010,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008564170000227023
+      "wall_seconds": 0.001377818999998226
     },
     {
       "id": "a1e9e64acc258cc9b616",
@@ -1021,7 +1021,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.000845285000025342
+      "wall_seconds": 0.0014231279999989965
     },
     {
       "id": "a1eb4f1b517fdeefbd02",
@@ -1032,7 +1032,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.000899599999968359
+      "wall_seconds": 0.0014679599999993798
     },
     {
       "id": "a391da8780cb41121edf",
@@ -1043,7 +1043,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0009063570000193977
+      "wall_seconds": 0.001424599000003468
     },
     {
       "id": "a8d61640adf9814bf4ce",
@@ -1054,7 +1054,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0011035969999966255
+      "wall_seconds": 0.0013850699999977678
     },
     {
       "id": "a9a18f28123f1bb4b502",
@@ -1065,7 +1065,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.001121071000000029
+      "wall_seconds": 0.001389887000001977
     },
     {
       "id": "ab4a310852bcd4bae5bc",
@@ -1076,7 +1076,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008795659999805139
+      "wall_seconds": 0.0013858710000107521
     },
     {
       "id": "abb7d1cb2173890111ce",
@@ -1087,7 +1087,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.00087108600001784
+      "wall_seconds": 0.0014767680000034034
     },
     {
       "id": "ae04a1b521d2d325fb73",
@@ -1098,7 +1098,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008667029999855913
+      "wall_seconds": 0.0014205230000072788
     },
     {
       "id": "af207ab7c069a2f30e21",
@@ -1109,7 +1109,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0009812360000296394
+      "wall_seconds": 0.001394953999991344
     },
     {
       "id": "b37fda7c217ac330227f",
@@ -1120,7 +1120,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008746190000010756
+      "wall_seconds": 0.0014075240000011036
     },
     {
       "id": "b4a82f0db24bf908c601",
@@ -1131,7 +1131,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0011261529999728737
+      "wall_seconds": 0.0014542290000036928
     },
     {
       "id": "b9690f3c7ec2d48da93e",
@@ -1142,7 +1142,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0009525640000447311
+      "wall_seconds": 0.0024240869999943016
     },
     {
       "id": "ba6d45dc4393276ac4a7",
@@ -1153,7 +1153,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008614629999783574
+      "wall_seconds": 0.0030442730000004303
     },
     {
       "id": "baa46c34eb43d36c3737",
@@ -1164,7 +1164,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008769780000079663
+      "wall_seconds": 0.0019806090000002996
     },
     {
       "id": "bc5d9a73f87706c026a6",
@@ -1175,7 +1175,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008559579999882772
+      "wall_seconds": 0.0019240829999915832
     },
     {
       "id": "c6897da305e4d962c7be",
@@ -1186,7 +1186,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008716190000086499
+      "wall_seconds": 0.0020438939999962713
     },
     {
       "id": "c6fff4a9af95c6982ed9",
@@ -1197,7 +1197,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0009153889999993226
+      "wall_seconds": 0.0030478989999949135
     },
     {
       "id": "c8bc99ac640f5e3cd819",
@@ -1208,7 +1208,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008504389999757223
+      "wall_seconds": 0.002996260999992728
     },
     {
       "id": "c9e5c46ca685dd8d6985",
@@ -1219,7 +1219,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008771540000225286
+      "wall_seconds": 0.003061528999992902
     },
     {
       "id": "cb5661cff609df1dc600",
@@ -1230,7 +1230,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008516090000512122
+      "wall_seconds": 0.0030287100000094824
     },
     {
       "id": "d1d474f8a2a517c83db9",
@@ -1241,7 +1241,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008343009999975948
+      "wall_seconds": 0.0030513540000072226
     },
     {
       "id": "d35a181ffb8b3c41ff07",
@@ -1252,7 +1252,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008402349999983016
+      "wall_seconds": 0.003083172000003742
     },
     {
       "id": "d466b6e8f3a2eb2ac244",
@@ -1263,7 +1263,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0009623189999956594
+      "wall_seconds": 0.0031021710000089797
     },
     {
       "id": "d6ac0163af97a8c04c7a",
@@ -1274,7 +1274,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008646680000197193
+      "wall_seconds": 0.003091795000003117
     },
     {
       "id": "d92cfcbcffca56f39948",
@@ -1285,7 +1285,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008883379999815588
+      "wall_seconds": 0.0030350090000013097
     },
     {
       "id": "da6ea859481398678369",
@@ -1296,7 +1296,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008594059999609271
+      "wall_seconds": 0.0019824709999909373
     },
     {
       "id": "da9548aba2451c6025f0",
@@ -1307,7 +1307,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008547220000423295
+      "wall_seconds": 0.0030443829999882155
     },
     {
       "id": "dcf7c21e0de2c0f657ca",
@@ -1318,7 +1318,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008513299999890478
+      "wall_seconds": 0.0030593759999959502
     },
     {
       "id": "e1801cc4e23d7d869a33",
@@ -1329,7 +1329,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008539050000422321
+      "wall_seconds": 0.003045936000006577
     },
     {
       "id": "e244d54fe5fa99f3af31",
@@ -1340,7 +1340,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008575749999977234
+      "wall_seconds": 0.0030051739999947813
     },
     {
       "id": "e36c4ea1244f6e1ae3a3",
@@ -1351,7 +1351,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0009006659999499789
+      "wall_seconds": 0.003045455000005859
     },
     {
       "id": "edf20d831eb986887f75",
@@ -1362,7 +1362,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008630589999825133
+      "wall_seconds": 0.003095790999992687
     },
     {
       "id": "eef935c9197430aabec0",
@@ -1373,7 +1373,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008760160000065298
+      "wall_seconds": 0.003115270000009218
     },
     {
       "id": "f344fd939ac6b4f88e9c",
@@ -1384,7 +1384,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.000842814999998609
+      "wall_seconds": 0.003038013999997702
     },
     {
       "id": "f49d2b2b2e668e181959",
@@ -1395,7 +1395,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008697490000031394
+      "wall_seconds": 0.0030640530000027866
     },
     {
       "id": "f5c171a0f969fa89b8b2",
@@ -1406,7 +1406,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008510499999943022
+      "wall_seconds": 0.0030452950000068313
     },
     {
       "id": "f9596832e419c45e171e",
@@ -1417,7 +1417,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008861460000275656
+      "wall_seconds": 0.0030335869999902343
     },
     {
       "id": "fa6e728b7eebc51bfe71",
@@ -1428,7 +1428,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008483839999939846
+      "wall_seconds": 0.0019814700000040375
     },
     {
       "id": "faffe70e3cda95116d66",
@@ -1439,7 +1439,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.000887195000018437
+      "wall_seconds": 0.0029999059999994415
     },
     {
       "id": "fc313c79c1b091bd62dd",
@@ -1450,7 +1450,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0008639019999918673
+      "wall_seconds": 0.001962871999992899
     }
   ]
 }
