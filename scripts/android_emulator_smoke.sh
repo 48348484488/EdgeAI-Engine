@@ -29,7 +29,7 @@ run_case() {
 
   adb shell am force-stop "$PKG" || true
   adb logcat -c
-  adb shell am start -W -n "$ACTIVITY" --es prompt "$prompt" | tee "/tmp/edgeai-${name}-am-start.txt"
+  adb shell "am start -W -n \"$ACTIVITY\" --es prompt '$prompt'" | tee "/tmp/edgeai-${name}-am-start.txt"
 
   local found=0
   for _ in $(seq 1 20); do
