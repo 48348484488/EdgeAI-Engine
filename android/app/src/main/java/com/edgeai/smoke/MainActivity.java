@@ -2,6 +2,7 @@ package com.edgeai.smoke;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
@@ -9,11 +10,25 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public final class MainActivity extends Activity {
+    private static final String TAG = "EDGEAI_SMOKE";
+
     static {
         System.loadLibrary("edgeai_android_jni");
     }
 
     private static native String nativeAsk(String prompt);
+
+    private void execute(EditText prompt, TextView output) {
+        try {
+            String result = nativeAsk(prompt.getText().toString());
+            output.setText(result);
+            Log.i(TAG, result.replace('\n', ' '));
+        } catch (Throwable error) {
+            String result = "Erro: " + error;
+            output.setText(result);
+            Log.e(TAG, result, error);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle state) {
@@ -25,7 +40,7 @@ public final class MainActivity extends Activity {
         root.setPadding(pad, pad, pad, pad);
 
         TextView title = new TextView(this);
-        title.setText("EdgeAI Android ARM64 smoke");
+        title.setText("EdgeAI Android smoke");
         title.setTextSize(20f);
 
         EditText prompt = new EditText(this);
@@ -47,14 +62,13 @@ public final class MainActivity extends Activity {
         root.addView(output, new LinearLayout.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT, 0, 1f));
 
-        ask.setOnClickListener(v -> {
-            try {
-                output.setText(nativeAsk(prompt.getText().toString()));
-            } catch (Throwable error) {
-                output.setText("Erro: " + error);
-            }
-        });
-
+        ask.setOnClickListener(v -> execute(prompt, output));
         setContentView(root);
+
+        String automatedPrompt = getIntent().getStringExtra("prompt");
+        if (automatedPrompt != null) {
+            prompt.setText(automatedPrompt);
+            execute(prompt, output);
+        }
     }
 }
