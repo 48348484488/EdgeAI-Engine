@@ -22,7 +22,8 @@ int main(){using namespace edgeai;
     CHECK(b.tokens_seen()==tok.encode_prompt("anything").size());
     std::ifstream in("instruction-test.edge",std::ios::binary);std::string raw((std::istreambuf_iterator<char>(in)),{});
     CHECK(raw.substr(0,7)=="EDGEAI7");
-    const std::vector<std::size_t> truncations{0u,8u,32u,raw.size()-1};\n    for(std::size_t n:truncations){std::ofstream o("instruction-bad.edge",std::ios::binary);o.write(raw.data(),n);o.close();reject([&]{TransformerModel::load("instruction-bad.edge");});}
+    const std::vector<std::size_t> truncations{0u,8u,32u,raw.size()-1};
+    for(std::size_t n:truncations){std::ofstream o("instruction-bad.edge",std::ios::binary);o.write(raw.data(),n);o.close();reject([&]{TransformerModel::load("instruction-bad.edge");});}
     {std::string bad=raw;bad[32]=char(0xff);bad[33]=char(0xff);bad[34]=char(0xff);bad[35]=char(0x7f);
      std::ofstream o("instruction-bad.edge",std::ios::binary);o.write(bad.data(),bad.size());o.close();reject([&]{TransformerModel::load("instruction-bad.edge");});}
     {std::ofstream o("instruction-bad.edge",std::ios::binary);o<<raw<<"junk";o.close();reject([&]{TransformerModel::load("instruction-bad.edge");});}
