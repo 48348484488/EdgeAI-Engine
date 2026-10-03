@@ -5,6 +5,7 @@ APK="${1:-android/app/build/outputs/apk/debug/app-debug.apk}"
 PKG="com.edgeai.smoke"
 ACTIVITY="$PKG/.MainActivity"
 TAG="EDGEAI_SMOKE"
+AUTOMATION_ACTION="com.edgeai.smoke.action.AUTOMATED_PROMPT"
 
 test -f "$APK"
 adb wait-for-device
@@ -20,6 +21,22 @@ fail_on_android_crash() {
   fi
 }
 
+run_untrusted_prompt_case() {
+  local full="/tmp/edgeai-untrusted-full.log"
+  adb shell am force-stop "$PKG" || true
+  adb logcat -c
+  adb shell "am start -W -n \"$ACTIVITY\" --es prompt 'Subtract 17 from 42'" |
+    tee /tmp/edgeai-untrusted-am-start.txt
+  sleep 2
+  adb logcat -d > "$full"
+  fail_on_android_crash "$full"
+  if grep -F -q "$TAG" "$full"; then
+    echo "Exported launcher executed an untrusted prompt" >&2
+    grep -F "$TAG" "$full" >&2 || true
+    return 1
+  fi
+}
+
 run_case() {
   local name="$1"
   local prompt="$2"
@@ -29,7 +46,8 @@ run_case() {
 
   adb shell am force-stop "$PKG" || true
   adb logcat -c
-  adb shell "am start -W -n \"$ACTIVITY\" --es prompt '$prompt'" | tee "/tmp/edgeai-${name}-am-start.txt"
+  adb shell "am start -W -a '$AUTOMATION_ACTION' -n \"$ACTIVITY\" --es prompt '$prompt'" |
+    tee "/tmp/edgeai-${name}-am-start.txt"
 
   local found=0
   for _ in $(seq 1 20); do
@@ -55,6 +73,7 @@ run_case() {
   fi
 }
 
+run_untrusted_prompt_case
 run_case calc "Subtract 17 from 42" '25.*route=calculator.*neural=0'
 run_case copy "Copy exactly: edge" 'edge.*route=text_copy.*neural=0'
 run_case uppercase "Uppercase: edge ai" 'EDGE AI.*route=text_uppercase.*neural=0'
