@@ -19,6 +19,7 @@ O projeto combina um **modelo neural próprio e pequeno** com ferramentas determ
 | Modelos próprios `.edge` em CPU | ✅ Experimental |
 | Transformer nativo com 1..8 blocos | ✅ v0.12 |
 | Formato multi-bloco `EDGEAI8` | ✅ v0.12 |
+| Build/test Windows x64 com MSVC | ✅ CI: 15/15 CTest + smoke |
 | Conversa/raciocínio geral no nível de grandes LLMs | ❌ |
 
 A busca de código suporta C/C++, Python, Pawn, JavaScript/TypeScript, Rust, Go e outras extensões listadas em `src/CodeSearch.cpp`.
@@ -135,7 +136,11 @@ cmake --build build -j2
 ctest --test-dir build --output-on-failure
 ```
 
-O código é C++17. Linux x86-64 foi validado. Windows, ARM e PCs realmente fracos ainda precisam de teste prático.
+O código é C++17. Linux x86-64 foi validado. **Windows x64 também está validado em GitHub Actions** com MSVC Release, **15/15 CTest** e smoke do runtime híbrido. Isso valida portabilidade de build/test no runner Windows, não desempenho em um PC fraco físico. **ARM e hardware fraco real ainda precisam de teste prático.**
+
+### Portabilidade Windows
+
+O CI Windows compila todos os targets em **MSVC Release**, executa **15/15 testes CTest** e valida o caminho híbrido com `Subtract 17 from 42 → 25` via `route=calculator`. Durante a portabilidade, três testes com initializer lists foram tornados portáveis e o build MSVC passou a usar `/utf-8` para tornar determinísticos os literais UTF-8 do código e dos testes. A suíte Linux final também permaneceu verde: **15/15 CTest e 168 testes Python**.
 
 ## Limites atuais
 
@@ -146,7 +151,7 @@ O benchmark neural usa tarefas sintéticas. Energia e pico de RSS não foram med
 ## Próximos focos
 
 - melhorar capacidade por unidade de CPU em vez de apenas aumentar profundidade;
-- medir ARM/Windows e hardware fraco real;
+- medir ARM e hardware fraco real; manter Windows x64 coberto pelo CI;
 - testar mudanças de dados/treino que melhorem geração livre sem dobrar o cache KV;
 - continuar combinando modelos pequenos com ferramentas e memória.
 
