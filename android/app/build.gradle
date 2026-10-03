@@ -21,7 +21,8 @@ android {
             cmake {
                 arguments '-DEDGEAI_BUILD_TESTS=OFF',
                           '-DEDGEAI_BUILD_BENCHMARK=OFF',
-                          '-DBUILD_SHARED_LIBS=ON'
+                          '-DBUILD_SHARED_LIBS=ON',
+                          '-DANDROID_STL=c++_shared'
                 targets 'edgeai_android_jni'
             }
         }
