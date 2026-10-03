@@ -26,6 +26,15 @@ int main(){
     CHECK(e.ask("Uppercase this paragraph please").neural_used);
     CHECK(!e.ask("Calculate 42 + 47").neural_used&&e.ask("Calculate 42 + 47").text=="89");
     CHECK(!e.ask("What is 42 + 47?").neural_used&&e.ask("What is 42 + 47?").text=="89");
+    CHECK(!e.ask("Subtract 17 from 42").neural_used&&e.ask("Subtract 17 from 42").text=="25");
+    CHECK(!e.ask("Subtraia 17 de 42").neural_used&&e.ask("Subtraia 17 de 42").text=="25");
+    CHECK(!e.ask("Multiply 12 by 7").neural_used&&e.ask("Multiply 12 by 7").text=="84");
+    CHECK(!e.ask("Multiplique 12 por 7").neural_used&&e.ask("Multiplique 12 por 7").text=="84");
+    CHECK(!e.ask("Divide 84 by 7").neural_used&&e.ask("Divide 84 by 7").text=="12");
+    CHECK(!e.ask("Divida 84 por 7").neural_used&&e.ask("Divida 84 por 7").text=="12");
+    CHECK(e.ask("Subtract apples from oranges").neural_used);
+    CHECK(e.ask("Multiply effort by focus").neural_used);
+    CHECK(e.ask("Divide the work by teams").neural_used);
     CHECK(!e.ask("Repeat exactly: edge").neural_used&&e.ask("Repeat exactly: edge").text=="edge");
     CHECK(!e.ask("Repita exatamente: teste").neural_used&&e.ask("Repita exatamente: teste").text=="teste");
     CHECK(!e.ask("Convert to uppercase: edge ai").neural_used&&e.ask("Convert to uppercase: edge ai").text=="EDGE AI");
