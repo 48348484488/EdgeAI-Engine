@@ -9,6 +9,8 @@ on:
       - benchmarks/router_paraphrase_v015.py
       - src/Router.cpp
       - src/Engine.cpp
+      - src/TextTools.cpp
+      - include/edgeai/TextTools.hpp
       - include/edgeai/Types.hpp
   workflow_dispatch:
 
@@ -35,16 +37,26 @@ jobs:
       - name: Evaluate paraphrased router cases
         run: |
           python3 benchmarks/router_paraphrase_v015.py --chat build/edgeai_chat
+      - name: Evaluate held-out reverse family
+        run: |
+          python3 benchmarks/hybrid_system_v015.py --chat build/edgeai_chat \
+            --data data/instructions_v015/test_family.jsonl \
+            --out results/v015/hybrid_family.json
       - name: Validate accounting
         run: |
           python3 - <<'PY'
           import json
           from pathlib import Path
-          for p in ('results/v015/hybrid_system.json','results/v015/router_paraphrases.json'):
+          expected={
+              'results/v015/hybrid_system.json':128,
+              'results/v015/router_paraphrases.json':128,
+              'results/v015/hybrid_family.json':16,
+          }
+          for p,count in expected.items():
               r=json.loads(Path(p).read_text())
               s=r['summary']
-              assert s['count']==128
-              assert s['tool_cases']+s['neural_cases']==128
+              assert s['count']==count
+              assert s['tool_cases']+s['neural_cases']==count
               assert s['tool_correct']+s['neural_correct']==s['correct']
               print(p,json.dumps(s))
           PY
@@ -55,11 +67,12 @@ jobs:
           path: |
             results/v015/hybrid_system.json
             results/v015/router_paraphrases.json
+            results/v015/hybrid_family.json
       - name: Commit evidence
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add results/v015/hybrid_system.json results/v015/router_paraphrases.json
+          git add results/v015/hybrid_system.json results/v015/router_paraphrases.json results/v015/hybrid_family.json
           git commit -m "bench: record v0.15 hybrid system result" || exit 0
           git fetch origin v0.12-multiblock
           git rebase origin/v0.12-multiblock
