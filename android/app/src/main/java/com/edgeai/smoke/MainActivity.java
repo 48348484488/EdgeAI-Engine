@@ -1,6 +1,7 @@
 package com.edgeai.smoke;
 
 import android.app.Activity;
+import android.content.pm.ApplicationInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ViewGroup;
@@ -11,6 +12,8 @@ import android.widget.TextView;
 
 public final class MainActivity extends Activity {
     private static final String TAG = "EDGEAI_SMOKE";
+    private static final String AUTOMATION_ACTION =
+        "com.edgeai.smoke.action.AUTOMATED_PROMPT";
 
     static {
         System.loadLibrary("edgeai_android_jni");
@@ -31,6 +34,12 @@ public final class MainActivity extends Activity {
             output.setText(result);
             Log.e(TAG, result, error);
         }
+    }
+
+    private boolean acceptsAutomatedPrompt() {
+        boolean debuggable =
+            (getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0;
+        return debuggable && AUTOMATION_ACTION.equals(getIntent().getAction());
     }
 
     @Override
@@ -69,7 +78,7 @@ public final class MainActivity extends Activity {
         setContentView(root);
 
         String automatedPrompt = getIntent().getStringExtra("prompt");
-        if (automatedPrompt != null) {
+        if (automatedPrompt != null && acceptsAutomatedPrompt()) {
             prompt.setText(automatedPrompt);
             execute(prompt, output);
         }
