@@ -1,0 +1,45 @@
+name: EdgeAI ARM64 CI
+
+on:
+  push:
+    branches: [main, v0.12-multiblock]
+    paths:
+      - .github/workflows/arm64-ci.yml
+      - CMakeLists.txt
+      - src/**
+      - include/**
+      - tests/**
+      - examples/**
+      - tools/**
+      - benchmarks/runtime.cpp
+  workflow_dispatch:
+
+jobs:
+  verify-arm64:
+    runs-on: ubuntu-24.04-arm
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verify native ARM64 runner
+        shell: bash
+        run: |
+          arch="$(uname -m)"
+          echo "runner_arch=$arch"
+          test "$arch" = "aarch64"
+
+      - name: Configure Release
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+
+      - name: Build Release
+        run: cmake --build build -j2
+
+      - name: CTest Release
+        run: ctest --test-dir build --output-on-failure
+
+      - name: Hybrid arithmetic smoke
+        shell: bash
+        run: |
+          out="$(./build/edgeai_chat --memory ':memory:' --prompt 'Subtract 17 from 42')"
+          printf '%s\n' "$out"
+          grep -qx '25' <<<"$out"
+          grep -q 'route=calculator neural=0' <<<"$out"
