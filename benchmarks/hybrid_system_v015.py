@@ -19,17 +19,20 @@ def run_case(chat,row):
     if not m:
         raise RuntimeError('invalid chat metadata: '+lines[-1])
     answer='\n'.join(lines[:-1])
-    neural=m.group(1)=='1'
+    route=m.group(1)\n    neural=m.group(2)=='1'
     return dict(id=row['id'],task=row['task'],prompt=row['prompt'],expected=row['answer'],
                 actual=answer,exact=answer==row['answer'],neural_used=neural,
                 loops=int(m.group(2)),wall_seconds=wall)
 
 def summarize(rows):
+    routes={}
+    for x in rows: routes[x['route']]=routes.get(x['route'],0)+1
     return dict(count=len(rows),correct=sum(x['exact'] for x in rows),
                 tool_cases=sum(not x['neural_used'] for x in rows),
                 neural_cases=sum(x['neural_used'] for x in rows),
                 tool_correct=sum(x['exact'] and not x['neural_used'] for x in rows),
-                neural_correct=sum(x['exact'] and x['neural_used'] for x in rows))
+                neural_correct=sum(x['exact'] and x['neural_used'] for x in rows),
+                routes=routes)
 
 def main():
     p=argparse.ArgumentParser()
