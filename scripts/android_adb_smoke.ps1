@@ -4,7 +4,7 @@ param(
 )
 $ErrorActionPreference = "Stop"
 $remote = "/data/local/tmp/edgeai"
-$files = @("libedgeai.so","libc++_shared.so","edgeai_chat")
+$files = @("libedgeai.so","libc++_shared.so","edgeai_chat","edgeai_make_demo")
 foreach ($f in $files) {
   $p = Join-Path (Join-Path $ArtifactRoot "arm64-v8a") $f
   if (-not (Test-Path $p)) { throw "Missing $p" }
@@ -15,10 +15,15 @@ foreach ($f in $files) {
   $p = Join-Path (Join-Path $ArtifactRoot "arm64-v8a") $f
   adb push $p "$remote/$f" | Out-Null
 }
-adb shell "chmod 755 '$remote/edgeai_chat'"
+adb shell "chmod 755 '$remote/edgeai_chat' '$remote/edgeai_make_demo'"
 $out = adb shell "cd '$remote' && LD_LIBRARY_PATH='$remote' ./edgeai_chat --memory :memory: --prompt 'Subtract 17 from 42'"
 $out | Write-Output
 if (-not ($out -match "(?m)^25\r?$")) { throw "Expected calculator result 25" }
 if (-not ($out -match "route=calculator")) { throw "Expected calculator route" }
 if (-not ($out -match "neural=0")) { throw "Expected deterministic route" }
-Write-Output "Android physical smoke passed"
+adb shell "cd '$remote' && LD_LIBRARY_PATH='$remote' ./edgeai_make_demo demo.edge" | Out-Null
+$neural = adb shell "cd '$remote' && LD_LIBRARY_PATH='$remote' ./edgeai_chat demo.edge --memory :memory: --prompt 'neural smoke'"
+$neural | Write-Output
+if (-not ($neural -match "route=neural")) { throw "Expected neural route" }
+if (-not ($neural -match "neural=1")) { throw "Expected neural backend usage" }
+Write-Output "Android physical smoke passed (deterministic + neural)"
