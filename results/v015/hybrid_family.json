@@ -1,5 +1,6 @@
 {
-  "protocol": "complete EdgeAI router/tool evaluation on sealed v0.15 test_range",
+  "protocol": "complete EdgeAI router/tool evaluation on sealed v0.15 test_family",
+  "split": "test_family",
   "caveat": "system capability benchmark; deterministic tool successes are not neural generalization",
   "summary": {
     "count": 16,
@@ -29,7 +30,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0013771960000070749
+      "wall_seconds": 0.0017939250000011953
     },
     {
       "id": "415d028b317d5aa92079",
@@ -40,7 +41,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0012356630000027735
+      "wall_seconds": 0.0013424330000049167
     },
     {
       "id": "d0a909a6e9b1f8127f4c",
@@ -51,7 +52,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0013231420000039407
+      "wall_seconds": 0.001320501999998669
     },
     {
       "id": "a44ecf296e6071e9b66f",
@@ -62,7 +63,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.001160189999993122
+      "wall_seconds": 0.001337974999998437
     },
     {
       "id": "9bb696cbd7aaae790fd6",
@@ -73,7 +74,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0011416460000077677
+      "wall_seconds": 0.00130914100000723
     },
     {
       "id": "5d932b5e70cb64ffff20",
@@ -84,7 +85,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0011579869999991388
+      "wall_seconds": 0.0013971049999952356
     },
     {
       "id": "b999cb4d567f16c67d52",
@@ -95,7 +96,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0026161810000076002
+      "wall_seconds": 0.0013142310000091584
     },
     {
       "id": "a765a802109dd5c1f98a",
@@ -106,7 +107,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0015483170000010205
+      "wall_seconds": 0.001287250000004292
     },
     {
       "id": "02a9556e337016d4933d",
@@ -117,7 +118,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0011323710000112897
+      "wall_seconds": 0.0013309220000081723
     },
     {
       "id": "a060d0c7d704856399e9",
@@ -128,7 +129,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0011135419999988017
+      "wall_seconds": 0.0013168650000068283
     },
     {
       "id": "ee614dbf34af626f7519",
@@ -139,7 +140,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0011213340000040262
+      "wall_seconds": 0.0013040719999963812
     },
     {
       "id": "3db8717e43d17c37f69c",
@@ -150,7 +151,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.002227406999992354
+      "wall_seconds": 0.0013739620000023933
     },
     {
       "id": "1df2606743209ca6624c",
@@ -161,7 +162,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0011821869999977253
+      "wall_seconds": 0.0013112350000028528
     },
     {
       "id": "6116070c21c7967cdcf7",
@@ -172,7 +173,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0011198730000074875
+      "wall_seconds": 0.0012921490000081803
     },
     {
       "id": "018b5f73378e2c554a98",
@@ -183,7 +184,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.001099653000011358
+      "wall_seconds": 0.0012925000000052478
     },
     {
       "id": "187d2e3f4d32743139b4",
@@ -194,7 +195,7 @@
       "exact": true,
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0011058449999978848
+      "wall_seconds": 0.0013649050000026364
     }
   ]
 }
