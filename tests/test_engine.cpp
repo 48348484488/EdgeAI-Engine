@@ -9,6 +9,7 @@
 #include <iostream>
 #include <memory>
 int main(){
+    try {
     using namespace edgeai;
     Engine e(Mode::Eco,":memory:",std::make_shared<EchoReasonerBackend>());
     auto a=e.ask("253 * 719");CHECK(!a.neural_used&&a.text=="181907");CHECK(e.ask("(10 + 5) * 3").text=="45");
@@ -51,4 +52,9 @@ int main(){
     auto m=make_demo_edge_model(16,32);CHECK(m.valid());CHECK(m.compression_ratio_vs_fp32()>1.0);const std::string p="test_demo.edge";m.save(p);auto m2=EdgeModel::load(p);CHECK(m2.valid());CHECK(m2.parameter_count()==m.parameter_count());std::cerr<<"stage model io ok\\n";
     Engine n(Mode::Eco,":memory:",std::make_shared<TernaryBackend>(m2));auto r=n.ask("teste do backend neural");CHECK(r.neural_used);CHECK(r.loops_used>=1);CHECK(!r.text.empty());std::cerr<<"stage backend ok\\n";std::remove(p.c_str());
     std::cout<<"all tests passed\n";
+    return 0;
+    } catch(const std::exception& error) {
+        std::cerr<<"edgeai_tests failure: "<<error.what()<<"\n";
+        return 1;
+    }
 }
