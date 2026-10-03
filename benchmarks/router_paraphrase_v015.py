@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Router robustness check using prompt forms absent from the v0.15 sealed range."""
-import argparse,hashlib,json,sys
+import argparse,hashlib,itertools,json,sys
 from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[1]
@@ -18,24 +18,24 @@ def cases():
         "Calcule {a} + {b}",
         "Quanto e {a} + {b}?",
     )
-    pairs=[(40+i%10,40+(i*7)%10) for i in range(32)]
+    pairs=list(itertools.combinations_with_replacement(range(40,50),2))[:32]
     for i,(a,b) in enumerate(pairs):
         prompt=add_templates[i%len(add_templates)].format(a=a,b=b)
         rows.append(dict(id=hid(prompt),task="addition",prompt=prompt,answer=str(a+b)))
 
-    strings=[
-        "feceedc","fbcacdc","afcbbfc","aaadfea","deccadb","cfcfeaf","aeaadae","bcabeaf",
-        "cbddcdb","ddcacfe","ccfdccf","efccdec","eaaafec","faaaeda","febcfad","badfabc",
-    ]
+    strings=sorted(
+        ("".join(x) for x in itertools.product("abcdef",repeat=7)),
+        key=lambda s:hashlib.sha256(("router-paraphrase:"+s).encode()).hexdigest()
+    )[:32]
     copy_templates=("Repeat exactly: {s}","Repita exatamente: {s}","Repeat unchanged: {s}","Repita sem alterar: {s}")
     upper_templates=("Convert to uppercase: {s}","Convert to capital letters: {s}",
                      "Converta para maiusculas: {s}","Converta para maiúsculas: {s}")
     for i in range(32):
-        s=strings[i%len(strings)]
+        s=strings[i]
         prompt=copy_templates[i%4].format(s=s)
         rows.append(dict(id=hid(prompt),task="copy",prompt=prompt,answer=s))
     for i in range(32):
-        s=strings[(i*5)%len(strings)]
+        s=strings[i]
         prompt=upper_templates[i%4].format(s=s)
         rows.append(dict(id=hid(prompt),task="uppercase",prompt=prompt,answer=s.upper()))
 
