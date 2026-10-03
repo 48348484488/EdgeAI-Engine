@@ -1,0 +1,3042 @@
+{
+  "protocol": "post-hoc frozen-model boundary curve; never used for training or checkpoint selection",
+  "probes_per_model": 440,
+  "runs": [
+    {
+      "family": "bpe-v013",
+      "seed": 11,
+      "blocks": 1,
+      "model": "models/v013/seed11-b1-after.edge",
+      "summary": [
+        {
+          "axis": "addition_band",
+          "bucket": "0-9",
+          "task": "addition",
+          "count": 16,
+          "correct": 15
+        },
+        {
+          "axis": "addition_band",
+          "bucket": "10-19",
+          "task": "addition",
+          "count": 16,
+          "correct": 16
+        },
+        {
+          "axis": "addition_band",
+          "bucket": "20-29",
+          "task": "addition",
+          "count": 16,
+          "correct": 16
+        },
+        {
+          "axis": "addition_band",
+          "bucket": "30-39",
+          "task": "addition",
+          "count": 16,
+          "correct": 0
+        },
+        {
+          "axis": "addition_band",
+          "bucket": "40-49",
+          "task": "addition",
+          "count": 16,
+          "correct": 0
+        },
+        {
+          "axis": "expression_band",
+          "bucket": "0-9",
+          "task": "expression",
+          "count": 12,
+          "correct": 9
+        },
+        {
+          "axis": "expression_band",
+          "bucket": "10-19",
+          "task": "expression",
+          "count": 12,
+          "correct": 9
+        },
+        {
+          "axis": "expression_band",
+          "bucket": "20-29",
+          "task": "expression",
+          "count": 12,
+          "correct": 9
+        },
+        {
+          "axis": "expression_band",
+          "bucket": "30-39",
+          "task": "expression",
+          "count": 12,
+          "correct": 12
+        },
+        {
+          "axis": "expression_band",
+          "bucket": "40-49",
+          "task": "expression",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "expression_band",
+          "bucket": "50-59",
+          "task": "expression",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "1",
+          "task": "reverse",
+          "count": 12,
+          "correct": 2
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "2",
+          "task": "reverse",
+          "count": 12,
+          "correct": 1
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "3",
+          "task": "reverse",
+          "count": 12,
+          "correct": 1
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "4",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "5",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "6",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "7",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "8",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "1",
+          "task": "copy",
+          "count": 12,
+          "correct": 10
+        },
+        {
+          "axis": "string_length",
+          "bucket": "1",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 8
+        },
+        {
+          "axis": "string_length",
+          "bucket": "2",
+          "task": "copy",
+          "count": 12,
+          "correct": 6
+        },
+        {
+          "axis": "string_length",
+          "bucket": "2",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 4
+        },
+        {
+          "axis": "string_length",
+          "bucket": "3",
+          "task": "copy",
+          "count": 12,
+          "correct": 10
+        },
+        {
+          "axis": "string_length",
+          "bucket": "3",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 8
+        },
+        {
+          "axis": "string_length",
+          "bucket": "4",
+          "task": "copy",
+          "count": 12,
+          "correct": 12
+        },
+        {
+          "axis": "string_length",
+          "bucket": "4",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 10
+        },
+        {
+          "axis": "string_length",
+          "bucket": "5",
+          "task": "copy",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "5",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "6",
+          "task": "copy",
+          "count": 12,
+          "correct": 1
+        },
+        {
+          "axis": "string_length",
+          "bucket": "6",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "7",
+          "task": "copy",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "7",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "8",
+          "task": "copy",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "8",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 0
+        }
+      ]
+    },
+    {
+      "family": "bpe-v013",
+      "seed": 11,
+      "blocks": 2,
+      "model": "models/v013/seed11-b2-after.edge",
+      "summary": [
+        {
+          "axis": "addition_band",
+          "bucket": "0-9",
+          "task": "addition",
+          "count": 16,
+          "correct": 13
+        },
+        {
+          "axis": "addition_band",
+          "bucket": "10-19",
+          "task": "addition",
+          "count": 16,
+          "correct": 12
+        },
+        {
+          "axis": "addition_band",
+          "bucket": "20-29",
+          "task": "addition",
+          "count": 16,
+          "correct": 14
+        },
+        {
+          "axis": "addition_band",
+          "bucket": "30-39",
+          "task": "addition",
+          "count": 16,
+          "correct": 0
+        },
+        {
+          "axis": "addition_band",
+          "bucket": "40-49",
+          "task": "addition",
+          "count": 16,
+          "correct": 0
+        },
+        {
+          "axis": "expression_band",
+          "bucket": "0-9",
+          "task": "expression",
+          "count": 12,
+          "correct": 12
+        },
+        {
+          "axis": "expression_band",
+          "bucket": "10-19",
+          "task": "expression",
+          "count": 12,
+          "correct": 10
+        },
+        {
+          "axis": "expression_band",
+          "bucket": "20-29",
+          "task": "expression",
+          "count": 12,
+          "correct": 9
+        },
+        {
+          "axis": "expression_band",
+          "bucket": "30-39",
+          "task": "expression",
+          "count": 12,
+          "correct": 12
+        },
+        {
+          "axis": "expression_band",
+          "bucket": "40-49",
+          "task": "expression",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "expression_band",
+          "bucket": "50-59",
+          "task": "expression",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "1",
+          "task": "reverse",
+          "count": 12,
+          "correct": 10
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "2",
+          "task": "reverse",
+          "count": 12,
+          "correct": 3
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "3",
+          "task": "reverse",
+          "count": 12,
+          "correct": 2
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "4",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "5",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "6",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "7",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "8",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "1",
+          "task": "copy",
+          "count": 12,
+          "correct": 12
+        },
+        {
+          "axis": "string_length",
+          "bucket": "1",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 10
+        },
+        {
+          "axis": "string_length",
+          "bucket": "2",
+          "task": "copy",
+          "count": 12,
+          "correct": 12
+        },
+        {
+          "axis": "string_length",
+          "bucket": "2",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 12
+        },
+        {
+          "axis": "string_length",
+          "bucket": "3",
+          "task": "copy",
+          "count": 12,
+          "correct": 12
+        },
+        {
+          "axis": "string_length",
+          "bucket": "3",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 12
+        },
+        {
+          "axis": "string_length",
+          "bucket": "4",
+          "task": "copy",
+          "count": 12,
+          "correct": 12
+        },
+        {
+          "axis": "string_length",
+          "bucket": "4",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 12
+        },
+        {
+          "axis": "string_length",
+          "bucket": "5",
+          "task": "copy",
+          "count": 12,
+          "correct": 1
+        },
+        {
+          "axis": "string_length",
+          "bucket": "5",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "6",
+          "task": "copy",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "6",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "7",
+          "task": "copy",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "7",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "8",
+          "task": "copy",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "8",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 0
+        }
+      ]
+    },
+    {
+      "family": "bpe-v013",
+      "seed": 22,
+      "blocks": 1,
+      "model": "models/v013/seed22-b1-after.edge",
+      "summary": [
+        {
+          "axis": "addition_band",
+          "bucket": "0-9",
+          "task": "addition",
+          "count": 16,
+          "correct": 10
+        },
+        {
+          "axis": "addition_band",
+          "bucket": "10-19",
+          "task": "addition",
+          "count": 16,
+          "correct": 16
+        },
+        {
+          "axis": "addition_band",
+          "bucket": "20-29",
+          "task": "addition",
+          "count": 16,
+          "correct": 14
+        },
+        {
+          "axis": "addition_band",
+          "bucket": "30-39",
+          "task": "addition",
+          "count": 16,
+          "correct": 0
+        },
+        {
+          "axis": "addition_band",
+          "bucket": "40-49",
+          "task": "addition",
+          "count": 16,
+          "correct": 0
+        },
+        {
+          "axis": "expression_band",
+          "bucket": "0-9",
+          "task": "expression",
+          "count": 12,
+          "correct": 12
+        },
+        {
+          "axis": "expression_band",
+          "bucket": "10-19",
+          "task": "expression",
+          "count": 12,
+          "correct": 9
+        },
+        {
+          "axis": "expression_band",
+          "bucket": "20-29",
+          "task": "expression",
+          "count": 12,
+          "correct": 9
+        },
+        {
+          "axis": "expression_band",
+          "bucket": "30-39",
+          "task": "expression",
+          "count": 12,
+          "correct": 12
+        },
+        {
+          "axis": "expression_band",
+          "bucket": "40-49",
+          "task": "expression",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "expression_band",
+          "bucket": "50-59",
+          "task": "expression",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "1",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "2",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "3",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "4",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "5",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "6",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "7",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "8",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "1",
+          "task": "copy",
+          "count": 12,
+          "correct": 12
+        },
+        {
+          "axis": "string_length",
+          "bucket": "1",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 10
+        },
+        {
+          "axis": "string_length",
+          "bucket": "2",
+          "task": "copy",
+          "count": 12,
+          "correct": 3
+        },
+        {
+          "axis": "string_length",
+          "bucket": "2",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 6
+        },
+        {
+          "axis": "string_length",
+          "bucket": "3",
+          "task": "copy",
+          "count": 12,
+          "correct": 11
+        },
+        {
+          "axis": "string_length",
+          "bucket": "3",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 10
+        },
+        {
+          "axis": "string_length",
+          "bucket": "4",
+          "task": "copy",
+          "count": 12,
+          "correct": 12
+        },
+        {
+          "axis": "string_length",
+          "bucket": "4",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 12
+        },
+        {
+          "axis": "string_length",
+          "bucket": "5",
+          "task": "copy",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "5",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "6",
+          "task": "copy",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "6",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "7",
+          "task": "copy",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "7",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "8",
+          "task": "copy",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "8",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 0
+        }
+      ]
+    },
+    {
+      "family": "bpe-v013",
+      "seed": 22,
+      "blocks": 2,
+      "model": "models/v013/seed22-b2-after.edge",
+      "summary": [
+        {
+          "axis": "addition_band",
+          "bucket": "0-9",
+          "task": "addition",
+          "count": 16,
+          "correct": 16
+        },
+        {
+          "axis": "addition_band",
+          "bucket": "10-19",
+          "task": "addition",
+          "count": 16,
+          "correct": 12
+        },
+        {
+          "axis": "addition_band",
+          "bucket": "20-29",
+          "task": "addition",
+          "count": 16,
+          "correct": 13
+        },
+        {
+          "axis": "addition_band",
+          "bucket": "30-39",
+          "task": "addition",
+          "count": 16,
+          "correct": 0
+        },
+        {
+          "axis": "addition_band",
+          "bucket": "40-49",
+          "task": "addition",
+          "count": 16,
+          "correct": 0
+        },
+        {
+          "axis": "expression_band",
+          "bucket": "0-9",
+          "task": "expression",
+          "count": 12,
+          "correct": 10
+        },
+        {
+          "axis": "expression_band",
+          "bucket": "10-19",
+          "task": "expression",
+          "count": 12,
+          "correct": 9
+        },
+        {
+          "axis": "expression_band",
+          "bucket": "20-29",
+          "task": "expression",
+          "count": 12,
+          "correct": 9
+        },
+        {
+          "axis": "expression_band",
+          "bucket": "30-39",
+          "task": "expression",
+          "count": 12,
+          "correct": 12
+        },
+        {
+          "axis": "expression_band",
+          "bucket": "40-49",
+          "task": "expression",
+          "count": 12,
+          "correct": 1
+        },
+        {
+          "axis": "expression_band",
+          "bucket": "50-59",
+          "task": "expression",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "1",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "2",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "3",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "4",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "5",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "6",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "7",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "8",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "1",
+          "task": "copy",
+          "count": 12,
+          "correct": 12
+        },
+        {
+          "axis": "string_length",
+          "bucket": "1",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 12
+        },
+        {
+          "axis": "string_length",
+          "bucket": "2",
+          "task": "copy",
+          "count": 12,
+          "correct": 12
+        },
+        {
+          "axis": "string_length",
+          "bucket": "2",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 10
+        },
+        {
+          "axis": "string_length",
+          "bucket": "3",
+          "task": "copy",
+          "count": 12,
+          "correct": 12
+        },
+        {
+          "axis": "string_length",
+          "bucket": "3",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 12
+        },
+        {
+          "axis": "string_length",
+          "bucket": "4",
+          "task": "copy",
+          "count": 12,
+          "correct": 12
+        },
+        {
+          "axis": "string_length",
+          "bucket": "4",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 12
+        },
+        {
+          "axis": "string_length",
+          "bucket": "5",
+          "task": "copy",
+          "count": 12,
+          "correct": 4
+        },
+        {
+          "axis": "string_length",
+          "bucket": "5",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "6",
+          "task": "copy",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "6",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "7",
+          "task": "copy",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "7",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "8",
+          "task": "copy",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "8",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 0
+        }
+      ]
+    },
+    {
+      "family": "bpe-v013",
+      "seed": 33,
+      "blocks": 1,
+      "model": "models/v013/seed33-b1-after.edge",
+      "summary": [
+        {
+          "axis": "addition_band",
+          "bucket": "0-9",
+          "task": "addition",
+          "count": 16,
+          "correct": 15
+        },
+        {
+          "axis": "addition_band",
+          "bucket": "10-19",
+          "task": "addition",
+          "count": 16,
+          "correct": 11
+        },
+        {
+          "axis": "addition_band",
+          "bucket": "20-29",
+          "task": "addition",
+          "count": 16,
+          "correct": 15
+        },
+        {
+          "axis": "addition_band",
+          "bucket": "30-39",
+          "task": "addition",
+          "count": 16,
+          "correct": 0
+        },
+        {
+          "axis": "addition_band",
+          "bucket": "40-49",
+          "task": "addition",
+          "count": 16,
+          "correct": 0
+        },
+        {
+          "axis": "expression_band",
+          "bucket": "0-9",
+          "task": "expression",
+          "count": 12,
+          "correct": 12
+        },
+        {
+          "axis": "expression_band",
+          "bucket": "10-19",
+          "task": "expression",
+          "count": 12,
+          "correct": 11
+        },
+        {
+          "axis": "expression_band",
+          "bucket": "20-29",
+          "task": "expression",
+          "count": 12,
+          "correct": 12
+        },
+        {
+          "axis": "expression_band",
+          "bucket": "30-39",
+          "task": "expression",
+          "count": 12,
+          "correct": 12
+        },
+        {
+          "axis": "expression_band",
+          "bucket": "40-49",
+          "task": "expression",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "expression_band",
+          "bucket": "50-59",
+          "task": "expression",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "1",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "2",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "3",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "4",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "5",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "6",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "7",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "8",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "1",
+          "task": "copy",
+          "count": 12,
+          "correct": 12
+        },
+        {
+          "axis": "string_length",
+          "bucket": "1",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 8
+        },
+        {
+          "axis": "string_length",
+          "bucket": "2",
+          "task": "copy",
+          "count": 12,
+          "correct": 9
+        },
+        {
+          "axis": "string_length",
+          "bucket": "2",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 7
+        },
+        {
+          "axis": "string_length",
+          "bucket": "3",
+          "task": "copy",
+          "count": 12,
+          "correct": 12
+        },
+        {
+          "axis": "string_length",
+          "bucket": "3",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 11
+        },
+        {
+          "axis": "string_length",
+          "bucket": "4",
+          "task": "copy",
+          "count": 12,
+          "correct": 12
+        },
+        {
+          "axis": "string_length",
+          "bucket": "4",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 11
+        },
+        {
+          "axis": "string_length",
+          "bucket": "5",
+          "task": "copy",
+          "count": 12,
+          "correct": 2
+        },
+        {
+          "axis": "string_length",
+          "bucket": "5",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "6",
+          "task": "copy",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "6",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "7",
+          "task": "copy",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "7",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "8",
+          "task": "copy",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "8",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 0
+        }
+      ]
+    },
+    {
+      "family": "bpe-v013",
+      "seed": 33,
+      "blocks": 2,
+      "model": "models/v013/seed33-b2-after.edge",
+      "summary": [
+        {
+          "axis": "addition_band",
+          "bucket": "0-9",
+          "task": "addition",
+          "count": 16,
+          "correct": 10
+        },
+        {
+          "axis": "addition_band",
+          "bucket": "10-19",
+          "task": "addition",
+          "count": 16,
+          "correct": 12
+        },
+        {
+          "axis": "addition_band",
+          "bucket": "20-29",
+          "task": "addition",
+          "count": 16,
+          "correct": 16
+        },
+        {
+          "axis": "addition_band",
+          "bucket": "30-39",
+          "task": "addition",
+          "count": 16,
+          "correct": 0
+        },
+        {
+          "axis": "addition_band",
+          "bucket": "40-49",
+          "task": "addition",
+          "count": 16,
+          "correct": 0
+        },
+        {
+          "axis": "expression_band",
+          "bucket": "0-9",
+          "task": "expression",
+          "count": 12,
+          "correct": 11
+        },
+        {
+          "axis": "expression_band",
+          "bucket": "10-19",
+          "task": "expression",
+          "count": 12,
+          "correct": 9
+        },
+        {
+          "axis": "expression_band",
+          "bucket": "20-29",
+          "task": "expression",
+          "count": 12,
+          "correct": 9
+        },
+        {
+          "axis": "expression_band",
+          "bucket": "30-39",
+          "task": "expression",
+          "count": 12,
+          "correct": 12
+        },
+        {
+          "axis": "expression_band",
+          "bucket": "40-49",
+          "task": "expression",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "expression_band",
+          "bucket": "50-59",
+          "task": "expression",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "1",
+          "task": "reverse",
+          "count": 12,
+          "correct": 8
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "2",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "3",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "4",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "5",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "6",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "7",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "8",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "1",
+          "task": "copy",
+          "count": 12,
+          "correct": 12
+        },
+        {
+          "axis": "string_length",
+          "bucket": "1",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 12
+        },
+        {
+          "axis": "string_length",
+          "bucket": "2",
+          "task": "copy",
+          "count": 12,
+          "correct": 11
+        },
+        {
+          "axis": "string_length",
+          "bucket": "2",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 9
+        },
+        {
+          "axis": "string_length",
+          "bucket": "3",
+          "task": "copy",
+          "count": 12,
+          "correct": 12
+        },
+        {
+          "axis": "string_length",
+          "bucket": "3",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 11
+        },
+        {
+          "axis": "string_length",
+          "bucket": "4",
+          "task": "copy",
+          "count": 12,
+          "correct": 12
+        },
+        {
+          "axis": "string_length",
+          "bucket": "4",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 12
+        },
+        {
+          "axis": "string_length",
+          "bucket": "5",
+          "task": "copy",
+          "count": 12,
+          "correct": 1
+        },
+        {
+          "axis": "string_length",
+          "bucket": "5",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "6",
+          "task": "copy",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "6",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "7",
+          "task": "copy",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "7",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "8",
+          "task": "copy",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "8",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 0
+        }
+      ]
+    },
+    {
+      "family": "byte-v014",
+      "seed": 11,
+      "blocks": 1,
+      "model": "models/v014/seed11-b1-byte-after.edge",
+      "summary": [
+        {
+          "axis": "addition_band",
+          "bucket": "0-9",
+          "task": "addition",
+          "count": 16,
+          "correct": 16
+        },
+        {
+          "axis": "addition_band",
+          "bucket": "10-19",
+          "task": "addition",
+          "count": 16,
+          "correct": 0
+        },
+        {
+          "axis": "addition_band",
+          "bucket": "20-29",
+          "task": "addition",
+          "count": 16,
+          "correct": 16
+        },
+        {
+          "axis": "addition_band",
+          "bucket": "30-39",
+          "task": "addition",
+          "count": 16,
+          "correct": 0
+        },
+        {
+          "axis": "addition_band",
+          "bucket": "40-49",
+          "task": "addition",
+          "count": 16,
+          "correct": 0
+        },
+        {
+          "axis": "expression_band",
+          "bucket": "0-9",
+          "task": "expression",
+          "count": 12,
+          "correct": 9
+        },
+        {
+          "axis": "expression_band",
+          "bucket": "10-19",
+          "task": "expression",
+          "count": 12,
+          "correct": 9
+        },
+        {
+          "axis": "expression_band",
+          "bucket": "20-29",
+          "task": "expression",
+          "count": 12,
+          "correct": 9
+        },
+        {
+          "axis": "expression_band",
+          "bucket": "30-39",
+          "task": "expression",
+          "count": 12,
+          "correct": 12
+        },
+        {
+          "axis": "expression_band",
+          "bucket": "40-49",
+          "task": "expression",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "expression_band",
+          "bucket": "50-59",
+          "task": "expression",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "1",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "2",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "3",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "4",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "5",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "6",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "7",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "8",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "1",
+          "task": "copy",
+          "count": 12,
+          "correct": 8
+        },
+        {
+          "axis": "string_length",
+          "bucket": "1",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 2
+        },
+        {
+          "axis": "string_length",
+          "bucket": "2",
+          "task": "copy",
+          "count": 12,
+          "correct": 2
+        },
+        {
+          "axis": "string_length",
+          "bucket": "2",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 4
+        },
+        {
+          "axis": "string_length",
+          "bucket": "3",
+          "task": "copy",
+          "count": 12,
+          "correct": 10
+        },
+        {
+          "axis": "string_length",
+          "bucket": "3",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 11
+        },
+        {
+          "axis": "string_length",
+          "bucket": "4",
+          "task": "copy",
+          "count": 12,
+          "correct": 12
+        },
+        {
+          "axis": "string_length",
+          "bucket": "4",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 12
+        },
+        {
+          "axis": "string_length",
+          "bucket": "5",
+          "task": "copy",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "5",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "6",
+          "task": "copy",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "6",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "7",
+          "task": "copy",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "7",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "8",
+          "task": "copy",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "8",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 0
+        }
+      ]
+    },
+    {
+      "family": "byte-v014",
+      "seed": 11,
+      "blocks": 2,
+      "model": "models/v014/seed11-b2-byte-after.edge",
+      "summary": [
+        {
+          "axis": "addition_band",
+          "bucket": "0-9",
+          "task": "addition",
+          "count": 16,
+          "correct": 8
+        },
+        {
+          "axis": "addition_band",
+          "bucket": "10-19",
+          "task": "addition",
+          "count": 16,
+          "correct": 7
+        },
+        {
+          "axis": "addition_band",
+          "bucket": "20-29",
+          "task": "addition",
+          "count": 16,
+          "correct": 9
+        },
+        {
+          "axis": "addition_band",
+          "bucket": "30-39",
+          "task": "addition",
+          "count": 16,
+          "correct": 0
+        },
+        {
+          "axis": "addition_band",
+          "bucket": "40-49",
+          "task": "addition",
+          "count": 16,
+          "correct": 0
+        },
+        {
+          "axis": "expression_band",
+          "bucket": "0-9",
+          "task": "expression",
+          "count": 12,
+          "correct": 11
+        },
+        {
+          "axis": "expression_band",
+          "bucket": "10-19",
+          "task": "expression",
+          "count": 12,
+          "correct": 9
+        },
+        {
+          "axis": "expression_band",
+          "bucket": "20-29",
+          "task": "expression",
+          "count": 12,
+          "correct": 9
+        },
+        {
+          "axis": "expression_band",
+          "bucket": "30-39",
+          "task": "expression",
+          "count": 12,
+          "correct": 12
+        },
+        {
+          "axis": "expression_band",
+          "bucket": "40-49",
+          "task": "expression",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "expression_band",
+          "bucket": "50-59",
+          "task": "expression",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "1",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "2",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "3",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "4",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "5",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "6",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "7",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "8",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "1",
+          "task": "copy",
+          "count": 12,
+          "correct": 4
+        },
+        {
+          "axis": "string_length",
+          "bucket": "1",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 2
+        },
+        {
+          "axis": "string_length",
+          "bucket": "2",
+          "task": "copy",
+          "count": 12,
+          "correct": 7
+        },
+        {
+          "axis": "string_length",
+          "bucket": "2",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 11
+        },
+        {
+          "axis": "string_length",
+          "bucket": "3",
+          "task": "copy",
+          "count": 12,
+          "correct": 10
+        },
+        {
+          "axis": "string_length",
+          "bucket": "3",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 11
+        },
+        {
+          "axis": "string_length",
+          "bucket": "4",
+          "task": "copy",
+          "count": 12,
+          "correct": 12
+        },
+        {
+          "axis": "string_length",
+          "bucket": "4",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 11
+        },
+        {
+          "axis": "string_length",
+          "bucket": "5",
+          "task": "copy",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "5",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "6",
+          "task": "copy",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "6",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "7",
+          "task": "copy",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "7",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "8",
+          "task": "copy",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "8",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 0
+        }
+      ]
+    },
+    {
+      "family": "byte-v014",
+      "seed": 22,
+      "blocks": 1,
+      "model": "models/v014/seed22-b1-byte-after.edge",
+      "summary": [
+        {
+          "axis": "addition_band",
+          "bucket": "0-9",
+          "task": "addition",
+          "count": 16,
+          "correct": 8
+        },
+        {
+          "axis": "addition_band",
+          "bucket": "10-19",
+          "task": "addition",
+          "count": 16,
+          "correct": 12
+        },
+        {
+          "axis": "addition_band",
+          "bucket": "20-29",
+          "task": "addition",
+          "count": 16,
+          "correct": 5
+        },
+        {
+          "axis": "addition_band",
+          "bucket": "30-39",
+          "task": "addition",
+          "count": 16,
+          "correct": 0
+        },
+        {
+          "axis": "addition_band",
+          "bucket": "40-49",
+          "task": "addition",
+          "count": 16,
+          "correct": 0
+        },
+        {
+          "axis": "expression_band",
+          "bucket": "0-9",
+          "task": "expression",
+          "count": 12,
+          "correct": 11
+        },
+        {
+          "axis": "expression_band",
+          "bucket": "10-19",
+          "task": "expression",
+          "count": 12,
+          "correct": 9
+        },
+        {
+          "axis": "expression_band",
+          "bucket": "20-29",
+          "task": "expression",
+          "count": 12,
+          "correct": 9
+        },
+        {
+          "axis": "expression_band",
+          "bucket": "30-39",
+          "task": "expression",
+          "count": 12,
+          "correct": 12
+        },
+        {
+          "axis": "expression_band",
+          "bucket": "40-49",
+          "task": "expression",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "expression_band",
+          "bucket": "50-59",
+          "task": "expression",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "1",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "2",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "3",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "4",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "5",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "6",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "7",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "8",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "1",
+          "task": "copy",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "1",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 2
+        },
+        {
+          "axis": "string_length",
+          "bucket": "2",
+          "task": "copy",
+          "count": 12,
+          "correct": 1
+        },
+        {
+          "axis": "string_length",
+          "bucket": "2",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 3
+        },
+        {
+          "axis": "string_length",
+          "bucket": "3",
+          "task": "copy",
+          "count": 12,
+          "correct": 12
+        },
+        {
+          "axis": "string_length",
+          "bucket": "3",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 12
+        },
+        {
+          "axis": "string_length",
+          "bucket": "4",
+          "task": "copy",
+          "count": 12,
+          "correct": 12
+        },
+        {
+          "axis": "string_length",
+          "bucket": "4",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 12
+        },
+        {
+          "axis": "string_length",
+          "bucket": "5",
+          "task": "copy",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "5",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "6",
+          "task": "copy",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "6",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "7",
+          "task": "copy",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "7",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "8",
+          "task": "copy",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "8",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 0
+        }
+      ]
+    },
+    {
+      "family": "byte-v014",
+      "seed": 22,
+      "blocks": 2,
+      "model": "models/v014/seed22-b2-byte-after.edge",
+      "summary": [
+        {
+          "axis": "addition_band",
+          "bucket": "0-9",
+          "task": "addition",
+          "count": 16,
+          "correct": 11
+        },
+        {
+          "axis": "addition_band",
+          "bucket": "10-19",
+          "task": "addition",
+          "count": 16,
+          "correct": 12
+        },
+        {
+          "axis": "addition_band",
+          "bucket": "20-29",
+          "task": "addition",
+          "count": 16,
+          "correct": 11
+        },
+        {
+          "axis": "addition_band",
+          "bucket": "30-39",
+          "task": "addition",
+          "count": 16,
+          "correct": 0
+        },
+        {
+          "axis": "addition_band",
+          "bucket": "40-49",
+          "task": "addition",
+          "count": 16,
+          "correct": 0
+        },
+        {
+          "axis": "expression_band",
+          "bucket": "0-9",
+          "task": "expression",
+          "count": 12,
+          "correct": 12
+        },
+        {
+          "axis": "expression_band",
+          "bucket": "10-19",
+          "task": "expression",
+          "count": 12,
+          "correct": 9
+        },
+        {
+          "axis": "expression_band",
+          "bucket": "20-29",
+          "task": "expression",
+          "count": 12,
+          "correct": 9
+        },
+        {
+          "axis": "expression_band",
+          "bucket": "30-39",
+          "task": "expression",
+          "count": 12,
+          "correct": 12
+        },
+        {
+          "axis": "expression_band",
+          "bucket": "40-49",
+          "task": "expression",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "expression_band",
+          "bucket": "50-59",
+          "task": "expression",
+          "count": 12,
+          "correct": 2
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "1",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "2",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "3",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "4",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "5",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "6",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "7",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "8",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "1",
+          "task": "copy",
+          "count": 12,
+          "correct": 2
+        },
+        {
+          "axis": "string_length",
+          "bucket": "1",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 2
+        },
+        {
+          "axis": "string_length",
+          "bucket": "2",
+          "task": "copy",
+          "count": 12,
+          "correct": 4
+        },
+        {
+          "axis": "string_length",
+          "bucket": "2",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 5
+        },
+        {
+          "axis": "string_length",
+          "bucket": "3",
+          "task": "copy",
+          "count": 12,
+          "correct": 12
+        },
+        {
+          "axis": "string_length",
+          "bucket": "3",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 12
+        },
+        {
+          "axis": "string_length",
+          "bucket": "4",
+          "task": "copy",
+          "count": 12,
+          "correct": 12
+        },
+        {
+          "axis": "string_length",
+          "bucket": "4",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 12
+        },
+        {
+          "axis": "string_length",
+          "bucket": "5",
+          "task": "copy",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "5",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "6",
+          "task": "copy",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "6",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "7",
+          "task": "copy",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "7",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "8",
+          "task": "copy",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "8",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 0
+        }
+      ]
+    },
+    {
+      "family": "byte-v014",
+      "seed": 33,
+      "blocks": 1,
+      "model": "models/v014/seed33-b1-byte-after.edge",
+      "summary": [
+        {
+          "axis": "addition_band",
+          "bucket": "0-9",
+          "task": "addition",
+          "count": 16,
+          "correct": 13
+        },
+        {
+          "axis": "addition_band",
+          "bucket": "10-19",
+          "task": "addition",
+          "count": 16,
+          "correct": 6
+        },
+        {
+          "axis": "addition_band",
+          "bucket": "20-29",
+          "task": "addition",
+          "count": 16,
+          "correct": 15
+        },
+        {
+          "axis": "addition_band",
+          "bucket": "30-39",
+          "task": "addition",
+          "count": 16,
+          "correct": 0
+        },
+        {
+          "axis": "addition_band",
+          "bucket": "40-49",
+          "task": "addition",
+          "count": 16,
+          "correct": 0
+        },
+        {
+          "axis": "expression_band",
+          "bucket": "0-9",
+          "task": "expression",
+          "count": 12,
+          "correct": 12
+        },
+        {
+          "axis": "expression_band",
+          "bucket": "10-19",
+          "task": "expression",
+          "count": 12,
+          "correct": 9
+        },
+        {
+          "axis": "expression_band",
+          "bucket": "20-29",
+          "task": "expression",
+          "count": 12,
+          "correct": 9
+        },
+        {
+          "axis": "expression_band",
+          "bucket": "30-39",
+          "task": "expression",
+          "count": 12,
+          "correct": 12
+        },
+        {
+          "axis": "expression_band",
+          "bucket": "40-49",
+          "task": "expression",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "expression_band",
+          "bucket": "50-59",
+          "task": "expression",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "1",
+          "task": "reverse",
+          "count": 12,
+          "correct": 2
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "2",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "3",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "4",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "5",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "6",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "7",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "8",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "1",
+          "task": "copy",
+          "count": 12,
+          "correct": 4
+        },
+        {
+          "axis": "string_length",
+          "bucket": "1",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 4
+        },
+        {
+          "axis": "string_length",
+          "bucket": "2",
+          "task": "copy",
+          "count": 12,
+          "correct": 4
+        },
+        {
+          "axis": "string_length",
+          "bucket": "2",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 3
+        },
+        {
+          "axis": "string_length",
+          "bucket": "3",
+          "task": "copy",
+          "count": 12,
+          "correct": 10
+        },
+        {
+          "axis": "string_length",
+          "bucket": "3",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 11
+        },
+        {
+          "axis": "string_length",
+          "bucket": "4",
+          "task": "copy",
+          "count": 12,
+          "correct": 11
+        },
+        {
+          "axis": "string_length",
+          "bucket": "4",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 12
+        },
+        {
+          "axis": "string_length",
+          "bucket": "5",
+          "task": "copy",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "5",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "6",
+          "task": "copy",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "6",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "7",
+          "task": "copy",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "7",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "8",
+          "task": "copy",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "8",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 0
+        }
+      ]
+    },
+    {
+      "family": "byte-v014",
+      "seed": 33,
+      "blocks": 2,
+      "model": "models/v014/seed33-b2-byte-after.edge",
+      "summary": [
+        {
+          "axis": "addition_band",
+          "bucket": "0-9",
+          "task": "addition",
+          "count": 16,
+          "correct": 6
+        },
+        {
+          "axis": "addition_band",
+          "bucket": "10-19",
+          "task": "addition",
+          "count": 16,
+          "correct": 10
+        },
+        {
+          "axis": "addition_band",
+          "bucket": "20-29",
+          "task": "addition",
+          "count": 16,
+          "correct": 16
+        },
+        {
+          "axis": "addition_band",
+          "bucket": "30-39",
+          "task": "addition",
+          "count": 16,
+          "correct": 0
+        },
+        {
+          "axis": "addition_band",
+          "bucket": "40-49",
+          "task": "addition",
+          "count": 16,
+          "correct": 0
+        },
+        {
+          "axis": "expression_band",
+          "bucket": "0-9",
+          "task": "expression",
+          "count": 12,
+          "correct": 9
+        },
+        {
+          "axis": "expression_band",
+          "bucket": "10-19",
+          "task": "expression",
+          "count": 12,
+          "correct": 9
+        },
+        {
+          "axis": "expression_band",
+          "bucket": "20-29",
+          "task": "expression",
+          "count": 12,
+          "correct": 9
+        },
+        {
+          "axis": "expression_band",
+          "bucket": "30-39",
+          "task": "expression",
+          "count": 12,
+          "correct": 12
+        },
+        {
+          "axis": "expression_band",
+          "bucket": "40-49",
+          "task": "expression",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "expression_band",
+          "bucket": "50-59",
+          "task": "expression",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "1",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "2",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "3",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "4",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "5",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "6",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "7",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "reverse_length",
+          "bucket": "8",
+          "task": "reverse",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "1",
+          "task": "copy",
+          "count": 12,
+          "correct": 2
+        },
+        {
+          "axis": "string_length",
+          "bucket": "1",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 2
+        },
+        {
+          "axis": "string_length",
+          "bucket": "2",
+          "task": "copy",
+          "count": 12,
+          "correct": 2
+        },
+        {
+          "axis": "string_length",
+          "bucket": "2",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 1
+        },
+        {
+          "axis": "string_length",
+          "bucket": "3",
+          "task": "copy",
+          "count": 12,
+          "correct": 7
+        },
+        {
+          "axis": "string_length",
+          "bucket": "3",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 6
+        },
+        {
+          "axis": "string_length",
+          "bucket": "4",
+          "task": "copy",
+          "count": 12,
+          "correct": 10
+        },
+        {
+          "axis": "string_length",
+          "bucket": "4",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 12
+        },
+        {
+          "axis": "string_length",
+          "bucket": "5",
+          "task": "copy",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "5",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "6",
+          "task": "copy",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "6",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "7",
+          "task": "copy",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "7",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "8",
+          "task": "copy",
+          "count": 12,
+          "correct": 0
+        },
+        {
+          "axis": "string_length",
+          "bucket": "8",
+          "task": "uppercase",
+          "count": 12,
+          "correct": 0
+        }
+      ]
+    }
+  ]
+}

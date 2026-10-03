@@ -1,0 +1,103 @@
+name: EdgeAI v0.15 Boundary Shift
+
+on:
+  push:
+    branches: [v0.12-multiblock]
+    paths:
+      - .github/workflows/v015-boundary-shift.yml
+      - tools/instruction_data_v015.py
+      - tests/test_v015_curriculum.py
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: edgeai-v015-boundary-shift
+  cancel-in-progress: true
+
+jobs:
+  boundary:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build and verify v0.15 curriculum
+        run: |
+          python3 -m unittest tests.test_v015_curriculum
+          python3 tools/instruction_data_v015.py
+          for s in valid test_id test_template test_family; do
+            cmp "data/instructions_v07/$s.jsonl" "data/instructions_v015/$s.jsonl"
+          done
+
+      - name: Configure and build native evaluator
+        run: |
+          cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+          cmake --build build -j2
+
+      - name: Install CPU Python dependencies
+        run: |
+          python3 -m pip install --disable-pip-version-check --index-url https://download.pytorch.org/whl/cpu torch==2.10.0
+          python3 -m pip install --disable-pip-version-check 'numpy>=1.26,<3'
+
+      - name: Train paired BPE models on expanded curriculum
+        run: |
+          python3 benchmarks/instruction_blocks_v012.py \
+            --cpu-seconds 60 --seeds 11 22 33 --threads 1 --architectures 1 2 \
+            --data data/instructions_v015 --out results/v015/training.json --model-dir models/v015
+
+      - name: Evaluate preregistered fresh range
+        run: |
+          python3 benchmarks/instruction_blocks_eval_v012.py \
+            --build build --report results/v015/training.json --data data/instructions_v015 \
+            --out results/v015/evaluation.json
+
+      - name: Summarize boundary shift
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          old=json.loads(Path('results/v013/evaluation.json').read_text())
+          new=json.loads(Path('results/v015/evaluation.json').read_text())
+          def rows(report):
+              return {(r['seed'],r['blocks']):r for r in report['runs']}
+          a,b=rows(old),rows(new);out=[]
+          for key in sorted(b):
+              cur=b[key];prev=a[key]
+              out.append(dict(
+                seed=key[0],blocks=key[1],
+                shared_id_old=prev['by_split']['test_id']['correct'],
+                shared_id_new=cur['by_split']['test_id']['correct'],
+                shared_template_old=prev['by_split']['test_template']['correct'],
+                shared_template_new=cur['by_split']['test_template']['correct'],
+                shared_family_old=prev['by_split']['test_family']['correct'],
+                shared_family_new=cur['by_split']['test_family']['correct'],
+                fresh_range_correct=cur['by_split']['test_range']['correct'],
+                fresh_range_count=cur['by_split']['test_range']['count']))
+          report=dict(
+            protocol='v0.15 train-boundary expansion with preregistered fresh range; shared splits compared to v0.13',
+            warning='v0.13 and v0.15 total scores are not directly comparable because test_range changed',
+            rows=out)
+          Path('results/v015/boundary_shift_summary.json').write_text(json.dumps(report,indent=2)+'\n')
+          print(json.dumps(report))
+          PY
+
+      - name: Upload evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: edgeai-v015-boundary-shift
+          path: |
+            results/v015/
+            data/instructions_v015/manifest.json
+            models/v015/
+
+      - name: Commit compact evidence
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/v015/ data/instructions_v015/
+          git commit -m "bench: record v0.15 boundary-shift evidence" || exit 0
+          git fetch origin v0.12-multiblock
+          git rebase origin/v0.12-multiblock
+          git push origin HEAD:v0.12-multiblock

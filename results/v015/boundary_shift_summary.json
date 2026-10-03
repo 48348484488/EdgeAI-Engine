@@ -1,0 +1,78 @@
+{
+  "protocol": "v0.15 train-boundary expansion with preregistered fresh range; shared splits compared to v0.13",
+  "warning": "v0.13 and v0.15 total scores are not directly comparable because test_range changed",
+  "rows": [
+    {
+      "seed": 11,
+      "blocks": 1,
+      "shared_id_old": 43,
+      "shared_id_new": 21,
+      "shared_template_old": 15,
+      "shared_template_new": 3,
+      "shared_family_old": 0,
+      "shared_family_new": 0,
+      "fresh_range_correct": 1,
+      "fresh_range_count": 128
+    },
+    {
+      "seed": 11,
+      "blocks": 2,
+      "shared_id_old": 50,
+      "shared_id_new": 33,
+      "shared_template_old": 14,
+      "shared_template_new": 7,
+      "shared_family_old": 0,
+      "shared_family_new": 0,
+      "fresh_range_correct": 16,
+      "fresh_range_count": 128
+    },
+    {
+      "seed": 22,
+      "blocks": 1,
+      "shared_id_old": 49,
+      "shared_id_new": 30,
+      "shared_template_old": 12,
+      "shared_template_new": 3,
+      "shared_family_old": 0,
+      "shared_family_new": 0,
+      "fresh_range_correct": 0,
+      "fresh_range_count": 128
+    },
+    {
+      "seed": 22,
+      "blocks": 2,
+      "shared_id_old": 47,
+      "shared_id_new": 36,
+      "shared_template_old": 10,
+      "shared_template_new": 13,
+      "shared_family_old": 0,
+      "shared_family_new": 0,
+      "fresh_range_correct": 12,
+      "fresh_range_count": 128
+    },
+    {
+      "seed": 33,
+      "blocks": 1,
+      "shared_id_old": 50,
+      "shared_id_new": 25,
+      "shared_template_old": 9,
+      "shared_template_new": 6,
+      "shared_family_old": 0,
+      "shared_family_new": 0,
+      "fresh_range_correct": 0,
+      "fresh_range_count": 128
+    },
+    {
+      "seed": 33,
+      "blocks": 2,
+      "shared_id_old": 45,
+      "shared_id_new": 39,
+      "shared_template_old": 12,
+      "shared_template_new": 9,
+      "shared_family_old": 0,
+      "shared_family_new": 0,
+      "fresh_range_correct": 13,
+      "fresh_range_count": 128
+    }
+  ]
+}

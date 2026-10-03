@@ -1,0 +1,435 @@
+{
+  "purpose": "diagnostic only; test splits are not checkpoint-selection data",
+  "baseline": [
+    {
+      "seed": 11,
+      "blocks": 1,
+      "lr": null,
+      "correct": 53,
+      "count": 194,
+      "by_split": {
+        "test_id": {
+          "correct": 38,
+          "count": 54
+        },
+        "test_template": {
+          "correct": 15,
+          "count": 60
+        },
+        "test_range": {
+          "correct": 0,
+          "count": 64
+        },
+        "test_family": {
+          "correct": 0,
+          "count": 16
+        }
+      },
+      "by_task": {
+        "addition": {
+          "correct": 15,
+          "count": 48
+        },
+        "copy": {
+          "correct": 20,
+          "count": 48
+        },
+        "expression": {
+          "correct": 0,
+          "count": 34
+        },
+        "reverse": {
+          "correct": 0,
+          "count": 16
+        },
+        "uppercase": {
+          "correct": 18,
+          "count": 48
+        }
+      }
+    },
+    {
+      "seed": 11,
+      "blocks": 2,
+      "lr": null,
+      "correct": 48,
+      "count": 194,
+      "by_split": {
+        "test_id": {
+          "correct": 34,
+          "count": 54
+        },
+        "test_template": {
+          "correct": 14,
+          "count": 60
+        },
+        "test_range": {
+          "correct": 0,
+          "count": 64
+        },
+        "test_family": {
+          "correct": 0,
+          "count": 16
+        }
+      },
+      "by_task": {
+        "addition": {
+          "correct": 0,
+          "count": 48
+        },
+        "copy": {
+          "correct": 27,
+          "count": 48
+        },
+        "expression": {
+          "correct": 7,
+          "count": 34
+        },
+        "reverse": {
+          "correct": 0,
+          "count": 16
+        },
+        "uppercase": {
+          "correct": 14,
+          "count": 48
+        }
+      }
+    },
+    {
+      "seed": 22,
+      "blocks": 1,
+      "lr": null,
+      "correct": 37,
+      "count": 194,
+      "by_split": {
+        "test_id": {
+          "correct": 28,
+          "count": 54
+        },
+        "test_template": {
+          "correct": 9,
+          "count": 60
+        },
+        "test_range": {
+          "correct": 0,
+          "count": 64
+        },
+        "test_family": {
+          "correct": 0,
+          "count": 16
+        }
+      },
+      "by_task": {
+        "addition": {
+          "correct": 0,
+          "count": 48
+        },
+        "copy": {
+          "correct": 17,
+          "count": 48
+        },
+        "expression": {
+          "correct": 0,
+          "count": 34
+        },
+        "reverse": {
+          "correct": 0,
+          "count": 16
+        },
+        "uppercase": {
+          "correct": 20,
+          "count": 48
+        }
+      }
+    },
+    {
+      "seed": 22,
+      "blocks": 2,
+      "lr": null,
+      "correct": 46,
+      "count": 194,
+      "by_split": {
+        "test_id": {
+          "correct": 34,
+          "count": 54
+        },
+        "test_template": {
+          "correct": 11,
+          "count": 60
+        },
+        "test_range": {
+          "correct": 1,
+          "count": 64
+        },
+        "test_family": {
+          "correct": 0,
+          "count": 16
+        }
+      },
+      "by_task": {
+        "addition": {
+          "correct": 1,
+          "count": 48
+        },
+        "copy": {
+          "correct": 20,
+          "count": 48
+        },
+        "expression": {
+          "correct": 4,
+          "count": 34
+        },
+        "reverse": {
+          "correct": 0,
+          "count": 16
+        },
+        "uppercase": {
+          "correct": 21,
+          "count": 48
+        }
+      }
+    },
+    {
+      "seed": 33,
+      "blocks": 1,
+      "lr": null,
+      "correct": 59,
+      "count": 194,
+      "by_split": {
+        "test_id": {
+          "correct": 43,
+          "count": 54
+        },
+        "test_template": {
+          "correct": 16,
+          "count": 60
+        },
+        "test_range": {
+          "correct": 0,
+          "count": 64
+        },
+        "test_family": {
+          "correct": 0,
+          "count": 16
+        }
+      },
+      "by_task": {
+        "addition": {
+          "correct": 9,
+          "count": 48
+        },
+        "copy": {
+          "correct": 25,
+          "count": 48
+        },
+        "expression": {
+          "correct": 8,
+          "count": 34
+        },
+        "reverse": {
+          "correct": 0,
+          "count": 16
+        },
+        "uppercase": {
+          "correct": 17,
+          "count": 48
+        }
+      }
+    },
+    {
+      "seed": 33,
+      "blocks": 2,
+      "lr": null,
+      "correct": 44,
+      "count": 194,
+      "by_split": {
+        "test_id": {
+          "correct": 30,
+          "count": 54
+        },
+        "test_template": {
+          "correct": 14,
+          "count": 60
+        },
+        "test_range": {
+          "correct": 0,
+          "count": 64
+        },
+        "test_family": {
+          "correct": 0,
+          "count": 16
+        }
+      },
+      "by_task": {
+        "addition": {
+          "correct": 2,
+          "count": 48
+        },
+        "copy": {
+          "correct": 22,
+          "count": 48
+        },
+        "expression": {
+          "correct": 1,
+          "count": 34
+        },
+        "reverse": {
+          "correct": 0,
+          "count": 16
+        },
+        "uppercase": {
+          "correct": 19,
+          "count": 48
+        }
+      }
+    }
+  ],
+  "equal_updates": [
+    {
+      "seed": 11,
+      "blocks": 2,
+      "lr": null,
+      "correct": 55,
+      "count": 194,
+      "by_split": {
+        "test_id": {
+          "correct": 46,
+          "count": 54
+        },
+        "test_template": {
+          "correct": 9,
+          "count": 60
+        },
+        "test_range": {
+          "correct": 0,
+          "count": 64
+        },
+        "test_family": {
+          "correct": 0,
+          "count": 16
+        }
+      },
+      "by_task": {
+        "addition": {
+          "correct": 10,
+          "count": 48
+        },
+        "copy": {
+          "correct": 20,
+          "count": 48
+        },
+        "expression": {
+          "correct": 6,
+          "count": 34
+        },
+        "reverse": {
+          "correct": 0,
+          "count": 16
+        },
+        "uppercase": {
+          "correct": 19,
+          "count": 48
+        }
+      }
+    },
+    {
+      "seed": 22,
+      "blocks": 2,
+      "lr": null,
+      "correct": 37,
+      "count": 194,
+      "by_split": {
+        "test_id": {
+          "correct": 28,
+          "count": 54
+        },
+        "test_template": {
+          "correct": 9,
+          "count": 60
+        },
+        "test_range": {
+          "correct": 0,
+          "count": 64
+        },
+        "test_family": {
+          "correct": 0,
+          "count": 16
+        }
+      },
+      "by_task": {
+        "addition": {
+          "correct": 1,
+          "count": 48
+        },
+        "copy": {
+          "correct": 18,
+          "count": 48
+        },
+        "expression": {
+          "correct": 2,
+          "count": 34
+        },
+        "reverse": {
+          "correct": 0,
+          "count": 16
+        },
+        "uppercase": {
+          "correct": 16,
+          "count": 48
+        }
+      }
+    },
+    {
+      "seed": 33,
+      "blocks": 2,
+      "lr": null,
+      "correct": 46,
+      "count": 194,
+      "by_split": {
+        "test_id": {
+          "correct": 41,
+          "count": 54
+        },
+        "test_template": {
+          "correct": 5,
+          "count": 60
+        },
+        "test_range": {
+          "correct": 0,
+          "count": 64
+        },
+        "test_family": {
+          "correct": 0,
+          "count": 16
+        }
+      },
+      "by_task": {
+        "addition": {
+          "correct": 9,
+          "count": 48
+        },
+        "copy": {
+          "correct": 17,
+          "count": 48
+        },
+        "expression": {
+          "correct": 0,
+          "count": 34
+        },
+        "reverse": {
+          "correct": 0,
+          "count": 16
+        },
+        "uppercase": {
+          "correct": 20,
+          "count": 48
+        }
+      }
+    }
+  ],
+  "observations": [
+    "held-out range and family splits expose generalization beyond memorized/base templates",
+    "aggregate exact/correct alone can hide task-specific collapse",
+    "next training experiments must keep these test splits sealed until final evaluation"
+  ]
+}

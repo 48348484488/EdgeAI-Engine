@@ -1,0 +1,16 @@
+{"answer":"abb","group":"string:bba","id":"5618294e9c32872e0ed0","language":"en","prompt":"Reverse: bba","task":"reverse","template":"reverse_en"}
+{"answer":"fcfb","group":"string:bfcf","id":"415d028b317d5aa92079","language":"en","prompt":"Reverse: bfcf","task":"reverse","template":"reverse_en"}
+{"answer":"cdca","group":"string:acdc","id":"d0a909a6e9b1f8127f4c","language":"en","prompt":"Reverse: acdc","task":"reverse","template":"reverse_en"}
+{"answer":"faec","group":"string:ceaf","id":"a44ecf296e6071e9b66f","language":"en","prompt":"Reverse: ceaf","task":"reverse","template":"reverse_en"}
+{"answer":"dfea","group":"string:aefd","id":"9bb696cbd7aaae790fd6","language":"en","prompt":"Reverse: aefd","task":"reverse","template":"reverse_en"}
+{"answer":"abbf","group":"string:fbba","id":"5d932b5e70cb64ffff20","language":"en","prompt":"Reverse: fbba","task":"reverse","template":"reverse_en"}
+{"answer":"ecab","group":"string:bace","id":"b999cb4d567f16c67d52","language":"en","prompt":"Reverse: bace","task":"reverse","template":"reverse_en"}
+{"answer":"cbfa","group":"string:afbc","id":"a765a802109dd5c1f98a","language":"en","prompt":"Reverse: afbc","task":"reverse","template":"reverse_en"}
+{"answer":"babb","group":"string:bbab","id":"02a9556e337016d4933d","language":"pt","prompt":"Inverta: bbab","task":"reverse","template":"reverse_pt"}
+{"answer":"ccfc","group":"string:cfcc","id":"a060d0c7d704856399e9","language":"pt","prompt":"Inverta: cfcc","task":"reverse","template":"reverse_pt"}
+{"answer":"abb","group":"string:bba","id":"ee614dbf34af626f7519","language":"pt","prompt":"Inverta: bba","task":"reverse","template":"reverse_pt"}
+{"answer":"bd","group":"string:db","id":"3db8717e43d17c37f69c","language":"pt","prompt":"Inverta: db","task":"reverse","template":"reverse_pt"}
+{"answer":"bedb","group":"string:bdeb","id":"1df2606743209ca6624c","language":"pt","prompt":"Inverta: bdeb","task":"reverse","template":"reverse_pt"}
+{"answer":"fecf","group":"string:fcef","id":"6116070c21c7967cdcf7","language":"pt","prompt":"Inverta: fcef","task":"reverse","template":"reverse_pt"}
+{"answer":"baff","group":"string:ffab","id":"018b5f73378e2c554a98","language":"pt","prompt":"Inverta: ffab","task":"reverse","template":"reverse_pt"}
+{"answer":"efbb","group":"string:bbfe","id":"187d2e3f4d32743139b4","language":"pt","prompt":"Inverta: bbfe","task":"reverse","template":"reverse_pt"}

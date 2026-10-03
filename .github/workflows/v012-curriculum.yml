@@ -1,0 +1,46 @@
+name: EdgeAI v0.12 Curriculum Ablation
+on:
+  push:
+    branches: [v0.12-multiblock]
+    paths: [.github/workflows/v012-curriculum.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: edgeai-v012-curriculum
+  cancel-in-progress: true
+jobs:
+  curriculum:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 tools/instruction_data_v012.py
+      - name: Verify sealed tests unchanged
+        run: |
+          for s in test_id test_template test_range test_family; do
+            cmp "data/instructions_v07/$s.jsonl" "data/instructions_v012_aug/$s.jsonl"
+          done
+      - run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release && cmake --build build -j2
+      - run: |
+          python3 -m pip install --disable-pip-version-check --index-url https://download.pytorch.org/whl/cpu torch==2.10.0
+          python3 -m pip install --disable-pip-version-check 'numpy>=1.26,<3'
+      - name: Train one-block augmented curriculum
+        run: python3 benchmarks/instruction_blocks_v012.py --cpu-seconds 60 --seeds 11 22 33 --data data/instructions_v012_aug --out results/v012_curriculum/training.json --model-dir models/v012_curriculum --resume
+      - name: Native sealed-test evaluation
+        run: python3 benchmarks/instruction_blocks_eval_v012.py --build build --report results/v012_curriculum/training.json --out results/v012_curriculum/evaluation.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: edgeai-v012-curriculum
+          path: |
+            results/v012_curriculum/
+            data/instructions_v012_aug/manifest.json
+      - name: Commit compact evidence
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/v012_curriculum/ data/instructions_v012_aug/
+          git commit -m "bench: record v0.12 curriculum ablation" || exit 0
+          git fetch origin v0.12-multiblock
+          git rebase origin/v0.12-multiblock
+          git push origin HEAD:v0.12-multiblock

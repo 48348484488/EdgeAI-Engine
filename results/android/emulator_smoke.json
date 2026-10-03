@@ -1,0 +1,93 @@
+{
+  "schema_version": 2,
+  "recorded_at": "2026-10-03",
+  "workflow": "EdgeAI Android Emulator CI",
+  "run_id": 37110111356,
+  "head_sha": "69a3791de5e628deb726a4531b40a466544a2fa3",
+  "environment": {
+    "android_api": 29,
+    "abi": "x86_64",
+    "device_type": "GitHub Actions Android emulator",
+    "physical_device": false,
+    "cold_process_per_case": true
+  },
+  "result": "pass",
+  "cases": [
+    {
+      "name": "calculator",
+      "prompt": "Subtract 17 from 42",
+      "text": "25",
+      "route": "calculator",
+      "neural_used": false,
+      "loops": 0,
+      "elapsed_us": 4437
+    },
+    {
+      "name": "copy",
+      "prompt": "Copy exactly: edge",
+      "text": "edge",
+      "route": "text_copy",
+      "neural_used": false,
+      "loops": 0,
+      "elapsed_us": 29876
+    },
+    {
+      "name": "uppercase",
+      "prompt": "Uppercase: edge ai",
+      "text": "EDGE AI",
+      "route": "text_uppercase",
+      "neural_used": false,
+      "loops": 0,
+      "elapsed_us": 1820
+    },
+    {
+      "name": "reverse",
+      "prompt": "Reverse: abcdef",
+      "text": "fedcba",
+      "route": "text_reverse",
+      "neural_used": false,
+      "loops": 0,
+      "elapsed_us": 1878
+    },
+    {
+      "name": "symbolic",
+      "prompt": "Return only x + 57",
+      "text": "x+57",
+      "route": "symbolic_expression",
+      "neural_used": false,
+      "loops": 0,
+      "elapsed_us": 1726
+    },
+    {
+      "name": "neural",
+      "prompt": "neural smoke",
+      "route": "neural",
+      "neural_used": true,
+      "loops": 96,
+      "elapsed_us": 4599
+    }
+  ],
+  "process_memory_kb": {
+    "total_pss": 55703,
+    "java_heap": 12316,
+    "native_heap": 15340,
+    "code": 2216,
+    "stack": 56,
+    "private_other": 1052,
+    "system": 24723,
+    "total_swap": 48
+  },
+  "artifact": {
+    "name": "edgeai-android-emulator-evidence",
+    "id": 11269836132,
+    "size_bytes": 116539,
+    "sha256": "e69187e0612fdc592a808ad9ddf4e1e7e7bcf6af9d850195f7cbe900ce6f218a"
+  },
+  "caveats": [
+    "Each smoke case force-stops the app first, so elapsed_us is a cold-process one-shot diagnostic and can include lazy Engine/backend initialization.",
+    "The copy latency is an observed outlier and must not be treated as representative throughput.",
+    "Memory is dumpsys meminfo for the complete APK process, not model-only RSS.",
+    "This validates Android runtime behavior in an x86_64 emulator, not ARM64 physical-device performance.",
+    "The neural smoke verifies the native neural execution path only; it is not a quality benchmark."
+  ]
+}

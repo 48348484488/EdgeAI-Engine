@@ -1,0 +1,47 @@
+plugins {
+    id 'com.android.application'
+}
+
+def edgeaiAbi = providers.gradleProperty('edgeaiAbi').getOrElse('arm64-v8a')
+
+android {
+    namespace 'com.edgeai.smoke'
+    compileSdk 35
+
+    defaultConfig {
+        applicationId 'com.edgeai.smoke'
+        minSdk 24
+        targetSdk 35
+        versionCode 1
+        versionName '0.1'
+
+        ndk {
+            abiFilters edgeaiAbi
+        }
+
+        externalNativeBuild {
+            cmake {
+                arguments '-DEDGEAI_BUILD_TESTS=OFF',
+                          '-DEDGEAI_BUILD_BENCHMARK=OFF',
+                          '-DBUILD_SHARED_LIBS=ON',
+                          '-DANDROID_STL=c++_shared'
+                targets 'edgeai_android_jni'
+            }
+        }
+    }
+
+    externalNativeBuild {
+        cmake {
+            path file('../../CMakeLists.txt')
+        }
+    }
+
+    buildTypes {
+        debug {
+            debuggable true
+        }
+        release {
+            minifyEnabled false
+        }
+    }
+}

@@ -1,0 +1,38 @@
+name: EdgeAI Windows CI
+
+on:
+  push:
+    branches: [main, v0.12-multiblock]
+    paths:
+      - .github/workflows/windows-ci.yml
+      - CMakeLists.txt
+      - src/**
+      - include/**
+      - tests/**
+      - examples/**
+      - tools/**
+      - benchmarks/runtime.cpp
+  workflow_dispatch:
+
+jobs:
+  verify-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure Release
+        run: cmake -S . -B build
+
+      - name: Build Release
+        run: cmake --build build --config Release --parallel 2
+
+      - name: CTest Release
+        run: ctest --test-dir build -C Release --output-on-failure
+
+      - name: Hybrid arithmetic smoke
+        shell: pwsh
+        run: |
+          $out = & .\build\Release\edgeai_chat.exe --memory ':memory:' --prompt 'Subtract 17 from 42'
+          $text = $out -join "`n"
+          if ($text -notmatch '(?m)^25$') { throw "unexpected answer: $text" }
+          if ($text -notmatch 'route=calculator neural=0') { throw "calculator route missing: $text" }

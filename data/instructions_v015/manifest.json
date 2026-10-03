@@ -1,0 +1,50 @@
+{
+  "format": "edge-sft-synthetic-1",
+  "synthetic": true,
+  "source": "deterministic local rules; v0.15 boundary-shift curriculum",
+  "license": "CC0-1.0",
+  "generator_sha256": "0699cc60ea4fad924d8ab8c80b74dac6ec28f347adadcebb901628d7825bbdba",
+  "files": {
+    "train.jsonl": {
+      "sha256": "b1491552c5890e6df242f0f44d5369bcc7fc8c9a2cb8244da0a63b29756ae947",
+      "rows": 8728,
+      "bytes": 1409678
+    },
+    "valid.jsonl": {
+      "sha256": "afdcbab2bf1c8575ca08ee0e07d358fa30d67b9091259126f45106c9b6bb05ea",
+      "rows": 128,
+      "bytes": 20498
+    },
+    "test_id.jsonl": {
+      "sha256": "44b81f2ddb367d439c1a976e40068e7ab32c10e340eae75364be52685e83a7e2",
+      "rows": 54,
+      "bytes": 8520
+    },
+    "test_template.jsonl": {
+      "sha256": "0826e28e8faf58a37ef5e277f5cb69ee2584b4f10e1200d78b1ea2c06c697c4a",
+      "rows": 60,
+      "bytes": 10260
+    },
+    "test_range.jsonl": {
+      "sha256": "8e5aab305e1eb173cb589e5b92324238dec5a05589d30a2550762339ee146404",
+      "rows": 128,
+      "bytes": 23712
+    },
+    "test_family.jsonl": {
+      "sha256": "50c18f65690cd9dff4945fbd6d30e6d7bb0491736d1fde46c9275d5efe0223f9",
+      "rows": 16,
+      "bytes": 2388
+    }
+  },
+  "preregistered_holdout": {
+    "strings": "length 7",
+    "addition": "operands 40-49",
+    "expression": "coefficients 50-59"
+  },
+  "limitations": [
+    "v0.12 test_range informed this curriculum and is retired for v0.15 claims",
+    "v0.15 test_range is generated before training and never used for checkpoint selection",
+    "reverse remains a fully held-out family",
+    "synthetic diagnostic curriculum, not a standardized benchmark"
+  ]
+}

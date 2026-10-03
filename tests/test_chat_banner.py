@@ -16,6 +16,17 @@ class ChatBanner(unittest.TestCase):
         self.assertIn('EdgeAI Engine v0.12 (model formats through EDGEAI8)',run.stdout)
 
 
+    def test_prompt_metadata_reports_route(self):
+        calc=subprocess.run(
+            [str(BINARY),'--memory',':memory:','--prompt','2 + 2'],
+            text=True,capture_output=True,check=True)
+        self.assertIn('[route=calculator neural=0 ',calc.stdout)
+        neural=subprocess.run(
+            [str(BINARY),'--memory',':memory:','--prompt','hello there'],
+            text=True,capture_output=True,check=True)
+        self.assertIn('[route=neural neural=1 ',neural.stdout)
+
+
 if __name__=='__main__':
     if len(sys.argv)>1 and not sys.argv[1].startswith('-'):
         BINARY=Path(sys.argv.pop(1)).resolve()

@@ -3,6 +3,11 @@ project(EdgeAIEngine VERSION 0.12.0 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
+if(MSVC)
+  # Keep source and execution character sets deterministic. The project contains
+  # UTF-8 route strings/tests and must not depend on the runner's active code page.
+  add_compile_options(/utf-8)
+endif()
 option(EDGEAI_DISABLE_SIMD "Force portable kernels" OFF)
 if(EDGEAI_DISABLE_SIMD)
   add_compile_definitions(EDGEAI_DISABLE_SIMD)
@@ -15,12 +20,18 @@ endif()
 option(EDGEAI_BUILD_TESTS "Build tests" ON)
 option(EDGEAI_BUILD_BENCHMARK "Build benchmarks" ON)
 add_library(edgeai
-    src/CodeSearch.cpp src/Engine.cpp src/Router.cpp src/Calculator.cpp src/Memory.cpp src/Scheduler.cpp src/Hardware.cpp src/Backend.cpp
+    src/CodeSearch.cpp src/Engine.cpp src/Router.cpp src/Calculator.cpp src/TextTools.cpp src/Memory.cpp src/Scheduler.cpp src/Hardware.cpp src/Backend.cpp
     src/HybridMemory.cpp src/HybridModel.cpp src/HybridBackend.cpp
     src/ByteBPE.cpp src/TransformerModel.cpp src/TransformerBackend.cpp
     src/MixedMatrix.cpp src/Int8Kernel.cpp src/Ternary.cpp src/Kernels.cpp src/EdgeModel.cpp src/TernaryBackend.cpp
 )
 target_include_directories(edgeai PUBLIC include)
+
+if(ANDROID)
+  add_library(edgeai_android_jni SHARED android/app/src/main/cpp/jni.cpp)
+  target_link_libraries(edgeai_android_jni PRIVATE edgeai)
+  target_include_directories(edgeai_android_jni PRIVATE include)
+endif()
 if(MSVC)
   target_compile_options(edgeai PRIVATE /W4)
 else()

@@ -1,0 +1,89 @@
+{
+  "protocol": "v0.13 BPE versus v0.14 pure-byte tokenization; same curriculum and sealed tests",
+  "rows": [
+    {
+      "seed": 11,
+      "blocks": 1,
+      "bpe_total": 58,
+      "byte_total": 61,
+      "bpe_range": 0,
+      "byte_range": 0,
+      "bpe_family": 0,
+      "byte_family": 0,
+      "bpe_id": 43,
+      "byte_id": 45,
+      "bpe_template": 15,
+      "byte_template": 16
+    },
+    {
+      "seed": 11,
+      "blocks": 2,
+      "bpe_total": 64,
+      "byte_total": 52,
+      "bpe_range": 0,
+      "byte_range": 0,
+      "bpe_family": 0,
+      "byte_family": 0,
+      "bpe_id": 50,
+      "byte_id": 38,
+      "bpe_template": 14,
+      "byte_template": 14
+    },
+    {
+      "seed": 22,
+      "blocks": 1,
+      "bpe_total": 61,
+      "byte_total": 57,
+      "bpe_range": 0,
+      "byte_range": 0,
+      "bpe_family": 0,
+      "byte_family": 0,
+      "bpe_id": 49,
+      "byte_id": 33,
+      "bpe_template": 12,
+      "byte_template": 24
+    },
+    {
+      "seed": 22,
+      "blocks": 2,
+      "bpe_total": 59,
+      "byte_total": 57,
+      "bpe_range": 2,
+      "byte_range": 1,
+      "bpe_family": 0,
+      "byte_family": 0,
+      "bpe_id": 47,
+      "byte_id": 49,
+      "bpe_template": 10,
+      "byte_template": 7
+    },
+    {
+      "seed": 33,
+      "blocks": 1,
+      "bpe_total": 59,
+      "byte_total": 63,
+      "bpe_range": 0,
+      "byte_range": 0,
+      "bpe_family": 0,
+      "byte_family": 0,
+      "bpe_id": 50,
+      "byte_id": 50,
+      "bpe_template": 9,
+      "byte_template": 13
+    },
+    {
+      "seed": 33,
+      "blocks": 2,
+      "bpe_total": 57,
+      "byte_total": 51,
+      "bpe_range": 0,
+      "byte_range": 0,
+      "bpe_family": 0,
+      "byte_family": 0,
+      "bpe_id": 45,
+      "byte_id": 41,
+      "bpe_template": 12,
+      "byte_template": 10
+    }
+  ]
+}

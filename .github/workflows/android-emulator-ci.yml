@@ -1,0 +1,81 @@
+name: EdgeAI Android Emulator CI
+
+on:
+  push:
+    branches: [v0.12-multiblock]
+    paths:
+      - .github/workflows/android-emulator-ci.yml
+      - android/**
+      - CMakeLists.txt
+      - include/**
+      - src/**
+      - scripts/android_emulator_smoke.sh
+  workflow_dispatch:
+
+concurrency:
+  group: edgeai-android-emulator
+  cancel-in-progress: true
+
+jobs:
+  emulator:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.9'
+
+      - name: Build x86_64 emulator APK
+        working-directory: android
+        run: gradle :app:assembleDebug -PedgeaiAbi=x86_64 --stacktrace
+
+      - name: Free disk after APK build
+        run: |
+          echo "Before cleanup:"
+          df -h /
+          rm -rf android/app/.cxx
+          find android/app/build -mindepth 1 -maxdepth 1 ! -name outputs -exec rm -rf {} +
+          rm -rf "$HOME/.gradle/caches"
+          if [ -n "${ANDROID_HOME:-}" ]; then
+            sudo rm -rf "$ANDROID_HOME/ndk" "$ANDROID_HOME/cmake"
+          fi
+          echo "After cleanup:"
+          df -h /
+
+      - name: Enable KVM access
+        run: |
+          if [ -e /dev/kvm ]; then
+            sudo chmod 666 /dev/kvm
+          fi
+
+      - name: Run Android OS smoke tests
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 29
+          arch: x86_64
+          disk-size: 2G
+          ram-size: 1536M
+          emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations: true
+          script: bash scripts/android_emulator_smoke.sh android/app/build/outputs/apk/debug/app-debug.apk
+
+      - name: Upload emulator evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: edgeai-android-emulator-evidence
+          path: |
+            /tmp/edgeai-*.log
+            /tmp/edgeai-meminfo.txt
+            /tmp/edgeai-activity.txt
+            /tmp/edgeai-final-logcat.txt
+            /tmp/edgeai-*-am-start.txt
+            /tmp/edgeai-*-full.log
+          if-no-files-found: warn

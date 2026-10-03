@@ -1,3 +1,19 @@
+## Pesquisa pós-v0.12 — v0.13–v0.15
+- v0.13 ampliou apenas o currículo de treino mantendo os testes selados; melhorou interpolação, mas não resolveu `test_range`/`test_family`.
+- v0.14 comparou BPE com tokenização byte pura; byte puro não eliminou os cliffs de generalização.
+- v0.15 deslocou explicitamente a fronteira de treino e avaliou um holdout novo definido antes do treino. Em `addition`, o neural permaneceu em 0/96 no novo range; 2 blocos mostrou algum ganho em `expression` e `copy`.
+- O runtime híbrido passou a rotear operações estruturadas para ferramentas determinísticas, mantendo os benchmarks neural-only separados.
+- Sistema híbrido: 128/128 no `test_range` v0.15, 128/128 em paráfrases e 16/16 no family holdout de reversão; todos esses acertos foram tool-routed, não neurais.
+- Fronteira adversarial do Router: 128 true positives + 128 true negatives, 0 false positives e 0 false negatives no corpus sintético balanceado.
+- Novas formas naturais bilíngues de subtração, multiplicação e divisão: 96/96 corretas via `Calculator`, 0 casos neurais.
+- Provenance de rota agora é exposta no CLI (`route=...`) e registrada nos benchmarks do sistema.
+- Portabilidade Windows x64 adicionada ao CI: MSVC Release compila todos os targets, 15/15 CTest passam e o smoke híbrido do Calculator passa; `/utf-8` é aplicado no MSVC para literais determinísticos.
+- Linux ARM64 nativo adicionado ao CI: runner `aarch64`, build Release, 15/15 CTest e smoke híbrido passam sem emulação x86.
+- Android NDK `arm64-v8a` adicionado ao CI: Release cross-compila `libedgeai.so`, `edgeai_chat`, `edgeai_generate` e `edgeai_make_demo`; ELF AArch64 verificado, `libc++_shared.so` empacotado e smoke ADB fornecido. O smoke preparado cobre Calculator e geração/carregamento de `demo.edge` com rota neural. Execução física continua pendente.
+- APK Android ARM64 mínimo adicionado: Activity Java + JNI sobre o `Engine`, backend neural demo em memória e build Gradle reproduzível. O APK final contém apenas `arm64-v8a` com `libc++_shared.so`, `libedgeai.so` e `libedgeai_android_jni.so`; CI `37105947328` passou. Instalação física continua pendente.
+- Runtime Android automatizado adicionado ao CI com emulador API 29 x86_64. O run ampliado `37110111356` instalou/abriu o APK e passou 6/6 rotas: Calculator, copy, uppercase, reverse, expressão simbólica e neural. A Activity registra `elapsed_us` em torno de `nativeAsk`; os valores one-shot ficam registrados como diagnóstico, não benchmark. Snapshot final de `dumpsys meminfo`: 55.703 KB PSS do processo completo, 15.340 KB Native Heap, 12.316 KB Java Heap e 48 KB swap. Evidência: `results/android/emulator_smoke.json`.
+- Limite preservado: resultados de ferramentas medem capacidade do sistema híbrido e não devem ser apresentados como generalização do Transformer.
+
 ## v0.12 — 2026-10-02
 - Transformer Python e runtime C++ agora suportam múltiplos blocos (1..8).
 - Novo formato `EDGEAI8`; `EDGEAI5/6/7` continuam compatíveis e carregam como um bloco.
