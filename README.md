@@ -93,6 +93,15 @@ A conclusão é que o Transformer pequeno consegue alguma extrapolação de padr
 
 Evidências: `results/v014/`, `results/v015/`, `data/instructions_v015/manifest.json` e testes nativos do roteador.
 
+
+### Sistema híbrido v0.15 — ferramentas separadas do neural
+
+O mesmo `test_range` selado da v0.15 foi executado pelo runtime completo, passando primeiro pelo `Router`. O resultado foi **128/128**, mas com uma distinção importante: **128 casos foram resolvidos por ferramentas determinísticas e 0 pelo backend neural**. Isso é evidência de capacidade do sistema híbrido, não de generalização neural.
+
+Para evitar que o resultado dependesse apenas das frases exatas do benchmark, foi criado um segundo corpus com **128 paráfrases únicas** ausentes do `test_range`: `Calculate ...`, `What is ...?`, `Repeat exactly ...`, `Repita sem alterar ...`, `Convert to uppercase ...`, `Return only x ...` e equivalentes em português. O roteador também fez **128/128**, novamente com **128 tool cases e 0 neural cases**.
+
+Portanto, a arquitetura atual tem duas medições que não devem ser misturadas: o Transformer pequeno continua limitado fora da distribuição, enquanto o **EdgeAI completo** resolve operações estruturadas conhecidas de forma barata e exata por roteamento determinístico. Evidências: `results/v015/hybrid_system.json` e `results/v015/router_paraphrases.json`.
+
 ## Verificação v0.12
 
 A verificação final da branch executa Release, suíte Python, paridade Python/C++, build sem SIMD, ASan+UBSan e auditoria dos modelos legados. O resultado reproduzível fica em `results/v012/verification.json`.
