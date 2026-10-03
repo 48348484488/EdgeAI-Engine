@@ -17,7 +17,7 @@
 | Windows x64 | Validado no GitHub Actions: MSVC Release + 15/15 CTest + smoke híbrido |
 | UTF-8 no MSVC | Build usa /utf-8; teste com code points multibyte passa |
 | Linux ARM64 nativo | Validado em runner aarch64: Release + 15/15 CTest + smoke híbrido |
-| Android arm64-v8a NDK | Cross-build Release validado; ELF AArch64 e pacote ADB com libc++_shared.so; execução física ainda pendente |
+| Android arm64-v8a NDK | Cross-build Release validado; ELF AArch64 e pacote ADB com libc++_shared.so; smoke físico preparado para Calculator + geração/carregamento de `.edge` + rota neural; execução física ainda pendente |
 | PC fraco físico | Pendente; Windows CI não mede desempenho da máquina-alvo |
 | Energia real | Pendente onde não houver sensor confiável; não inferir joules |
 | LLM externo real | Pendente; não contabilizar fixtures como modelo externo |

@@ -149,7 +149,7 @@ O workflow ARM usa um runner GitHub-hosted **nativo `aarch64`** (`ubuntu-24.04-a
 
 ### Android ARM64
 
-O workflow Android usa o **Android NDK**, `arm64-v8a`, API 24 e `c++_shared`. O build Release passou e os binários foram verificados como **ELF 64-bit AArch64**; `edgeai_chat` usa `/system/bin/linker64`. O artefato inclui `libedgeai.so`, `libc++_shared.so`, `edgeai_chat`, `edgeai_generate` e scripts ADB para Linux/macOS e PowerShell. O run reproduzível `37105420197` gerou o artefato `edgeai-android-arm64-v8a` (1.955.539 bytes, SHA-256 `177b3c1f302257103223c06b3c36eda6fe084aea838d13489b26d4e942d3f463`). Isso valida **compilação e empacotamento Android**, não execução física no celular.
+O workflow Android usa o **Android NDK**, `arm64-v8a`, API 24 e `c++_shared`. O build Release passou e os binários foram verificados como **ELF 64-bit AArch64**; `edgeai_chat` usa `/system/bin/linker64`. O artefato inclui `libedgeai.so`, `libc++_shared.so`, `edgeai_chat`, `edgeai_generate`, `edgeai_make_demo` e scripts ADB para Linux/macOS e PowerShell. O run reproduzível `37105570269` gerou o artefato `edgeai-android-arm64-v8a` (2.003.826 bytes, SHA-256 `46f6082a9f4589b3a833729bcea187ee5f754f0af39304a476fca089b982f786`). O smoke físico preparado executa uma rota determinística (`Calculator`) e depois gera/carrega um `demo.edge` para exigir `route=neural`. Isso valida **compilação e empacotamento Android**; a execução em aparelho físico ainda precisa ser feita.
 
 ## Limites atuais
 

@@ -9,7 +9,7 @@
 - Provenance de rota agora é exposta no CLI (`route=...`) e registrada nos benchmarks do sistema.
 - Portabilidade Windows x64 adicionada ao CI: MSVC Release compila todos os targets, 15/15 CTest passam e o smoke híbrido do Calculator passa; `/utf-8` é aplicado no MSVC para literais determinísticos.
 - Linux ARM64 nativo adicionado ao CI: runner `aarch64`, build Release, 15/15 CTest e smoke híbrido passam sem emulação x86.
-- Android NDK `arm64-v8a` adicionado ao CI: Release cross-compila `libedgeai.so`, `edgeai_chat` e `edgeai_generate`; ELF AArch64 verificado, `libc++_shared.so` empacotado e smoke ADB fornecido. Execução física continua pendente.
+- Android NDK `arm64-v8a` adicionado ao CI: Release cross-compila `libedgeai.so`, `edgeai_chat`, `edgeai_generate` e `edgeai_make_demo`; ELF AArch64 verificado, `libc++_shared.so` empacotado e smoke ADB fornecido. O smoke preparado cobre Calculator e geração/carregamento de `demo.edge` com rota neural. Execução física continua pendente.
 - Limite preservado: resultados de ferramentas medem capacidade do sistema híbrido e não devem ser apresentados como generalização do Transformer.
 
 ## v0.12 — 2026-10-02
