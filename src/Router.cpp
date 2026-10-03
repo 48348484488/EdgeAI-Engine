@@ -40,15 +40,16 @@ Route route(const std::string& text){
     if(low.rfind(search1,0)==0) return {RouteKind::MemorySearch,trim(raw.substr(search1.size())),1.0};
     if(low.rfind(search2,0)==0) return {RouteKind::MemorySearch,trim(raw.substr(search2.size())),1.0};
     std::string expr=raw;
-    const char* prefixes[]={"calcule ","calcular ","compute ","quanto e ","quanto é ","add:","some:"};
+    const char* prefixes[]={"calcule ","calcular ","calculate ","compute ","what is ","quanto e ","quanto é ","add:","some:"};
     for(auto p:prefixes){ std::string lp=p; if(low.rfind(lp,0)==0){ expr=trim(raw.substr(lp.size())); break; } }
+    if(!expr.empty()&&expr.back()=='?')expr=trim(expr.substr(0,expr.size()-1));
     std::string natural;
     if(natural_sum(raw,low,"what is the sum of "," and ",natural) ||
        natural_sum(raw,low,"quanto vale a soma de "," e ",natural))
         return {RouteKind::Calculator,natural,0.999};
     if(mathish(expr)) return {RouteKind::Calculator,expr,0.999};
 
-    const char* copy_prefixes[]={"copy exactly: ","copie exatamente: "};
+    const char* copy_prefixes[]={"copy exactly: ","copie exatamente: ","repeat exactly: ","repita exatamente: ","repeat unchanged: ","repita sem alterar: "};
     for(auto p:copy_prefixes){
         std::string lp=p;
         if(low.rfind(lp,0)==0){
@@ -57,7 +58,7 @@ Route route(const std::string& text){
         }
     }
 
-    const char* upper_prefixes[]={"uppercase: ","maiusculas: ","maiúsculas: "};
+    const char* upper_prefixes[]={"uppercase: ","maiusculas: ","maiúsculas: ","convert to uppercase: ","convert to capital letters: ","converta para maiusculas: ","converta para maiúsculas: "};
     for(auto p:upper_prefixes){
         std::string lp=p;
         if(low.rfind(lp,0)==0){
@@ -66,12 +67,12 @@ Route route(const std::string& text){
         }
     }
 
-    const char* expression_prefixes[]={"expression for x ","expressao para x ","expressão para x "};
+    const char* expression_prefixes[]={"expression for x ","expressao para x ","expressão para x ","return only x ","retorne apenas x ","return only the python expression x ","retorne apenas a expressao python x ","retorne apenas a expressão python x "};
     for(auto p:expression_prefixes){
         std::string lp=p;
         if(low.rfind(lp,0)==0){
             std::string tail=trim(raw.substr(lp.size()));
-            if(!tail.empty()&&tail.back()==':')tail=trim(tail.substr(0,tail.size()-1));
+            while(!tail.empty()&&(tail.back()==':'||tail.back()=='.'||tail.back()=='?'))tail=trim(tail.substr(0,tail.size()-1));
             if(tail.size()>=2 && std::string("+-*").find(tail[0])!=std::string::npos){
                 std::string rhs=trim(tail.substr(1));
                 bool digits=!rhs.empty()&&std::all_of(rhs.begin(),rhs.end(),[](unsigned char c){return std::isdigit(c);});
