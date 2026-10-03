@@ -1,0 +1,97 @@
+name: EdgeAI Android ARM64 Emulator CI
+
+on:
+  push:
+    branches: [v0.12-multiblock]
+    paths:
+      - .github/workflows/android-arm64-emulator-ci.yml
+      - android/**
+      - CMakeLists.txt
+      - include/**
+      - src/**
+      - scripts/android_emulator_smoke.sh
+  workflow_dispatch:
+
+concurrency:
+  group: edgeai-android-arm64-emulator
+  cancel-in-progress: true
+
+jobs:
+  arm64-emulator:
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verify ARM64 host and KVM
+        shell: bash
+        run: |
+          test "$(uname -m)" = "aarch64"
+          test -e /dev/kvm
+          sudo chmod 666 /dev/kvm
+          uname -a
+          ls -l /dev/kvm
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.9'
+
+      - name: Build ARM64 emulator APK
+        working-directory: android
+        run: gradle :app:assembleDebug -PedgeaiAbi=arm64-v8a --stacktrace
+
+      - name: Verify packaged ARM64 JNI runtime
+        shell: bash
+        run: |
+          APK=android/app/build/outputs/apk/debug/app-debug.apk
+          test -f "$APK"
+          unzip -l "$APK" | tee /tmp/edgeai-apk-list.txt
+          grep -q 'lib/arm64-v8a/libedgeai_android_jni.so' /tmp/edgeai-apk-list.txt
+          grep -q 'lib/arm64-v8a/libedgeai.so' /tmp/edgeai-apk-list.txt
+          grep -q 'lib/arm64-v8a/libc++_shared.so' /tmp/edgeai-apk-list.txt
+          ! grep -q 'lib/x86' /tmp/edgeai-apk-list.txt
+
+      - name: Free disk after APK build
+        shell: bash
+        run: |
+          df -h /
+          rm -rf android/app/.cxx
+          find android/app/build -mindepth 1 -maxdepth 1 ! -name outputs -exec rm -rf {} +
+          rm -rf "$HOME/.gradle/caches"
+          if [ -n "${ANDROID_HOME:-}" ]; then
+            sudo rm -rf "$ANDROID_HOME/ndk" "$ANDROID_HOME/cmake"
+          fi
+          df -h /
+
+      - name: Run Android ARM64 OS smoke tests
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 30
+          target: default
+          arch: arm64-v8a
+          disk-size: 2G
+          ram-size: 1536M
+          emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations: true
+          emulator-boot-timeout: 900
+          script: bash scripts/android_emulator_smoke.sh android/app/build/outputs/apk/debug/app-debug.apk
+
+      - name: Upload ARM64 emulator evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: edgeai-android-arm64-emulator-evidence
+          path: |
+            /tmp/edgeai-apk-list.txt
+            /tmp/edgeai-*.log
+            /tmp/edgeai-meminfo.txt
+            /tmp/edgeai-activity.txt
+            /tmp/edgeai-final-logcat.txt
+            /tmp/edgeai-*-am-start.txt
+            /tmp/edgeai-*-full.log
+          if-no-files-found: warn
