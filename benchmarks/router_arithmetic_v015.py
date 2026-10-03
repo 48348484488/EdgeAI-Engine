@@ -20,14 +20,14 @@ def cases():
         ):
             rows.append(dict(id=hid(prompt),task="subtract",prompt=prompt,answer=answer))
     for i in range(16):
-        a=2+(i%11);b=3+((i*3)%8)
+        a=2+i;b=3+(i%7)
         for prompt,answer in (
             (f"Multiply {a} by {b}",str(a*b)),
             (f"Multiplique {a} por {b}",str(a*b)),
         ):
             rows.append(dict(id=hid(prompt),task="multiply",prompt=prompt,answer=answer))
     for i in range(16):
-        divisor=2+(i%8);quotient=3+((i*5)%10);value=divisor*quotient
+        divisor=2+(i%8);quotient=3+i;value=divisor*quotient
         for prompt,answer in (
             (f"Divide {value} by {divisor}",str(quotient)),
             (f"Divida {value} por {divisor}",str(quotient)),
