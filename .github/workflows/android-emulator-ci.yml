@@ -9,6 +9,7 @@ on:
       - CMakeLists.txt
       - include/**
       - src/**
+      - scripts/android_emulator_smoke.sh
   workflow_dispatch:
 
 concurrency:
@@ -49,24 +50,7 @@ jobs:
           profile: pixel_2
           emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           disable-animations: true
-          script: |
-            adb install -r android/app/build/outputs/apk/debug/app-debug.apk
-
-            adb logcat -c
-            adb shell am start -W -n com.edgeai.smoke/.MainActivity --es prompt "Subtract 17 from 42"
-            sleep 2
-            adb logcat -d -s EDGEAI_SMOKE:I '*:S' | tee /tmp/edgeai-calc.log
-            grep -q "25.*route=calculator.*neural=0" /tmp/edgeai-calc.log
-
-            adb shell am force-stop com.edgeai.smoke
-            adb logcat -c
-            adb shell am start -W -n com.edgeai.smoke/.MainActivity --es prompt "neural smoke"
-            sleep 2
-            adb logcat -d -s EDGEAI_SMOKE:I '*:S' | tee /tmp/edgeai-neural.log
-            grep -q "route=neural.*neural=1" /tmp/edgeai-neural.log
-
-            adb shell dumpsys meminfo com.edgeai.smoke | tee /tmp/edgeai-meminfo.txt
-            adb shell am force-stop com.edgeai.smoke
+          script: bash scripts/android_emulator_smoke.sh android/app/build/outputs/apk/debug/app-debug.apk
 
       - name: Upload emulator evidence
         if: always()
@@ -77,4 +61,8 @@ jobs:
             /tmp/edgeai-calc.log
             /tmp/edgeai-neural.log
             /tmp/edgeai-meminfo.txt
+            /tmp/edgeai-activity.txt
+            /tmp/edgeai-final-logcat.txt
+            /tmp/edgeai-*-am-start.txt
+            /tmp/edgeai-*-full.log
           if-no-files-found: warn
