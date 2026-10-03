@@ -26,6 +26,12 @@ add_library(edgeai
     src/MixedMatrix.cpp src/Int8Kernel.cpp src/Ternary.cpp src/Kernels.cpp src/EdgeModel.cpp src/TernaryBackend.cpp
 )
 target_include_directories(edgeai PUBLIC include)
+
+if(ANDROID)
+  add_library(edgeai_android_jni SHARED android/app/src/main/cpp/jni.cpp)
+  target_link_libraries(edgeai_android_jni PRIVATE edgeai)
+  target_include_directories(edgeai_android_jni PRIVATE include)
+endif()
 if(MSVC)
   target_compile_options(edgeai PRIVATE /W4)
 else()
