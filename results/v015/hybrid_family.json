@@ -8,7 +8,10 @@
     "tool_cases": 16,
     "neural_cases": 0,
     "tool_correct": 16,
-    "neural_correct": 0
+    "neural_correct": 0,
+    "routes": {
+      "text_reverse": 16
+    }
   },
   "by_task": {
     "reverse": {
@@ -17,7 +20,10 @@
       "tool_cases": 16,
       "neural_cases": 0,
       "tool_correct": 16,
-      "neural_correct": 0
+      "neural_correct": 0,
+      "routes": {
+        "text_reverse": 16
+      }
     }
   },
   "cases": [
@@ -28,9 +34,11 @@
       "expected": "abb",
       "actual": "abb",
       "exact": true,
+      "route": "text_reverse",
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0017939250000011953
+      "token_score": 1.0,
+      "wall_seconds": 0.0016469209999740997
     },
     {
       "id": "415d028b317d5aa92079",
@@ -39,9 +47,11 @@
       "expected": "fcfb",
       "actual": "fcfb",
       "exact": true,
+      "route": "text_reverse",
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0013424330000049167
+      "token_score": 1.0,
+      "wall_seconds": 0.0011636070000236032
     },
     {
       "id": "d0a909a6e9b1f8127f4c",
@@ -50,9 +60,11 @@
       "expected": "cdca",
       "actual": "cdca",
       "exact": true,
+      "route": "text_reverse",
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.001320501999998669
+      "token_score": 1.0,
+      "wall_seconds": 0.0011225869999975657
     },
     {
       "id": "a44ecf296e6071e9b66f",
@@ -61,9 +73,11 @@
       "expected": "faec",
       "actual": "faec",
       "exact": true,
+      "route": "text_reverse",
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.001337974999998437
+      "token_score": 1.0,
+      "wall_seconds": 0.0010943749999796637
     },
     {
       "id": "9bb696cbd7aaae790fd6",
@@ -72,9 +86,11 @@
       "expected": "dfea",
       "actual": "dfea",
       "exact": true,
+      "route": "text_reverse",
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.00130914100000723
+      "token_score": 1.0,
+      "wall_seconds": 0.0010982300000250689
     },
     {
       "id": "5d932b5e70cb64ffff20",
@@ -83,9 +99,11 @@
       "expected": "abbf",
       "actual": "abbf",
       "exact": true,
+      "route": "text_reverse",
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0013971049999952356
+      "token_score": 1.0,
+      "wall_seconds": 0.0024953330000130336
     },
     {
       "id": "b999cb4d567f16c67d52",
@@ -94,9 +112,11 @@
       "expected": "ecab",
       "actual": "ecab",
       "exact": true,
+      "route": "text_reverse",
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0013142310000091584
+      "token_score": 1.0,
+      "wall_seconds": 0.001151459999960025
     },
     {
       "id": "a765a802109dd5c1f98a",
@@ -105,9 +125,11 @@
       "expected": "cbfa",
       "actual": "cbfa",
       "exact": true,
+      "route": "text_reverse",
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.001287250000004292
+      "token_score": 1.0,
+      "wall_seconds": 0.0010969090000116921
     },
     {
       "id": "02a9556e337016d4933d",
@@ -116,9 +138,11 @@
       "expected": "babb",
       "actual": "babb",
       "exact": true,
+      "route": "text_reverse",
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0013309220000081723
+      "token_score": 1.0,
+      "wall_seconds": 0.0010947860000101173
     },
     {
       "id": "a060d0c7d704856399e9",
@@ -127,9 +151,11 @@
       "expected": "ccfc",
       "actual": "ccfc",
       "exact": true,
+      "route": "text_reverse",
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0013168650000068283
+      "token_score": 1.0,
+      "wall_seconds": 0.0011088869999866802
     },
     {
       "id": "ee614dbf34af626f7519",
@@ -138,9 +164,11 @@
       "expected": "abb",
       "actual": "abb",
       "exact": true,
+      "route": "text_reverse",
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0013040719999963812
+      "token_score": 1.0,
+      "wall_seconds": 0.0010779510000133996
     },
     {
       "id": "3db8717e43d17c37f69c",
@@ -149,9 +177,11 @@
       "expected": "bd",
       "actual": "bd",
       "exact": true,
+      "route": "text_reverse",
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0013739620000023933
+      "token_score": 1.0,
+      "wall_seconds": 0.0010869339999999283
     },
     {
       "id": "1df2606743209ca6624c",
@@ -160,9 +190,11 @@
       "expected": "bedb",
       "actual": "bedb",
       "exact": true,
+      "route": "text_reverse",
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0013112350000028528
+      "token_score": 1.0,
+      "wall_seconds": 0.0011505979999810734
     },
     {
       "id": "6116070c21c7967cdcf7",
@@ -171,9 +203,11 @@
       "expected": "fecf",
       "actual": "fecf",
       "exact": true,
+      "route": "text_reverse",
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0012921490000081803
+      "token_score": 1.0,
+      "wall_seconds": 0.0011021459999938088
     },
     {
       "id": "018b5f73378e2c554a98",
@@ -182,9 +216,11 @@
       "expected": "baff",
       "actual": "baff",
       "exact": true,
+      "route": "text_reverse",
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0012925000000052478
+      "token_score": 1.0,
+      "wall_seconds": 0.0011497669999585014
     },
     {
       "id": "187d2e3f4d32743139b4",
@@ -193,9 +229,11 @@
       "expected": "efbb",
       "actual": "efbb",
       "exact": true,
+      "route": "text_reverse",
       "neural_used": false,
       "loops": 0,
-      "wall_seconds": 0.0013649050000026364
+      "token_score": 1.0,
+      "wall_seconds": 0.0010636599999997998
     }
   ]
 }
