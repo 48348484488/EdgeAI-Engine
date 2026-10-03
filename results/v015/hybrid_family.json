@@ -1,0 +1,200 @@
+{
+  "protocol": "complete EdgeAI router/tool evaluation on sealed v0.15 test_range",
+  "caveat": "system capability benchmark; deterministic tool successes are not neural generalization",
+  "summary": {
+    "count": 16,
+    "correct": 16,
+    "tool_cases": 16,
+    "neural_cases": 0,
+    "tool_correct": 16,
+    "neural_correct": 0
+  },
+  "by_task": {
+    "reverse": {
+      "count": 16,
+      "correct": 16,
+      "tool_cases": 16,
+      "neural_cases": 0,
+      "tool_correct": 16,
+      "neural_correct": 0
+    }
+  },
+  "cases": [
+    {
+      "id": "5618294e9c32872e0ed0",
+      "task": "reverse",
+      "prompt": "Reverse: bba",
+      "expected": "abb",
+      "actual": "abb",
+      "exact": true,
+      "neural_used": false,
+      "loops": 0,
+      "wall_seconds": 0.0013771960000070749
+    },
+    {
+      "id": "415d028b317d5aa92079",
+      "task": "reverse",
+      "prompt": "Reverse: bfcf",
+      "expected": "fcfb",
+      "actual": "fcfb",
+      "exact": true,
+      "neural_used": false,
+      "loops": 0,
+      "wall_seconds": 0.0012356630000027735
+    },
+    {
+      "id": "d0a909a6e9b1f8127f4c",
+      "task": "reverse",
+      "prompt": "Reverse: acdc",
+      "expected": "cdca",
+      "actual": "cdca",
+      "exact": true,
+      "neural_used": false,
+      "loops": 0,
+      "wall_seconds": 0.0013231420000039407
+    },
+    {
+      "id": "a44ecf296e6071e9b66f",
+      "task": "reverse",
+      "prompt": "Reverse: ceaf",
+      "expected": "faec",
+      "actual": "faec",
+      "exact": true,
+      "neural_used": false,
+      "loops": 0,
+      "wall_seconds": 0.001160189999993122
+    },
+    {
+      "id": "9bb696cbd7aaae790fd6",
+      "task": "reverse",
+      "prompt": "Reverse: aefd",
+      "expected": "dfea",
+      "actual": "dfea",
+      "exact": true,
+      "neural_used": false,
+      "loops": 0,
+      "wall_seconds": 0.0011416460000077677
+    },
+    {
+      "id": "5d932b5e70cb64ffff20",
+      "task": "reverse",
+      "prompt": "Reverse: fbba",
+      "expected": "abbf",
+      "actual": "abbf",
+      "exact": true,
+      "neural_used": false,
+      "loops": 0,
+      "wall_seconds": 0.0011579869999991388
+    },
+    {
+      "id": "b999cb4d567f16c67d52",
+      "task": "reverse",
+      "prompt": "Reverse: bace",
+      "expected": "ecab",
+      "actual": "ecab",
+      "exact": true,
+      "neural_used": false,
+      "loops": 0,
+      "wall_seconds": 0.0026161810000076002
+    },
+    {
+      "id": "a765a802109dd5c1f98a",
+      "task": "reverse",
+      "prompt": "Reverse: afbc",
+      "expected": "cbfa",
+      "actual": "cbfa",
+      "exact": true,
+      "neural_used": false,
+      "loops": 0,
+      "wall_seconds": 0.0015483170000010205
+    },
+    {
+      "id": "02a9556e337016d4933d",
+      "task": "reverse",
+      "prompt": "Inverta: bbab",
+      "expected": "babb",
+      "actual": "babb",
+      "exact": true,
+      "neural_used": false,
+      "loops": 0,
+      "wall_seconds": 0.0011323710000112897
+    },
+    {
+      "id": "a060d0c7d704856399e9",
+      "task": "reverse",
+      "prompt": "Inverta: cfcc",
+      "expected": "ccfc",
+      "actual": "ccfc",
+      "exact": true,
+      "neural_used": false,
+      "loops": 0,
+      "wall_seconds": 0.0011135419999988017
+    },
+    {
+      "id": "ee614dbf34af626f7519",
+      "task": "reverse",
+      "prompt": "Inverta: bba",
+      "expected": "abb",
+      "actual": "abb",
+      "exact": true,
+      "neural_used": false,
+      "loops": 0,
+      "wall_seconds": 0.0011213340000040262
+    },
+    {
+      "id": "3db8717e43d17c37f69c",
+      "task": "reverse",
+      "prompt": "Inverta: db",
+      "expected": "bd",
+      "actual": "bd",
+      "exact": true,
+      "neural_used": false,
+      "loops": 0,
+      "wall_seconds": 0.002227406999992354
+    },
+    {
+      "id": "1df2606743209ca6624c",
+      "task": "reverse",
+      "prompt": "Inverta: bdeb",
+      "expected": "bedb",
+      "actual": "bedb",
+      "exact": true,
+      "neural_used": false,
+      "loops": 0,
+      "wall_seconds": 0.0011821869999977253
+    },
+    {
+      "id": "6116070c21c7967cdcf7",
+      "task": "reverse",
+      "prompt": "Inverta: fcef",
+      "expected": "fecf",
+      "actual": "fecf",
+      "exact": true,
+      "neural_used": false,
+      "loops": 0,
+      "wall_seconds": 0.0011198730000074875
+    },
+    {
+      "id": "018b5f73378e2c554a98",
+      "task": "reverse",
+      "prompt": "Inverta: ffab",
+      "expected": "baff",
+      "actual": "baff",
+      "exact": true,
+      "neural_used": false,
+      "loops": 0,
+      "wall_seconds": 0.001099653000011358
+    },
+    {
+      "id": "187d2e3f4d32743139b4",
+      "task": "reverse",
+      "prompt": "Inverta: bbfe",
+      "expected": "efbb",
+      "actual": "efbb",
+      "exact": true,
+      "neural_used": false,
+      "loops": 0,
+      "wall_seconds": 0.0011058449999978848
+    }
+  ]
+}
