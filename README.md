@@ -155,12 +155,11 @@ Também existe um APK mínimo de smoke com Activity Java + JNI. O build reproduz
 
 ### Android runtime automático
 
-O CI agora também executa o APK dentro de um **Android API 29 x86_64 emulado**, instala o app com ADB, abre a `MainActivity`, verifica logcat/crash e exercita o Engine via JNI. No run `37109722956`, os dois caminhos passaram:
+O CI agora também executa o APK dentro de um **Android API 29 x86_64 emulado**, instala o app com ADB, abre a `MainActivity`, verifica logcat/crash e exercita o Engine via JNI. O run ampliado `37110111356` passou **6/6 caminhos**: Calculator, copy, uppercase, reverse, expressão simbólica e backend neural. Exemplos observados incluem `Subtract 17 from 42 → 25`, `Uppercase: edge ai → EDGE AI`, `Reverse: abcdef → fedcba` e `Return only x + 57 → x+57`.
 
-- `Subtract 17 from 42` → **`25`**, `route=calculator`, `neural=0`, `loops=0`;
-- `neural smoke` → `route=neural`, `neural=1`, `loops=96`.
+A Activity também registra `elapsed_us` ao redor de `nativeAsk`. Nessa execução one-shot, Calculator marcou **4.437 µs**, uppercase **1.820 µs**, reverse **1.878 µs**, expressão simbólica **1.726 µs** e neural **4.599 µs**; copy marcou **29.876 µs** e foi tratado como outlier. Cada caso inicia um novo processo, então esses valores incluem inicialização lazy do Engine/backend e são diagnóstico, **não benchmark de desempenho**.
 
-O `dumpsys meminfo` do processo completo do APK reportou **40.363 KB PSS total**, com **14.760 KB Native Heap**, **10.380 KB Java Heap** e **0 KB de swap**. Esses números incluem Activity/JVM/runtime Android e foram medidos em x86_64 emulado; não são RSS do modelo isolado nem estimativa de desempenho no Poco X6. Evidência compacta: `results/android/emulator_smoke.json`.
+No final dessa rodada, `dumpsys meminfo` reportou **55.703 KB PSS total** para o processo completo do APK, com **15.340 KB Native Heap**, **12.316 KB Java Heap** e **48 KB de swap**. Esses números incluem Activity/JVM/runtime Android e foram medidos em x86_64 emulado; não são RSS do modelo isolado nem estimativa de desempenho no Poco X6. Evidência compacta: `results/android/emulator_smoke.json`.
 
 ## Limites atuais
 

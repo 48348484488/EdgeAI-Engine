@@ -72,8 +72,7 @@ jobs:
         with:
           name: edgeai-android-emulator-evidence
           path: |
-            /tmp/edgeai-calc.log
-            /tmp/edgeai-neural.log
+            /tmp/edgeai-*.log
             /tmp/edgeai-meminfo.txt
             /tmp/edgeai-activity.txt
             /tmp/edgeai-final-logcat.txt
