@@ -3,6 +3,11 @@ project(EdgeAIEngine VERSION 0.12.0 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
+if(MSVC)
+  # Keep source and execution character sets deterministic. The project contains
+  # UTF-8 route strings/tests and must not depend on the runner's active code page.
+  add_compile_options(/utf-8)
+endif()
 option(EDGEAI_DISABLE_SIMD "Force portable kernels" OFF)
 if(EDGEAI_DISABLE_SIMD)
   add_compile_definitions(EDGEAI_DISABLE_SIMD)
