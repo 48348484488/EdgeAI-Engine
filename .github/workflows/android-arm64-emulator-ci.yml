@@ -19,18 +19,21 @@ concurrency:
 jobs:
   arm64-emulator:
     runs-on: ubuntu-24.04-arm
-    timeout-minutes: 35
+    timeout-minutes: 50
     steps:
       - uses: actions/checkout@v4
 
-      - name: Verify ARM64 host and KVM
+      - name: Verify ARM64 host and record acceleration
         shell: bash
         run: |
           test "$(uname -m)" = "aarch64"
-          test -e /dev/kvm
-          sudo chmod 666 /dev/kvm
           uname -a
-          ls -l /dev/kvm
+          if [ -e /dev/kvm ]; then
+            sudo chmod 666 /dev/kvm
+            ls -l /dev/kvm
+          else
+            echo "KVM unavailable; using software acceleration"
+          fi
 
       - uses: actions/setup-java@v4
         with:
@@ -77,8 +80,9 @@ jobs:
           disk-size: 2G
           ram-size: 1536M
           emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-linux-hw-accel: true
           disable-animations: true
-          emulator-boot-timeout: 900
+          emulator-boot-timeout: 1200
           script: bash scripts/android_emulator_smoke.sh android/app/build/outputs/apk/debug/app-debug.apk
 
       - name: Upload ARM64 emulator evidence
