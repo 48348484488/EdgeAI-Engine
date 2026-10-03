@@ -104,6 +104,8 @@ Portanto, a arquitetura atual tem duas medições que não devem ser misturadas:
 
 Também foi executado um teste adversarial balanceado de fronteira do Router: **128 comandos que deveriam usar ferramenta** e **128 frases semanticamente parecidas que deveriam permanecer no backend neural**. Resultado: **128 true positives, 128 true negatives, 0 false positives e 0 false negatives**, equivalente a **precision 1,00 e recall 1,00** nesse corpus. Esse número mede apenas a fronteira de roteamento das formas testadas; não é evidência de compreensão aberta. Evidência: `results/v015/router_boundary.json`.
 
+A calculadora também ganhou formas naturais bilíngues para operações binárias seguras. Um lote separado com **96 comandos** — 32 subtrações (`Subtract ... from ...` / `Subtraia ... de ...`), 32 multiplicações (`Multiply ... by ...` / `Multiplique ... por ...`) e 32 divisões (`Divide ... by ...` / `Divida ... por ...`) — terminou em **96/96 corretos**, todos com `route=calculator` e **0 casos neurais**. Evidência: `results/v015/router_arithmetic.json`.
+
 ## Verificação v0.12
 
 A verificação final da branch executa Release, suíte Python, paridade Python/C++, build sem SIMD, ASan+UBSan e auditoria dos modelos legados. O resultado reproduzível fica em `results/v012/verification.json`.
