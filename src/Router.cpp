@@ -31,6 +31,21 @@ static bool natural_sum(const std::string& raw,const std::string& low,
     expression="("+left+")+("+right+")";
     return true;
 }
+static bool natural_binary(const std::string& raw,const std::string& low,
+                           const std::string& prefix,const std::string& separator,
+                           char op,bool reverse,std::string& expression){
+    if(low.rfind(prefix,0)!=0)return false;
+    std::string tail=trim(raw.substr(prefix.size()));
+    if(!tail.empty()&&tail.back()=='?')tail=trim(tail.substr(0,tail.size()-1));
+    std::string low_tail=lower_ascii(tail);
+    auto at=low_tail.find(separator);
+    if(at==std::string::npos)return false;
+    std::string left=trim(tail.substr(0,at)),right=trim(tail.substr(at+separator.size()));
+    if(!mathish(left)||!mathish(right))return false;
+    if(reverse)expression="("+right+")"+op+"("+left+")";
+    else expression="("+left+")"+op+"("+right+")";
+    return true;
+}
 Route route(const std::string& text){
     std::string raw=trim(text), low=lower_ascii(raw);
     for(const std::string p:{"buscar codigo:","buscar código:","/code "}) if(low.rfind(p,0)==0) return {RouteKind::CodeSearch,trim(raw.substr(p.size())),1.0};
@@ -45,7 +60,13 @@ Route route(const std::string& text){
     if(!expr.empty()&&expr.back()=='?')expr=trim(expr.substr(0,expr.size()-1));
     std::string natural;
     if(natural_sum(raw,low,"what is the sum of "," and ",natural) ||
-       natural_sum(raw,low,"quanto vale a soma de "," e ",natural))
+       natural_sum(raw,low,"quanto vale a soma de "," e ",natural) ||
+       natural_binary(raw,low,"subtract "," from ",'-',true,natural) ||
+       natural_binary(raw,low,"subtraia "," de ",'-',true,natural) ||
+       natural_binary(raw,low,"multiply "," by ",'*',false,natural) ||
+       natural_binary(raw,low,"multiplique "," por ",'*',false,natural) ||
+       natural_binary(raw,low,"divide "," by ",'/',false,natural) ||
+       natural_binary(raw,low,"divida "," por ",'/',false,natural))
         return {RouteKind::Calculator,natural,0.999};
     if(mathish(expr)) return {RouteKind::Calculator,expr,0.999};
 
