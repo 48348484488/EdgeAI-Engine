@@ -1,4 +1,4 @@
-name: EdgeAI Android ARM64 Emulator CI
+name: EdgeAI Android ARM64 APK Runtime CI
 
 on:
   push:
@@ -13,51 +13,33 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: edgeai-android-arm64-emulator
+  group: edgeai-android-arm64-runtime
   cancel-in-progress: true
 
 jobs:
-  arm64-emulator:
-    runs-on: ubuntu-24.04-arm
-    timeout-minutes: 50
+  arm64-runtime:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
     steps:
       - uses: actions/checkout@v4
 
-      - name: Verify ARM64 host and record acceleration
+      - name: Enable KVM access
         shell: bash
         run: |
-          test "$(uname -m)" = "aarch64"
-          uname -a
-          if [ -e /dev/kvm ]; then
-            sudo chmod 666 /dev/kvm
-            ls -l /dev/kvm
-          else
-            echo "KVM unavailable; using software acceleration"
-          fi
+          test -e /dev/kvm
+          sudo chmod 666 /dev/kvm
+          ls -l /dev/kvm
 
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: '17'
 
-      - uses: android-actions/setup-android@v3
-
-      - name: Install Android SDK, NDK and CMake
-        shell: bash
-        run: |
-          yes | sdkmanager --licenses >/dev/null
-          sdkmanager \
-            "platform-tools" \
-            "platforms;android-35" \
-            "build-tools;35.0.0" \
-            "ndk;27.0.12077973" \
-            "cmake;3.22.1"
-
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.9'
 
-      - name: Build ARM64 emulator APK
+      - name: Build ARM64-only APK
         working-directory: android
         run: gradle :app:assembleDebug -PedgeaiAbi=arm64-v8a --stacktrace
 
@@ -75,7 +57,6 @@ jobs:
       - name: Free disk after APK build
         shell: bash
         run: |
-          df -h /
           rm -rf android/app/.cxx
           find android/app/build -mindepth 1 -maxdepth 1 ! -name outputs -exec rm -rf {} +
           rm -rf "$HOME/.gradle/caches"
@@ -84,27 +65,31 @@ jobs:
           fi
           df -h /
 
-      - name: Run Android ARM64 OS smoke tests
+      - name: Run ARM64 APK through Android native bridge
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 30
-          target: default
-          arch: arm64-v8a
+          target: google_apis
+          arch: x86_64
           disk-size: 2G
           ram-size: 1536M
           emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
-          disable-linux-hw-accel: true
           disable-animations: true
-          emulator-boot-timeout: 1200
-          script: bash scripts/android_emulator_smoke.sh android/app/build/outputs/apk/debug/app-debug.apk
+          script: |
+            adb shell getprop ro.product.cpu.abilist | tee /tmp/edgeai-device-abilist.txt
+            adb shell getprop ro.dalvik.vm.native.bridge | tee /tmp/edgeai-native-bridge.txt
+            grep -q 'arm64-v8a' /tmp/edgeai-device-abilist.txt
+            bash scripts/android_emulator_smoke.sh android/app/build/outputs/apk/debug/app-debug.apk
 
-      - name: Upload ARM64 emulator evidence
+      - name: Upload ARM64 runtime evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: edgeai-android-arm64-emulator-evidence
+          name: edgeai-android-arm64-runtime-evidence
           path: |
             /tmp/edgeai-apk-list.txt
+            /tmp/edgeai-device-abilist.txt
+            /tmp/edgeai-native-bridge.txt
             /tmp/edgeai-*.log
             /tmp/edgeai-meminfo.txt
             /tmp/edgeai-activity.txt
