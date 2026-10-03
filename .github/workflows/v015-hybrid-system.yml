@@ -6,6 +6,7 @@ on:
     paths:
       - .github/workflows/v015-hybrid-system.yml
       - benchmarks/hybrid_system_v015.py
+      - benchmarks/router_paraphrase_v015.py
       - src/Router.cpp
       - src/Engine.cpp
       - include/edgeai/Types.hpp
