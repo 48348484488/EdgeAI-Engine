@@ -137,7 +137,7 @@ cmake --build build -j2
 ctest --test-dir build --output-on-failure
 ```
 
-O código é C++17. Linux x86-64 foi validado. **Windows x64** também está validado em GitHub Actions com MSVC Release, **15/15 CTest** e smoke do runtime híbrido. **Linux ARM64 nativo** também foi validado em runner `aarch64`, com build Release, **15/15 CTest** e o mesmo smoke híbrido. Esses resultados validam portabilidade de build/test nesses runners; **Android/ARM mobile e hardware fraco físico ainda precisam de teste prático de desempenho.**
+O código é C++17. Linux x86-64 foi validado. **Windows x64** também está validado em GitHub Actions com MSVC Release, **15/15 CTest** e smoke do runtime híbrido. **Linux ARM64 nativo** também foi validado em runner `aarch64`, com build Release, **15/15 CTest** e o mesmo smoke híbrido. O projeto agora também faz cross-build Android NDK para **`arm64-v8a` / API 24**, gerando `libedgeai.so`, `edgeai_chat` e `edgeai_generate` como ELF AArch64. Esses resultados validam compilação/ABI; **execução física Android e hardware fraco real ainda precisam de teste prático.**
 
 ### Portabilidade Windows
 
@@ -145,7 +145,11 @@ O CI Windows compila todos os targets em **MSVC Release**, executa **15/15 teste
 
 ### Portabilidade ARM64
 
-O workflow ARM usa um runner GitHub-hosted **nativo `aarch64`** (`ubuntu-24.04-arm`), confirma a arquitetura com `uname -m`, compila Release, executa **15/15 CTest** e valida o mesmo smoke do runtime híbrido. Isso demonstra que o runtime C++ não depende de x86 para funcionar no conjunto testado. Não é ainda um teste Android nem uma medição de desempenho em celular.
+O workflow ARM usa um runner GitHub-hosted **nativo `aarch64`** (`ubuntu-24.04-arm`), confirma a arquitetura com `uname -m`, compila Release, executa **15/15 CTest** e valida o mesmo smoke do runtime híbrido. Isso demonstra que o runtime C++ não depende de x86 para funcionar no conjunto testado.
+
+### Android ARM64
+
+O workflow Android usa o **Android NDK**, `arm64-v8a`, API 24 e `c++_shared`. O build Release passou e os binários foram verificados como **ELF 64-bit AArch64**; `edgeai_chat` usa `/system/bin/linker64`. O artefato inclui `libedgeai.so`, `libc++_shared.so`, `edgeai_chat`, `edgeai_generate` e scripts ADB para Linux/macOS e PowerShell. O run reproduzível `37105420197` gerou o artefato `edgeai-android-arm64-v8a` (1.955.539 bytes, SHA-256 `177b3c1f302257103223c06b3c36eda6fe084aea838d13489b26d4e942d3f463`). Isso valida **compilação e empacotamento Android**, não execução física no celular.
 
 ## Limites atuais
 
@@ -156,7 +160,7 @@ O benchmark neural usa tarefas sintéticas. Energia e pico de RSS não foram med
 ## Próximos focos
 
 - melhorar capacidade por unidade de CPU em vez de apenas aumentar profundidade;
-- medir Android/ARM mobile e hardware fraco físico; manter Windows x64 e Linux ARM64 cobertos pelo CI;
+- executar o smoke ADB em Android ARM64 físico e medir tempo/RSS; manter Windows x64, Linux ARM64 e o cross-build Android cobertos pelo CI;
 - testar mudanças de dados/treino que melhorem geração livre sem dobrar o cache KV;
 - continuar combinando modelos pequenos com ferramentas e memória.
 

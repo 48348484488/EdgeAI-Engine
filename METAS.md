@@ -17,13 +17,14 @@
 | Windows x64 | Validado no GitHub Actions: MSVC Release + 15/15 CTest + smoke híbrido |
 | UTF-8 no MSVC | Build usa /utf-8; teste com code points multibyte passa |
 | Linux ARM64 nativo | Validado em runner aarch64: Release + 15/15 CTest + smoke híbrido |
+| Android arm64-v8a NDK | Cross-build Release validado; ELF AArch64 e pacote ADB com libc++_shared.so; execução física ainda pendente |
 | PC fraco físico | Pendente; Windows CI não mede desempenho da máquina-alvo |
 | Energia real | Pendente onde não houver sensor confiável; não inferir joules |
 | LLM externo real | Pendente; não contabilizar fixtures como modelo externo |
 
 ## Próximas metas
 
-1. **Android/ARM mobile real:** Linux ARM64 nativo já passou; falta compilar/rodar no ambiente Android ou dispositivo alvo antes de afirmar portabilidade mobile.
+1. **Android/ARM mobile real:** cross-build NDK `arm64-v8a` já passou; falta executar o smoke ADB em dispositivo físico e medir tempo/RSS antes de afirmar desempenho mobile.
 2. **Hardware fraco físico:** medir tempo, RSS e comportamento do runtime em uma máquina alvo real; separar isso de resultados de CI.
 3. **Capacidade neural por CPU:** melhorar geração livre/generalização sem simplesmente dobrar blocos, KV e latência.
 4. **Router fora dos templates atuais:** ampliar corpus adversarial com linguagem mais livre, mantendo precision/recall separados da qualidade da resposta neural.
