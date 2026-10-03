@@ -102,6 +102,8 @@ Para evitar que o resultado dependesse apenas das frases exatas do benchmark, fo
 
 Portanto, a arquitetura atual tem duas medições que não devem ser misturadas: o Transformer pequeno continua limitado fora da distribuição, enquanto o **EdgeAI completo** resolve operações estruturadas conhecidas de forma barata e exata por roteamento determinístico. Além disso, o family holdout de reversão foi executado separadamente: **16/16** em `test_family`, com **16 tool cases e 0 neural cases**. A implementação de `reverse` trabalha por code point UTF-8, evitando inverter bytes de caracteres multibyte. Evidências: `results/v015/hybrid_system.json`, `results/v015/router_paraphrases.json` e `results/v015/hybrid_family.json`.
 
+Também foi executado um teste adversarial balanceado de fronteira do Router: **128 comandos que deveriam usar ferramenta** e **128 frases semanticamente parecidas que deveriam permanecer no backend neural**. Resultado: **128 true positives, 128 true negatives, 0 false positives e 0 false negatives**, equivalente a **precision 1,00 e recall 1,00** nesse corpus. Esse número mede apenas a fronteira de roteamento das formas testadas; não é evidência de compreensão aberta. Evidência: `results/v015/router_boundary.json`.
+
 ## Verificação v0.12
 
 A verificação final da branch executa Release, suíte Python, paridade Python/C++, build sem SIMD, ASan+UBSan e auditoria dos modelos legados. O resultado reproduzível fica em `results/v012/verification.json`.
