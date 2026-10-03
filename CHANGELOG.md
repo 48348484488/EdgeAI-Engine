@@ -7,6 +7,7 @@
 - Fronteira adversarial do Router: 128 true positives + 128 true negatives, 0 false positives e 0 false negatives no corpus sintético balanceado.
 - Novas formas naturais bilíngues de subtração, multiplicação e divisão: 96/96 corretas via `Calculator`, 0 casos neurais.
 - Provenance de rota agora é exposta no CLI (`route=...`) e registrada nos benchmarks do sistema.
+- Portabilidade Windows x64 adicionada ao CI: MSVC Release compila todos os targets, 15/15 CTest passam e o smoke híbrido do Calculator passa; `/utf-8` é aplicado no MSVC para literais determinísticos.
 - Limite preservado: resultados de ferramentas medem capacidade do sistema híbrido e não devem ser apresentados como generalização do Transformer.
 
 ## v0.12 — 2026-10-02
