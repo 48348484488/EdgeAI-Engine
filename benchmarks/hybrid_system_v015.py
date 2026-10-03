@@ -40,8 +40,10 @@ def main():
     rows=[json.loads(x) for x in a.data.read_text().splitlines() if x.strip()]
     cases=[run_case(a.chat.resolve(),r) for r in rows]
     tasks={t:summarize([x for x in cases if x['task']==t]) for t in sorted({x['task'] for x in cases})}
+    split=a.data.stem
     report=dict(
-        protocol='complete EdgeAI router/tool evaluation on sealed v0.15 test_range',
+        protocol=f'complete EdgeAI router/tool evaluation on sealed v0.15 {split}',
+        split=split,
         caveat='system capability benchmark; deterministic tool successes are not neural generalization',
         summary=summarize(cases),by_task=tasks,cases=cases)
     a.out.parent.mkdir(parents=True,exist_ok=True)
