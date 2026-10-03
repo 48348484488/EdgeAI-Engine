@@ -3,7 +3,14 @@
 import argparse,json,re,subprocess,time
 from pathlib import Path
 
-META=re.compile(r'^\[neural=(0|1) loops=(\d+) token_score=([^\]]+)\]$')
+META=re.compile(r'^\[route=([a-z_]+) neural=(0|1) loops=(\d+) token_score=([^\]]+)\]$')
+
+def parse_meta(line):
+    m=META.match(line)
+    if not m:
+        raise ValueError('invalid chat metadata: '+line)
+    return dict(route=m.group(1),neural_used=m.group(2)=='1',
+                loops=int(m.group(3)),token_score=float(m.group(4)))
 
 def run_case(chat,row):
     t0=time.perf_counter()
@@ -15,18 +22,20 @@ def run_case(chat,row):
     lines=p.stdout.rstrip('\n').splitlines()
     if len(lines)<2:
         raise RuntimeError('missing chat metadata')
-    m=META.match(lines[-1])
-    if not m:
-        raise RuntimeError('invalid chat metadata: '+lines[-1])
+    try:
+        meta=parse_meta(lines[-1])
+    except ValueError as error:
+        raise RuntimeError(str(error)) from error
     answer='\n'.join(lines[:-1])
-    route=m.group(1)\n    neural=m.group(2)=='1'
     return dict(id=row['id'],task=row['task'],prompt=row['prompt'],expected=row['answer'],
-                actual=answer,exact=answer==row['answer'],neural_used=neural,
-                loops=int(m.group(2)),wall_seconds=wall)
+                actual=answer,exact=answer==row['answer'],route=meta['route'],
+                neural_used=meta['neural_used'],loops=meta['loops'],
+                token_score=meta['token_score'],wall_seconds=wall)
 
 def summarize(rows):
     routes={}
-    for x in rows: routes[x['route']]=routes.get(x['route'],0)+1
+    for x in rows:
+        routes[x['route']]=routes.get(x['route'],0)+1
     return dict(count=len(rows),correct=sum(x['exact'] for x in rows),
                 tool_cases=sum(not x['neural_used'] for x in rows),
                 neural_cases=sum(x['neural_used'] for x in rows),
@@ -52,4 +61,5 @@ def main():
     a.out.parent.mkdir(parents=True,exist_ok=True)
     a.out.write_text(json.dumps(report,indent=2,ensure_ascii=False)+'\n')
     print(json.dumps(dict(summary=report['summary'],by_task=tasks)))
+
 if __name__=='__main__':main()
