@@ -60,7 +60,6 @@ jobs:
         with:
           api-level: 29
           arch: x86_64
-          profile: pixel_2
           disk-size: 2G
           ram-size: 1536M
           emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
