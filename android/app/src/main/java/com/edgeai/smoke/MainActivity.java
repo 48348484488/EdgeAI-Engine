@@ -20,9 +20,12 @@ public final class MainActivity extends Activity {
 
     private void execute(EditText prompt, TextView output) {
         try {
+            long startNs = System.nanoTime();
             String result = nativeAsk(prompt.getText().toString());
-            output.setText(result);
-            Log.i(TAG, result.replace('\n', ' '));
+            long elapsedUs = (System.nanoTime() - startNs) / 1000L;
+            String measured = result + "\n[elapsed_us=" + elapsedUs + "]";
+            output.setText(measured);
+            Log.i(TAG, measured.replace('\n', ' '));
         } catch (Throwable error) {
             String result = "Erro: " + error;
             output.setText(result);

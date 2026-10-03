@@ -44,6 +44,10 @@ run_case() {
 
   cat "$filtered" || true
   fail_on_android_crash "$full"
+  if ! grep -E -q 'elapsed_us=[0-9]+' "$filtered"; then
+    echo "Latency marker missing for case: $name" >&2
+    return 1
+  fi
   if [[ "$found" != 1 ]]; then
     echo "Expected result not found for case: $name" >&2
     tail -n 250 "$full" >&2
@@ -52,6 +56,10 @@ run_case() {
 }
 
 run_case calc "Subtract 17 from 42" '25.*route=calculator.*neural=0'
+run_case copy "Copy exactly: edge" 'edge.*route=text_copy.*neural=0'
+run_case uppercase "Uppercase: edge ai" 'EDGE AI.*route=text_uppercase.*neural=0'
+run_case reverse "Reverse: abcdef" 'fedcba.*route=text_reverse.*neural=0'
+run_case symbolic "Return only x + 57" 'x\+57.*route=symbolic_expression.*neural=0'
 run_case neural "neural smoke" 'route=neural.*neural=1'
 
 adb shell dumpsys meminfo "$PKG" | tee /tmp/edgeai-meminfo.txt
