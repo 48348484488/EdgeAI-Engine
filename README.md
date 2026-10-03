@@ -100,7 +100,7 @@ O mesmo `test_range` selado da v0.15 foi executado pelo runtime completo, passan
 
 Para evitar que o resultado dependesse apenas das frases exatas do benchmark, foi criado um segundo corpus com **128 paráfrases únicas** ausentes do `test_range`: `Calculate ...`, `What is ...?`, `Repeat exactly ...`, `Repita sem alterar ...`, `Convert to uppercase ...`, `Return only x ...` e equivalentes em português. O roteador também fez **128/128**, novamente com **128 tool cases e 0 neural cases**.
 
-Portanto, a arquitetura atual tem duas medições que não devem ser misturadas: o Transformer pequeno continua limitado fora da distribuição, enquanto o **EdgeAI completo** resolve operações estruturadas conhecidas de forma barata e exata por roteamento determinístico. Evidências: `results/v015/hybrid_system.json` e `results/v015/router_paraphrases.json`.
+Portanto, a arquitetura atual tem duas medições que não devem ser misturadas: o Transformer pequeno continua limitado fora da distribuição, enquanto o **EdgeAI completo** resolve operações estruturadas conhecidas de forma barata e exata por roteamento determinístico. Além disso, o family holdout de reversão foi executado separadamente: **16/16** em `test_family`, com **16 tool cases e 0 neural cases**. A implementação de `reverse` trabalha por code point UTF-8, evitando inverter bytes de caracteres multibyte. Evidências: `results/v015/hybrid_system.json`, `results/v015/router_paraphrases.json` e `results/v015/hybrid_family.json`.
 
 ## Verificação v0.12
 
