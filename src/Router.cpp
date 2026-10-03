@@ -47,6 +47,39 @@ Route route(const std::string& text){
        natural_sum(raw,low,"quanto vale a soma de "," e ",natural))
         return {RouteKind::Calculator,natural,0.999};
     if(mathish(expr)) return {RouteKind::Calculator,expr,0.999};
+
+    const char* copy_prefixes[]={"copy exactly: ","copie exatamente: "};
+    for(auto p:copy_prefixes){
+        std::string lp=p;
+        if(low.rfind(lp,0)==0){
+            std::string payload=trim(raw.substr(lp.size()));
+            if(!payload.empty()) return {RouteKind::TextCopy,payload,1.0};
+        }
+    }
+
+    const char* upper_prefixes[]={"uppercase: ","maiusculas: ","maiúsculas: "};
+    for(auto p:upper_prefixes){
+        std::string lp=p;
+        if(low.rfind(lp,0)==0){
+            std::string payload=trim(raw.substr(lp.size()));
+            if(!payload.empty()) return {RouteKind::TextUppercase,payload,1.0};
+        }
+    }
+
+    const char* expression_prefixes[]={"expression for x ","expressao para x ","expressão para x "};
+    for(auto p:expression_prefixes){
+        std::string lp=p;
+        if(low.rfind(lp,0)==0){
+            std::string tail=trim(raw.substr(lp.size()));
+            if(!tail.empty()&&tail.back()==':')tail=trim(tail.substr(0,tail.size()-1));
+            if(tail.size()>=2 && std::string("+-*").find(tail[0])!=std::string::npos){
+                std::string rhs=trim(tail.substr(1));
+                bool digits=!rhs.empty()&&std::all_of(rhs.begin(),rhs.end(),[](unsigned char c){return std::isdigit(c);});
+                if(digits) return {RouteKind::SymbolicExpression,std::string("x")+tail[0]+rhs,1.0};
+            }
+        }
+    }
+
     return {RouteKind::Neural,raw,0.5};
 }
 }
