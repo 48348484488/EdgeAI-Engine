@@ -67,6 +67,15 @@ Route route(const std::string& text){
         }
     }
 
+    const char* reverse_prefixes[]={"reverse: ","inverta: ","reverse exactly: ","inverta exatamente: "};
+    for(auto p:reverse_prefixes){
+        std::string lp=p;
+        if(low.rfind(lp,0)==0){
+            std::string payload=trim(raw.substr(lp.size()));
+            if(!payload.empty()) return {RouteKind::TextReverse,payload,1.0};
+        }
+    }
+
     const char* expression_prefixes[]={"expression for x ","expressao para x ","expressão para x ","return only x ","retorne apenas x ","return only the python expression x ","retorne apenas a expressao python x ","retorne apenas a expressão python x "};
     for(auto p:expression_prefixes){
         std::string lp=p;

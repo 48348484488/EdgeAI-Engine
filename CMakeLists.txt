@@ -15,7 +15,7 @@ endif()
 option(EDGEAI_BUILD_TESTS "Build tests" ON)
 option(EDGEAI_BUILD_BENCHMARK "Build benchmarks" ON)
 add_library(edgeai
-    src/CodeSearch.cpp src/Engine.cpp src/Router.cpp src/Calculator.cpp src/Memory.cpp src/Scheduler.cpp src/Hardware.cpp src/Backend.cpp
+    src/CodeSearch.cpp src/Engine.cpp src/Router.cpp src/Calculator.cpp src/TextTools.cpp src/Memory.cpp src/Scheduler.cpp src/Hardware.cpp src/Backend.cpp
     src/HybridMemory.cpp src/HybridModel.cpp src/HybridBackend.cpp
     src/ByteBPE.cpp src/TransformerModel.cpp src/TransformerBackend.cpp
     src/MixedMatrix.cpp src/Int8Kernel.cpp src/Ternary.cpp src/Kernels.cpp src/EdgeModel.cpp src/TernaryBackend.cpp
