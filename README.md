@@ -151,6 +151,8 @@ O workflow ARM usa um runner GitHub-hosted **nativo `aarch64`** (`ubuntu-24.04-a
 
 O workflow Android usa o **Android NDK**, `arm64-v8a`, API 24 e `c++_shared`. O build Release passou e os binários foram verificados como **ELF 64-bit AArch64**; `edgeai_chat` usa `/system/bin/linker64`. O artefato inclui `libedgeai.so`, `libc++_shared.so`, `edgeai_chat`, `edgeai_generate`, `edgeai_make_demo` e scripts ADB para Linux/macOS e PowerShell. O run reproduzível `37105570269` gerou o artefato `edgeai-android-arm64-v8a` (2.003.826 bytes, SHA-256 `46f6082a9f4589b3a833729bcea187ee5f754f0af39304a476fca089b982f786`). O smoke físico preparado executa uma rota determinística (`Calculator`) e depois gera/carrega um `demo.edge` para exigir `route=neural`. Isso valida **compilação e empacotamento Android**; a execução em aparelho físico ainda precisa ser feita.
 
+Também existe um APK mínimo de smoke com Activity Java + JNI. O build reproduzível `37105947328` passou e gerou `app-debug.apk` com **2.256.337 bytes**, SHA-256 `cb1a5c47c36937216fdb10531363ccc9312f540eefa8c27e0c13529c6eac9c1d`. O APK contém apenas `arm64-v8a` e empacota `libc++_shared.so`, `libedgeai.so` e `libedgeai_android_jni.so`. A tela permite enviar prompts ao `Engine`; o backend neural de smoke usa um modelo ternário demo em memória. O APK ainda precisa ser instalado e executado num aparelho físico para validar runtime Android real.
+
 ## Limites atuais
 
 O EdgeAI **não é um substituto para Claude, ChatGPT ou outros LLMs grandes**. Ainda não há evidência de inteligência geral comparável, correção autônoma confiável de bugs, compreensão semântica completa de repositórios ou menor consumo de energia que grandes modelos.
@@ -160,7 +162,7 @@ O benchmark neural usa tarefas sintéticas. Energia e pico de RSS não foram med
 ## Próximos focos
 
 - melhorar capacidade por unidade de CPU em vez de apenas aumentar profundidade;
-- executar o smoke ADB em Android ARM64 físico e medir tempo/RSS; manter Windows x64, Linux ARM64 e o cross-build Android cobertos pelo CI;
+- instalar/executar o APK e o smoke ADB em Android ARM64 físico e medir tempo/RSS; manter Windows x64, Linux ARM64, cross-build NDK e APK cobertos pelo CI;
 - testar mudanças de dados/treino que melhorem geração livre sem dobrar o cache KV;
 - continuar combinando modelos pequenos com ferramentas e memória.
 

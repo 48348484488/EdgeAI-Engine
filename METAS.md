@@ -18,13 +18,14 @@
 | UTF-8 no MSVC | Build usa /utf-8; teste com code points multibyte passa |
 | Linux ARM64 nativo | Validado em runner aarch64: Release + 15/15 CTest + smoke híbrido |
 | Android arm64-v8a NDK | Cross-build Release validado; ELF AArch64 e pacote ADB com libc++_shared.so; smoke físico preparado para Calculator + geração/carregamento de `.edge` + rota neural; execução física ainda pendente |
+| APK Android ARM64 | Build Gradle/JNI validado; APK arm64-only contém libc++_shared + libedgeai + JNI; instalação/execução física pendente |
 | PC fraco físico | Pendente; Windows CI não mede desempenho da máquina-alvo |
 | Energia real | Pendente onde não houver sensor confiável; não inferir joules |
 | LLM externo real | Pendente; não contabilizar fixtures como modelo externo |
 
 ## Próximas metas
 
-1. **Android/ARM mobile real:** cross-build NDK `arm64-v8a` já passou; falta executar o smoke ADB em dispositivo físico e medir tempo/RSS antes de afirmar desempenho mobile.
+1. **Android/ARM mobile real:** cross-build NDK e APK `arm64-v8a` já passam no CI; falta instalar/executar o APK e o smoke ADB em dispositivo físico e medir tempo/RSS antes de afirmar desempenho mobile.
 2. **Hardware fraco físico:** medir tempo, RSS e comportamento do runtime em uma máquina alvo real; separar isso de resultados de CI.
 3. **Capacidade neural por CPU:** melhorar geração livre/generalização sem simplesmente dobrar blocos, KV e latência.
 4. **Router fora dos templates atuais:** ampliar corpus adversarial com linguagem mais livre, mantendo precision/recall separados da qualidade da resposta neural.
