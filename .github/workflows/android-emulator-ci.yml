@@ -36,6 +36,19 @@ jobs:
         working-directory: android
         run: gradle :app:assembleDebug -PedgeaiAbi=x86_64 --stacktrace
 
+      - name: Free disk after APK build
+        run: |
+          echo "Before cleanup:"
+          df -h /
+          rm -rf android/app/.cxx
+          find android/app/build -mindepth 1 -maxdepth 1 ! -name outputs -exec rm -rf {} +
+          rm -rf "$HOME/.gradle/caches"
+          if [ -n "${ANDROID_HOME:-}" ]; then
+            sudo rm -rf "$ANDROID_HOME/ndk" "$ANDROID_HOME/cmake"
+          fi
+          echo "After cleanup:"
+          df -h /
+
       - name: Enable KVM access
         run: |
           if [ -e /dev/kvm ]; then
