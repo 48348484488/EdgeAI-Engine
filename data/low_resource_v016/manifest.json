@@ -1,0 +1,10 @@
+{
+  "schema": "edgeai.low-resource.corpus.v1",
+  "version": "0.16.0",
+  "sha256": "c09383a851caf69fff2d2ce501c5fc4584476978c406c4616dd71259fee3d0a7",
+  "items": 40,
+  "tool_items": 20,
+  "neural_items": 20,
+  "languages": ["en", "pt-BR"],
+  "training_use": false
+}

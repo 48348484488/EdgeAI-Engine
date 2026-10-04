@@ -1,38 +1,29 @@
-# Metas — EdgeAI branch v0.12+ pesquisa v0.15
+# Technical goals
 
-| Meta | Estado |
-|---|---|
-| Preservar compatibilidade legada | EDGEAI5/6/7 continuam carregando como 1 bloco; auditoria v0.12 preserva os modelos/checkpoints legados |
-| Transformer multi-bloco | Implementado em Python/C++; 1..8 blocos, EDGEAI8 e KV independente por bloco |
-| Paridade Python/C++ | Validada para 1/2 blocos, incluindo wrap do KV |
-| Benchmark neural controlado | 3 seeds, CPU/steps controlados, geração nativa; 1 bloco continua default |
-| Investigar profundidade | Equal-updates, dinâmica, copy-inner, LR interno e seleção por geração executados |
-| Generalização fora da faixa | v0.13–v0.15 medidos; currículo maior desloca parte da fronteira, mas não produz soma algorítmica |
-| Separar neural de ferramentas | Benchmarks neural-only permanecem separados dos resultados do sistema híbrido |
-| Sistema híbrido | Router + Calculator + texto determinístico + memória + busca de código |
-| Robustez do Router | Corpus adversarial: 128 TP, 128 TN, 0 FP, 0 FN nas formas testadas |
-| Aritmética natural via ferramenta | 96/96 em subtração/multiplicação/divisão bilíngues, todos via Calculator |
-| Busca de código | v0.11: 24/27 top-1, 26/27 top-5, 8/8 ausentes no benchmark CPython |
-| Linux x86-64 | Validado no CI final: 15/15 CTest + 168 testes Python |
-| Windows x64 | Validado no GitHub Actions: MSVC Release + 15/15 CTest + smoke híbrido |
-| UTF-8 no MSVC | Build usa /utf-8; teste com code points multibyte passa |
-| Linux ARM64 nativo | Validado em runner aarch64: Release + 15/15 CTest + smoke híbrido |
-| Android arm64-v8a NDK | Cross-build Release validado; ELF AArch64 e pacote ADB com libc++_shared.so; smoke físico preparado para Calculator + geração/carregamento de `.edge` + rota neural; execução física ainda pendente |
-| APK Android ARM64 | Build Gradle/JNI validado; APK arm64-only contém libc++_shared + libedgeai + JNI; instalação/execução física pendente |
-| Android runtime emulado | API 29 x86_64: APK instalado e Activity/JNI executados; 6/6 rotas smoke passam (Calculator/copy/uppercase/reverse/simbólica/neural); latência one-shot instrumentada |
-| PC fraco físico | Pendente; Windows CI não mede desempenho da máquina-alvo |
-| Energia real | Pendente onde não houver sensor confiável; não inferir joules |
-| LLM externo real | Pendente; não contabilizar fixtures como modelo externo |
+## Product direction
 
-## Próximas metas
+Build a useful, fully offline local AI system for inexpensive CPU-only computers. Improve capability per byte, CPU cycle, and watt before increasing model size.
 
-1. **Android/ARM mobile real:** cross-build NDK, APK `arm64-v8a` e runtime automático em emulador já passam; falta somente validar execução/desempenho em ARM64 físico antes de afirmar desempenho mobile.
-2. **Hardware fraco físico:** medir tempo, RSS e comportamento do runtime em uma máquina alvo real; separar isso de resultados de CI.
-3. **Capacidade neural por CPU:** melhorar geração livre/generalização sem simplesmente dobrar blocos, KV e latência.
-4. **Router fora dos templates atuais:** ampliar corpus adversarial com linguagem mais livre, mantendo precision/recall separados da qualidade da resposta neural.
-5. **Sistema híbrido:** continuar adicionando ferramentas apenas quando forem verificáveis e baratas; nunca reportar seus acertos como inteligência do Transformer.
-6. **Release/integracao:** manter `main` estável e só integrar a branch depois da verificação final completa e revisão dos relatórios.
+## v0.16 acceptance criteria
 
-## Regra de medição
+- focused x86-64 runtime with no GPU or Python dependency;
+- at most 64 MiB peak RSS in the canonical Linux CI workload;
+- model file no larger than 16 MiB;
+- one or two CPU threads;
+- deterministic tools and neural output evaluated separately;
+- bounded memory and fail-fast model validation;
+- reproducible Linux and Windows CI evidence.
 
-Resultados do **modelo neural**, das **ferramentas determinísticas** e do **sistema híbrido** devem continuar separados. Todo ganho novo precisa de teste, benchmark reproduzível ou evidência de CI; itens não medidos permanecem marcados como pendentes.
+## Quality policy
+
+A compiled binary is not proof of a useful AI. A tool-correct result is not neural accuracy. Neural progress requires a frozen corpus, human-readable outputs, retained per-item evidence, and explicit human review.
+
+The current v0.16 development fixture establishes infrastructure and a baseline. It does not yet produce useful neural answers and does not claim parity with large language models.
+
+## Next research milestones
+
+1. Train a compact model on an auditable corpus that excludes evaluation prompts.
+2. Improve the neural human-review pass rate without exceeding the v0.16 budgets.
+3. Reproduce the Linux budget on a physical low-cost dual-core x86-64 PC.
+4. Reduce the 64 MiB process target toward 32 MiB after quality is measurable.
+

@@ -1,0 +1,40 @@
+{"id":"calc-01","category":"tool","prompt":"2+2","expected_route":"calculator","expected_text":"4"}
+{"id":"calc-02","category":"tool","prompt":"10*7","expected_route":"calculator","expected_text":"70"}
+{"id":"calc-03","category":"tool","prompt":"100/4","expected_route":"calculator","expected_text":"25"}
+{"id":"calc-04","category":"tool","prompt":"calcule 9-3","expected_route":"calculator","expected_text":"6"}
+{"id":"text-01","category":"tool","prompt":"uppercase: weak pc","expected_route":"text_uppercase","expected_text":"WEAK PC"}
+{"id":"text-02","category":"tool","prompt":"uppercase: edge ai","expected_route":"text_uppercase","expected_text":"EDGE AI"}
+{"id":"text-03","category":"tool","prompt":"copy exactly: local","expected_route":"text_copy","expected_text":"local"}
+{"id":"text-04","category":"tool","prompt":"repeat exactly: cpu","expected_route":"text_copy","expected_text":"cpu"}
+{"id":"text-05","category":"tool","prompt":"reverse: abc","expected_route":"text_reverse","expected_text":"cba"}
+{"id":"text-06","category":"tool","prompt":"reverse: edge","expected_route":"text_reverse","expected_text":"egde"}
+{"id":"code-01","category":"tool","prompt":"/code router","expected_route":"code_search","expected_text":"Code search is unavailable in the low-resource runtime."}
+{"id":"code-02","category":"tool","prompt":"buscar codigo: engine","expected_route":"code_search","expected_text":"Code search is unavailable in the low-resource runtime."}
+{"id":"calc-05","category":"tool","prompt":"what is the sum of 5 and 8?","expected_route":"calculator","expected_text":"13"}
+{"id":"calc-06","category":"tool","prompt":"multiply 6 by 7","expected_route":"calculator","expected_text":"42"}
+{"id":"calc-07","category":"tool","prompt":"divide 81 by 9","expected_route":"calculator","expected_text":"9"}
+{"id":"text-07","category":"tool","prompt":"maiusculas: local","expected_route":"text_uppercase","expected_text":"LOCAL"}
+{"id":"text-08","category":"tool","prompt":"copie exatamente: teste","expected_route":"text_copy","expected_text":"teste"}
+{"id":"text-09","category":"tool","prompt":"inverta: xyz","expected_route":"text_reverse","expected_text":"zyx"}
+{"id":"calc-08","category":"tool","prompt":"3^2","expected_route":"calculator","expected_text":"9"}
+{"id":"calc-09","category":"tool","prompt":"(2+3)*4","expected_route":"calculator","expected_text":"20"}
+{"id":"neural-01","category":"neural","prompt":"Explain entropy in one sentence.","expected_route":"neural","rubric":"human_review"}
+{"id":"neural-02","category":"neural","prompt":"What is a CPU?","expected_route":"neural","rubric":"human_review"}
+{"id":"neural-03","category":"neural","prompt":"Define offline inference.","expected_route":"neural","rubric":"human_review"}
+{"id":"neural-04","category":"neural","prompt":"Why is bounded memory useful?","expected_route":"neural","rubric":"human_review"}
+{"id":"neural-05","category":"neural","prompt":"Describe quantization briefly.","expected_route":"neural","rubric":"human_review"}
+{"id":"neural-06","category":"neural","prompt":"What does deterministic mean?","expected_route":"neural","rubric":"human_review"}
+{"id":"neural-07","category":"neural","prompt":"Explain a neural network.","expected_route":"neural","rubric":"human_review"}
+{"id":"neural-08","category":"neural","prompt":"What is an integer?","expected_route":"neural","rubric":"human_review"}
+{"id":"neural-09","category":"neural","prompt":"Define latency.","expected_route":"neural","rubric":"human_review"}
+{"id":"neural-10","category":"neural","prompt":"What is RAM?","expected_route":"neural","rubric":"human_review"}
+{"id":"neural-11","category":"neural","prompt":"Explain a cache.","expected_route":"neural","rubric":"human_review"}
+{"id":"neural-12","category":"neural","prompt":"What is a model weight?","expected_route":"neural","rubric":"human_review"}
+{"id":"neural-13","category":"neural","prompt":"Why test software?","expected_route":"neural","rubric":"human_review"}
+{"id":"neural-14","category":"neural","prompt":"Define a token.","expected_route":"neural","rubric":"human_review"}
+{"id":"neural-15","category":"neural","prompt":"What is inference?","expected_route":"neural","rubric":"human_review"}
+{"id":"neural-16","category":"neural","prompt":"Explain reproducibility.","expected_route":"neural","rubric":"human_review"}
+{"id":"neural-17","category":"neural","prompt":"What is an algorithm?","expected_route":"neural","rubric":"human_review"}
+{"id":"neural-18","category":"neural","prompt":"Define energy efficiency.","expected_route":"neural","rubric":"human_review"}
+{"id":"neural-19","category":"neural","prompt":"What is a compiler?","expected_route":"neural","rubric":"human_review"}
+{"id":"neural-20","category":"neural","prompt":"Explain local AI.","expected_route":"neural","rubric":"human_review"}
