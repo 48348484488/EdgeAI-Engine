@@ -9,11 +9,11 @@ BINARY=Path(os.environ.get('EDGEAI_BUILD_DIR',str(ROOT/'build')))/'edgeai_chat'
 
 
 class ChatBanner(unittest.TestCase):
-    def test_banner_reports_v012_and_edgeai8(self):
+    def test_banner_reports_v016_and_edgeai8(self):
         run=subprocess.run(
             [str(BINARY),'--memory',':memory:'],
             input='sair\n',text=True,capture_output=True,check=True)
-        self.assertIn('EdgeAI Engine v0.12 (model formats through EDGEAI8)',run.stdout)
+        self.assertIn('EdgeAI Engine v0.16 (model formats through EDGEAI8)',run.stdout)
 
 
     def test_prompt_metadata_reports_route(self):
