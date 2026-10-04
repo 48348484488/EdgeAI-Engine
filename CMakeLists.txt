@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-project(EdgeAIEngine VERSION 0.12.0 LANGUAGES CXX)
+project(EdgeAIEngine VERSION 0.16.0 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
@@ -19,6 +19,7 @@ if(EDGEAI_SANITIZERS AND NOT MSVC)
 endif()
 option(EDGEAI_BUILD_TESTS "Build tests" ON)
 option(EDGEAI_BUILD_BENCHMARK "Build benchmarks" ON)
+option(EDGEAI_LOW_RESOURCE "Build the focused CPU-only runtime" OFF)
 add_library(edgeai
     src/CodeSearch.cpp src/Engine.cpp src/Router.cpp src/Calculator.cpp src/TextTools.cpp src/Memory.cpp src/Scheduler.cpp src/Hardware.cpp src/Backend.cpp
     src/HybridMemory.cpp src/HybridModel.cpp src/HybridBackend.cpp
@@ -26,6 +27,45 @@ add_library(edgeai
     src/MixedMatrix.cpp src/Int8Kernel.cpp src/Ternary.cpp src/Kernels.cpp src/EdgeModel.cpp src/TernaryBackend.cpp
 )
 target_include_directories(edgeai PUBLIC include)
+
+set(EDGEAI_LOW_RESOURCE_SOURCES
+    src/BoundedMemory.cpp
+    src/LowResourceEngine.cpp
+    src/LowResourceMetrics.cpp
+    src/Router.cpp
+    src/Calculator.cpp
+    src/TextTools.cpp
+    src/Backend.cpp
+    src/ByteBPE.cpp
+    src/TransformerModel.cpp
+    src/TransformerBackend.cpp
+    src/MixedMatrix.cpp
+    src/Int8Kernel.cpp
+    src/Ternary.cpp
+    src/Kernels.cpp
+)
+if(EDGEAI_LOW_RESOURCE)
+  add_library(edgeai_low_resource ${EDGEAI_LOW_RESOURCE_SOURCES})
+  target_include_directories(edgeai_low_resource PUBLIC include)
+  if(MSVC)
+    target_compile_options(edgeai_low_resource PRIVATE /W4)
+  else()
+    target_compile_options(edgeai_low_resource PRIVATE -Wall -Wextra -Wpedantic)
+  endif()
+  add_executable(edgeai_low_resource_cli examples/low_resource.cpp)
+  target_link_libraries(edgeai_low_resource_cli PRIVATE edgeai_low_resource)
+  add_executable(edgeai_low_resource_fixture tools/make_low_resource_fixture.cpp)
+  target_link_libraries(edgeai_low_resource_fixture PRIVATE edgeai_low_resource)
+  if(EDGEAI_BUILD_TESTS)
+    enable_testing()
+    add_executable(edgeai_test_bounded_memory tests/test_bounded_memory.cpp)
+    target_link_libraries(edgeai_test_bounded_memory PRIVATE edgeai_low_resource)
+    add_test(NAME edgeai_bounded_memory COMMAND edgeai_test_bounded_memory)
+    add_executable(edgeai_test_low_resource_engine tests/test_low_resource_engine.cpp)
+    target_link_libraries(edgeai_test_low_resource_engine PRIVATE edgeai_low_resource)
+    add_test(NAME edgeai_low_resource_engine COMMAND edgeai_test_low_resource_engine)
+  endif()
+endif()
 
 if(ANDROID)
   add_library(edgeai_android_jni SHARED android/app/src/main/cpp/jni.cpp)
@@ -92,3 +132,4 @@ if(EDGEAI_BUILD_BENCHMARK)
     benchmarks/v09_baseline/CodeSearch.cpp benchmarks/v09_baseline/batch.cpp)
   target_include_directories(edgeai_code_search_v09_baseline PRIVATE benchmarks/v09_baseline/include)
 endif()
+

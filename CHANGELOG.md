@@ -60,3 +60,13 @@ Read-only native source search with file/line evidence; explicit chat route; opt
 - Seed padrão escolhida por validação, não pelo melhor resultado de teste.
 
 Histórico anterior: docs/v06/ARCHIVED_CHANGELOG.md e results/v03..v06.
+
+# v0.16.0 - Low-resource runtime
+
+- Added an opt-in CPU-only runtime with a focused source allowlist.
+- Enforced 64 MiB RSS, 16 MiB model, two-thread, and startup budgets in CI.
+- Added bounded persistent memory and fail-fast transformer validation.
+- Added a frozen 40-prompt corpus with separate tool and neural reporting.
+- Replaced the project overview with concise, evidence-based documentation.
+- Removed obsolete experimental Actions workflows while retaining historical documentation.
+

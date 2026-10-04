@@ -1,0 +1,62 @@
+name: EdgeAI Low-Resource CI
+
+on:
+  push:
+    branches: [main, v0.16-low-resource]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  linux-budget:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure focused runtime
+        run: cmake -S . -B build-low -DCMAKE_BUILD_TYPE=Release -DEDGEAI_LOW_RESOURCE=ON -DEDGEAI_BUILD_TESTS=ON -DEDGEAI_BUILD_BENCHMARK=OFF
+      - name: Build focused runtime
+        run: cmake --build build-low -j2
+      - name: Focused C++ tests
+        run: ctest --test-dir build-low -R 'edgeai_(bounded_memory|low_resource_engine)' --output-on-failure
+      - name: Composition contract
+        run: python3 tests/test_low_resource_composition.py --source . --binary build-low/edgeai_low_resource_cli
+      - name: Evaluation and metrics unit tests
+        run: python3 -m unittest tests.test_measure_low_resource tests.test_evaluate_low_resource tests.test_low_resource_workflow
+      - name: Generate isolated fixture
+        run: ./build-low/edgeai_low_resource_fixture build-low/low-resource-fixture.edge
+      - name: Frozen corpus baseline
+        run: python3 tools/evaluate_low_resource.py --binary build-low/edgeai_low_resource_cli --model build-low/low-resource-fixture.edge --corpus data/low_resource_v016/prompts.jsonl --manifest data/low_resource_v016/manifest.json --baseline results/v016_low_resource/baseline.json --output evidence/evaluation.json
+      - name: Enforce actual process budgets
+        run: python3 scripts/measure_low_resource.py --binary build-low/edgeai_low_resource_cli --model build-low/low-resource-fixture.edge --workload data/low_resource_v016/workload.txt --output evidence/metrics.json
+      - name: Upload evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: low-resource-linux-evidence
+          path: evidence/
+
+  windows-functional:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure focused runtime
+        run: cmake -S . -B build-low -DEDGEAI_LOW_RESOURCE=ON -DEDGEAI_BUILD_TESTS=ON -DEDGEAI_BUILD_BENCHMARK=OFF
+      - name: Build focused runtime
+        run: cmake --build build-low --config Release --parallel 2
+      - name: Focused tests
+        run: ctest --test-dir build-low -C Release -R "edgeai_(bounded_memory|low_resource_engine)" --output-on-failure
+      - name: Python contracts
+        run: python -m unittest tests.test_measure_low_resource tests.test_evaluate_low_resource tests.test_low_resource_workflow
+      - name: Generate isolated fixture
+        run: .\build-low\Release\edgeai_low_resource_fixture.exe build-low\low-resource-fixture.edge
+      - name: Frozen corpus functional run
+        run: python tools/evaluate_low_resource.py --binary build-low\Release\edgeai_low_resource_cli.exe --model build-low\low-resource-fixture.edge --corpus data\low_resource_v016\prompts.jsonl --manifest data\low_resource_v016\manifest.json --baseline results\v016_low_resource\baseline.json --output evidence\evaluation-windows.json
+      - name: Upload evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: low-resource-windows-evidence
+          path: evidence/

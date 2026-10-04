@@ -2,7 +2,7 @@ name: EdgeAI Windows CI
 
 on:
   push:
-    branches: [main, v0.12-multiblock]
+    branches: [main, v0.12-multiblock, v0.16-low-resource]
     paths:
       - .github/workflows/windows-ci.yml
       - CMakeLists.txt
@@ -36,3 +36,4 @@ jobs:
           $text = $out -join "`n"
           if ($text -notmatch '(?m)^25$') { throw "unexpected answer: $text" }
           if ($text -notmatch 'route=calculator neural=0') { throw "calculator route missing: $text" }
+

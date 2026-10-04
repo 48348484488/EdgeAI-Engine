@@ -1,5 +1,15 @@
+# Build output
 build*/
+cmake-build-*/
+CMakeFiles/
+CMakeCache.txt
+
+# Python
 __pycache__/
-*.pyc
-edgeai_memory.txt
-*.core
+*.py[cod]
+.venv/
+
+# Local execution
+.superpowers/
+*.tmp
+*.log

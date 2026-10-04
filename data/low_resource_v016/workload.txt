@@ -1,0 +1,5 @@
+2+2
+uppercase: weak pc
+lembrar: bounded memory entry
+buscar memoria: bounded
+Explain entropy briefly.
