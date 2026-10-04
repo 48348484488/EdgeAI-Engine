@@ -1,0 +1,5 @@
+{
+  "schema": "edgeai.portuguese.reviews.v1",
+  "instructions": "A human may add test row IDs under reviews with decision pass or fail, reviewer identity, response_sha256 of the exact unmodified UTF-8 generated text, and an optional reason. Greetings, definitions and the current polite-request instructions default to failure without a matching approval. Closed facts use normalized exact scoring and never count as human-approved. The evaluator never edits this ledger.",
+  "reviews": {}
+}

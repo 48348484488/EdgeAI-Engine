@@ -1,0 +1,1262 @@
+[
+  {
+    "source_id": "local-templates-v017",
+    "license": "CC0-1.0",
+    "origin": "repository:data/portuguese_v017/sources.json#local-templates-v017",
+    "method": "Deterministic local templates and enumerated inputs; no external API or collected conversation.",
+    "content_sha256": "7e73792d5f1abe38854e717d6ef3c94a37582a3fe3d87b990fe6fd3eb5d462a6",
+    "content": {
+      "kind": "synthetic",
+      "templates": {
+        "greeting": [
+          "{prompt}",
+          "Responda em português: {prompt}",
+          "Resposta curta: {prompt}"
+        ],
+        "definition": [
+          "{prompt}",
+          "Responda em português: {prompt}",
+          "Resposta curta: {prompt}"
+        ],
+        "closed_fact": [
+          "{prompt}",
+          "Responda em português: {prompt}",
+          "Resposta curta: {prompt}"
+        ],
+        "short_instruction": [
+          "{prompt}",
+          "Responda em português: {prompt}",
+          "Resposta curta: {prompt}"
+        ]
+      },
+      "records": [
+        {
+          "category": "greeting",
+          "key": "greeting-00",
+          "prompt": "Olá! Estou começando o trabalho.",
+          "response": "Olá! Posso ajudar com uma pergunta curta."
+        },
+        {
+          "category": "greeting",
+          "key": "greeting-01",
+          "prompt": "Olá! Estou começando o estudo.",
+          "response": "Olá! Posso ajudar com uma pergunta curta."
+        },
+        {
+          "category": "greeting",
+          "key": "greeting-02",
+          "prompt": "Olá! Estou começando a leitura.",
+          "response": "Olá! Posso ajudar com uma pergunta curta."
+        },
+        {
+          "category": "greeting",
+          "key": "greeting-03",
+          "prompt": "Olá! Estou começando uma viagem.",
+          "response": "Olá! Posso ajudar com uma pergunta curta."
+        },
+        {
+          "category": "greeting",
+          "key": "greeting-04",
+          "prompt": "Olá! Estou começando o dia.",
+          "response": "Olá! Posso ajudar com uma pergunta curta."
+        },
+        {
+          "category": "greeting",
+          "key": "greeting-05",
+          "prompt": "Olá! Estou começando uma tarefa.",
+          "response": "Olá! Posso ajudar com uma pergunta curta."
+        },
+        {
+          "category": "greeting",
+          "key": "greeting-06",
+          "prompt": "Olá! Estou começando o planejamento.",
+          "response": "Olá! Posso ajudar com uma pergunta curta."
+        },
+        {
+          "category": "greeting",
+          "key": "greeting-07",
+          "prompt": "Olá! Estou começando uma reunião.",
+          "response": "Olá! Posso ajudar com uma pergunta curta."
+        },
+        {
+          "category": "greeting",
+          "key": "greeting-08",
+          "prompt": "Olá! Estou começando uma aula.",
+          "response": "Olá! Posso ajudar com uma pergunta curta."
+        },
+        {
+          "category": "greeting",
+          "key": "greeting-09",
+          "prompt": "Olá! Estou começando um curso.",
+          "response": "Olá! Posso ajudar com uma pergunta curta."
+        },
+        {
+          "category": "greeting",
+          "key": "greeting-10",
+          "prompt": "Olá! Estou começando uma pesquisa.",
+          "response": "Olá! Posso ajudar com uma pergunta curta."
+        },
+        {
+          "category": "greeting",
+          "key": "greeting-11",
+          "prompt": "Olá! Estou começando uma conversa.",
+          "response": "Olá! Posso ajudar com uma pergunta curta."
+        },
+        {
+          "category": "greeting",
+          "key": "greeting-12",
+          "prompt": "Olá! Estou começando um projeto.",
+          "response": "Olá! Posso ajudar com uma pergunta curta."
+        },
+        {
+          "category": "greeting",
+          "key": "greeting-13",
+          "prompt": "Olá! Estou começando uma revisão.",
+          "response": "Olá! Posso ajudar com uma pergunta curta."
+        },
+        {
+          "category": "greeting",
+          "key": "greeting-14",
+          "prompt": "Olá! Estou começando o expediente.",
+          "response": "Olá! Posso ajudar com uma pergunta curta."
+        },
+        {
+          "category": "greeting",
+          "key": "greeting-15",
+          "prompt": "Olá! Estou começando um exercício.",
+          "response": "Olá! Posso ajudar com uma pergunta curta."
+        },
+        {
+          "category": "greeting",
+          "key": "greeting-16",
+          "prompt": "Olá! Estou começando uma visita.",
+          "response": "Olá! Posso ajudar com uma pergunta curta."
+        },
+        {
+          "category": "greeting",
+          "key": "greeting-17",
+          "prompt": "Olá! Estou começando um passeio.",
+          "response": "Olá! Posso ajudar com uma pergunta curta."
+        },
+        {
+          "category": "greeting",
+          "key": "greeting-18",
+          "prompt": "Olá! Estou começando a semana.",
+          "response": "Olá! Posso ajudar com uma pergunta curta."
+        },
+        {
+          "category": "greeting",
+          "key": "greeting-19",
+          "prompt": "Olá! Estou começando o mês.",
+          "response": "Olá! Posso ajudar com uma pergunta curta."
+        },
+        {
+          "category": "greeting",
+          "key": "greeting-20",
+          "prompt": "Olá! Estou começando o semestre.",
+          "response": "Olá! Posso ajudar com uma pergunta curta."
+        },
+        {
+          "category": "greeting",
+          "key": "greeting-21",
+          "prompt": "Olá! Estou começando as férias.",
+          "response": "Olá! Posso ajudar com uma pergunta curta."
+        },
+        {
+          "category": "greeting",
+          "key": "greeting-22",
+          "prompt": "Olá! Estou começando a manhã.",
+          "response": "Olá! Posso ajudar com uma pergunta curta."
+        },
+        {
+          "category": "greeting",
+          "key": "greeting-23",
+          "prompt": "Olá! Estou começando a tarde.",
+          "response": "Olá! Posso ajudar com uma pergunta curta."
+        },
+        {
+          "category": "greeting",
+          "key": "greeting-24",
+          "prompt": "Olá! Estou começando a noite.",
+          "response": "Olá! Posso ajudar com uma pergunta curta."
+        },
+        {
+          "category": "greeting",
+          "key": "greeting-25",
+          "prompt": "Olá! Estou começando uma pausa.",
+          "response": "Olá! Posso ajudar com uma pergunta curta."
+        },
+        {
+          "category": "greeting",
+          "key": "greeting-26",
+          "prompt": "Olá! Estou começando um treino.",
+          "response": "Olá! Posso ajudar com uma pergunta curta."
+        },
+        {
+          "category": "greeting",
+          "key": "greeting-27",
+          "prompt": "Olá! Estou começando a organização.",
+          "response": "Olá! Posso ajudar com uma pergunta curta."
+        },
+        {
+          "category": "greeting",
+          "key": "greeting-28",
+          "prompt": "Olá! Estou começando uma atividade.",
+          "response": "Olá! Posso ajudar com uma pergunta curta."
+        },
+        {
+          "category": "greeting",
+          "key": "greeting-29",
+          "prompt": "Olá! Estou começando um desafio.",
+          "response": "Olá! Posso ajudar com uma pergunta curta."
+        },
+        {
+          "category": "greeting",
+          "key": "greeting-30",
+          "prompt": "Olá! Estou começando uma avaliação.",
+          "response": "Olá! Posso ajudar com uma pergunta curta."
+        },
+        {
+          "category": "greeting",
+          "key": "greeting-31",
+          "prompt": "Olá! Estou começando a preparação.",
+          "response": "Olá! Posso ajudar com uma pergunta curta."
+        },
+        {
+          "category": "greeting",
+          "key": "greeting-32",
+          "prompt": "Olá! Estou começando o aprendizado.",
+          "response": "Olá! Posso ajudar com uma pergunta curta."
+        },
+        {
+          "category": "greeting",
+          "key": "greeting-33",
+          "prompt": "Olá! Estou começando o atendimento.",
+          "response": "Olá! Posso ajudar com uma pergunta curta."
+        },
+        {
+          "category": "greeting",
+          "key": "greeting-34",
+          "prompt": "Olá! Estou começando o descanso.",
+          "response": "Olá! Posso ajudar com uma pergunta curta."
+        },
+        {
+          "category": "greeting",
+          "key": "greeting-35",
+          "prompt": "Olá! Estou começando um encontro.",
+          "response": "Olá! Posso ajudar com uma pergunta curta."
+        },
+        {
+          "category": "greeting",
+          "key": "greeting-36",
+          "prompt": "Olá! Estou começando uma apresentação.",
+          "response": "Olá! Posso ajudar com uma pergunta curta."
+        },
+        {
+          "category": "greeting",
+          "key": "greeting-37",
+          "prompt": "Olá! Estou começando uma oficina.",
+          "response": "Olá! Posso ajudar com uma pergunta curta."
+        },
+        {
+          "category": "greeting",
+          "key": "greeting-38",
+          "prompt": "Olá! Estou começando um relatório.",
+          "response": "Olá! Posso ajudar com uma pergunta curta."
+        },
+        {
+          "category": "greeting",
+          "key": "greeting-39",
+          "prompt": "Olá! Estou começando a rotina.",
+          "response": "Olá! Posso ajudar com uma pergunta curta."
+        },
+        {
+          "category": "short_instruction",
+          "key": "instruction-00",
+          "prompt": "Escreva um pedido educado de água.",
+          "response": "Por favor, gostaria de água."
+        },
+        {
+          "category": "short_instruction",
+          "key": "instruction-01",
+          "prompt": "Escreva um pedido educado de um café.",
+          "response": "Por favor, gostaria de um café."
+        },
+        {
+          "category": "short_instruction",
+          "key": "instruction-02",
+          "prompt": "Escreva um pedido educado de um chá.",
+          "response": "Por favor, gostaria de um chá."
+        },
+        {
+          "category": "short_instruction",
+          "key": "instruction-03",
+          "prompt": "Escreva um pedido educado de um copo.",
+          "response": "Por favor, gostaria de um copo."
+        },
+        {
+          "category": "short_instruction",
+          "key": "instruction-04",
+          "prompt": "Escreva um pedido educado de uma xícara.",
+          "response": "Por favor, gostaria de uma xícara."
+        },
+        {
+          "category": "short_instruction",
+          "key": "instruction-05",
+          "prompt": "Escreva um pedido educado de um prato.",
+          "response": "Por favor, gostaria de um prato."
+        },
+        {
+          "category": "short_instruction",
+          "key": "instruction-06",
+          "prompt": "Escreva um pedido educado de um guardanapo.",
+          "response": "Por favor, gostaria de um guardanapo."
+        },
+        {
+          "category": "short_instruction",
+          "key": "instruction-07",
+          "prompt": "Escreva um pedido educado de uma colher.",
+          "response": "Por favor, gostaria de uma colher."
+        },
+        {
+          "category": "short_instruction",
+          "key": "instruction-08",
+          "prompt": "Escreva um pedido educado de um garfo.",
+          "response": "Por favor, gostaria de um garfo."
+        },
+        {
+          "category": "short_instruction",
+          "key": "instruction-09",
+          "prompt": "Escreva um pedido educado de uma faca.",
+          "response": "Por favor, gostaria de uma faca."
+        },
+        {
+          "category": "short_instruction",
+          "key": "instruction-10",
+          "prompt": "Escreva um pedido educado de uma cadeira.",
+          "response": "Por favor, gostaria de uma cadeira."
+        },
+        {
+          "category": "short_instruction",
+          "key": "instruction-11",
+          "prompt": "Escreva um pedido educado de uma mesa.",
+          "response": "Por favor, gostaria de uma mesa."
+        },
+        {
+          "category": "short_instruction",
+          "key": "instruction-12",
+          "prompt": "Escreva um pedido educado de um livro.",
+          "response": "Por favor, gostaria de um livro."
+        },
+        {
+          "category": "short_instruction",
+          "key": "instruction-13",
+          "prompt": "Escreva um pedido educado de um caderno.",
+          "response": "Por favor, gostaria de um caderno."
+        },
+        {
+          "category": "short_instruction",
+          "key": "instruction-14",
+          "prompt": "Escreva um pedido educado de uma caneta.",
+          "response": "Por favor, gostaria de uma caneta."
+        },
+        {
+          "category": "short_instruction",
+          "key": "instruction-15",
+          "prompt": "Escreva um pedido educado de um lápis.",
+          "response": "Por favor, gostaria de um lápis."
+        },
+        {
+          "category": "short_instruction",
+          "key": "instruction-16",
+          "prompt": "Escreva um pedido educado de uma borracha.",
+          "response": "Por favor, gostaria de uma borracha."
+        },
+        {
+          "category": "short_instruction",
+          "key": "instruction-17",
+          "prompt": "Escreva um pedido educado de uma régua.",
+          "response": "Por favor, gostaria de uma régua."
+        },
+        {
+          "category": "short_instruction",
+          "key": "instruction-18",
+          "prompt": "Escreva um pedido educado de uma folha.",
+          "response": "Por favor, gostaria de uma folha."
+        },
+        {
+          "category": "short_instruction",
+          "key": "instruction-19",
+          "prompt": "Escreva um pedido educado de uma pasta.",
+          "response": "Por favor, gostaria de uma pasta."
+        },
+        {
+          "category": "short_instruction",
+          "key": "instruction-20",
+          "prompt": "Escreva um pedido educado de uma caixa.",
+          "response": "Por favor, gostaria de uma caixa."
+        },
+        {
+          "category": "short_instruction",
+          "key": "instruction-21",
+          "prompt": "Escreva um pedido educado de uma sacola.",
+          "response": "Por favor, gostaria de uma sacola."
+        },
+        {
+          "category": "short_instruction",
+          "key": "instruction-22",
+          "prompt": "Escreva um pedido educado de uma toalha.",
+          "response": "Por favor, gostaria de uma toalha."
+        },
+        {
+          "category": "short_instruction",
+          "key": "instruction-23",
+          "prompt": "Escreva um pedido educado de um mapa.",
+          "response": "Por favor, gostaria de um mapa."
+        },
+        {
+          "category": "short_instruction",
+          "key": "instruction-24",
+          "prompt": "Escreva um pedido educado de um bilhete.",
+          "response": "Por favor, gostaria de um bilhete."
+        },
+        {
+          "category": "short_instruction",
+          "key": "instruction-25",
+          "prompt": "Escreva um pedido educado de uma chave.",
+          "response": "Por favor, gostaria de uma chave."
+        },
+        {
+          "category": "short_instruction",
+          "key": "instruction-26",
+          "prompt": "Escreva um pedido educado de um carregador.",
+          "response": "Por favor, gostaria de um carregador."
+        },
+        {
+          "category": "short_instruction",
+          "key": "instruction-27",
+          "prompt": "Escreva um pedido educado de uma lanterna.",
+          "response": "Por favor, gostaria de uma lanterna."
+        },
+        {
+          "category": "short_instruction",
+          "key": "instruction-28",
+          "prompt": "Escreva um pedido educado de um casaco.",
+          "response": "Por favor, gostaria de um casaco."
+        },
+        {
+          "category": "short_instruction",
+          "key": "instruction-29",
+          "prompt": "Escreva um pedido educado de um cobertor.",
+          "response": "Por favor, gostaria de um cobertor."
+        },
+        {
+          "category": "short_instruction",
+          "key": "instruction-30",
+          "prompt": "Escreva um pedido educado de um travesseiro.",
+          "response": "Por favor, gostaria de um travesseiro."
+        },
+        {
+          "category": "short_instruction",
+          "key": "instruction-31",
+          "prompt": "Escreva um pedido educado de um ingresso.",
+          "response": "Por favor, gostaria de um ingresso."
+        },
+        {
+          "category": "short_instruction",
+          "key": "instruction-32",
+          "prompt": "Escreva um pedido educado de um formulário.",
+          "response": "Por favor, gostaria de um formulário."
+        },
+        {
+          "category": "short_instruction",
+          "key": "instruction-33",
+          "prompt": "Escreva um pedido educado de um recibo.",
+          "response": "Por favor, gostaria de um recibo."
+        },
+        {
+          "category": "short_instruction",
+          "key": "instruction-34",
+          "prompt": "Escreva um pedido educado de uma etiqueta.",
+          "response": "Por favor, gostaria de uma etiqueta."
+        },
+        {
+          "category": "short_instruction",
+          "key": "instruction-35",
+          "prompt": "Escreva um pedido educado de um envelope.",
+          "response": "Por favor, gostaria de um envelope."
+        },
+        {
+          "category": "short_instruction",
+          "key": "instruction-36",
+          "prompt": "Escreva um pedido educado de um selo.",
+          "response": "Por favor, gostaria de um selo."
+        },
+        {
+          "category": "short_instruction",
+          "key": "instruction-37",
+          "prompt": "Escreva um pedido educado de uma fita.",
+          "response": "Por favor, gostaria de uma fita."
+        },
+        {
+          "category": "short_instruction",
+          "key": "instruction-38",
+          "prompt": "Escreva um pedido educado de um pacote.",
+          "response": "Por favor, gostaria de um pacote."
+        },
+        {
+          "category": "short_instruction",
+          "key": "instruction-39",
+          "prompt": "Escreva um pedido educado de uma cesta.",
+          "response": "Por favor, gostaria de uma cesta."
+        }
+      ]
+    }
+  },
+  {
+    "source_id": "repository-pairs-v017",
+    "license": "CC0-1.0",
+    "origin": "repository:data/portuguese_v017/sources.json#repository-pairs-v017",
+    "method": "Repository-authored seed pairs for bounded definitions and elementary closed facts; not asserted to be human-authored, and no external model API or private source was used.",
+    "content_sha256": "39b7f8c3f4376e93ffd6569eeade32fbcf0e77e70a48cad7ea50c875c60b6999",
+    "content": {
+      "kind": "repository_authored",
+      "records": [
+        {
+          "category": "definition",
+          "key": "definition-00",
+          "prompt": "Defina livro em uma frase.",
+          "response": "Um livro é uma obra formada por páginas com texto ou imagens."
+        },
+        {
+          "category": "definition",
+          "key": "definition-01",
+          "prompt": "Defina caderno em uma frase.",
+          "response": "Um caderno é um conjunto de folhas usado para escrever."
+        },
+        {
+          "category": "definition",
+          "key": "definition-02",
+          "prompt": "Defina lápis em uma frase.",
+          "response": "Um lápis é um instrumento usado para escrever ou desenhar."
+        },
+        {
+          "category": "definition",
+          "key": "definition-03",
+          "prompt": "Defina caneta em uma frase.",
+          "response": "Uma caneta é um instrumento de escrita que usa tinta."
+        },
+        {
+          "category": "definition",
+          "key": "definition-04",
+          "prompt": "Defina borracha em uma frase.",
+          "response": "Uma borracha é um objeto usado para apagar marcas de lápis."
+        },
+        {
+          "category": "definition",
+          "key": "definition-05",
+          "prompt": "Defina régua em uma frase.",
+          "response": "Uma régua é um instrumento para medir comprimentos e traçar linhas."
+        },
+        {
+          "category": "definition",
+          "key": "definition-06",
+          "prompt": "Defina tesoura em uma frase.",
+          "response": "Uma tesoura é um instrumento com duas lâminas usado para cortar."
+        },
+        {
+          "category": "definition",
+          "key": "definition-07",
+          "prompt": "Defina envelope em uma frase.",
+          "response": "Um envelope é uma embalagem de papel para guardar cartas ou documentos."
+        },
+        {
+          "category": "definition",
+          "key": "definition-08",
+          "prompt": "Defina calendário em uma frase.",
+          "response": "Um calendário organiza os dias, as semanas e os meses."
+        },
+        {
+          "category": "definition",
+          "key": "definition-09",
+          "prompt": "Defina relógio em uma frase.",
+          "response": "Um relógio é um instrumento usado para indicar as horas."
+        },
+        {
+          "category": "definition",
+          "key": "definition-10",
+          "prompt": "Defina mapa em uma frase.",
+          "response": "Um mapa é uma representação de um lugar ou território."
+        },
+        {
+          "category": "definition",
+          "key": "definition-11",
+          "prompt": "Defina dicionário em uma frase.",
+          "response": "Um dicionário reúne palavras e explica seus significados."
+        },
+        {
+          "category": "definition",
+          "key": "definition-12",
+          "prompt": "Defina receita em uma frase.",
+          "response": "Uma receita é um conjunto de instruções para preparar algo."
+        },
+        {
+          "category": "definition",
+          "key": "definition-13",
+          "prompt": "Defina lista em uma frase.",
+          "response": "Uma lista é uma sequência de itens registrados em ordem."
+        },
+        {
+          "category": "definition",
+          "key": "definition-14",
+          "prompt": "Defina fila em uma frase.",
+          "response": "Uma fila é uma sequência de pessoas ou coisas que aguardam sua vez."
+        },
+        {
+          "category": "definition",
+          "key": "definition-15",
+          "prompt": "Defina ponte em uma frase.",
+          "response": "Uma ponte é uma construção que permite atravessar um obstáculo."
+        },
+        {
+          "category": "definition",
+          "key": "definition-16",
+          "prompt": "Defina estrada em uma frase.",
+          "response": "Uma estrada é uma via destinada à circulação de veículos."
+        },
+        {
+          "category": "definition",
+          "key": "definition-17",
+          "prompt": "Defina biblioteca em uma frase.",
+          "response": "Uma biblioteca é um lugar que reúne livros para consulta ou empréstimo."
+        },
+        {
+          "category": "definition",
+          "key": "definition-18",
+          "prompt": "Defina escola em uma frase.",
+          "response": "Uma escola é uma instituição dedicada ao ensino e à aprendizagem."
+        },
+        {
+          "category": "definition",
+          "key": "definition-19",
+          "prompt": "Defina jardim em uma frase.",
+          "response": "Um jardim é um espaço onde se cultivam plantas."
+        },
+        {
+          "category": "definition",
+          "key": "definition-20",
+          "prompt": "Defina semente em uma frase.",
+          "response": "Uma semente é uma estrutura da qual pode nascer uma nova planta."
+        },
+        {
+          "category": "definition",
+          "key": "definition-21",
+          "prompt": "Defina raiz em uma frase.",
+          "response": "Uma raiz é uma parte da planta que absorve água e nutrientes."
+        },
+        {
+          "category": "definition",
+          "key": "definition-22",
+          "prompt": "Defina folha em uma frase.",
+          "response": "Uma folha é uma parte da planta geralmente ligada à fotossíntese."
+        },
+        {
+          "category": "definition",
+          "key": "definition-23",
+          "prompt": "Defina flor em uma frase.",
+          "response": "Uma flor é uma estrutura reprodutiva de muitas plantas."
+        },
+        {
+          "category": "definition",
+          "key": "definition-24",
+          "prompt": "Defina fruto em uma frase.",
+          "response": "Um fruto é uma estrutura que se desenvolve da flor e pode conter sementes."
+        },
+        {
+          "category": "definition",
+          "key": "definition-25",
+          "prompt": "Defina chuva em uma frase.",
+          "response": "A chuva é a queda de gotas de água das nuvens."
+        },
+        {
+          "category": "definition",
+          "key": "definition-26",
+          "prompt": "Defina vento em uma frase.",
+          "response": "O vento é o movimento do ar."
+        },
+        {
+          "category": "definition",
+          "key": "definition-27",
+          "prompt": "Defina nuvem em uma frase.",
+          "response": "Uma nuvem é um conjunto de pequenas gotas de água ou cristais de gelo no ar."
+        },
+        {
+          "category": "definition",
+          "key": "definition-28",
+          "prompt": "Defina rio em uma frase.",
+          "response": "Um rio é um curso natural de água."
+        },
+        {
+          "category": "definition",
+          "key": "definition-29",
+          "prompt": "Defina lago em uma frase.",
+          "response": "Um lago é uma porção de água cercada por terra."
+        },
+        {
+          "category": "definition",
+          "key": "definition-30",
+          "prompt": "Defina ilha em uma frase.",
+          "response": "Uma ilha é uma porção de terra cercada por água."
+        },
+        {
+          "category": "definition",
+          "key": "definition-31",
+          "prompt": "Defina montanha em uma frase.",
+          "response": "Uma montanha é uma grande elevação natural do terreno."
+        },
+        {
+          "category": "definition",
+          "key": "definition-32",
+          "prompt": "Defina vale em uma frase.",
+          "response": "Um vale é uma área mais baixa entre elevações do terreno."
+        },
+        {
+          "category": "definition",
+          "key": "definition-33",
+          "prompt": "Defina sombra em uma frase.",
+          "response": "Uma sombra é uma região onde um objeto bloqueia a luz."
+        },
+        {
+          "category": "definition",
+          "key": "definition-34",
+          "prompt": "Defina som em uma frase.",
+          "response": "O som é uma vibração que se propaga em um meio."
+        },
+        {
+          "category": "definition",
+          "key": "definition-35",
+          "prompt": "Defina eco em uma frase.",
+          "response": "Um eco é a repetição de um som causada por sua reflexão."
+        },
+        {
+          "category": "definition",
+          "key": "definition-36",
+          "prompt": "Defina temperatura em uma frase.",
+          "response": "A temperatura é uma grandeza que indica o estado térmico de um corpo."
+        },
+        {
+          "category": "definition",
+          "key": "definition-37",
+          "prompt": "Defina memória em uma frase.",
+          "response": "A memória é a capacidade de guardar e recuperar informações."
+        },
+        {
+          "category": "definition",
+          "key": "definition-38",
+          "prompt": "Defina pergunta em uma frase.",
+          "response": "Uma pergunta é uma expressão usada para pedir uma informação."
+        },
+        {
+          "category": "definition",
+          "key": "definition-39",
+          "prompt": "Defina resposta em uma frase.",
+          "response": "Uma resposta é uma informação dada a uma pergunta ou solicitação."
+        },
+        {
+          "category": "closed_fact",
+          "key": "fact-00",
+          "prompt": "Qual é o primeiro mês do ano?",
+          "response": "Janeiro."
+        },
+        {
+          "category": "closed_fact",
+          "key": "fact-01",
+          "prompt": "Qual é o último mês do ano?",
+          "response": "Dezembro."
+        },
+        {
+          "category": "closed_fact",
+          "key": "fact-02",
+          "prompt": "Qual mês vem depois de janeiro?",
+          "response": "Fevereiro."
+        },
+        {
+          "category": "closed_fact",
+          "key": "fact-03",
+          "prompt": "Qual mês vem depois de fevereiro?",
+          "response": "Março."
+        },
+        {
+          "category": "closed_fact",
+          "key": "fact-04",
+          "prompt": "Qual mês vem depois de março?",
+          "response": "Abril."
+        },
+        {
+          "category": "closed_fact",
+          "key": "fact-05",
+          "prompt": "Qual mês vem depois de abril?",
+          "response": "Maio."
+        },
+        {
+          "category": "closed_fact",
+          "key": "fact-06",
+          "prompt": "Qual mês vem depois de maio?",
+          "response": "Junho."
+        },
+        {
+          "category": "closed_fact",
+          "key": "fact-07",
+          "prompt": "Qual mês vem depois de junho?",
+          "response": "Julho."
+        },
+        {
+          "category": "closed_fact",
+          "key": "fact-08",
+          "prompt": "Qual mês vem depois de julho?",
+          "response": "Agosto."
+        },
+        {
+          "category": "closed_fact",
+          "key": "fact-09",
+          "prompt": "Qual mês vem depois de agosto?",
+          "response": "Setembro."
+        },
+        {
+          "category": "closed_fact",
+          "key": "fact-10",
+          "prompt": "Qual mês vem depois de setembro?",
+          "response": "Outubro."
+        },
+        {
+          "category": "closed_fact",
+          "key": "fact-11",
+          "prompt": "Qual mês vem depois de outubro?",
+          "response": "Novembro."
+        },
+        {
+          "category": "closed_fact",
+          "key": "fact-12",
+          "prompt": "Qual mês vem depois de novembro?",
+          "response": "Dezembro."
+        },
+        {
+          "category": "closed_fact",
+          "key": "fact-13",
+          "prompt": "Qual dia vem depois de segunda-feira?",
+          "response": "Terça-feira."
+        },
+        {
+          "category": "closed_fact",
+          "key": "fact-14",
+          "prompt": "Qual dia vem depois de terça-feira?",
+          "response": "Quarta-feira."
+        },
+        {
+          "category": "closed_fact",
+          "key": "fact-15",
+          "prompt": "Qual dia vem depois de quarta-feira?",
+          "response": "Quinta-feira."
+        },
+        {
+          "category": "closed_fact",
+          "key": "fact-16",
+          "prompt": "Qual dia vem depois de quinta-feira?",
+          "response": "Sexta-feira."
+        },
+        {
+          "category": "closed_fact",
+          "key": "fact-17",
+          "prompt": "Qual dia vem depois de sexta-feira?",
+          "response": "Sábado."
+        },
+        {
+          "category": "closed_fact",
+          "key": "fact-18",
+          "prompt": "Qual dia vem depois de sábado?",
+          "response": "Domingo."
+        },
+        {
+          "category": "closed_fact",
+          "key": "fact-19",
+          "prompt": "Qual dia vem depois de domingo?",
+          "response": "Segunda-feira."
+        },
+        {
+          "category": "closed_fact",
+          "key": "fact-20",
+          "prompt": "Qual é a primeira letra do alfabeto português?",
+          "response": "A."
+        },
+        {
+          "category": "closed_fact",
+          "key": "fact-21",
+          "prompt": "Qual é a última letra do alfabeto português?",
+          "response": "Z."
+        },
+        {
+          "category": "closed_fact",
+          "key": "fact-22",
+          "prompt": "Qual letra vem depois de A no alfabeto?",
+          "response": "B."
+        },
+        {
+          "category": "closed_fact",
+          "key": "fact-23",
+          "prompt": "Qual letra vem depois de B no alfabeto?",
+          "response": "C."
+        },
+        {
+          "category": "closed_fact",
+          "key": "fact-24",
+          "prompt": "Qual letra vem depois de C no alfabeto?",
+          "response": "D."
+        },
+        {
+          "category": "closed_fact",
+          "key": "fact-25",
+          "prompt": "Qual letra vem depois de D no alfabeto?",
+          "response": "E."
+        },
+        {
+          "category": "closed_fact",
+          "key": "fact-26",
+          "prompt": "Qual letra vem depois de E no alfabeto?",
+          "response": "F."
+        },
+        {
+          "category": "closed_fact",
+          "key": "fact-27",
+          "prompt": "Qual letra vem depois de F no alfabeto?",
+          "response": "G."
+        },
+        {
+          "category": "closed_fact",
+          "key": "fact-28",
+          "prompt": "Qual letra vem depois de G no alfabeto?",
+          "response": "H."
+        },
+        {
+          "category": "closed_fact",
+          "key": "fact-29",
+          "prompt": "Qual letra vem depois de H no alfabeto?",
+          "response": "I."
+        },
+        {
+          "category": "closed_fact",
+          "key": "fact-30",
+          "prompt": "Qual letra vem depois de I no alfabeto?",
+          "response": "J."
+        },
+        {
+          "category": "closed_fact",
+          "key": "fact-31",
+          "prompt": "Qual letra vem depois de J no alfabeto?",
+          "response": "K."
+        },
+        {
+          "category": "closed_fact",
+          "key": "fact-32",
+          "prompt": "Qual sinal encerra uma pergunta escrita?",
+          "response": "O ponto de interrogação."
+        },
+        {
+          "category": "closed_fact",
+          "key": "fact-33",
+          "prompt": "Qual sinal costuma separar itens em uma lista dentro de uma frase?",
+          "response": "A vírgula."
+        },
+        {
+          "category": "closed_fact",
+          "key": "fact-34",
+          "prompt": "Qual sinal costuma encerrar uma frase declarativa?",
+          "response": "O ponto final."
+        },
+        {
+          "category": "closed_fact",
+          "key": "fact-35",
+          "prompt": "Qual sinal pode expressar uma exclamação?",
+          "response": "O ponto de exclamação."
+        },
+        {
+          "category": "closed_fact",
+          "key": "fact-36",
+          "prompt": "Qual sinal introduz uma explicação ou uma lista?",
+          "response": "Os dois-pontos."
+        },
+        {
+          "category": "closed_fact",
+          "key": "fact-37",
+          "prompt": "Como se chama o conjunto das letras de uma língua?",
+          "response": "Alfabeto."
+        },
+        {
+          "category": "closed_fact",
+          "key": "fact-38",
+          "prompt": "Como se chama o nome próprio usado para identificar uma pessoa?",
+          "response": "Nome."
+        },
+        {
+          "category": "closed_fact",
+          "key": "fact-39",
+          "prompt": "Como se chama a língua em que esta pergunta foi escrita?",
+          "response": "Português."
+        }
+      ]
+    }
+  }
+,
+{
+  "source_id": "supporting-facts-v017",
+  "license": "CC0-1.0",
+  "origin": "repository:data/portuguese_v017/sources.json#supporting-facts-v017",
+  "method": "Separately repository-authored supporting facts for all calendar, alphabet and punctuation topics, registered as training-only before training. Not selected or generated from test rows.",
+  "content_sha256": "d9985cba2d623edf8c700a78935070db7959d233640ccb7e56550c73e481af6a",
+  "content": {
+    "kind": "repository_authored",
+    "training_only": true,
+    "records": [
+      {
+        "category": "closed_fact",
+        "key": "knowledge-00",
+        "prompt": "Complete a informação: o ano começa no mês de...",
+        "response": "Janeiro."
+      },
+      {
+        "category": "closed_fact",
+        "key": "knowledge-01",
+        "prompt": "Complete a informação: o ano termina no mês de...",
+        "response": "Dezembro."
+      },
+      {
+        "category": "closed_fact",
+        "key": "knowledge-02",
+        "prompt": "Complete a sequência de meses: janeiro, ...",
+        "response": "Fevereiro."
+      },
+      {
+        "category": "closed_fact",
+        "key": "knowledge-03",
+        "prompt": "Complete a sequência de meses: fevereiro, ...",
+        "response": "Março."
+      },
+      {
+        "category": "closed_fact",
+        "key": "knowledge-04",
+        "prompt": "Complete a sequência de meses: março, ...",
+        "response": "Abril."
+      },
+      {
+        "category": "closed_fact",
+        "key": "knowledge-05",
+        "prompt": "Complete a sequência de meses: abril, ...",
+        "response": "Maio."
+      },
+      {
+        "category": "closed_fact",
+        "key": "knowledge-06",
+        "prompt": "Complete a sequência de meses: maio, ...",
+        "response": "Junho."
+      },
+      {
+        "category": "closed_fact",
+        "key": "knowledge-07",
+        "prompt": "Complete a sequência de meses: junho, ...",
+        "response": "Julho."
+      },
+      {
+        "category": "closed_fact",
+        "key": "knowledge-08",
+        "prompt": "Complete a sequência de meses: julho, ...",
+        "response": "Agosto."
+      },
+      {
+        "category": "closed_fact",
+        "key": "knowledge-09",
+        "prompt": "Complete a sequência de meses: agosto, ...",
+        "response": "Setembro."
+      },
+      {
+        "category": "closed_fact",
+        "key": "knowledge-10",
+        "prompt": "Complete a sequência de meses: setembro, ...",
+        "response": "Outubro."
+      },
+      {
+        "category": "closed_fact",
+        "key": "knowledge-11",
+        "prompt": "Complete a sequência de meses: outubro, ...",
+        "response": "Novembro."
+      },
+      {
+        "category": "closed_fact",
+        "key": "knowledge-12",
+        "prompt": "Complete a sequência de meses: novembro, ...",
+        "response": "Dezembro."
+      },
+      {
+        "category": "closed_fact",
+        "key": "knowledge-13",
+        "prompt": "Complete a sequência semanal: segunda-feira, ...",
+        "response": "Terça-feira."
+      },
+      {
+        "category": "closed_fact",
+        "key": "knowledge-14",
+        "prompt": "Complete a sequência semanal: terça-feira, ...",
+        "response": "Quarta-feira."
+      },
+      {
+        "category": "closed_fact",
+        "key": "knowledge-15",
+        "prompt": "Complete a sequência semanal: quarta-feira, ...",
+        "response": "Quinta-feira."
+      },
+      {
+        "category": "closed_fact",
+        "key": "knowledge-16",
+        "prompt": "Complete a sequência semanal: quinta-feira, ...",
+        "response": "Sexta-feira."
+      },
+      {
+        "category": "closed_fact",
+        "key": "knowledge-17",
+        "prompt": "Complete a sequência semanal: sexta-feira, ...",
+        "response": "Sábado."
+      },
+      {
+        "category": "closed_fact",
+        "key": "knowledge-18",
+        "prompt": "Complete a sequência semanal: sábado, ...",
+        "response": "Domingo."
+      },
+      {
+        "category": "closed_fact",
+        "key": "knowledge-19",
+        "prompt": "Complete a sequência semanal: domingo, ...",
+        "response": "Segunda-feira."
+      },
+      {
+        "category": "closed_fact",
+        "key": "knowledge-20",
+        "prompt": "Complete a informação: o alfabeto português começa com a letra...",
+        "response": "A."
+      },
+      {
+        "category": "closed_fact",
+        "key": "knowledge-21",
+        "prompt": "Complete a informação: o alfabeto português termina com a letra...",
+        "response": "Z."
+      },
+      {
+        "category": "closed_fact",
+        "key": "knowledge-22",
+        "prompt": "Complete o trecho do alfabeto: A, ...",
+        "response": "B."
+      },
+      {
+        "category": "closed_fact",
+        "key": "knowledge-23",
+        "prompt": "Complete o trecho do alfabeto: B, ...",
+        "response": "C."
+      },
+      {
+        "category": "closed_fact",
+        "key": "knowledge-24",
+        "prompt": "Complete o trecho do alfabeto: C, ...",
+        "response": "D."
+      },
+      {
+        "category": "closed_fact",
+        "key": "knowledge-25",
+        "prompt": "Complete o trecho do alfabeto: D, ...",
+        "response": "E."
+      },
+      {
+        "category": "closed_fact",
+        "key": "knowledge-26",
+        "prompt": "Complete o trecho do alfabeto: E, ...",
+        "response": "F."
+      },
+      {
+        "category": "closed_fact",
+        "key": "knowledge-27",
+        "prompt": "Complete o trecho do alfabeto: F, ...",
+        "response": "G."
+      },
+      {
+        "category": "closed_fact",
+        "key": "knowledge-28",
+        "prompt": "Complete o trecho do alfabeto: G, ...",
+        "response": "H."
+      },
+      {
+        "category": "closed_fact",
+        "key": "knowledge-29",
+        "prompt": "Complete o trecho do alfabeto: H, ...",
+        "response": "I."
+      },
+      {
+        "category": "closed_fact",
+        "key": "knowledge-30",
+        "prompt": "Complete o trecho do alfabeto: I, ...",
+        "response": "J."
+      },
+      {
+        "category": "closed_fact",
+        "key": "knowledge-31",
+        "prompt": "Complete o trecho do alfabeto: J, ...",
+        "response": "K."
+      },
+      {
+        "category": "closed_fact",
+        "key": "knowledge-32",
+        "prompt": "Nomeie a pontuação usada no fim de uma frase interrogativa.",
+        "response": "O ponto de interrogação."
+      },
+      {
+        "category": "closed_fact",
+        "key": "knowledge-33",
+        "prompt": "Nomeie a pontuação empregada entre elementos de uma enumeração na mesma frase.",
+        "response": "A vírgula."
+      },
+      {
+        "category": "closed_fact",
+        "key": "knowledge-34",
+        "prompt": "Nomeie a pontuação usada para terminar uma declaração.",
+        "response": "O ponto final."
+      },
+      {
+        "category": "closed_fact",
+        "key": "knowledge-35",
+        "prompt": "Nomeie a pontuação associada a uma expressão exclamativa.",
+        "response": "O ponto de exclamação."
+      },
+      {
+        "category": "closed_fact",
+        "key": "knowledge-36",
+        "prompt": "Nomeie a pontuação que antecede a apresentação de uma explicação ou enumeração.",
+        "response": "Os dois-pontos."
+      },
+      {
+        "category": "closed_fact",
+        "key": "knowledge-37",
+        "prompt": "Dê o termo usado para o conjunto ordenado de letras de uma língua.",
+        "response": "Alfabeto."
+      },
+      {
+        "category": "closed_fact",
+        "key": "knowledge-38",
+        "prompt": "Dê o termo para a identificação própria atribuída a uma pessoa.",
+        "response": "Nome."
+      },
+      {
+        "category": "closed_fact",
+        "key": "knowledge-39",
+        "prompt": "Indique o idioma destas frases: livro, caderno e calendário.",
+        "response": "Português."
+      }
+    ]
+  }
+}
+]

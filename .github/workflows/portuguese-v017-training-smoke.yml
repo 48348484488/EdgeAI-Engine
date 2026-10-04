@@ -1,0 +1,57 @@
+name: Portuguese v0.17 Training Smoke
+
+on:
+  push:
+    branches: [v0.17-portuguese-neural]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  training-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install pinned CPU training dependencies
+        run: |
+          python -m pip install --disable-pip-version-check --index-url https://download.pytorch.org/whl/cpu torch==2.10.0
+          python -m pip install --disable-pip-version-check 'numpy>=1.26,<3'
+      - name: Training data and contract tests
+        run: >-
+          python -m unittest
+          tests.test_portuguese_training_v017.TrainingContracts
+          tests.test_portuguese_data_v017
+          tests.test_evaluate_portuguese_v017
+          tests.test_portuguese_v017_training_workflow -v
+      - name: Prepare clean quick-run evidence directories
+        run: |
+          rm -rf evidence/portuguese-v017-quick-a evidence/portuguese-v017-quick-b
+          mkdir -p evidence/portuguese-v017-quick-a evidence/portuguese-v017-quick-b
+      - name: Run both quick training profiles
+        shell: bash
+        run: |
+          set +e
+          python benchmarks/portuguese_v017.py --profile quick --threads 1 --out evidence/portuguese-v017-quick-a > evidence/portuguese-v017-quick-a/run.log 2>&1
+          status_a=$?
+          python benchmarks/portuguese_v017.py --profile quick --threads 1 --out evidence/portuguese-v017-quick-b > evidence/portuguese-v017-quick-b/run.log 2>&1
+          status_b=$?
+          printf 'run_a_exit=%s\nrun_b_exit=%s\n' "$status_a" "$status_b" | tee evidence/training-run-status.txt
+          if [ "$status_a" -ne 0 ] || [ "$status_b" -ne 0 ]; then exit 1; fi
+      - name: Compare deterministic reports and checkpoint hashes
+        run: >-
+          python tools/verify_portuguese_training_runs.py
+          evidence/portuguese-v017-quick-a evidence/portuguese-v017-quick-b
+      - name: Upload both training runs as evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: portuguese-v017-training-smoke-evidence
+          path: |
+            evidence/portuguese-v017-quick-a/
+            evidence/portuguese-v017-quick-b/
+            evidence/training-run-status.txt
+          if-no-files-found: warn

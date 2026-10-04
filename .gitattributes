@@ -1,1 +1,5 @@
 data/low_resource_v016/*.jsonl text eol=lf
+data/portuguese_v017/* text eol=lf
+tools/portuguese_data_v017.py text eol=lf
+tools/evaluate_portuguese_v017.py text eol=lf
+results/v017_portuguese/*.json text eol=lf
