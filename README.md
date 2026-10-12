@@ -314,6 +314,19 @@ inventar certezas. O relatorio do jogo compilado inclui
 **Escopo:** apenas comparacoes imediatas EQ/NE com semantica parcial.
 Nao prova todos os caminhos ARM32 nem a equivalencia de codigo gerado.
 
+## Intervalos unsigned recuperados do ARM32
+
+`tools/arm_unsigned_paths.py` acompanha restricoes conservadoras
+de `CMP registrador, #imediato` e desvios `BHI`/`BLS`.
+No jogo da velha compilado, reconhece que `CMP R0, #8; BHI`
+separa valores de `R0` em `0..8` e `9..4294967295`.
+O relatorio de `play()` inclui `unsigned_path_constraints`.
+
+Os testes controlados passaram em ambiente local e o modulo foi
+executado sobre um ELF ARM32 real. GitHub Actions continua com falha,
+portanto a validacao integrada permanece pendente. A ferramenta nao
+prova equivalencia completa nem recupera automaticamente qualquer funcao.
+
 ## Qual é o próximo objetivo?
 
 Ampliar o decodificador ARM/Thumb-2, reconhecer os limites reais das funções e validar os mapas de chamadas em binários ARM reais. A ferramenta `arm_functions.py` gera **candidatos** a partir de chamadas diretas ARM32 `BL` e Thumb-2 `BL`/`BLX` imediato, mas não cobre instruções Thumb-2 em geral, chamadas indiretas, mudanças dinâmicas de modo nem limites completos das funções. Depois, avançar para pseudocódigo e reconstrução verificável em C/C++.
