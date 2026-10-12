@@ -83,6 +83,16 @@ também preserva o relatório como artefato de CI.
 não a precisão em jogos completos. Os números devem ser obtidos da execução;
 não são estimados no README.
 
+## Saltos de cauda e esboço de fluxo
+
+Quando já conhecemos dois endereços de entrada, a ferramenta pode apontar um salto direto entre eles como **possível transferência de cauda**. Ela também gera um esboço comentado do fluxo, **não um código C++ funcional**:
+
+```bash
+python3 tools/arm_flow_outline.py jogo-arm.elf --entry 0x1080 --entry 0x1000 --mode arm
+```
+
+Os endereços acima são específicos do jogo da velha usado na validação; para outros executáveis, utilize as entradas corretas. Não há inferência automática de tipos, variáveis ou condições.
+
 ## Qual é o próximo objetivo?
 
 Ampliar o decodificador ARM/Thumb-2, reconhecer os limites reais das funções e validar os mapas de chamadas em binários ARM reais. A ferramenta `arm_functions.py` gera **candidatos** a partir de chamadas diretas ARM32 `BL` e Thumb-2 `BL`/`BLX` imediato, mas não cobre instruções Thumb-2 em geral, chamadas indiretas, mudanças dinâmicas de modo nem limites completos das funções. Depois, avançar para pseudocódigo e reconstrução verificável em C/C++.
