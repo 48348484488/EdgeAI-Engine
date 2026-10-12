@@ -36,7 +36,7 @@ def main():
                'all_arm32_candidates_compiled':all(x['arm32_candidate_compiled'] for x in cases),
                'qemu_tested':False,'different_compilers_tested':False,
                'generic_decompilation':False}
-    if total!=5*85223 or mismatches or not aggregate['all_arm32_candidates_compiled']:
+    if total!=5*327684 or mismatches or not aggregate['all_arm32_candidates_compiled']:
         raise AssertionError('winner variants validation failed')
     args.output.parent.mkdir(parents=True,exist_ok=True)
     args.output.write_text(json.dumps(aggregate,indent=2)+'\n',encoding='utf-8')
