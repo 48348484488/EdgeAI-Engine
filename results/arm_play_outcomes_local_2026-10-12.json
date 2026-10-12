@@ -1,0 +1,35 @@
+{
+  "test": "Compiled ARM32 tic-tac-toe play() path analysis and native differential",
+  "source": "examples/reverse/tictactoe.c",
+  "source_sha256": "6232f5dfdfe706c46b799786b80186a4cbdd0602bfba9c1997c63933b3ac6a43",
+  "elf_sha256": "65d699729f322fcc3ca3d151d86d9fc0b392b8b9fc2681e4c0e46f481454829c",
+  "toolchain": "clang --target=armv7-none-eabi -marm -O1 -fno-inline -nostdlib -fuse-ld=lld -Wl,-Ttext=0x1000 -Wl,-e=start",
+  "compiled_play_entry": "0x1074",
+  "compiled_board_base": "0x21120",
+  "compiled_board_read_pc": "0x1084",
+  "compiled_board_write_pc": "0x1098",
+  "visited_states": 13,
+  "unsupported_pcs": [],
+  "outcomes": [
+    {
+      "condition": "position 0..8 and board cell occupied",
+      "result": "return_minus_one",
+      "board_written": false
+    },
+    {
+      "condition": "position 9..4294967295",
+      "result": "return_minus_one",
+      "board_written": false
+    },
+    {
+      "condition": "position 0..8 and board cell empty",
+      "result": "winner_tail_jump",
+      "board_written": true
+    }
+  ],
+  "native_differential": {
+    "tested_cases": 767637,
+    "mismatches": 0
+  },
+  "limitations": "Local compiled ARM32 disassembly path analysis; behavioral test runs native x86_64 against supplied original winner() and assumes C++ prototype. Not byte-identical recovery. GitHub Actions verification pending."
+}
