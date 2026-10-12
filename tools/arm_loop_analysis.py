@@ -189,8 +189,20 @@ def analyze(instructions, function=None, max_instructions=20000):
         results.append({'header': hex(header), 'back_edge_latches': [hex(x) for x in sorted(info['latches'])],
                         'instruction_addresses': [hex(x) for x in sorted(members)],
                         'exit_edges': exits, 'counter_candidates': candidates})
+    # Export the same bounded, reachable CFG so separate passes can analyze
+    # postdominators and control-flow regions without re-decoding ARM.
+    cfg_edges = []
+    for src in sorted(reachable):
+        op, args = by_pc[src]
+        match = TARGET.match(args) if op in BRANCHES else None
+        taken = int(match[1], 16) if match else None
+        for dst in sorted(successors[src]):
+            kind = ('taken' if taken == dst else 'fallthrough') if op in BRANCHES else 'flow'
+            cfg_edges.append({'from': hex(src), 'to': hex(dst), 'type': kind})
+    exit_pcs = [hex(pc) for pc in sorted(reachable) if not successors[pc]]
     return {'function': function, 'entry': hex(entry),
-            'reachable_instruction_count': len(reachable), 'loop_count': len(results),
+            'reachable_instruction_count': len(reachable), 'reachable_pcs': [hex(pc) for pc in sorted(reachable)],
+            'cfg_edges': cfg_edges, 'exit_pcs': exit_pcs, 'loop_count': len(results),
             'loops': results, 'memory_accesses': memory_accesses,
             'external_edges': external_edges, 'conditional_returns': conditional_returns,
             'unknown_control_pcs': unknown_control,
