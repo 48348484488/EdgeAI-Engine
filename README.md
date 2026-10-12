@@ -175,8 +175,7 @@ está dentro de seus 36 bytes.
 python3 tools/inspect_tictactoe_memory.py
 ```
 
-Valores desconhecidos continuam marcados como não resolvidos. A análise
-linear ainda não infere registradores através de todos os desvios e chamadas.
+O resolvedor reconhece `MOVW`/`MOVT` para construir endereços de 32 bits. Quando identifica o endereço-base de `board`, mas não sabe o índice, classifica o acesso como `board_base_dynamic_index`, **não** como endereço confirmado. Valores desconhecidos continuam não resolvidos, e a análise não atravessa todos os desvios e chamadas.
 
 ## Qual é o próximo objetivo?
 
