@@ -177,6 +177,21 @@ python3 tools/inspect_tictactoe_memory.py
 
 O resolvedor reconhece `MOVW`/`MOVT` para construir endereços de 32 bits. Quando identifica o endereço-base de `board`, mas não sabe o índice, classifica o acesso como `board_base_dynamic_index`, **não** como endereço confirmado. Valores desconhecidos continuam não resolvidos, e a análise não atravessa todos os desvios e chamadas.
 
+## Rastreamento simbolico entre desvios ARM
+
+O analisador `tools/arm_symbolic_flow.py` acompanha enderecos conhecidos
+pelos desvios diretos `B` e condicionais ARM suportados e reune estados
+mantendo somente constantes iguais em todos os caminhos identificados.
+
+O comando `python3 tools/inspect_tictactoe_memory.py` aplica essa
+analise ao executavel ARM compilado do jogo da velha para tentar reconhecer
+tanto leituras quanto gravacoes ligadas ao simbolo `board`.
+`board_base_dynamic_index` significa base conhecida e indice incerto;
+**nao prova qual casa do tabuleiro foi acessada**.
+
+Esta etapa ainda nao rastreia enderecos por todos os modos ARM nem gera
+codigo C++ equivalente.
+
 ## Qual é o próximo objetivo?
 
 Ampliar o decodificador ARM/Thumb-2, reconhecer os limites reais das funções e validar os mapas de chamadas em binários ARM reais. A ferramenta `arm_functions.py` gera **candidatos** a partir de chamadas diretas ARM32 `BL` e Thumb-2 `BL`/`BLX` imediato, mas não cobre instruções Thumb-2 em geral, chamadas indiretas, mudanças dinâmicas de modo nem limites completos das funções. Depois, avançar para pseudocódigo e reconstrução verificável em C/C++.
