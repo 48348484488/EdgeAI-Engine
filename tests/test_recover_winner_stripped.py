@@ -74,6 +74,23 @@ class StrippedWinnerTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 recover_stripped(file)
 
+    def test_relinked_executable_without_fixed_addresses(self):
+        with tempfile.TemporaryDirectory() as td:
+            original=Path(td)/'relocated.elf'
+            stripped=Path(td)/'relocated_stripped.elf'
+            subprocess.run(['clang','--target=armv7-none-eabi','-marm','-O1',
+                            '-fno-inline','-nostdlib','-fuse-ld=lld',
+                            '-Wl,-Ttext=0x5000','-Wl,-e,start',
+                            str(ROOT/'examples/reverse/tictactoe.c'),'-o',str(original)],
+                           capture_output=True,check=True)
+            subprocess.run(['llvm-objcopy','--strip-all',str(original),str(stripped)],
+                           capture_output=True,check=True)
+            result=recover_stripped(stripped)
+            self.assertEqual(result['function_address'],'0x5000')
+            self.assertEqual(result['table_address'],'0x15108')
+            self.assertEqual(result['board_address'],'0x25120')
+            self.assertEqual(result['triplets'],recover_stripped(self.stripped)['triplets'])
+
     def test_invalid_elf_header_rejected(self):
         with tempfile.TemporaryDirectory() as td:
             file=Path(td)/'bad.elf';file.write_bytes(b'bad')
