@@ -27,7 +27,7 @@ class Tests(unittest.TestCase):
         out=m.analyze(data,0x1000)
         self.assertNotIn("r2",out["in_states"]["0x1014"]["registers"])
     def test_unknown_instruction_stops(self):
-        out=m.analyze(sample([0xe5900000,0xe3a01001]),0x1000)
+        out=m.analyze(sample([0xe5d00000,0xe3a01001]),0x1000)
         self.assertIn("0x1000",out["unsupported_addresses"])
 if __name__=="__main__":
     unittest.main()
