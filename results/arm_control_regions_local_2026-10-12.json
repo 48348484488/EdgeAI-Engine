@@ -50,5 +50,28 @@
     "Structural CFG analysis; cannot prove ARM register values, loop termination, or C++ source equivalence",
     "Native Python probe over LLVM-disassembled ARM32; full GitHub runner remains unverified",
     "No QEMU execution in this run"
-  ]
+  ],
+  "other_compiled_fixture": {
+    "source": "examples/reverse/array_sum.c",
+    "target": "armv7-none-eabi clang -O1",
+    "elf_sha256": "8bf599999029e1d79394eb7001010196b8ce672cdd8d80e0c0d0f44f11dd1ad2",
+    "sum_array": {
+      "branch_count": 2,
+      "branches": [
+        {
+          "pc": "0x1004",
+          "classification": "exit_only",
+          "merge": null
+        },
+        {
+          "pc": "0x101c",
+          "classification": "reconverging",
+          "merge": "0x1020"
+        }
+      ]
+    },
+    "start": {
+      "branch_count": 0
+    }
+  }
 }
