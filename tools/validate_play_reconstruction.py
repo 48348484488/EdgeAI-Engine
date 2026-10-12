@@ -35,10 +35,11 @@ def run(output=Path("results/play_reconstruction_test.json")):
                 "candidate_generation":info["generation"],
                 "evidence":info["binary_evidence"],
                 "source_assumptions":info["not_inferred_from_binary"],
+                "inferred_from_binary":info["inferred_from_binary"],
                 "arm32_candidate_compiled":arm_candidate.is_file(),
                 "native_behavior_test":behavior,
                 "binary_bytes_compared":False,
-                "caveat":"The candidate is a source-assisted template validated against original behavior on the enumerated inputs; this is not automatic decompilation."}
+                "caveat":"Bounds, zero-cell guard and rejection value are pattern-inferred from ARM, while structure and winner implementation remain shared/template-based; not autonomous decompilation."}
         output=Path(output)
         if not output.is_absolute():output=ROOT/output
         output.parent.mkdir(parents=True,exist_ok=True)
