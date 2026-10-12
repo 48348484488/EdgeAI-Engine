@@ -33,6 +33,9 @@ unsigned_spec.loader.exec_module(unsigned_tool)
 outcomes_spec=importlib.util.spec_from_file_location('edgeai_outcomes',ROOT/'tools'/'arm_play_outcomes.py')
 outcomes_tool=importlib.util.module_from_spec(outcomes_spec)
 outcomes_spec.loader.exec_module(outcomes_tool)
+loop_spec=importlib.util.spec_from_file_location('edgeai_generic_loop',ROOT/'tools'/'arm_loop_analysis.py')
+loop_tool=importlib.util.module_from_spec(loop_spec)
+loop_spec.loader.exec_module(loop_tool)
 
 def evaluate():
     with tempfile.TemporaryDirectory() as directory:
@@ -69,7 +72,8 @@ def evaluate():
                 numeric=int(access["resolved_address"],16) if access["resolved_address"] else None
                 access["board_relation"]=("confirmed_address" if numeric is not None and board_start<=numeric<board_start+36 else "board_base_dynamic_index" if access.get("base_address")==hex(board_start) and numeric is None else "unresolved_or_other")
             item={"name":name,"address":hex(addr),
-                  "memory_access_count":len(accesses),"accesses":accesses}
+                  "memory_access_count":len(accesses),"accesses":accesses,
+                  "control_flow_structure":loop_tool.analyze(instructions,name)}
             if name=="play":
                 item["register_evidence"]=play_evidence.report(instructions,board_start)
                 item["control_flow"]=compiled_branches.analyze(instructions)
