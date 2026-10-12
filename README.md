@@ -192,6 +192,17 @@ tanto leituras quanto gravacoes ligadas ao simbolo `board`.
 Esta etapa ainda nao rastreia enderecos por todos os modos ARM nem gera
 codigo C++ equivalente.
 
+## Evidencias da rotina play() ARM32
+
+O modulo `tools/arm_play_evidence.py` inspeciona comparacoes, desvios
+e acessos indexados no binario ARM32 do jogo da velha. O relatorio
+`python3 tools/inspect_tictactoe_memory.py` agora inclui um esboco
+comentado com os papeis candidatos de `R0` (posicao) e `R1` (jogador).
+
+Esses papeis sao hipoteses fundamentadas na convencao de chamadas e
+nos operandos. As condicoes exatas e a equivalencia com C++ ainda nao
+estao demonstradas.
+
 ## Qual é o próximo objetivo?
 
 Ampliar o decodificador ARM/Thumb-2, reconhecer os limites reais das funções e validar os mapas de chamadas em binários ARM reais. A ferramenta `arm_functions.py` gera **candidatos** a partir de chamadas diretas ARM32 `BL` e Thumb-2 `BL`/`BLX` imediato, mas não cobre instruções Thumb-2 em geral, chamadas indiretas, mudanças dinâmicas de modo nem limites completos das funções. Depois, avançar para pseudocódigo e reconstrução verificável em C/C++.
