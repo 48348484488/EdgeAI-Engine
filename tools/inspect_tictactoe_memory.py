@@ -46,7 +46,7 @@ def evaluate():
             board_start=int(board.group(1),16)
             for access in accesses:
                 numeric=int(access["resolved_address"],16) if access["resolved_address"] else None
-                access["board_relation"]="confirmed_address" if numeric is not None and board_start<=numeric<board_start+36 else "unresolved_or_other"
+                access["board_relation"]=("confirmed_address" if numeric is not None and board_start<=numeric<board_start+36 else "board_base_dynamic_index" if access.get("base_address")==hex(board_start) and numeric is None else "unresolved_or_other")
             functions.append({"name":name,"address":hex(addr),
                               "memory_access_count":len(accesses),"accesses":accesses})
         if {item["name"] for item in functions}!={"start","play","winner"}:
