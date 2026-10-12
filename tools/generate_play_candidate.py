@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Generate a constrained C++ play() candidate after verifying compiled ARM evidence.
 
-This is a RULE-BASED, SOURCE-ASSISTED BASELINE, not autonomous decompilation:
-the function's invalid-move policy and winner() contract are human supplied.
+Pattern-constrained generator, not autonomous decompilation. Function signatures
+and the memory model remain supplied; guards and paths are checked in ARM.
 """
 import argparse
 import json
@@ -16,23 +16,9 @@ spec.loader.exec_module(inspect)
 rule_spec=importlib.util.spec_from_file_location("edgeai_play_rules",ROOT/"tools"/"infer_play_rules.py")
 rules=importlib.util.module_from_spec(rule_spec)
 rule_spec.loader.exec_module(rules)
-emit_spec=importlib.util.spec_from_file_location("edgeai_cpp_emitter",ROOT/"tools"/"arm_cpp_emitter.py")
-emitter=importlib.util.module_from_spec(emit_spec)
-emit_spec.loader.exec_module(emitter)
 ir_spec=importlib.util.spec_from_file_location("edgeai_arm_ir",ROOT/"tools"/"arm_ir.py")
 arm_ir=importlib.util.module_from_spec(ir_spec)
 ir_spec.loader.exec_module(arm_ir)
-
-CPP='''// C++ structural template, with guard values inferred from ARM evidence.
-extern "C" volatile int board[9];
-extern "C" int winner(void);
-extern "C" int play(int position, int player) {{
-    if ((unsigned)position > {max_position}u || board[position] != {empty_value})
-        return {rejection_value};
-    board[position] = player;
-    return winner();
-}}
-'''
 
 def generate(report):
     play=next((f for f in report["functions"] if f["name"]=="play"),None)
