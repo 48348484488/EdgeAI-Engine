@@ -29,9 +29,14 @@ static void check(const int values[9]) {
 }
 int main() {
     int values[9]{};
-    for (int state = 0; state < 19683; ++state) {
+    // Exhaust all 4^9 boards, including negative values, not only ternary boards.
+    const int alphabet[] = {-1, 0, 1, 2};
+    for (int state = 0; state < 262144; ++state) {
         int n = state;
-        for (int i = 0; i < 9; ++i) { values[i] = n % 3; n /= 3; }
+        for (int i = 0; i < 9; ++i) {
+            values[i] = alphabet[n & 3];
+            n >>= 2;
+        }
         check(values);
     }
     const int edge[] = {-2147483647-1, -1, 3, 2147483647};
