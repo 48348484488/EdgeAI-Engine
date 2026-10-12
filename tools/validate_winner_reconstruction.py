@@ -9,6 +9,7 @@ import tempfile
 from recover_winner import recover, emit_cpp
 from reconstruct_winner import reconstruct as strict_reconstruct
 from arm_winner_reconstruct import reconstruct as independent_elf_reconstruct
+from arm_loop_analysis import disassemble_function, analyze as analyze_generic_loops
 from recover_winner_stripped import recover_stripped
 from recover_winner_variants import recover_variants
 
@@ -36,6 +37,7 @@ def validate(source=SOURCE, harness=HARNESS, output=ROOT/'results/winner_reconst
         extracted = recover_variants(evidence_elf) if strip_symbols else recover(original_elf)
         strict_o1_verification = None
         independent_o1_verification = None
+        generic_loop_verification = None
         if optimization == '1':
             # Second parser reads addresses/section bytes from objdump, while
             # the primary parsers use ELF symbols or PT_LOAD segments.
@@ -50,6 +52,16 @@ def validate(source=SOURCE, harness=HARNESS, output=ROOT/'results/winner_reconst
             if (independent_o1_verification['table_symbol_address'] != extracted['table_address']
                     or independent_o1_verification['board_symbol_address'] != extracted['board_address']):
                 raise ValueError('independently decoded symbol pointers disagree')
+            disassembled = execute(['llvm-objdump', '-d', str(original_elf)])
+            generic_loop_verification = analyze_generic_loops(
+                disassemble_function(disassembled, 'winner'), 'winner')
+            if (generic_loop_verification['loop_count'] != 1 or
+                    len([i for i in generic_loop_verification['memory_accesses']
+                         if i['operation'] == 'ldrb']) != 3 or
+                    len([i for i in generic_loop_verification['memory_accesses']
+                         if i['operation'] == 'ldr']) != 3 or
+                    generic_loop_verification['unknown_control_pcs']):
+                raise ValueError('independent generic ARM loop/memory analysis disagrees')
         candidate = temp/'winner.cpp'
         candidate.write_text(emit_cpp(extracted), encoding='utf-8')
         candidate_arm = temp/'candidate_arm.o'
@@ -72,6 +84,7 @@ def validate(source=SOURCE, harness=HARNESS, output=ROOT/'results/winner_reconst
             'extraction': extracted,
             'independent_arm_o1_verification': strict_o1_verification,
             'additional_elf32_arm_o1_verification': independent_o1_verification,
+            'generic_arm_loop_verification': generic_loop_verification,
             'stripped_elf_tested': strip_symbols,
             'reference_arm_optimization': '-O'+optimization,
             'arm_candidate_compiled': candidate_arm.is_file(),
