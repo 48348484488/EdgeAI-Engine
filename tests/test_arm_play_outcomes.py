@@ -12,6 +12,7 @@ def load(path,name):
 
 outcomes=load("tools/arm_play_outcomes.py","play_outcomes")
 inspector=load("tools/inspect_tictactoe_memory.py","tic_inspector")
+generator=load("tools/generate_play_candidate.py","tic_generator")
 MAX=0xffffffff
 
 def ins(pc,op,args):
@@ -53,6 +54,15 @@ class PathOutcomeTests(unittest.TestCase):
         ]
         report=outcomes.analyze(seq,[],[])
         self.assertTrue(all(x["board_cell"]=="unknown" for x in report["outcomes"]))
+
+    def test_generator_rejects_tampered_rejection_path(self):
+        report=inspector.evaluate()
+        play=next(f for f in report["functions"] if f["name"]=="play")
+        rejection=next(x for x in play["path_outcomes"]["outcomes"]
+                       if x["event"]=="return_minus_one")
+        rejection["board_written"]=True
+        with self.assertRaisesRegex(ValueError,"partition"):
+            generator.generate(report)
 
     def test_actual_compiled_arm_game(self):
         report=inspector.evaluate()
