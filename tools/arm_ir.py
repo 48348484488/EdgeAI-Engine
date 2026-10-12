@@ -33,3 +33,25 @@ def emit_cpp(ir):
             body.append("return winner();")
         else: raise ValueError("unsupported IR operation")
     return "\n".join(header+["    "+line for line in body]+["}",""])
+
+def emit_expression(node, names=None):
+    """Small reusable C++ expression backend for non-game-specific IR."""
+    names=names or {}
+    def operand(value):
+        if isinstance(value,int):
+            return str(value)
+        if isinstance(value,str) and value in names:
+            return names[value]
+        raise ValueError("unmapped IR operand")
+    op=node.get("op")
+    if op=="constant":
+        return operand(node["value"])
+    if op=="binary":
+        operators={"add":"+","sub":"-","eq":"==","ult":"<"}
+        kind=node.get("kind")
+        if kind not in operators:
+            raise ValueError("unsupported binary IR operator")
+        return "("+operand(node["lhs"])+" "+operators[kind]+" "+operand(node["rhs"])+")"
+    if op=="move":
+        return operand(node["source"])
+    raise ValueError("unsupported expression IR node")
