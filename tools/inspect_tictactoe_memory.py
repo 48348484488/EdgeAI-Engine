@@ -30,6 +30,9 @@ constraints_spec.loader.exec_module(constraints_tool)
 unsigned_spec=importlib.util.spec_from_file_location('edgeai_unsigned',ROOT/'tools'/'arm_unsigned_paths.py')
 unsigned_tool=importlib.util.module_from_spec(unsigned_spec)
 unsigned_spec.loader.exec_module(unsigned_tool)
+outcomes_spec=importlib.util.spec_from_file_location('edgeai_outcomes',ROOT/'tools'/'arm_play_outcomes.py')
+outcomes_tool=importlib.util.module_from_spec(outcomes_spec)
+outcomes_spec.loader.exec_module(outcomes_tool)
 
 def evaluate():
     with tempfile.TemporaryDirectory() as directory:
@@ -73,6 +76,10 @@ def evaluate():
                 item["path_events"]=play_paths.analyze(instructions,[a["pc"] for a in accesses if a["mnemonic"].startswith("str") and a["board_relation"]=="board_base_dynamic_index"])
                 item["path_constraints"]=constraints_tool.explore(instructions)
                 item["unsigned_path_constraints"]=unsigned_tool.explore(instructions)
+                item["path_outcomes"]=outcomes_tool.analyze(
+                    instructions,
+                    [a["pc"] for a in accesses if a["mnemonic"].startswith("ldr") and a["board_relation"]=="board_base_dynamic_index"],
+                    [a["pc"] for a in accesses if a["mnemonic"].startswith("str") and a["board_relation"]=="board_base_dynamic_index"])
             functions.append(item)
         if {item["name"] for item in functions}!={"start","play","winner"}:
             raise RuntimeError("expected game functions absent")
