@@ -15,10 +15,13 @@ on:
       - 'tools/validate_play_arm_emulation.py'
       - 'tools/recover_winner.py'
       - 'tools/recover_winner_stripped.py'
+      - 'tools/recover_winner_variants.py'
+      - 'tools/validate_winner_variants.py'
       - 'tools/validate_winner_reconstruction.py'
       - 'tests/winner_differential_harness.cpp'
       - 'tests/test_recover_winner.py'
       - 'tests/test_recover_winner_stripped.py'
+      - 'tests/test_recover_winner_variants.py'
       - 'tests/play_differential_harness.cpp'
       - 'examples/reverse/tictactoe.c'
       - 'tests/test_arm*.py'
@@ -104,6 +107,10 @@ jobs:
       - name: Differential validation with stripped winner ELF
         run: |
           python3 tools/validate_winner_reconstruction.py --strip --output results/winner_stripped_test.json --candidate-output results/winner_stripped_candidate.cpp
+      - name: Regression test five stripped ARM winner optimizations
+        run: python3 -m unittest discover -s tests -p 'test_recover_winner_variants.py' -v
+      - name: Differential comparison across Clang O1 O2 O3 Os Oz
+        run: python3 tools/validate_winner_variants.py --output results/winner_variants_validation.json
       - name: Real ELF validation against LLVM
         run: |
           python3 tools/validate_arm_reference.py --output results/arm_reference_latest.json
@@ -121,4 +128,7 @@ jobs:
             results/winner_candidate.cpp
             results/winner_stripped_test.json
             results/winner_stripped_candidate.cpp
+            results/winner_variants_validation.json
+            results/winner_variant_*.json
+            results/winner_variant_*.cpp
           if-no-files-found: warn
