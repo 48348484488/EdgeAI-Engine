@@ -48,6 +48,24 @@ python3 -m unittest discover -s tests -p 'test_arm_functions.py' -v
 python3 -m unittest discover -s tests -p 'test_thumb_calls.py' -v
 ```
 
+## Validação com binários ARM reais
+
+A verificação agora tem uma etapa própria: compilar três programas ARM/Thumb
+pequenos com Clang e comparar chamadas diretas encontradas pela EdgeAI
+com o LLVM Objdump. Ela mede acertos, falsos positivos e falsos negativos.
+
+```bash
+python3 tools/validate_arm_reference.py
+```
+
+Requer `clang`, `lld` e `llvm-objdump`. O resultado fica em JSON.
+O workflow [Reverse engineering ARM reference](.github/workflows/reverse-arm-reference.yml)
+também preserva o relatório como artefato de CI.
+
+**Importante:** três programas pequenos comprovam apenas os casos testados,
+não a precisão em jogos completos. Os números devem ser obtidos da execução;
+não são estimados no README.
+
 ## Qual é o próximo objetivo?
 
 Ampliar o decodificador ARM/Thumb-2, reconhecer os limites reais das funções e validar os mapas de chamadas em binários ARM reais. A ferramenta `arm_functions.py` gera **candidatos** a partir de chamadas diretas ARM32 `BL` e Thumb-2 `BL`/`BLX` imediato, mas não cobre instruções Thumb-2 em geral, chamadas indiretas, mudanças dinâmicas de modo nem limites completos das funções. Depois, avançar para pseudocódigo e reconstrução verificável em C/C++.
