@@ -54,7 +54,7 @@ Informe um ponto de entrada confirmado de um binario ARM32 e o modo de instrucao
 
 ```bash
 python3 tools/arm_cfg.py libGame.so --entry 0x1000 --mode arm
-python3 tools/arm_cfg.py libGame.so --entry 0x1001 --mode thumb
+python3 tools/arm_cfg.py libGame.so --entry 0x1000 --mode thumb
 ```
 
 **Atencao:** para Thumb, informe o endereco de instrucao alinhado (sem o bit
