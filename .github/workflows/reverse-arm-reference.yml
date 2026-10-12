@@ -36,6 +36,8 @@ jobs:
         run: python3 -m unittest discover -s tests -p 'test_arm_constants.py' -v
       - name: Test ARM dataflow joins
         run: python3 -m unittest discover -s tests -p 'test_arm_dataflow.py' -v
+      - name: Test ARM memory analysis
+        run: python3 -m unittest discover -s tests -p 'test_arm_memory.py' -v
       - name: Test compiled tic-tac-toe game
         run: python3 tools/validate_tictactoe_arm.py
       - name: Real ELF validation against LLVM
