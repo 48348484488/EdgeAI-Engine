@@ -13,36 +13,37 @@ def discover(data, entry, mode="arm", max_functions=128, max_instructions=4096):
     if mode not in ("arm","thumb") or not 1<=max_functions<=4096:
         raise cfg.arm.ScanError("invalid mode or function budget")
     # A direct call target is a candidate, never a confirmed function boundary.
-    pending=[entry]
+    pending=[(entry,mode)]
     candidates={}
     calls=set()
     while pending:
-        start=pending.pop(0)
-        if start in candidates:
+        start,current_mode=pending.pop(0)
+        if (start,current_mode) in candidates:
             continue
         if len(candidates)>=max_functions:
             raise cfg.arm.ScanError("function budget exceeded")
-        graph=cfg.build(data,start,mode,max_instructions)
-        candidates[start]=graph
+        graph=cfg.build(data,start,current_mode,max_instructions)
+        candidates[(start,current_mode)]=graph
         for edge in graph["edges"]:
-            if edge["type"]!="call":
+            if not edge["type"].startswith("call"):
                 continue
             src,dst=int(edge["from"],16),int(edge["to"],16)
-            calls.add((start,src,dst))
-            if dst not in candidates and dst not in pending:
-                pending.append(dst)
+            destination_mode=edge["type"].partition(":")[2] or current_mode
+            calls.add((start,current_mode,src,dst,destination_mode))
+            if (dst,destination_mode) not in candidates and (dst,destination_mode) not in pending:
+                pending.append((dst,destination_mode))
     return {
         "architecture":"ARM32","mode":mode,"seed":hex(entry),
         "candidate_count":len(candidates),
         "candidates":[{
-            "address":hex(addr),
-            "basis":"user_seed" if addr==entry else "direct_BL_target",
+            "address":hex(addr), "mode":candidate_mode,
+            "basis":"user_seed" if (addr,candidate_mode)==(entry,mode) else "direct_call_target",
             "visited_instructions":graph["instruction_count"],
             "unresolved_targets":graph["unresolved_targets"]
-        } for addr,graph in sorted(candidates.items())],
-        "calls":[{"caller_candidate":hex(owner),"call_site":hex(site),"target_candidate":hex(dst)}
-                 for owner,site,dst in sorted(calls)],
-        "limitations":"Call targets are candidates, not proven functions. BLX and Thumb-2 calls, cross-mode calls, tail calls, data flow, and decompilation are not supported."
+        } for (addr,candidate_mode),graph in sorted(candidates.items())],
+        "calls":[{"caller_candidate":hex(owner),"caller_mode":origin_mode,"call_site":hex(site),"target_candidate":hex(dst),"target_mode":destination_mode}
+                 for owner,origin_mode,site,dst,destination_mode in sorted(calls)],
+        "limitations":"Call targets are candidates, not proven functions. Indirect BLX calls, general Thumb-2 decoding, tail calls, data flow, and decompilation are not supported."
     }
 
 def main():
