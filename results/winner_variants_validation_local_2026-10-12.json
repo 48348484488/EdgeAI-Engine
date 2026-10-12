@@ -1,0 +1,263 @@
+{
+  "reference": "Clang ARM32 little-endian ELF stripped with llvm-objcopy --strip-all",
+  "test_fixture_sha256": "bc3f0dcf7b97e42f7031cf2eabba042a3c924398cd40ddcda49bfeaa0539a7ff",
+  "test_scope": "Five clang optimization levels for known winner fixture",
+  "optimizations": [
+    {
+      "optimization": "-O1",
+      "fingerprint": "O1",
+      "triplets": [
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          3,
+          4,
+          5
+        ],
+        [
+          6,
+          7,
+          8
+        ],
+        [
+          0,
+          3,
+          6
+        ],
+        [
+          1,
+          4,
+          7
+        ],
+        [
+          2,
+          5,
+          8
+        ],
+        [
+          0,
+          4,
+          8
+        ],
+        [
+          2,
+          4,
+          6
+        ]
+      ],
+      "symbols_removed": true,
+      "arm32_candidate_compiled": true,
+      "tested_cases": 85223,
+      "mismatches": 0
+    },
+    {
+      "optimization": "-O2",
+      "fingerprint": "O2_or_O3",
+      "triplets": [
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          3,
+          4,
+          5
+        ],
+        [
+          6,
+          7,
+          8
+        ],
+        [
+          0,
+          3,
+          6
+        ],
+        [
+          1,
+          4,
+          7
+        ],
+        [
+          2,
+          5,
+          8
+        ],
+        [
+          0,
+          4,
+          8
+        ],
+        [
+          2,
+          4,
+          6
+        ]
+      ],
+      "symbols_removed": true,
+      "arm32_candidate_compiled": true,
+      "tested_cases": 85223,
+      "mismatches": 0
+    },
+    {
+      "optimization": "-O3",
+      "fingerprint": "O2_or_O3",
+      "triplets": [
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          3,
+          4,
+          5
+        ],
+        [
+          6,
+          7,
+          8
+        ],
+        [
+          0,
+          3,
+          6
+        ],
+        [
+          1,
+          4,
+          7
+        ],
+        [
+          2,
+          5,
+          8
+        ],
+        [
+          0,
+          4,
+          8
+        ],
+        [
+          2,
+          4,
+          6
+        ]
+      ],
+      "symbols_removed": true,
+      "arm32_candidate_compiled": true,
+      "tested_cases": 85223,
+      "mismatches": 0
+    },
+    {
+      "optimization": "-Os",
+      "fingerprint": "Os",
+      "triplets": [
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          3,
+          4,
+          5
+        ],
+        [
+          6,
+          7,
+          8
+        ],
+        [
+          0,
+          3,
+          6
+        ],
+        [
+          1,
+          4,
+          7
+        ],
+        [
+          2,
+          5,
+          8
+        ],
+        [
+          0,
+          4,
+          8
+        ],
+        [
+          2,
+          4,
+          6
+        ]
+      ],
+      "symbols_removed": true,
+      "arm32_candidate_compiled": true,
+      "tested_cases": 85223,
+      "mismatches": 0
+    },
+    {
+      "optimization": "-Oz",
+      "fingerprint": "Oz",
+      "triplets": [
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          3,
+          4,
+          5
+        ],
+        [
+          6,
+          7,
+          8
+        ],
+        [
+          0,
+          3,
+          6
+        ],
+        [
+          1,
+          4,
+          7
+        ],
+        [
+          2,
+          5,
+          8
+        ],
+        [
+          0,
+          4,
+          8
+        ],
+        [
+          2,
+          4,
+          6
+        ]
+      ],
+      "symbols_removed": true,
+      "arm32_candidate_compiled": true,
+      "tested_cases": 85223,
+      "mismatches": 0
+    }
+  ],
+  "total_native_comparisons": 426115,
+  "mismatches": 0,
+  "all_arm32_candidates_compiled": true,
+  "qemu_tested": false,
+  "different_compilers_tested": false,
+  "generic_decompilation": false
+}
