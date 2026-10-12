@@ -1,0 +1,92 @@
+{
+  "reference": "ARM32 ELF built from tic-tac-toe C fixture (local host compiler)",
+  "function": "winner",
+  "extraction": {
+    "function": "winner",
+    "source": "ARM32 ELF symbol bytes and LLVM disassembly",
+    "board_address": "0x21120",
+    "board_cells": 9,
+    "table_address": "0x11108",
+    "table_symbol": "winner.lines",
+    "triplets": [
+      [
+        0,
+        1,
+        2
+      ],
+      [
+        3,
+        4,
+        5
+      ],
+      [
+        6,
+        7,
+        8
+      ],
+      [
+        0,
+        3,
+        6
+      ],
+      [
+        1,
+        4,
+        7
+      ],
+      [
+        2,
+        5,
+        8
+      ],
+      [
+        0,
+        4,
+        8
+      ],
+      [
+        2,
+        4,
+        6
+      ]
+    ],
+    "loop_iterations": 8,
+    "board_load_pcs": [
+      "0x1030",
+      "0x1034",
+      "0x1038"
+    ],
+    "table_load_pcs": [
+      "0x1024",
+      "0x1028",
+      "0x102c"
+    ],
+    "boolean_test": "compiler_pattern_xor_clz_zero_and_equality"
+  },
+  "arm_candidate_compiled": true,
+  "native_differential": {
+    "tested_cases": 85223,
+    "mismatches": 0,
+    "passed": true
+  },
+  "comparisons": {
+    "all_ternary_boards": 19683,
+    "uniform_extreme_boards": 4,
+    "deterministic_full_width_boards": 65536
+  },
+  "unit_tests_local": {
+    "passed": 4,
+    "failed": 0
+  },
+  "original_source_used_for_generation": false,
+  "original_source_used_for_differential_reference": true,
+  "byte_for_byte_identity_tested": false,
+  "qemu_arm_tested": false,
+  "limitations": [
+    "Unstripped ELF symbols board and winner.lines required",
+    "Recognizes one clang -O1 ARM32 boolean instruction pattern",
+    "Signature, high-level C++ equality condition and loop skeleton are part of the recognizer",
+    "Exact byte identity and QEMU behavior not tested locally",
+    "GitHub Actions CI success is separate from local validation"
+  ]
+}
