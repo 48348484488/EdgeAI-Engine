@@ -1,0 +1,29 @@
+{
+  "date": "2026-10-12",
+  "scope": "Strict clang ARM32 -O1 winner ELF pattern, extracted .rodata and independent native differential",
+  "binary_sha256": "6d6d534c05e16ded513dfd14252a5c223d38adba426c6457666fbba2d2bd23db",
+  "loop_instructions": 29,
+  "loop_iterations": 8,
+  "table_address": "0x11108",
+  "board_address": "0x21120",
+  "table_bytes_sha256": "375d0ee889feb958d4a2628453e7a9b7d9ad8a67b0b7b6ead2dcc1c714c015de",
+  "native_differential": {
+    "all_4_value_boards": 262144,
+    "uniform_extreme_boards": 4,
+    "deterministic_random_full_width_boards": 65536,
+    "tested_cases": 327684,
+    "mismatches": 0,
+    "passed": true
+  },
+  "arm32_candidate_object_compiled": true,
+  "local_test_suite": {
+    "total": 5,
+    "passed": 5
+  },
+  "limitations": [
+    "Original game compiled as the test fixture; winning combinations extracted from compiled ELF bytes",
+    "C++ code generation is ARM compiler pattern-specific, not a general decompiler",
+    "ARM32 candidate compiled, but execution comparison was native x86_64, not ARM QEMU",
+    "Current GitHub Actions workflows fail before exposing steps; full integrated verification pending"
+  ]
+}
