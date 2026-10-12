@@ -85,6 +85,22 @@ class RegionsTests(unittest.TestCase):
         self.assertEqual(play['decision_count'],2)
         self.assertTrue(all(x['classification']=='exit_only' for x in play['decisions']))
 
+    def test_unknown_indirect_control_disables_proof(self):
+        g=fixture([0x1000,0x1004,0x1008,0x100c],
+                  [(0x1000,0x1004,'fallthrough'),(0x1000,0x1008,'taken'),
+                   (0x1004,0x100c,'flow'),(0x1008,0x100c,'flow')],[0x100c])
+        g['unknown_control_pcs']=['0x1008']
+        result=regions.analyze(g)
+        self.assertEqual(result['decisions'][0]['classification'],'unresolved')
+        self.assertIsNone(result['decisions'][0]['merge'])
+
+    def test_3000_node_graph_is_bounded(self):
+        pcs=[0x1000+4*i for i in range(3000)]
+        g=fixture(pcs,[(a,b,'flow') for a,b in zip(pcs,pcs[1:])],[pcs[-1]])
+        result=regions.analyze(g)
+        self.assertEqual(result['decision_count'],0)
+        self.assertEqual(result['nonterminating_nodes'],[])
+
     def test_invalid_graph_rejected(self):
         g=fixture([0x1000],[(0x1000,0x1004,'flow')],[0x1000])
         with self.assertRaisesRegex(ValueError,'outside reachable'):
