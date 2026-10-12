@@ -33,7 +33,11 @@ def explore(instructions, max_states=10000):
         elif op in ("beq","bne"):
             m=TARGET.match(args)
             if comparison is None or not m:
-                comparison=None
+                if m and int(m[1],16) in nodes:
+                    queue.append((int(m[1],16),None,dict(constraints)))
+                if pc in nxt:
+                    queue.append((nxt[pc],None,dict(constraints)))
+                continue
             else:
                 reg,value=comparison
                 for taken,dst in ((True,int(m[1],16)),(False,nxt.get(pc))):
