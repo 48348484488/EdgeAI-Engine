@@ -434,6 +434,40 @@ versao. Estrutura e prototipo C++ sao reconhecidos por regras, nao
 recuperados genericamente. GitHub Actions continua sem resultado de
 job verificavel; testes locais sao independentes desse CI.
 
+## Execucao ARM32 real sob QEMU e verificacao GCC
+
+`tools/validate_winner_qemu.py` prepara um teste **real ARM32 Linux**:
+recupera `winner()` de cada ELF Clang sem simbolos,
+compila a implementacao original e o candidato com
+`arm-linux-gnueabihf-gcc/g++`, liga o harness como binario ARM32
+estatico e executa as **85.223 comparacoes por variante** sob
+`qemu-arm`. O comando tambem tenta extrair a rotina de um ELF
+compilado pelo proprio GCC, reportando `recognized`,
+`unsupported_gcc_pattern` ou `gcc_probe_failed` separadamente.
+Executar o codigo de ambos com GCC **nao significa** que a ferramenta
+conseguiu descompilar o codigo produzido pelo GCC.
+
+Em Ubuntu/Debian com os repositorios de pacotes habilitados:
+
+```bash
+sudo apt-get install clang lld llvm qemu-user gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf
+python3 tools/validate_winner_qemu.py --output results/winner_qemu_arm32.json
+```
+
+O workflow `reverse-arm-reference.yml` executa automaticamente esse
+comando e tenta publicar `results/winner_qemu_arm32.json`.
+**Situacao verificada em 12/10/2026:** o ambiente local possui
+Clang/LLVM, mas **nao possui QEMU nem GCC ARM**; o programa termina
+com erro explicito, sem falsificar sucesso. O CI do GitHub continua
+reportando falha sem etapas/logs acessiveis pela integracao. O teste
+ARM32 sob QEMU **ainda nao foi concluido** nesta etapa.
+
+Os resultados efetivamente reproduzidos no ambiente local foram:
+**16 testes de recuperacao + 3 testes de contrato aprovados**,
+compilacao real de um objeto ARM32 e **426.115 comparacoes nativas
+sem divergencias**. Evidencia:
+`results/winner_qemu_readiness_2026-10-12.json`.
+
 ## Qual é o próximo objetivo?
 
 Ampliar o decodificador ARM/Thumb-2, reconhecer os limites reais das funções e validar os mapas de chamadas em binários ARM reais. A ferramenta `arm_functions.py` gera **candidatos** a partir de chamadas diretas ARM32 `BL` e Thumb-2 `BL`/`BLX` imediato, mas não cobre instruções Thumb-2 em geral, chamadas indiretas, mudanças dinâmicas de modo nem limites completos das funções. Depois, avançar para pseudocódigo e reconstrução verificável em C/C++.
