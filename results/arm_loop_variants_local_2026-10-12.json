@@ -1,0 +1,74 @@
+{
+  "program": "compiled ARM32 tic-tac-toe",
+  "function": "winner",
+  "source_sha256": "6232f5dfdfe706c46b799786b80186a4cbdd0602bfba9c1997c63933b3ac6a43",
+  "compiler": "clang 17.0.0 (Swift LLVM build 10999b6d034f)",
+  "algorithm": "dominance-based natural loops plus indexed memory accesses",
+  "test_run": {
+    "local_unit_tests": 8,
+    "passed": 8,
+    "failed": 0,
+    "ARM_elf_disassembly_verified": true,
+    "QEMU_executed": false
+  },
+  "variant_results": [
+    {
+      "optimization": "-O1",
+      "elf_sha256": "a931d7b4b70d2fe6b78c8b77c8c313b0efb1fa3691889e2b000f00336a3d7df5",
+      "reachable_instructions": 29,
+      "natural_loop_count": 1,
+      "loop_headers": [
+        "0x101c"
+      ],
+      "memory_reads": 6,
+      "unknown_control_pcs": [],
+      "conditional_return_count": 0
+    },
+    {
+      "optimization": "-O2",
+      "elf_sha256": "9560b8d57470dcf4db0a18beb16aff19f22b31e63f19a9e1b093e5a5806522bb",
+      "reachable_instructions": 70,
+      "natural_loop_count": 0,
+      "loop_headers": [],
+      "memory_reads": 24,
+      "unknown_control_pcs": [],
+      "conditional_return_count": 1
+    },
+    {
+      "optimization": "-O3",
+      "elf_sha256": "1bbf3778ae90c0d1b60d2acae22a095520bad8b9f7b53e4611856b896a284f3c",
+      "reachable_instructions": 70,
+      "natural_loop_count": 0,
+      "loop_headers": [],
+      "memory_reads": 24,
+      "unknown_control_pcs": [],
+      "conditional_return_count": 1
+    },
+    {
+      "optimization": "-Os",
+      "elf_sha256": "c79dbbbb048d6e8f84af0258a0ec0b1291aaa3c2938148f3321187540c423411",
+      "reachable_instructions": 25,
+      "natural_loop_count": 1,
+      "loop_headers": [
+        "0x101c"
+      ],
+      "memory_reads": 6,
+      "unknown_control_pcs": [],
+      "conditional_return_count": 0
+    },
+    {
+      "optimization": "-Oz",
+      "elf_sha256": "e4c306e4fc1da4708b64fbbfd4d538f9070c43f0f8a717722c4ce811bfb3c674",
+      "reachable_instructions": 24,
+      "natural_loop_count": 1,
+      "loop_headers": [
+        "0x1014"
+      ],
+      "memory_reads": 8,
+      "unknown_control_pcs": [],
+      "conditional_return_count": 0
+    }
+  ],
+  "interpretation": "With Clang 17 ARM32, O2/O3 unroll this source-level loop; lack of a natural machine-code loop is not failure to identify a real back edge.",
+  "limitations": "Structural CFG only. Does not infer source-level loops from unrolled code and does not reconstruct arbitrary C++. CI and ARM/QEMU unverified for this change."
+}
