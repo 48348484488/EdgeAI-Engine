@@ -23,7 +23,7 @@ def validate(source=SOURCE, harness=HARNESS, output=ROOT/'results/winner_reconst
         temp = Path(temp)
         original_elf = temp/'original_arm.elf'
         execute(['clang', '--target=armv7-none-eabi', '-marm', '-O1', '-fno-inline',
-                 '-nostdlib', '-fuse-ld=lld', '-Wl,-Ttext=0x1000', '-Wl,-e=start',
+                 '-nostdlib', '-fuse-ld=lld', '-Wl,-Ttext=0x1000', '-Wl,-e,start',
                  str(source), '-o', str(original_elf)])
         extracted = recover(original_elf)
         candidate = temp/'winner.cpp'
