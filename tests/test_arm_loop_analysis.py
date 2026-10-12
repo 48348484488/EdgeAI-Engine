@@ -106,6 +106,26 @@ class TestLoopAnalysis(unittest.TestCase):
 
     @unittest.skipUnless(shutil.which('clang') and shutil.which('llvm-objdump'),
                          'LLVM ARM compiler and disassembler are required')
+    def test_unrelated_compiled_array_sum_loop_and_postincrement(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            elf = Path(tmp) / 'array_sum.elf'
+            subprocess.run(['clang', '--target=armv7-none-eabi', '-marm', '-O1',
+                '-fno-inline', '-nostdlib', '-fuse-ld=lld', '-Wl,-Ttext=0x1000',
+                '-Wl,-e,start', str(ROOT / 'examples/reverse/array_sum.c'), '-o', str(elf)],
+                check=True, capture_output=True)
+            dump = subprocess.run(['llvm-objdump', '-d', str(elf)],
+                                  check=True, capture_output=True, text=True).stdout
+        result = loops.analyze(loops.disassemble_function(dump, 'sum_array'), 'sum_array')
+        self.assertEqual(result['loop_count'], 1)
+        self.assertFalse(result['unknown_control_pcs'])
+        indexed = [x for x in result['memory_accesses'] if x['address_mode'] == 'post_index']
+        self.assertEqual(len(indexed), 1)
+        self.assertEqual(indexed[0]['width_bytes'], 4)
+        self.assertTrue(indexed[0]['writeback'])
+        self.assertEqual(indexed[0]['post_index_increment'], 4)
+
+    @unittest.skipUnless(shutil.which('clang') and shutil.which('llvm-objdump'),
+                         'LLVM ARM compiler and disassembler are required')
     def test_changing_real_loop_back_edge_changes_detected_structure(self):
         with tempfile.TemporaryDirectory() as tmp:
             elf = Path(tmp) / 'game.elf'
