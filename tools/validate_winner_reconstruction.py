@@ -8,6 +8,7 @@ import tempfile
 
 from recover_winner import recover, emit_cpp
 from recover_winner_stripped import recover_stripped
+from recover_winner_variants import recover_variants
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / 'examples' / 'reverse' / 'tictactoe.c'
@@ -19,18 +20,18 @@ def execute(args):
 
 
 def validate(source=SOURCE, harness=HARNESS, output=ROOT/'results/winner_reconstruction_test.json',
-             candidate_output=ROOT/'results/winner_candidate.cpp', strip_symbols=False):
+             candidate_output=ROOT/'results/winner_candidate.cpp', strip_symbols=False, optimization='1'):
     with tempfile.TemporaryDirectory() as temp:
         temp = Path(temp)
         original_elf = temp/'original_arm.elf'
-        execute(['clang', '--target=armv7-none-eabi', '-marm', '-O1', '-fno-inline',
+        execute(['clang', '--target=armv7-none-eabi', '-marm', '-O'+optimization, '-fno-inline',
                  '-nostdlib', '-fuse-ld=lld', '-Wl,-Ttext=0x1000', '-Wl,-e,start',
                  str(source), '-o', str(original_elf)])
         evidence_elf = original_elf
         if strip_symbols:
             evidence_elf = temp/'game_stripped.elf'
             execute(['llvm-objcopy', '--strip-all', str(original_elf), str(evidence_elf)])
-        extracted = recover_stripped(evidence_elf) if strip_symbols else recover(original_elf)
+        extracted = recover_variants(evidence_elf) if strip_symbols else recover(original_elf)
         candidate = temp/'winner.cpp'
         candidate.write_text(emit_cpp(extracted), encoding='utf-8')
         candidate_arm = temp/'candidate_arm.o'
@@ -52,6 +53,7 @@ def validate(source=SOURCE, harness=HARNESS, output=ROOT/'results/winner_reconst
             'function': 'winner',
             'extraction': extracted,
             'stripped_elf_tested': strip_symbols,
+            'reference_arm_optimization': '-O'+optimization,
             'arm_candidate_compiled': candidate_arm.is_file(),
             'native_differential': behavior,
             'comparisons': {'all_ternary_boards': 19683, 'uniform_extreme_boards': 4,
@@ -82,8 +84,9 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--source', type=Path, default=SOURCE)
     parser.add_argument('--strip', action='store_true', help='Remove all symbols before recovering winner')
+    parser.add_argument('--optimization', choices=['1','2','3','s','z'], default='1', help='Clang ARM optimization for compiled reference')
     parser.add_argument('--harness', type=Path, default=HARNESS)
     parser.add_argument('--output', type=Path, default=ROOT/'results/winner_reconstruction_test.json')
     parser.add_argument('--candidate-output', type=Path, default=ROOT/'results/winner_candidate.cpp')
     args = parser.parse_args()
-    validate(args.source, args.harness, args.output, args.candidate_output, args.strip)
+    validate(args.source, args.harness, args.output, args.candidate_output, args.strip, args.optimization)
