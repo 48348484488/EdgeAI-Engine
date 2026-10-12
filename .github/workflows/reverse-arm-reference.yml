@@ -29,6 +29,8 @@ jobs:
       - name: Real ELF validation against LLVM
         run: |
           python3 tools/validate_arm_reference.py --output results/arm_reference_latest.json
+      - name: Test compiled tic-tac-toe game
+        run: python3 tools/validate_tictactoe_arm.py
       - name: Upload validation evidence
         if: always()
         uses: actions/upload-artifact@v4
