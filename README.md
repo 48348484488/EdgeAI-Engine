@@ -48,8 +48,33 @@ que rivalize com assistentes comerciais.
 - Arquivos binarios analisados nao sao executados.
 - Testes: `python3 -m unittest discover -s tests -p 'test_arm_scan.py' -v`.
 
-**Proximo passo:** identificar fronteiras de codigo e construir grafos de
-fluxo de controle, medindo precisao com binarios de referencia.
+## Novo: mapa inicial do fluxo de execucao (CFG)
+
+Informe um ponto de entrada confirmado de um binario ARM32 e o modo de instrucao:
+
+```bash
+python3 tools/arm_cfg.py libGame.so --entry 0x1000 --mode arm
+python3 tools/arm_cfg.py libGame.so --entry 0x1001 --mode thumb
+```
+
+**Atencao:** para Thumb, informe o endereco de instrucao alinhado (sem o bit
+de estado Thumb); se o simbolo tiver o bit zero definido, subtraia 1 antes
+de usar `--entry`.
+
+A saida JSON mostra instrucoes alcancadas e conexoes `taken`,
+`fallthrough` e `call`. Exemplos: um salto B transfere o fluxo para
+outro endereco; BL registra uma chamada e segue pela proxima instrucao.
+Chamadas nao sao percorridas como parte do mesmo CFG.
+
+Esse CFG e **parcial e experimental**: nao descobre funcoes sozinho,
+nao suporta Thumb-2 completo, nem instrucao indireta com alvo desconhecido,
+nem identifica codigo misturado com dados. O modo deve ser escolhido pelo
+usuario. Os resultados sao candidatos, nao uma descompilacao.
+
+Teste: `python3 -m unittest discover -s tests -p 'test_arm_cfg.py' -v`.
+
+**Proximo passo:** aprimorar a decodificacao e validar CFGs em binarios ARM
+reais com referencias independentes.
 
 ## Current status
 
