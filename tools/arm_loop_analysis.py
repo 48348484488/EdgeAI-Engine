@@ -156,13 +156,16 @@ def analyze(instructions, function=None, max_instructions=20000):
         match = MEMORY.match(args)
         if not match:
             continue
-        dst, base, offset, wb = match.groups()
+        dst, base, offset, wb, post_index = match.groups()
         shift = re.search(r'lsl\s+#(\d+)', offset or '')
         memory_accesses.append({'pc': hex(pc), 'operation': op,
             'width_bytes': 1 if op.endswith('b') else 2 if op.endswith('h') else 4,
             'base_register': base.strip(), 'index_expression': (offset or '').strip(),
             'scale': 1 << int(shift[1]) if shift else 1,
-            'writeback': bool(wb), 'inside_loop_headers': [hex(h) for h, v in sorted(loops.items()) if pc in v['nodes']]})
+            'writeback': bool(wb or post_index),
+            'address_mode': 'post_index' if post_index else 'pre_index' if wb else 'offset',
+            'post_index_increment': int(post_index[1:], 0) if post_index else None,
+            'inside_loop_headers': [hex(h) for h, v in sorted(loops.items()) if pc in v['nodes']]})
     results = []
     for header, info in sorted(loops.items()):
         members = info['nodes']
