@@ -1,0 +1,86 @@
+{
+  "project": "EdgeAI-Engine",
+  "tool": "tools/arm_winner_reconstruct.py",
+  "input": "ARM32 ELF compiled from examples/reverse/tictactoe.c with clang -O1",
+  "elf_sha256": "6d6d534c05e16ded513dfd14252a5c223d38adba426c6457666fbba2d2bd23db",
+  "candidate_cpp_sha256": "b6b4e9db9e701bb39ee2fe46e0ce04d0cf472613eadbb8e0bc474e24aff127fb",
+  "arm_evidence": {
+    "instruction_count": 29,
+    "loop_back_edge": "0x101c",
+    "table_symbol_address": "0x11108",
+    "board_symbol_address": "0x21120",
+    "winner_address": "0x1000",
+    "table_source": "ELF symbol winner.lines in .rodata",
+    "winning_triplets": [
+      [
+        0,
+        1,
+        2
+      ],
+      [
+        3,
+        4,
+        5
+      ],
+      [
+        6,
+        7,
+        8
+      ],
+      [
+        0,
+        3,
+        6
+      ],
+      [
+        1,
+        4,
+        7
+      ],
+      [
+        2,
+        5,
+        8
+      ],
+      [
+        0,
+        4,
+        8
+      ],
+      [
+        2,
+        4,
+        6
+      ]
+    ],
+    "byte_count": 24
+  },
+  "local_unit_tests": {
+    "passed": 3,
+    "failed": 0,
+    "cases": [
+      "real ARM32 ELF table extraction",
+      "reject corrupted table index",
+      "reject altered loop bound"
+    ]
+  },
+  "local_arm32_cpp_compilation": {
+    "passed": true,
+    "execution_under_qemu": false
+  },
+  "local_native_differential": {
+    "tested_cases": 327684,
+    "mismatches": 0,
+    "passed": true,
+    "board_alphabet": [
+      -1,
+      0,
+      1,
+      2
+    ],
+    "uniform_extremes": 4,
+    "deterministic_random_cases": 65536
+  },
+  "integration": "Third verifier checked by the existing winner validator for -O1 against two earlier implementations",
+  "limitations": "Pattern-constrained ARM O1 proof and source-supplied high-level C++ skeleton. Native differential is not ARM QEMU execution or generic decompilation. GitHub CI still unverified."
+}
