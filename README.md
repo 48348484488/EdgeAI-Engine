@@ -456,6 +456,10 @@ python3 tools/validate_winner_qemu.py --output results/winner_qemu_arm32.json
 
 O workflow `reverse-arm-reference.yml` executa automaticamente esse
 comando e tenta publicar `results/winner_qemu_arm32.json`.
+O workflow independente `.github/workflows/winner-arm32-qemu.yml`
+tenta o mesmo teste em um job isolado, sem depender da bateria geral.
+A tentativa mais recente desse workflow retornou falha **sem etapas
+registradas**, portanto nao prova que QEMU realmente executou.
 **Situacao verificada em 12/10/2026:** o ambiente local possui
 Clang/LLVM, mas **nao possui QEMU nem GCC ARM**; o programa termina
 com erro explicito, sem falsificar sucesso. O CI do GitHub continua
