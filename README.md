@@ -572,6 +572,30 @@ reconhecimento sem nome/limite da função ainda exigem novas etapas.
 Esta rodada testou ELFs ARM32 locais, sem executar ARM sob QEMU; o
 GitHub Actions ainda precisa de validação independente.
 
+## Reconvergencia generica de caminhos ARM32 (2026-10-12)
+
+`tools/arm_loop_analysis.py` agora exporta o grafo de controle
+alcancavel, as arestas tipadas e os pontos de saida. O novo
+`tools/arm_control_regions.py` usa pos-dominadores compactados
+em bitsets para diferenciar bifurcacoes que se reencontram
+daquelas cujos caminhos seguem ate saidas diferentes.
+
+No ELF ARM32 compilado de jogo da velha, o verificador estrutural
+local encontrou duas bifurcacoes de `winner()` com destino comum
+`0x1070`, duas bifurcacoes de `play()` sem reconvergencia
+intrafuncional e nenhuma em `start()`. Oito testes locais
+passaram, incluindo grafo linear de 3.000 nos, ciclos sem saida,
+retorno condicional e fluxo indireto desconhecido.
+
+Arquivo: `results/arm_control_regions_local_2026-10-12.json`.
+Os testes de integracao estao em `tests/test_arm_control_regions.py`
+e o workflow salva `arm_winner_regions_latest.json` e
+`arm_play_regions_latest.json` quando conseguir executar.
+
+**Limite:** analise de estrutura estatica, nao equivalencia C++
+nem prova de que o programa encerra; GitHub Actions continua
+sem validacao completa nesta revisao.
+
 ## Qual é o próximo objetivo?
 
 Ampliar o decodificador ARM/Thumb-2, reconhecer os limites reais das funções e validar os mapas de chamadas em binários ARM reais. A ferramenta `arm_functions.py` gera **candidatos** a partir de chamadas diretas ARM32 `BL` e Thumb-2 `BL`/`BLX` imediato, mas não cobre instruções Thumb-2 em geral, chamadas indiretas, mudanças dinâmicas de modo nem limites completos das funções. Depois, avançar para pseudocódigo e reconstrução verificável em C/C++.
