@@ -93,7 +93,7 @@ def build(data,entry,mode,max_instructions=4096):
             successors.append((target,"taken"))
             if conditional: successors.append((pc+step,"fallthrough"))
         elif kind in ("BL","BLX"):
-            edges.add((pc,target,"call:"+call_mode))
+            edges.add((pc,target,"call" if mode=="arm" and call_mode=="arm" else "call:"+call_mode))
             successors.append((pc+width,"fallthrough"))
         elif kind in ("other","indirect-call"):
             successors.append((pc+width,"fallthrough"))
