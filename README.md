@@ -103,6 +103,20 @@ python3 tools/arm_semantics.py jogo-arm.elf --entry 0x1080
 
 Isso **não reconstrói variáveis nem produz C++**. Ainda falta analisar transferência de valores entre registradores, memória e ramificações. Os endereços de entrada dependem do executável.
 
+## Rastreamento inicial de valores ARM32
+
+A ferramenta `arm_constants.py` acompanha constantes em sequências lineares
+de `MOV`, `ADD`, `SUB` e `CMP`. Por exemplo, após `MOV R0, #5` e
+`ADD R0, R0, #3`, ela registra `R0 = 8`.
+
+```bash
+python3 tools/arm_constants.py jogo-arm.elf --entry 0x1080
+```
+
+Ela interrompe a análise diante de instruções não suportadas, condições ou
+transferências de controle. **Não rastreia memória, junções de fluxo nem
+reconstrói funções C++**.
+
 ## Qual é o próximo objetivo?
 
 Ampliar o decodificador ARM/Thumb-2, reconhecer os limites reais das funções e validar os mapas de chamadas em binários ARM reais. A ferramenta `arm_functions.py` gera **candidatos** a partir de chamadas diretas ARM32 `BL` e Thumb-2 `BL`/`BLX` imediato, mas não cobre instruções Thumb-2 em geral, chamadas indiretas, mudanças dinâmicas de modo nem limites completos das funções. Depois, avançar para pseudocódigo e reconstrução verificável em C/C++.
