@@ -59,6 +59,30 @@ class RegionsTests(unittest.TestCase):
         self.assertEqual(a['decisions'][0]['classification'],'unresolved')
         self.assertEqual(a['nonterminating_nodes'],['0x1004'])
 
+    def test_unrelated_compiled_array_sum(self):
+        import shutil
+        import subprocess
+        import tempfile
+        if not shutil.which('clang') or not shutil.which('llvm-objdump'):
+            self.skipTest('requires LLVM ARM compiler and disassembler')
+        loop_path = ROOT/'tools'/'arm_loop_analysis.py'
+        ls = importlib.util.spec_from_file_location('edge_loop_analysis',loop_path)
+        loops = importlib.util.module_from_spec(ls)
+        ls.loader.exec_module(loops)
+        with tempfile.TemporaryDirectory() as tmp:
+            elf=Path(tmp)/'array_sum.elf'
+            subprocess.run(['clang','--target=armv7-none-eabi','-marm','-O1',
+                '-fno-inline','-nostdlib','-fuse-ld=lld','-Wl,-Ttext=0x1000',
+                '-Wl,-e,start',str(ROOT/'examples/reverse/array_sum.c'),
+                '-o',str(elf)],check=True,capture_output=True)
+            dump=subprocess.run(['llvm-objdump','-d',str(elf)],
+                                check=True,capture_output=True,text=True).stdout
+        result=regions.analyze(loops.analyze(loops.disassemble_function(dump,'sum_array'),'sum_array'))
+        self.assertEqual(result['decision_count'],2)
+        self.assertEqual([x['classification'] for x in result['decisions']],
+                         ['exit_only','reconverging'])
+        self.assertIsNotNone(result['decisions'][1]['merge'])
+
     def test_actual_arm_game(self):
         import shutil
         import subprocess
