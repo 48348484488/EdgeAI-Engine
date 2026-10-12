@@ -28,7 +28,7 @@ class CandidateTests(unittest.TestCase):
         self.assertEqual(out["calls"][0]["call_site"],"0x1000")
     def test_candidate_is_not_confirmed(self):
         out=mod.discover(self.data,0x1000)
-        self.assertEqual(out["candidates"][1]["basis"],"direct_BL_target")
+        self.assertEqual(out["candidates"][1]["basis"],"direct_call_target")
     def test_budget(self):
         with self.assertRaises(mod.cfg.arm.ScanError):
             mod.discover(self.data,0x1000,max_functions=1)
