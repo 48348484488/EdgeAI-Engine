@@ -117,6 +117,16 @@ Ela interrompe a análise diante de instruções não suportadas, condições ou
 transferências de controle. **Não rastreia memória, junções de fluxo nem
 reconstrói funções C++**.
 
+## Constantes entre blocos ARM
+
+O novo `arm_dataflow.py` percorre os caminhos do CFG para instruções ARM32 suportadas, acompanha constantes, avalia comparações `EQ`/`NE` e junta estados mantendo somente valores iguais entre todos os caminhos encontrados.
+
+```bash
+python3 tools/arm_dataflow.py jogo-arm.elf --entry 0x1000
+```
+
+A implementação **não é um descompilador**: interrompe caminhos em instruções desconhecidas, não modela memória nem efeitos completos de chamadas. As entradas e o conjunto ARM devem ser conhecidos.
+
 ## Qual é o próximo objetivo?
 
 Ampliar o decodificador ARM/Thumb-2, reconhecer os limites reais das funções e validar os mapas de chamadas em binários ARM reais. A ferramenta `arm_functions.py` gera **candidatos** a partir de chamadas diretas ARM32 `BL` e Thumb-2 `BL`/`BLX` imediato, mas não cobre instruções Thumb-2 em geral, chamadas indiretas, mudanças dinâmicas de modo nem limites completos das funções. Depois, avançar para pseudocódigo e reconstrução verificável em C/C++.
