@@ -15,6 +15,9 @@ spec.loader.exec_module(address_tool)
 flow_spec=importlib.util.spec_from_file_location("edgeai_symbolic_flow",ROOT/"tools"/"arm_symbolic_flow.py")
 symbolic_flow=importlib.util.module_from_spec(flow_spec)
 flow_spec.loader.exec_module(symbolic_flow)
+play_spec=importlib.util.spec_from_file_location("edgeai_play_evidence",ROOT/"tools"/"arm_play_evidence.py")
+play_evidence=importlib.util.module_from_spec(play_spec)
+play_spec.loader.exec_module(play_evidence)
 
 def evaluate():
     with tempfile.TemporaryDirectory() as directory:
@@ -50,8 +53,11 @@ def evaluate():
             for access in accesses:
                 numeric=int(access["resolved_address"],16) if access["resolved_address"] else None
                 access["board_relation"]=("confirmed_address" if numeric is not None and board_start<=numeric<board_start+36 else "board_base_dynamic_index" if access.get("base_address")==hex(board_start) and numeric is None else "unresolved_or_other")
-            functions.append({"name":name,"address":hex(addr),
-                              "memory_access_count":len(accesses),"accesses":accesses})
+            item={"name":name,"address":hex(addr),
+                  "memory_access_count":len(accesses),"accesses":accesses}
+            if name=="play":
+                item["register_evidence"]=play_evidence.report(instructions,board_start)
+            functions.append(item)
         if {item["name"] for item in functions}!={"start","play","winner"}:
             raise RuntimeError("expected game functions absent")
         return {"program":"compiled ARM32 tic-tac-toe","board_symbol_address":hex(int(board.group(1),16)),
