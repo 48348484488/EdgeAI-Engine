@@ -137,6 +137,19 @@ python3 tools/arm_memory.py jogo-arm.elf --entry 0x1000
 
 **Limitações:** apenas sequências lineares de instruções ARM32 incondicionais; não rastreia memória entre desvios, ponteiros desconhecidos nem mapeia automaticamente o tabuleiro do jogo. O binário é analisado, nunca executado.
 
+## Memoria entre caminhos de execucao
+
+O modulo `arm_memory_flow.py` acompanha acessos simples `LDR` e `STR`
+entre desvios ARM32. Ao juntar caminhos, preserva somente constantes
+compativeis. Escritas em endereco desconhecido invalidam a memoria conhecida;
+chamadas invalidam os valores rastreados na memoria.
+
+```bash
+python3 tools/arm_memory_flow.py jogo-arm.elf --entry 0x1000
+```
+
+Ainda nao recupera automaticamente estruturas ou codigo C++.
+
 ## Qual é o próximo objetivo?
 
 Ampliar o decodificador ARM/Thumb-2, reconhecer os limites reais das funções e validar os mapas de chamadas em binários ARM reais. A ferramenta `arm_functions.py` gera **candidatos** a partir de chamadas diretas ARM32 `BL` e Thumb-2 `BL`/`BLX` imediato, mas não cobre instruções Thumb-2 em geral, chamadas indiretas, mudanças dinâmicas de modo nem limites completos das funções. Depois, avançar para pseudocódigo e reconstrução verificável em C/C++.
