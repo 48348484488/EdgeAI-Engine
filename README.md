@@ -248,6 +248,15 @@ O resultado continua **limitado a um padrao conhecido**, com assinatura
 C++ e estrutura de alto nivel predefinidas. Nao e ainda um descompilador
 geral nem reconstrucao do codigo-fonte historico.
 
+## Representacao intermediaria ARM (IR)
+
+O modulo `tools/arm_ir.py` registra quatro operacoes tipadas do padrao
+`play()`: guarda de limite, guarda de celula ocupada, gravacao
+indexada e chamada final. O gerador transforma instrucoes ARM reconhecidas
+em IR e depois em C++; o relatorio da comparacao guarda a IR emitida.
+Esse subconjunto **nao** recupera funcoes ARM arbitrarias e continua
+dependente da assinatura e do modelo de memoria especificos do exemplo.
+
 ## Qual é o próximo objetivo?
 
 Ampliar o decodificador ARM/Thumb-2, reconhecer os limites reais das funções e validar os mapas de chamadas em binários ARM reais. A ferramenta `arm_functions.py` gera **candidatos** a partir de chamadas diretas ARM32 `BL` e Thumb-2 `BL`/`BLX` imediato, mas não cobre instruções Thumb-2 em geral, chamadas indiretas, mudanças dinâmicas de modo nem limites completos das funções. Depois, avançar para pseudocódigo e reconstrução verificável em C/C++.
