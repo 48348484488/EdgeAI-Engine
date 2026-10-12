@@ -27,6 +27,9 @@ paths_spec.loader.exec_module(play_paths)
 constraints_spec=importlib.util.spec_from_file_location('edgeai_constraints',ROOT/'tools'/'arm_path_constraints.py')
 constraints_tool=importlib.util.module_from_spec(constraints_spec)
 constraints_spec.loader.exec_module(constraints_tool)
+unsigned_spec=importlib.util.spec_from_file_location('edgeai_unsigned',ROOT/'tools'/'arm_unsigned_paths.py')
+unsigned_tool=importlib.util.module_from_spec(unsigned_spec)
+unsigned_spec.loader.exec_module(unsigned_tool)
 
 def evaluate():
     with tempfile.TemporaryDirectory() as directory:
@@ -69,6 +72,7 @@ def evaluate():
                 item["control_flow"]=compiled_branches.analyze(instructions)
                 item["path_events"]=play_paths.analyze(instructions,[a["pc"] for a in accesses if a["mnemonic"].startswith("str") and a["board_relation"]=="board_base_dynamic_index"])
                 item["path_constraints"]=constraints_tool.explore(instructions)
+                item["unsigned_path_constraints"]=unsigned_tool.explore(instructions)
             functions.append(item)
         if {item["name"] for item in functions}!={"start","play","winner"}:
             raise RuntimeError("expected game functions absent")
