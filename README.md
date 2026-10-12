@@ -203,6 +203,22 @@ Esses papeis sao hipoteses fundamentadas na convencao de chamadas e
 nos operandos. As condicoes exatas e a equivalencia com C++ ainda nao
 estao demonstradas.
 
+## Teste experimental de reconstrucao de play()
+
+`python3 tools/validate_play_reconstruction.py` compila o jogo original ARM
+para extrair evidencias, gera um **candidato C++ por regras** a partir dessas
+evidencias, compila o candidato para ARM32 e compara a execucao nativa do
+candidato com a funcao C original. O teste enumera os `3^9` tabuleiros,
+13 posicoes de -2 a 10 e 3 valores de jogador (767.637 casos). Verifica tanto
+o retorno quanto todas as 9 casas apos a chamada.
+
+O gerador **ainda recebe manualmente** a politica de jogadas invalidas,
+os limites de tabuleiro e a chamada a `winner()`. Por isso, mesmo com
+comportamento identico no teste, nao representa decompilacao autonoma.
+O relatorio fica em `results/play_reconstruction_test.json` no CI como
+artefato e especifica as hipoteses nao inferidas. O candidato **nao e
+comparado byte a byte** com a funcao ARM original.
+
 ## Qual é o próximo objetivo?
 
 Ampliar o decodificador ARM/Thumb-2, reconhecer os limites reais das funções e validar os mapas de chamadas em binários ARM reais. A ferramenta `arm_functions.py` gera **candidatos** a partir de chamadas diretas ARM32 `BL` e Thumb-2 `BL`/`BLX` imediato, mas não cobre instruções Thumb-2 em geral, chamadas indiretas, mudanças dinâmicas de modo nem limites completos das funções. Depois, avançar para pseudocódigo e reconstrução verificável em C/C++.
