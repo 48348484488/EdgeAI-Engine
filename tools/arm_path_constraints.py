@@ -50,14 +50,24 @@ def explore(instructions, max_states=10000):
                         current[reg]=(equal,tuple(sorted(set(not_equal)|{value})))
                     if dst is not None:queue.append((dst,comparison,current))
                 continue
+        elif op in ("ldr","ldrb","mov","movw","movt","add","sub"):
+            dest=args.split(",",1)[0].strip()
+            constraints={reg:val for reg,val in constraints.items() if reg!=dest}
+            comparison=None
         elif op=="bx" or op=="pop":
             terminal.append({"pc":hex(pc),"constraints":constraints})
             continue
-        elif op not in ("b","str","ldr","movw","movt","cmp","tst"):
+        elif op not in ("b","str","cmp","tst","beq","bne"):
             comparison=None
             # Unknown writes/side effects could invalidate register constraints.
             constraints={}
-        if op=="b":
+        if op in ("bhi","bls","bge","blt","bgt","ble","bcs","bcc","bmi","bpl"):
+            m=TARGET.match(args)
+            if m and int(m[1],16) in nodes:
+                queue.append((int(m[1],16),None,dict(constraints)))
+            if pc in nxt:
+                queue.append((nxt[pc],None,dict(constraints)))
+        elif op=="b":
             m=TARGET.match(args)
             if m and int(m[1],16) in nodes:
                 queue.append((int(m[1],16),comparison,dict(constraints)))
