@@ -583,7 +583,9 @@ daquelas cujos caminhos seguem ate saidas diferentes.
 No ELF ARM32 compilado de jogo da velha, o verificador estrutural
 local encontrou duas bifurcacoes de `winner()` com destino comum
 `0x1070`, duas bifurcacoes de `play()` sem reconvergencia
-intrafuncional e nenhuma em `start()`. Oito testes locais
+intrafuncional e nenhuma em `start()`. Num ELF independente de
+soma de vetor, `sum_array()` teve um desvio com saida antecipada
+e outro que repete o laco, convergindo em `0x1020`. Oito testes locais
 passaram, incluindo grafo linear de 3.000 nos, ciclos sem saida,
 retorno condicional e fluxo indireto desconhecido.
 
