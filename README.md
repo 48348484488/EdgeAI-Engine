@@ -397,6 +397,43 @@ A evidencia esta em `results/winner_stripped_local_2026-10-12.json`.
 um esqueleto C++ baseado em semantica previamente reconhecida.
 Nao extrai fontes arbitrarios de executaveis comerciais.
 
+## Reconstrucao de winner() sob cinco otimizacoes ARM32
+
+`tools/recover_winner_variants.py` reconhece **cinco configuracoes do
+Clang ARM32** em ELF sem simbolos: `-O1`, `-O2`, `-O3`, `-Os`
+e `-Oz`. Os padroes possuem diferencas materiais:
+
+- `-O1`: laço com verificacao XOR/CLZ;
+- `-Os`: laço compacto com comparacoes CMP/CMPEQ;
+- `-Oz`: laço com ponteiros obtidos via literais PC-relativos;
+- `-O2/-O3`: laço desenrolado em 24 leituras diretas do tabuleiro,
+  sem tabela explicita no binario.
+
+A ferramenta valida acessos e desvios antes de emitir o esqueleto C++.
+Cada compilacao foi testada tambem com o codigo movido para `0x5000`,
+sem fixar os enderecos do ELF original. Testes de corrupcao garantem
+rejeicao de instrucoes nao suportadas.
+
+Para reproduzir a bateria, com Clang, LLD, LLVM objcopy/objdump
+disponiveis:
+
+```bash
+python3 -m unittest discover -s tests -p 'test_recover_winner*.py' -v
+python3 tools/validate_winner_variants.py --output results/winner_variants_validation.json
+```
+
+Resultado local: **16 testes de recuperacao passaram**, considerando
+os testes anteriores e os novos. Os cinco candidatos recompilados para
+ARM32 passaram em **426.115 comparacoes comportamentais nativas**
+(85.223 cada), **zero divergencias**. Evidencias:
+`results/winner_variants_validation_local_2026-10-12.json`.
+
+**Escopo real:** apenas padroes deste jogo gerados por **Clang**. Nao
+ha validacao com GCC ARM, executavel arbitrario ou QEMU desta
+versao. Estrutura e prototipo C++ sao reconhecidos por regras, nao
+recuperados genericamente. GitHub Actions continua sem resultado de
+job verificavel; testes locais sao independentes desse CI.
+
 ## Qual é o próximo objetivo?
 
 Ampliar o decodificador ARM/Thumb-2, reconhecer os limites reais das funções e validar os mapas de chamadas em binários ARM reais. A ferramenta `arm_functions.py` gera **candidatos** a partir de chamadas diretas ARM32 `BL` e Thumb-2 `BL`/`BLX` imediato, mas não cobre instruções Thumb-2 em geral, chamadas indiretas, mudanças dinâmicas de modo nem limites completos das funções. Depois, avançar para pseudocódigo e reconstrução verificável em C/C++.
