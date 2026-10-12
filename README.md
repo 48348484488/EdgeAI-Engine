@@ -93,6 +93,16 @@ python3 tools/arm_flow_outline.py jogo-arm.elf --entry 0x1080 --entry 0x1000 --m
 
 Os endereços acima são específicos do jogo da velha usado na validação; para outros executáveis, utilize as entradas corretas. Não há inferência automática de tipos, variáveis ou condições.
 
+## Anotação inicial das instruções ARM
+
+O analisador experimental agora reconhece algumas operações ARM32, como `MOV`, `CMP`, `ADD`, `SUB`, `B`, `BL` e `BX`, incluindo códigos de condição. As demais instruções ficam marcadas como **não suportadas**, sem inventar lógica:
+
+```bash
+python3 tools/arm_semantics.py jogo-arm.elf --entry 0x1080
+```
+
+Isso **não reconstrói variáveis nem produz C++**. Ainda falta analisar transferência de valores entre registradores, memória e ramificações. Os endereços de entrada dependem do executável.
+
 ## Qual é o próximo objetivo?
 
 Ampliar o decodificador ARM/Thumb-2, reconhecer os limites reais das funções e validar os mapas de chamadas em binários ARM reais. A ferramenta `arm_functions.py` gera **candidatos** a partir de chamadas diretas ARM32 `BL` e Thumb-2 `BL`/`BLX` imediato, mas não cobre instruções Thumb-2 em geral, chamadas indiretas, mudanças dinâmicas de modo nem limites completos das funções. Depois, avançar para pseudocódigo e reconstrução verificável em C/C++.
