@@ -278,6 +278,17 @@ Os testes de regressao estao em `tests/test_arm_ir_graph.py`.
 O GitHub Actions tem retornado falha sem etapas/logs disponiveis;
 essa integracao ainda precisa de comprovacao no runner.
 
+## Desvios de play() recuperados do jogo compilado
+
+O analisador `tools/arm_compiled_branches.py` le instrucoes
+desmontadas por LLVM e informa origem, condicao, caminho tomado e
+caminho sequencial de desvios que permanecem dentro da funcao.
+`tools/inspect_tictactoe_memory.py` anexa os candidatos ao relatorio
+da funcao `play()`. Um teste compila o jogo e exige evidencias de
+um desvio de igualdade. Isso nao prova automaticamente qual caminho
+corresponde a uma jogada aceita ou rejeitada: para isso ainda faltam
+analise semantica e associacao das instrucoes de retorno.
+
 ## Qual é o próximo objetivo?
 
 Ampliar o decodificador ARM/Thumb-2, reconhecer os limites reais das funções e validar os mapas de chamadas em binários ARM reais. A ferramenta `arm_functions.py` gera **candidatos** a partir de chamadas diretas ARM32 `BL` e Thumb-2 `BL`/`BLX` imediato, mas não cobre instruções Thumb-2 em geral, chamadas indiretas, mudanças dinâmicas de modo nem limites completos das funções. Depois, avançar para pseudocódigo e reconstrução verificável em C/C++.
