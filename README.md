@@ -327,6 +327,27 @@ executado sobre um ELF ARM32 real. GitHub Actions continua com falha,
 portanto a validacao integrada permanece pendente. A ferramenta nao
 prova equivalencia completa nem recupera automaticamente qualquer funcao.
 
+## Caminhos completos de play() validados em ARM32
+
+`tools/arm_play_outcomes.py` combina o intervalo unsigned de `R0`,
+o resultado da comparacao de uma leitura **com origem board comprovada**
+e os pontos de escrita reconhecidos. Para o binario ARM32 de exemplo,
+distingue tres saidas: posicao invalida retorna -1; posicao valida com
+casa ocupada retorna -1; posicao valida com casa livre grava e salta
+para `winner()`. Instrucoes desconhecidas geram evento nao suportado.
+
+`tools/generate_play_candidate.py` recusa produzir C++ quando essas
+tres categorias nao particionam corretamente o dominio reconhecido.
+A evidencia local reproduzida esta em
+`results/arm_play_outcomes_local_2026-10-12.json`: 13 estados da
+analise de caminhos, 11 instrucoes ARM em `play()` e 767.637
+comparacoes nativas de comportamento sem divergencias.
+
+**Limites:** a semantica de caminho e especifica desse padrao,
+o prototipo C++ e a funcao `winner()` continuam fornecidos,
+a comparacao diferencial mais recente foi nativa (nao QEMU) e
+os workflows do GitHub Actions ainda nao foram validados nesta versao.
+
 ## Qual é o próximo objetivo?
 
 Ampliar o decodificador ARM/Thumb-2, reconhecer os limites reais das funções e validar os mapas de chamadas em binários ARM reais. A ferramenta `arm_functions.py` gera **candidatos** a partir de chamadas diretas ARM32 `BL` e Thumb-2 `BL`/`BLX` imediato, mas não cobre instruções Thumb-2 em geral, chamadas indiretas, mudanças dinâmicas de modo nem limites completos das funções. Depois, avançar para pseudocódigo e reconstrução verificável em C/C++.
