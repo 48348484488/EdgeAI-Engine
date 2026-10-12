@@ -13,13 +13,16 @@ ROOT=Path(__file__).resolve().parents[1]
 spec=importlib.util.spec_from_file_location("edgeai_inspect",ROOT/"tools"/"inspect_tictactoe_memory.py")
 inspect=importlib.util.module_from_spec(spec)
 spec.loader.exec_module(inspect)
+rule_spec=importlib.util.spec_from_file_location("edgeai_play_rules",ROOT/"tools"/"infer_play_rules.py")
+rules=importlib.util.module_from_spec(rule_spec)
+rule_spec.loader.exec_module(rules)
 
-CPP='''// Rule-based candidate. Not a reconstruction proved solely from ARM bytes.
+CPP='''// C++ structural template, with guard values inferred from ARM evidence.
 extern "C" volatile int board[9];
 extern "C" int winner(void);
 extern "C" int play(int position, int player) {
-    if (position < 0 || position >= 9 || board[position] != 0)
-        return -1;
+    if ((unsigned)position > {max_position}u || board[position] != {empty_value})
+        return {rejection_value};
     board[position] = player;
     return winner();
 }
@@ -37,14 +40,17 @@ def generate(report):
     comparisons=[x for x in ev if x["kind"]=="comparison"]
     if not reads or not writes or not comparisons:
         raise ValueError("insufficient compiled binary evidence for template")
-    return {"candidate_cpp":CPP,
-            "generation":"rule_based_source_assisted_template",
+    inferred=rules.infer(ROOT/"examples/reverse/tictactoe.c")
+    return {"candidate_cpp":CPP.format(**inferred),
+            "generation":"ARM_pattern_inference_with_C++_template",
             "binary_evidence":{"play_address":play["address"],
                                "board_address":report["board_symbol_address"],
                                "read_pc":reads[0]["pc"],"write_pc":writes[0]["pc"],
                                "comparisons":[x["instruction"] for x in comparisons]},
-            "not_inferred_from_binary":["invalid move returns -1","bounds are 0..8",
-                                        "empty cell has value 0","successful move calls winner"]}
+            "inferred_from_binary":inferred,
+            "not_inferred_from_binary":["C++ function signature and board declaration",
+                                        "high-level control structure and memory model",
+                                        "shared original winner implementation"]}
 
 def main():
     p=argparse.ArgumentParser(description=__doc__)
