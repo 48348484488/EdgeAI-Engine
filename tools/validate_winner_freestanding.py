@@ -6,6 +6,7 @@ If QEMU is absent the report records 'not_executed', never a passing run.
 """
 import argparse
 import json
+import hashlib
 from pathlib import Path
 import shutil
 import struct
@@ -49,7 +50,8 @@ def verify_static_arm_elf(path):
 
 
 def validate(output=ROOT/'results/winner_freestanding_arm32.json',
-             qemu=shutil.which('qemu-arm'),require_qemu=False,optimizations=MODES):
+             qemu=shutil.which('qemu-arm'),require_qemu=False,optimizations=MODES,
+             save_runners=None):
     report={'architecture':'ARM32 Linux EABI','compiler':'Clang + LLD',
             'libc_required':False,'gcc_arm_required':False,
             'emulator':'qemu-arm' if qemu else None,
@@ -84,6 +86,11 @@ def validate(output=ROOT/'results/winner_freestanding_arm32.json',
                     '-static','-Wl,-e,_start',str(original_o),str(candidate),
                     str(harness_o),'-o',str(runner)])
             elf=verify_static_arm_elf(runner)
+            elf['sha256']=hashlib.sha256(runner.read_bytes()).hexdigest()
+            if save_runners is not None:
+                destination=Path(save_runners)
+                destination.mkdir(parents=True,exist_ok=True)
+                shutil.copyfile(runner,destination/('winner_arm32_O'+opt+'.elf'))
             entry={'optimization':'-O'+opt,'recognized_pattern':recovered['optimization_pattern'],
                    'elf':elf,'execution_status':'not_executed','behavior':None}
             if qemu:
@@ -116,8 +123,9 @@ if __name__=='__main__':
     parser.add_argument('--require-qemu',action='store_true')
     parser.add_argument('--qemu',type=str,default=shutil.which('qemu-arm'))
     parser.add_argument('--optimizations',type=str,default=','.join(MODES))
+    parser.add_argument('--save-runners',type=Path,default=None)
     args=parser.parse_args()
     try:
-        validate(args.output,args.qemu,args.require_qemu,args.optimizations.split(','))
+        validate(args.output,args.qemu,args.require_qemu,args.optimizations.split(','),args.save_runners)
     except (ValueError,RuntimeError) as exc:
         parser.exit(2,'ARM32 validation: '+str(exc)+'\n')
