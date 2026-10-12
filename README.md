@@ -48,6 +48,23 @@ python3 -m unittest discover -s tests -p 'test_arm_functions.py' -v
 python3 -m unittest discover -s tests -p 'test_thumb_calls.py' -v
 ```
 
+## Teste com um jogo compilado
+
+Incluímos um **jogo da velha pequeno em C**, compilado como executável ARM32 real.
+Ele tem as rotinas `start`, `play` e `winner`. O teste compara as chamadas
+que a EdgeAI encontra com o desassemblador LLVM Objdump:
+
+```bash
+python3 tools/validate_tictactoe_arm.py
+```
+
+Requer Clang, LLD e LLVM Objdump. O código de exemplo está em
+[`examples/reverse/tictactoe.c`](examples/reverse/tictactoe.c).
+
+O teste mede chamadas **diretas BL**, não reconstrói a lógica completa do
+jogo. Uma transferência para `winner` por salto de cauda não conta
+automaticamente como função descoberta.
+
 ## Validação com binários ARM reais
 
 A verificação agora tem uma etapa própria: compilar três programas ARM/Thumb
