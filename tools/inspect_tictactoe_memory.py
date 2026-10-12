@@ -5,9 +5,13 @@ from pathlib import Path
 import re
 import subprocess
 import tempfile
+import importlib.util
 
 ROOT=Path(__file__).resolve().parents[1]
 SOURCE=ROOT/"examples"/"reverse"/"tictactoe.c"
+spec=importlib.util.spec_from_file_location("edgeai_address",ROOT/"tools"/"arm_address_resolver.py")
+address_tool=importlib.util.module_from_spec(spec)
+spec.loader.exec_module(address_tool)
 
 def evaluate():
     with tempfile.TemporaryDirectory() as directory:
@@ -31,22 +35,25 @@ def evaluate():
             if name not in ("start","play","winner"):
                 continue
             end=locations[i+1][0] if i+1<len(locations) else len(dump)
-            accesses=[]
+            instructions=[]
             for line in dump[start:end].splitlines():
                 match=instruction_re.match(line)
                 if not match:
                     continue
                 pc,opcode,operands=match.groups()
-                if opcode.startswith(("ldr","str")):
-                    accesses.append({"pc":"0x"+pc,"mnemonic":opcode,"operands":operands.strip(),
-                                    "is_board_access":"unproven"})
+                instructions.append({"pc":"0x"+pc,"mnemonic":opcode,"operands":operands.strip()})
+            accesses=address_tool.walk(instructions)
+            board_start=int(board.group(1),16)
+            for access in accesses:
+                numeric=int(access["resolved_address"],16) if access["resolved_address"] else None
+                access["board_relation"]="confirmed_address" if numeric is not None and board_start<=numeric<board_start+36 else "unresolved_or_other"
             functions.append({"name":name,"address":hex(addr),
                               "memory_access_count":len(accesses),"accesses":accesses})
         if {item["name"] for item in functions}!={"start","play","winner"}:
             raise RuntimeError("expected game functions absent")
         return {"program":"compiled ARM32 tic-tac-toe","board_symbol_address":hex(int(board.group(1),16)),
                 "functions":functions,
-                "interpretation":"LDR/STR instructions are verified by LLVM; their relationship to board is not proven by these instructions alone."}
+                "interpretation":"Only a computed address inside the board symbol range is confirmed. An unresolved address is not evidence of a board access. This is intentionally linear and conservative."}
 
 if __name__=="__main__":
     print(json.dumps(evaluate(),indent=2,ensure_ascii=False))
