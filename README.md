@@ -13,6 +13,7 @@ O objetivo é analisar arquivos compilados, entender como o código funciona e, 
 | Analisar arquivos ELF (`.so` e executáveis) | Identifica metadados e funções que ainda tenham símbolos |
 | Analisar instruções ARM32 e Thumb16 | Localiza candidatos a saltos e chamadas diretas |
 | Mapear o fluxo do código (CFG) | Segue caminhos a partir de um endereço informado; análise parcial |
+| Encontrar candidatos a funções | Segue destinos de chamadas ARM32 `BL` e cria um mapa inicial de chamadas; ainda não confirma os limites das funções |
 | IA local em C++17 | Runtime de baixo consumo com ferramentas e modelo neural experimental |
 
 **Exemplo prático:** ao fornecer uma biblioteca de jogo como `libGame.so`, as ferramentas podem listar funções nomeadas, endereços, saltos e caminhos de execução. Elas **não executam o jogo, não descobrem todas as funções sozinhas e ainda não geram seu código-fonte**.
@@ -30,6 +31,9 @@ python3 tools/arm_scan.py libGame.so --mode arm
 
 # 3. Mapear o fluxo a partir de um endereço conhecido
 python3 tools/arm_cfg.py libGame.so --entry 0x1000 --mode arm
+
+# 4. Descobrir candidatos a funções e chamadas diretas ARM32
+python3 tools/arm_functions.py libGame.so --entry 0x1000 --mode arm
 ```
 
 Para código Thumb, use `--mode thumb` e informe o endereço alinhado, sem o bit que identifica o estado Thumb. Essas ferramentas usam decodificação parcial; **não escolha ARM ou Thumb ao acaso**.
@@ -40,11 +44,12 @@ Para testar as ferramentas:
 python3 -m unittest discover -s tests -p 'test_elf_inspect.py' -v
 python3 -m unittest discover -s tests -p 'test_arm_scan.py' -v
 python3 -m unittest discover -s tests -p 'test_arm_cfg.py' -v
+python3 -m unittest discover -s tests -p 'test_arm_functions.py' -v
 ```
 
 ## Qual é o próximo objetivo?
 
-Ampliar a identificação de instruções ARM/Thumb-2, reconhecer melhor os limites das funções, construir mapas de chamadas mais confiáveis e validar o resultado em binários reais. Depois, avançar para pseudocódigo e reconstrução verificável em C/C++.
+Ampliar o decodificador ARM/Thumb-2, reconhecer os limites reais das funções e validar os mapas de chamadas em binários ARM reais. A ferramenta `arm_functions.py` já gera **candidatos** a partir de instruções ARM32 `BL`, mas não oferece descoberta completa nem suporte a chamadas Thumb-2 ou entre modos. Depois, avançar para pseudocódigo e reconstrução verificável em C/C++.
 
 ## E a IA?
 
