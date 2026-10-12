@@ -19,6 +19,9 @@ rule_spec.loader.exec_module(rules)
 emit_spec=importlib.util.spec_from_file_location("edgeai_cpp_emitter",ROOT/"tools"/"arm_cpp_emitter.py")
 emitter=importlib.util.module_from_spec(emit_spec)
 emit_spec.loader.exec_module(emitter)
+ir_spec=importlib.util.spec_from_file_location("edgeai_arm_ir",ROOT/"tools"/"arm_ir.py")
+arm_ir=importlib.util.module_from_spec(ir_spec)
+ir_spec.loader.exec_module(arm_ir)
 
 CPP='''// C++ structural template, with guard values inferred from ARM evidence.
 extern "C" volatile int board[9];
@@ -54,8 +57,10 @@ def generate(report):
     if not load_match:
         raise ValueError("unsupported board read index")
     inferred=rules.infer(ROOT/"examples/reverse/tictactoe.c")
-    return {"candidate_cpp":emitter.emit(inferred,reads[0],writes[0]),
-            "generation":"ARM_evidence_gated_statement_emitter",
+    ir=arm_ir.lower(inferred,reads[0],writes[0])
+    return {"candidate_cpp":arm_ir.emit_cpp(ir),
+            "intermediate_representation":ir,
+            "generation":"ARM_evidence_to_typed_IR_to_CPP",
             "binary_evidence":{"play_address":play["address"],
                                "board_address":report["board_symbol_address"],
                                "read_pc":reads[0]["pc"],"write_pc":writes[0]["pc"],
