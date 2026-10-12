@@ -4,6 +4,9 @@ on:
   push:
     paths:
       - 'tools/recover_winner*.py'
+      - 'tools/reconstruct_winner.py'
+      - 'tools/validate_winner_variants.py'
+      - 'tests/test_arm_winner_strict.py'
       - 'tools/validate_winner_qemu.py'
       - 'tools/validate_winner_freestanding.py'
       - 'tests/winner_freestanding_arm.cpp'
@@ -26,6 +29,10 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y clang lld llvm qemu-user
           qemu-arm --version | head -n 1
+      - name: Verify independent winner fingerprint and corruption handling
+        run: python3 -m unittest discover -s tests -p 'test_arm_winner_strict.py' -v
+      - name: Exhaustive native differential across five stripped ARM optimizations
+        run: python3 tools/validate_winner_variants.py --output results/winner_variants_validation.json
       - name: Check ARM32 static runners and fail-closed behavior
         run: python3 -m unittest discover -s tests -p 'test_winner_freestanding.py' -v
       - name: Execute real ARM32 Linux syscall harness under QEMU
@@ -38,5 +45,6 @@ jobs:
           name: actual-arm32-winner-qemu
           path: |
             results/winner_freestanding_arm32.json
+            results/winner_variants_validation.json
             results/arm32_binaries/*.elf
           if-no-files-found: warn
