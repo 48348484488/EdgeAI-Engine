@@ -105,6 +105,12 @@ jobs:
         run: python3 tools/validate_play_arm_emulation.py
       - name: Cross-check winner via independent ARM32 ELF verifier
         run: python3 -m unittest discover -s tests -p 'test_arm_winner_reconstruct.py' -v
+      - name: Test generic ARM loop and table analysis
+        run: python3 -m unittest discover -s tests -p 'test_arm_loop_analysis.py' -v
+      - name: Save generic winner ARM loop analysis
+        run: |
+          clang --target=armv7-none-eabi -marm -O1 -fno-inline -nostdlib -fuse-ld=lld -Wl,-Ttext=0x1000 -Wl,-e,start examples/reverse/tictactoe.c -o results/arm_loop_reference.elf
+          python3 tools/arm_loop_analysis.py results/arm_loop_reference.elf --function winner --output results/arm_winner_loops_latest.json
       - name: Recover winner directly from compiled ARM ELF
         run: python3 -m unittest discover -s tests -p 'test_recover_winner.py' -v
       - name: Recover winner without ELF symbols
@@ -139,6 +145,7 @@ jobs:
             results/play_reconstruction_test.json
             results/play_arm_emulation.json
             results/arm_play_inspection_latest.json
+            results/arm_winner_loops_latest.json
             results/winner_reconstruction_test.json
             results/winner_candidate.cpp
             results/winner_stripped_test.json
