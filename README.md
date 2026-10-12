@@ -472,6 +472,40 @@ compilacao real de um objeto ARM32 e **426.115 comparacoes nativas
 sem divergencias**. Evidencia:
 `results/winner_qemu_readiness_2026-10-12.json`.
 
+## ARM32 sem GCC, sem libc, com executavel estatico real
+
+O script `tools/validate_winner_freestanding.py` compila
+`winner()` original e seu candidato C++ usando apenas **Clang + LLD**,
+sem sysroot ARM, libc ou GCC. O harness C++
+`tests/winner_freestanding_arm.cpp` usa as syscalls Linux ARM32
+`write` e `exit` via `svc #0` e executa os mesmos 85.223 casos
+por variante, quando ha `qemu-arm`.
+
+O modo somente de compilacao valida o ELF32 `ET_EXEC`, a arquitetura
+ARM e a ausencia de interpretador dinamico. Ele produz SHA-256 de
+cada binario e, opcionalmente, salva cinco ELF prontos para execucao:
+
+```bash
+python3 tools/validate_winner_freestanding.py \
+  --output results/winner_freestanding_arm32.json \
+  --save-runners results/arm32_binaries
+```
+
+Para **exigir execucao ARM32 real**:
+
+```bash
+python3 tools/validate_winner_freestanding.py \
+  --require-qemu --save-runners results/arm32_binaries
+```
+
+Validaçao local em 12/10/2026: **5 binarios ARM32 reais compilados**,
+3 testes do validador aprovados, **0 casos QEMU executados** (emulador
+ausente). O comando com `--require-qemu` falha explicitamente se
+nao houver emulador. Evidencia com hashes:
+`results/winner_freestanding_arm32_local_2026-10-12.json`.
+O workflow `winner-arm32-qemu.yml` usa esse teste, instala apenas
+Clang/LLVM/QEMU e publica os arquivos ELF quando executado.
+
 ## Qual é o próximo objetivo?
 
 Ampliar o decodificador ARM/Thumb-2, reconhecer os limites reais das funções e validar os mapas de chamadas em binários ARM reais. A ferramenta `arm_functions.py` gera **candidatos** a partir de chamadas diretas ARM32 `BL` e Thumb-2 `BL`/`BLX` imediato, mas não cobre instruções Thumb-2 em geral, chamadas indiretas, mudanças dinâmicas de modo nem limites completos das funções. Depois, avançar para pseudocódigo e reconstrução verificável em C/C++.
