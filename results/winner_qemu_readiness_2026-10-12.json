@@ -1,0 +1,43 @@
+{
+  "date": "2026-10-12",
+  "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+  "workflow": "ARM32 GCC+QEMU readiness",
+  "tests": {
+    "existing_recovery": {
+      "passed": 16,
+      "failed": 0
+    },
+    "qemu_runner_contract": {
+      "passed": 3,
+      "failed": 0
+    },
+    "clang_arm32_object_compilation": "passed"
+  },
+  "native_clang_stripped_variants": {
+    "variants": 5,
+    "cases": 426115,
+    "mismatches": 0
+  },
+  "tools_present": {
+    "clang": true,
+    "llvm-objcopy": true,
+    "llvm-objdump": true,
+    "arm-linux-gnueabihf-gcc": false,
+    "arm-linux-gnueabihf-g++": false,
+    "qemu-arm": false
+  },
+  "arm32_qemu_execution": {
+    "status": "not_run",
+    "reason": "Required GCC ARM and QEMU programs unavailable in this container",
+    "missing": [
+      "arm-linux-gnueabihf-gcc",
+      "arm-linux-gnueabihf-g++",
+      "qemu-arm"
+    ]
+  },
+  "gcc_elf_recovery_test": {
+    "status": "not_run",
+    "reason": "arm-linux-gnueabihf-gcc unavailable"
+  },
+  "caveat": "No ARM32 runtime equivalence should be claimed from this host; CI job must execute on toolchain-equipped machine."
+}
