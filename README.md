@@ -525,6 +525,29 @@ Os workflows do GitHub Actions continuam falhando sem etapas
 disponiveis; **a nova rodada de cinco otimizacoes e o QEMU ainda
 nao tiveram conclusao confirmada nesta revisao**.
 
+## winner(): terceira verificacao independente do ELF (2026-10-12)
+
+O verificador adicional `tools/arm_winner_reconstruct.py` interpreta
+o ELF32 com `struct`, extrai os 24 bytes da tabela `winner.lines`
+e confere a sequencia ARM32 de 29 instrucoes, os ponteiros MOVW/MOVT,
+o limite do loop e os acessos a memoria. Nao usa a tabela C original
+na geracao e rejeita modificacoes nao reconhecidas, incluindo indice
+fora de faixa e limite do loop adulterado.
+
+`tools/validate_winner_reconstruction.py` confronta os dados desse
+terceiro verificador com os dois verificadores existentes no modo O1.
+`tests/test_arm_winner_reconstruct.py` cobre ELF real e dois casos
+adulterados. Em execucao local, os tres testes passaram e um C++
+candidato dessa etapa compilou para ARM32. A comparacao nativa do
+candidato com a implementacao C original passou em **327.684 estados**
+(262.144 tabuleiros enumerados + 4 extremos + 65.536 aleatorios),
+sem divergencias.
+
+**Limites:** nao e descompilador generico; o modo novo verifica
+apenas o padrao ARM32 Clang O1 reconhecido. C++ de alto nivel e
+prototipo continuam previstos por um molde. A rodada acima nao
+executou QEMU e nao representa aprovacao do GitHub Actions.
+
 ## Qual é o próximo objetivo?
 
 Ampliar o decodificador ARM/Thumb-2, reconhecer os limites reais das funções e validar os mapas de chamadas em binários ARM reais. A ferramenta `arm_functions.py` gera **candidatos** a partir de chamadas diretas ARM32 `BL` e Thumb-2 `BL`/`BLX` imediato, mas não cobre instruções Thumb-2 em geral, chamadas indiretas, mudanças dinâmicas de modo nem limites completos das funções. Depois, avançar para pseudocódigo e reconstrução verificável em C/C++.
