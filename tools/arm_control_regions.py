@@ -57,11 +57,14 @@ def analyze(report, max_nodes=20000):
         for pred in backwards[curr] - can_exit:
             can_exit.add(pred)
             pending.append(pred)
-    all_sites = set(nodes) | {EXIT}
-    # No path to a function exit => no defensible postdominator claims.
-    postdom = {EXIT: {EXIT}}
+    # Bitsets keep memory linear in the number of CFG nodes, unlike a Python
+    # set of all postdominators at every node.
+    ordered = [EXIT] + sorted(nodes)
+    bit = {pc: 1 << i for i, pc in enumerate(ordered)}
+    all_bits = (1 << len(ordered)) - 1
+    postdom = {EXIT: bit[EXIT]}
     for pc in nodes:
-        postdom[pc] = set(all_sites) if pc in can_exit else {pc}
+        postdom[pc] = all_bits if pc in can_exit else bit[pc]
     changed = True
     while changed:
         changed = False
@@ -69,10 +72,12 @@ def analyze(report, max_nodes=20000):
             if pc not in can_exit:
                 continue
             if any(s not in can_exit for s in edges[pc]):
-                updated = {pc}
+                updated = bit[pc]
             else:
-                intersect = set.intersection(*(postdom[s] for s in edges[pc]))
-                updated = {pc} | intersect
+                intersect = all_bits
+                for successor in edges[pc]:
+                    intersect &= postdom[successor]
+                updated = bit[pc] | intersect
             if updated != postdom[pc]:
                 postdom[pc] = updated
                 changed = True
@@ -94,12 +99,16 @@ def analyze(report, max_nodes=20000):
         classification = 'unresolved'
         merge = None
         if taken in can_exit and fallthrough in can_exit:
-            common = postdom[taken] & postdom[fallthrough] - {EXIT}
-            immediate = [v for v in common if all(other == v or other in postdom[v] for other in common)]
+            common_bits = postdom[taken] & postdom[fallthrough] & ~bit[EXIT]
+            common = [v for v in sorted(nodes) if common_bits & bit[v]]
+            immediate = [v for v in common if postdom[v] & common_bits == common_bits]
             if len(immediate) == 1:
                 merge = hex(immediate[0]); classification = 'reconverging'
             elif not common:
                 classification = 'exit_only'
+        if report.get('unknown_control_pcs'):
+            classification = 'unresolved'
+            merge = None
         branches.append({'branch_pc': hex(src), 'taken': EXIT if taken == EXIT else hex(taken),
                          'fallthrough': hex(fallthrough), 'merge': merge, 'classification': classification,
                          'conditional_return': conditional_return})
