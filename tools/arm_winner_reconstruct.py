@@ -83,6 +83,7 @@ def _verify_instructions(instructions, table_address, board_address):
     expected = [
         ('mov', 'r1, #0'),
         ('add', 'r2, r1, r1, lsl #1'),
+        ('mov', 'r3, r12'),
         ('ldrb', 'r2, [r3, r2]!'),
         ('ldrb', 'r4, [r3, #0x1]'),
         ('ldrb', 'r3, [r3, #0x2]'),
@@ -92,6 +93,7 @@ def _verify_instructions(instructions, table_address, board_address):
         ('eor', 'r5, r2, r4'),
         ('eor', 'r3, r4, r3'),
         ('orrs', 'r3, r5, r3'),
+        ('movwne', 'r3, #0x1'),
         ('clz', 'r4, r2'),
         ('lsr', 'r4, r4, #5'),
         ('orrs', 'r3, r3, r4'),
@@ -125,6 +127,8 @@ def _verify_instructions(instructions, table_address, board_address):
         raise ValueError('winner loop back-edge was not verified')
     if sum(op == 'beq' for _, op, _ in instructions) != 1:
         raise ValueError('winner early-exit branch was not verified')
+    if len(instructions) != 29:
+        raise ValueError('winner instruction count differs from verified LLVM pattern')
     permitted = {'push', 'add', 'mov', 'movw', 'movt', 'ldrb', 'ldr', 'eor',
                  'orrs', 'movwne', 'clz', 'lsr', 'moveq', 'beq', 'cmp', 'bne', 'pop'}
     unexpected = [(hex(pc), op) for pc, op, _ in instructions if op not in permitted]
