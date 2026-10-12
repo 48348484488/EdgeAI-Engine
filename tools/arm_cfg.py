@@ -33,6 +33,8 @@ def build(data,entry,mode,max_instructions=4096):
             unresolved.add(pc)
             continue
         op=struct.unpack(order+("I" if mode=="arm" else "H"),data[off:off+step])[0]
+        width=step
+        call_mode=mode
         kind,target,conditional="other",None,False
         if mode=="arm":
             cond=(op>>28)&15
@@ -45,8 +47,33 @@ def build(data,entry,mode,max_instructions=4096):
             elif op&0x0ffffff0==0x012fff30:
                 kind="indirect-call"
         else:
-            if op&0xf800 in (0xe800,0xf000,0xf800):
-                kind="unsupported-thumb32"
+            if (op & 0xf800) in (0xe800,0xf000,0xf800):
+                width=4
+                if locate(pc+2) is None:
+                    kind="incomplete-thumb32"
+                else:
+                    second=struct.unpack(order+"H",data[off+2:off+4])[0]
+                    if (op & 0xf800)==0xf000 and (second & 0xc000)==0xc000:
+                        sign=(op>>10)&1
+                        j1=(second>>13)&1
+                        j2=(second>>11)&1
+                        i1=(~(j1^sign))&1
+                        i2=(~(j2^sign))&1
+                        imm=(sign<<24)|(i1<<23)|(i2<<22)|((op&0x3ff)<<12)
+                        if second & 0x1000:
+                            imm|=(second&0x7ff)<<1
+                            target=(pc+4+arm.signext(imm,25))&0xffffffff
+                            kind="BL"
+                            call_mode="thumb"
+                        elif (second & 1)==0:
+                            imm|=(second&0x7fe)<<1
+                            target=(((pc+4)&~3)+arm.signext(imm,25))&0xffffffff
+                            kind="BLX"
+                            call_mode="arm"
+                        else:
+                            kind="unsupported-thumb32"
+                    else:
+                        kind="unsupported-thumb32"
             elif op&0xf800==0xe000:
                 kind="B"
                 target=(pc+4+(arm.signext(op&0x7ff,11)<<1))&0xffffffff
@@ -60,16 +87,16 @@ def build(data,entry,mode,max_instructions=4096):
                 kind="indirect-call"
             elif op&0xff00==0xbd00:
                 kind="unknown-control"
-        nodes[pc]={"address":hex(pc),"kind":kind,"width":step}
+        nodes[pc]={"address":hex(pc),"kind":kind,"width":width}
         successors=[]
         if kind in ("B","B.cond"):
             successors.append((target,"taken"))
             if conditional: successors.append((pc+step,"fallthrough"))
-        elif kind=="BL":
-            edges.add((pc,target,"call"))
-            successors.append((pc+step,"fallthrough"))
+        elif kind in ("BL","BLX"):
+            edges.add((pc,target,"call:"+call_mode))
+            successors.append((pc+width,"fallthrough"))
         elif kind in ("other","indirect-call"):
-            successors.append((pc+step,"fallthrough"))
+            successors.append((pc+width,"fallthrough"))
         for nxt,label in successors:
             edges.add((pc,nxt,label))
             if nxt not in nodes: queue.append(nxt)
@@ -78,7 +105,7 @@ def build(data,entry,mode,max_instructions=4096):
             "instructions":[nodes[k] for k in sorted(nodes)],
             "edges":[{"from":hex(a),"to":hex(b),"type":t} for a,b,t in sorted(edges)],
             "unresolved_targets":[hex(k) for k in sorted(unresolved)],
-            "limitations":"Partial decoder; explicit ISA and entry; no automatic function recovery."}
+            "limitations":"Partial decoder; explicit ISA and entry, no automatic boundaries; Thumb BL/BLX immediate supported."}
 
 def main():
     p=argparse.ArgumentParser(description=__doc__)
