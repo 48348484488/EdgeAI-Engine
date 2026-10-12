@@ -59,6 +59,32 @@ class RegionsTests(unittest.TestCase):
         self.assertEqual(a['decisions'][0]['classification'],'unresolved')
         self.assertEqual(a['nonterminating_nodes'],['0x1004'])
 
+    def test_actual_arm_game(self):
+        import shutil
+        import subprocess
+        import tempfile
+        if not shutil.which('clang') or not shutil.which('llvm-objdump'):
+            self.skipTest('requires LLVM ARM compiler and disassembler')
+        loop_path = ROOT/'tools'/'arm_loop_analysis.py'
+        ls = importlib.util.spec_from_file_location('edge_loop_analysis',loop_path)
+        loops = importlib.util.module_from_spec(ls)
+        ls.loader.exec_module(loops)
+        with tempfile.TemporaryDirectory() as tmp:
+            elf = Path(tmp)/'game.elf'
+            subprocess.run(['clang','--target=armv7-none-eabi','-marm','-O1',
+                '-fno-inline','-nostdlib','-fuse-ld=lld','-Wl,-Ttext=0x1000',
+                '-Wl,-e,start',str(ROOT/'examples/reverse/tictactoe.c'),
+                '-o',str(elf)], check=True,capture_output=True)
+            dump = subprocess.run(['llvm-objdump','-d',str(elf)],
+                                  check=True,capture_output=True,text=True).stdout
+        winner = regions.analyze(loops.analyze(loops.disassemble_function(dump,'winner'),'winner'))
+        play = regions.analyze(loops.analyze(loops.disassemble_function(dump,'play'),'play'))
+        self.assertEqual(winner['decision_count'],2)
+        self.assertEqual(len({x['merge'] for x in winner['decisions']}),1)
+        self.assertTrue(all(x['classification']=='reconverging' for x in winner['decisions']))
+        self.assertEqual(play['decision_count'],2)
+        self.assertTrue(all(x['classification']=='exit_only' for x in play['decisions']))
+
     def test_invalid_graph_rejected(self):
         g=fixture([0x1000],[(0x1000,0x1004,'flow')],[0x1000])
         with self.assertRaisesRegex(ValueError,'outside reachable'):
