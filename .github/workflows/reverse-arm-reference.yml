@@ -18,6 +18,9 @@ on:
       - 'tools/recover_winner_variants.py'
       - 'tools/validate_winner_variants.py'
       - 'tools/validate_winner_qemu.py'
+      - 'tools/validate_winner_freestanding.py'
+      - 'tests/winner_freestanding_arm.cpp'
+      - 'tests/test_winner_freestanding.py'
       - 'tests/test_winner_qemu_contract.py'
       - 'tools/validate_winner_reconstruction.py'
       - 'tests/winner_differential_harness.cpp'
@@ -117,6 +120,10 @@ jobs:
         run: python3 -m unittest discover -s tests -p 'test_winner_qemu_contract.py' -v
       - name: Actual ARM32 differential with GCC-built binaries under QEMU
         run: python3 tools/validate_winner_qemu.py --output results/winner_qemu_arm32.json
+      - name: Verify sysroot-free ARM32 executables and no false QEMU success
+        run: python3 -m unittest discover -s tests -p 'test_winner_freestanding.py' -v
+      - name: Run independent real ARM32 Linux EABI tests under QEMU
+        run: python3 tools/validate_winner_freestanding.py --require-qemu --output results/winner_freestanding_arm32.json --save-runners results/arm32_binaries
       - name: Real ELF validation against LLVM
         run: |
           python3 tools/validate_arm_reference.py --output results/arm_reference_latest.json
@@ -138,4 +145,6 @@ jobs:
             results/winner_variant_*.json
             results/winner_variant_*.cpp
             results/winner_qemu_arm32.json
+            results/winner_freestanding_arm32.json
+            results/arm32_binaries/*.elf
           if-no-files-found: warn
