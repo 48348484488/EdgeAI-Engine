@@ -7,6 +7,7 @@ import subprocess
 import tempfile
 
 from recover_winner import recover, emit_cpp
+from reconstruct_winner import reconstruct as strict_reconstruct
 from recover_winner_stripped import recover_stripped
 from recover_winner_variants import recover_variants
 
@@ -32,6 +33,13 @@ def validate(source=SOURCE, harness=HARNESS, output=ROOT/'results/winner_reconst
             evidence_elf = temp/'game_stripped.elf'
             execute(['llvm-objcopy', '--strip-all', str(original_elf), str(evidence_elf)])
         extracted = recover_variants(evidence_elf) if strip_symbols else recover(original_elf)
+        strict_o1_verification = None
+        if optimization == '1':
+            # Second parser reads addresses/section bytes from objdump, while
+            # the primary parsers use ELF symbols or PT_LOAD segments.
+            _, strict_o1_verification = strict_reconstruct(original_elf)
+            if strict_o1_verification['rows'] != extracted['triplets']:
+                raise ValueError('independent ARM O1 reconstruction disagrees with primary evidence')
         candidate = temp/'winner.cpp'
         candidate.write_text(emit_cpp(extracted), encoding='utf-8')
         candidate_arm = temp/'candidate_arm.o'
@@ -52,6 +60,7 @@ def validate(source=SOURCE, harness=HARNESS, output=ROOT/'results/winner_reconst
             'reference': 'ARM32 ELF compiled from test game C',
             'function': 'winner',
             'extraction': extracted,
+            'independent_arm_o1_verification': strict_o1_verification,
             'stripped_elf_tested': strip_symbols,
             'reference_arm_optimization': '-O'+optimization,
             'arm_candidate_compiled': candidate_arm.is_file(),
