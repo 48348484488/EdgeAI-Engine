@@ -30,6 +30,8 @@ jobs:
           python3 -m unittest discover -s tests -p 'test_thumb_calls.py' -v
       - name: Verify conservative ARM flow outline
         run: python3 -m unittest discover -s tests -p 'test_arm_flow_outline.py' -v
+      - name: Test ARM semantic annotations
+        run: python3 -m unittest discover -s tests -p 'test_arm_semantics.py' -v
       - name: Test compiled tic-tac-toe game
         run: python3 tools/validate_tictactoe_arm.py
       - name: Real ELF validation against LLVM
