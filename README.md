@@ -265,6 +265,19 @@ Condicoes e instrucoes desconhecidas recebem `unsupported` em vez de
 uma interpretacao inventada. Isso e um primeiro passo para abandonar
 o reconhecimento exclusivo de `play()`, nao um descompilador completo.
 
+## IR com grafo de fluxo de controle ARM32
+
+O modulo `tools/arm_ir_graph.py` integra o decodificador ARM32
+existente ao grafo de fluxo de controle. Mantem enderecos, condicoes,
+arestas de desvio, chamadas e operacoes nao reconhecidas. A API
+`from_elf(bytes, entry)` produz uma IR limitada por orcamento de
+instrucoes. Por enquanto, a IR do grafo **nao faz estruturacao
+automatica de loops/ifs em C++**.
+
+Os testes de regressao estao em `tests/test_arm_ir_graph.py`.
+O GitHub Actions tem retornado falha sem etapas/logs disponiveis;
+essa integracao ainda precisa de comprovacao no runner.
+
 ## Qual é o próximo objetivo?
 
 Ampliar o decodificador ARM/Thumb-2, reconhecer os limites reais das funções e validar os mapas de chamadas em binários ARM reais. A ferramenta `arm_functions.py` gera **candidatos** a partir de chamadas diretas ARM32 `BL` e Thumb-2 `BL`/`BLX` imediato, mas não cobre instruções Thumb-2 em geral, chamadas indiretas, mudanças dinâmicas de modo nem limites completos das funções. Depois, avançar para pseudocódigo e reconstrução verificável em C/C++.
