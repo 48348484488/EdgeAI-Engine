@@ -21,6 +21,9 @@ play_spec.loader.exec_module(play_evidence)
 branch_spec=importlib.util.spec_from_file_location("edgeai_compiled_branches",ROOT/"tools"/"arm_compiled_branches.py")
 compiled_branches=importlib.util.module_from_spec(branch_spec)
 branch_spec.loader.exec_module(compiled_branches)
+paths_spec=importlib.util.spec_from_file_location("edgeai_play_paths",ROOT/"tools"/"arm_play_paths.py")
+play_paths=importlib.util.module_from_spec(paths_spec)
+paths_spec.loader.exec_module(play_paths)
 
 def evaluate():
     with tempfile.TemporaryDirectory() as directory:
@@ -61,6 +64,7 @@ def evaluate():
             if name=="play":
                 item["register_evidence"]=play_evidence.report(instructions,board_start)
                 item["control_flow"]=compiled_branches.analyze(instructions)
+                item["path_events"]=play_paths.analyze(instructions,[a["pc"] for a in accesses if a["mnemonic"].startswith("str") and a["board_relation"]=="board_base_dynamic_index"])
             functions.append(item)
         if {item["name"] for item in functions}!={"start","play","winner"}:
             raise RuntimeError("expected game functions absent")
