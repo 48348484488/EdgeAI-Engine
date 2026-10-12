@@ -35,6 +35,11 @@ def explore(ins,max_states=10000):
                     queue.append((dest,cmp,state))
                     forks.append({"branch_pc":hex(pc),"taken":taken,"destination":hex(dest),"bounds":state})
                 continue
+        elif op in ("beq","bne","bge","blt","bgt","ble","bcs","bcc","bmi","bpl"):
+            m=TARGET.match(args)
+            if m and int(m[1],16) in nodes:queue.append((int(m[1],16),None,dict(bounds)))
+            if pc in nxt:queue.append((nxt[pc],None,dict(bounds)))
+            continue
         elif op in ("bx","pop"):
             term.append({"pc":hex(pc),"unsigned_bounds":bounds});continue
         elif op in ("ldr","ldrb","mov","movw","movt","add","sub"):
