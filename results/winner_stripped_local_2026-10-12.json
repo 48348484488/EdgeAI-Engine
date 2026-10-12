@@ -67,8 +67,8 @@
   },
   "compiler": "clang 17.0.0; --target=armv7-none-eabi -marm -O1",
   "recovery_regressions": {
-    "tests": 5,
-    "passed": 5,
+    "tests": 6,
+    "passed": 6,
     "failures": 0
   },
   "prior_unstripped_regressions": {
@@ -83,5 +83,12 @@
   },
   "arm32_candidate_compiled": true,
   "qemu_arm_execution": false,
-  "caveat": "Narrow clang ARM -O1 fingerprint using valid ELF32 PT_LOAD headers. Reconstructed board capacity is a minimum from recovered triplets. Does not handle arbitrary stripped native executables or recover original C++ source."
+  "caveat": "Narrow clang ARM -O1 fingerprint using valid ELF32 PT_LOAD headers. Reconstructed board capacity is a minimum from recovered triplets. Does not handle arbitrary stripped native executables or recover original C++ source.",
+  "relocated_text_test": {
+    "text_base": "0x5000",
+    "winner_address": "0x5000",
+    "table_address": "0x15108",
+    "board_address": "0x25120",
+    "passed": true
+  }
 }
