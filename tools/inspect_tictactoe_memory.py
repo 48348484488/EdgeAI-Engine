@@ -12,6 +12,9 @@ SOURCE=ROOT/"examples"/"reverse"/"tictactoe.c"
 spec=importlib.util.spec_from_file_location("edgeai_address",ROOT/"tools"/"arm_address_resolver.py")
 address_tool=importlib.util.module_from_spec(spec)
 spec.loader.exec_module(address_tool)
+flow_spec=importlib.util.spec_from_file_location("edgeai_symbolic_flow",ROOT/"tools"/"arm_symbolic_flow.py")
+symbolic_flow=importlib.util.module_from_spec(flow_spec)
+flow_spec.loader.exec_module(symbolic_flow)
 
 def evaluate():
     with tempfile.TemporaryDirectory() as directory:
@@ -42,7 +45,7 @@ def evaluate():
                     continue
                 pc,opcode,operands=match.groups()
                 instructions.append({"pc":"0x"+pc,"mnemonic":opcode,"operands":operands.strip()})
-            accesses=address_tool.walk(instructions)
+            accesses=symbolic_flow.analyze(instructions)
             board_start=int(board.group(1),16)
             for access in accesses:
                 numeric=int(access["resolved_address"],16) if access["resolved_address"] else None
@@ -53,7 +56,7 @@ def evaluate():
             raise RuntimeError("expected game functions absent")
         return {"program":"compiled ARM32 tic-tac-toe","board_symbol_address":hex(int(board.group(1),16)),
                 "functions":functions,
-                "interpretation":"Only a computed address inside the board symbol range is confirmed. An unresolved address is not evidence of a board access. This is intentionally linear and conservative."}
+                "interpretation":"Known register bases can cross supported conditional branches; only a fully computed address in the board range is confirmed. Unsupported instructions invalidate register knowledge."}
 
 if __name__=="__main__":
     print(json.dumps(evaluate(),indent=2,ensure_ascii=False))
