@@ -348,6 +348,28 @@ o prototipo C++ e a funcao `winner()` continuam fornecidos,
 a comparacao diferencial mais recente foi nativa (nao QEMU) e
 os workflows do GitHub Actions ainda nao foram validados nesta versao.
 
+## Reconstrucao experimental de winner() a partir do ARM32
+
+O modulo `tools/recover_winner.py` le um ELF32 little-endian **compilado**,
+recupera os bytes da tabela `winner.lines` diretamente da secao de dados
+e verifica enderecos base `MOVW/MOVT`, as tres leituras do tabuleiro,
+o limite do loop e o padrao booleano ARM produzido pelo Clang `-O1`.
+Depois emite um candidato C++ sem ler o fonte original durante a geracao.
+
+`tools/validate_winner_reconstruction.py` compila o candidato para ARM32,
+e testa a versao nativa contra `winner()` original em 19.683 tabuleiros
+ternarios, 65.536 casos deterministas de 32 bits e quatro casos extremos.
+Na verificacao local: **85.223 casos, zero divergencias**, e quatro testes
+de recuperacao/negativos aprovados. O CI reproduz esses passos quando houver
+runner disponivel. O registro da verificacao local esta em
+`results/winner_reconstruction_local_2026-10-12.json`.
+
+**Limitacoes:** depende de simbolos ELF nao removidos (`board`,
+`winner.lines`), do padrao de instrucoes ARM especifico do compilador e
+de uma estrutura C++ de alto nivel conhecida. Equivalencia testada em
+execucao **nativa**; nao sao bytes identicos, nem validacao QEMU deste
+candidato. Nao e um descompilador geral.
+
 ## Qual é o próximo objetivo?
 
 Ampliar o decodificador ARM/Thumb-2, reconhecer os limites reais das funções e validar os mapas de chamadas em binários ARM reais. A ferramenta `arm_functions.py` gera **candidatos** a partir de chamadas diretas ARM32 `BL` e Thumb-2 `BL`/`BLX` imediato, mas não cobre instruções Thumb-2 em geral, chamadas indiretas, mudanças dinâmicas de modo nem limites completos das funções. Depois, avançar para pseudocódigo e reconstrução verificável em C/C++.
