@@ -370,6 +370,33 @@ de uma estrutura C++ de alto nivel conhecida. Equivalencia testada em
 execucao **nativa**; nao sao bytes identicos, nem validacao QEMU deste
 candidato. Nao e um descompilador geral.
 
+## Recuperacao de `winner()` em ELF ARM32 sem simbolos
+
+O novo `tools/recover_winner_stripped.py` identifica o padrao compilado
+da rotina pelo disassembly ARM, reconstrói os enderecos da tabela e do
+tabuleiro com `MOVW/MOVT` e resolve seus bytes pelos segmentos
+`PT_LOAD` do ELF. **Nao exige nomes de simbolos**, nem um endereco
+fixo para a funcao ou a tabela. Os testes incluem um ELF relinkado
+com `-Ttext=0x5000` e um ELF sem tabela de simbolos.
+
+Para reproduzir:
+
+```bash
+python3 -m unittest discover -s tests -p 'test_recover_winner_stripped.py' -v
+python3 tools/validate_winner_reconstruction.py --strip
+```
+
+Validacao local: **6 testes de recuperacao aprovados** e **85.223**
+comparacoes nativas entre `winner()` original e o candidato C++
+obtido do ELF stripped, sem divergencias. O candidato tambem foi
+compilado para ARM32; nao foi executado sob QEMU nessa rodada.
+A evidencia esta em `results/winner_stripped_local_2026-10-12.json`.
+
+**Escopo:** ainda reconhece um fingerprint especifico do Clang ARM32
+`-O1`, requer cabecalhos ELF com segmentos carregaveis e fornece
+um esqueleto C++ baseado em semantica previamente reconhecida.
+Nao extrai fontes arbitrarios de executaveis comerciais.
+
 ## Qual é o próximo objetivo?
 
 Ampliar o decodificador ARM/Thumb-2, reconhecer os limites reais das funções e validar os mapas de chamadas em binários ARM reais. A ferramenta `arm_functions.py` gera **candidatos** a partir de chamadas diretas ARM32 `BL` e Thumb-2 `BL`/`BLX` imediato, mas não cobre instruções Thumb-2 em geral, chamadas indiretas, mudanças dinâmicas de modo nem limites completos das funções. Depois, avançar para pseudocódigo e reconstrução verificável em C/C++.
