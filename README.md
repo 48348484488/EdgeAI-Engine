@@ -221,6 +221,21 @@ O relatorio fica em `results/play_reconstruction_test.json` no CI como
 artefato e especifica as hipoteses nao inferidas. O candidato **nao e
 comparado byte a byte** com a funcao ARM original.
 
+## Execucao diferencial ARM32 sob QEMU
+
+O teste `python3 tools/validate_play_arm_emulation.py` compila
+**ambas** as implementacoes (a funcao original em C e o candidato gerado
+em C++) para Linux ARM32 e executa o comparador sob `qemu-arm`.
+Compara retorno e as 9 posicoes do tabuleiro em 767.637 entradas.
+
+Requisitos adicionais: `qemu-user`, `gcc-arm-linux-gnueabihf` e
+`g++-arm-linux-gnueabihf`. O relatorio aparece em
+`results/play_arm_emulation.json` como artefato do CI.
+
+A estrutura do candidato e a funcao `winner()` ainda sao compartilhadas
+ou fornecidas pelo gerador; o teste mede equivalencia nos casos executados,
+**nao recuperacao exata do codigo original**.
+
 ## Qual é o próximo objetivo?
 
 Ampliar o decodificador ARM/Thumb-2, reconhecer os limites reais das funções e validar os mapas de chamadas em binários ARM reais. A ferramenta `arm_functions.py` gera **candidatos** a partir de chamadas diretas ARM32 `BL` e Thumb-2 `BL`/`BLX` imediato, mas não cobre instruções Thumb-2 em geral, chamadas indiretas, mudanças dinâmicas de modo nem limites completos das funções. Depois, avançar para pseudocódigo e reconstrução verificável em C/C++.
