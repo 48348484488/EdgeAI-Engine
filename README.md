@@ -236,6 +236,18 @@ A estrutura do candidato e a funcao `winner()` ainda sao compartilhadas
 ou fornecidas pelo gerador; o teste mede equivalencia nos casos executados,
 **nao recuperacao exata do codigo original**.
 
+## Emissor C++ dirigido por evidencias ARM
+
+O modulo `tools/arm_cpp_emitter.py` monta instrucoes `if`, escrita
+no tabuleiro e chamada de funcao usando as operacoes reconhecidas no ARM.
+Ele rejeita padroes de leitura ou escrita que nao correspondam ao subconjunto
+validado de `play()`. Os limites, comparacoes e valor de retorno sao
+extraidos pelo modulo de inferencia ARM.
+
+O resultado continua **limitado a um padrao conhecido**, com assinatura
+C++ e estrutura de alto nivel predefinidas. Nao e ainda um descompilador
+geral nem reconstrucao do codigo-fonte historico.
+
 ## Qual é o próximo objetivo?
 
 Ampliar o decodificador ARM/Thumb-2, reconhecer os limites reais das funções e validar os mapas de chamadas em binários ARM reais. A ferramenta `arm_functions.py` gera **candidatos** a partir de chamadas diretas ARM32 `BL` e Thumb-2 `BL`/`BLX` imediato, mas não cobre instruções Thumb-2 em geral, chamadas indiretas, mudanças dinâmicas de modo nem limites completos das funções. Depois, avançar para pseudocódigo e reconstrução verificável em C/C++.
