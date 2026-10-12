@@ -1,8 +1,55 @@
 # EdgeAI Engine
 
-EdgeAI Engine is an experimental, offline, CPU-only inference runtime written in C++17. Its goal is to make useful local automation possible on inexpensive x86-64 computers without a discrete GPU.
+**Objetivo: criar uma IA leve, offline e especializada em engenharia reversa.**
+Queremos ajudar a entender binarios de jogos e programas (como bibliotecas `.so`),
+localizar codigo e, no futuro, reconstruir funcoes equivalentes em C/C++.
+O projeto tambem pesquisa uma engine de IA local para PCs fracos, sem GPU.
 
-The project combines deterministic tools with one compact neural backend. Tool results and neural results are measured separately: a correct calculator answer is not presented as evidence of neural intelligence.
+## Na pratica: o que funciona agora?
+
+1. **Ler simbolos de funcoes ELF**: `python3 tools/elf_inspect.py libGame.so`.
+   Se o arquivo tiver nomes preservados, o resultado JSON mostra os nomes,
+   enderecos e tamanhos.
+2. **Buscar desvios ARM32**: `python3 tools/arm_scan.py libGame.so --mode arm`.
+   O resultado JSON mostra enderecos de instrucoes B/BL e seus destinos.
+3. **Buscar desvios Thumb16**: `python3 tools/arm_scan.py libGame.so --mode thumb`.
+   Mostra candidatos B e B.cond. Escolha o modo apenas quando souber qual
+   conjunto de instrucoes o segmento utiliza.
+
+Exemplo de saida ilustrativa (nao extraida de um jogo real):
+
+```json
+{
+  "architecture": "ARM32",
+  "mode": "arm",
+  "branches": [
+    {"address": "0x1000", "instruction": "BL", "target": "0x1008"}
+  ]
+}
+```
+
+**Limites atuais:** o scanner nao descobre automaticamente ARM versus Thumb,
+nao identifica fronteiras de funcoes, nao recupera funcoes removidas dos
+simbolos e nao gera C++. Ele examina candidatos sem executar o binario.
+A analise completa de fluxo e reconstrucao em C/C++ sao metas futuras.
+
+## E a inteligencia artificial?
+
+O runtime C++17 tem ferramentas deterministicas e um backend neural pequeno,
+mas **o modelo neural de desenvolvimento ainda nao produz respostas uteis
+no teste de referencia (0/20)**. Resultados das ferramentas nao provam
+qualidade neural. Nao afirmamos que a EdgeAI ja seja um descompilador ou
+que rivalize com assistentes comerciais.
+
+## Requisitos principais
+
+- A engine principal roda localmente em CPU e foi projetada para baixo consumo.
+- O scanner ELF experimental usa Python 3 sem pacotes externos.
+- Arquivos binarios analisados nao sao executados.
+- Testes: `python3 -m unittest discover -s tests -p 'test_arm_scan.py' -v`.
+
+**Proximo passo:** identificar fronteiras de codigo e construir grafos de
+fluxo de controle, medindo precisao com binarios de referencia.
 
 ## Current status
 
