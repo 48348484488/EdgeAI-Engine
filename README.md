@@ -506,6 +506,25 @@ nao houver emulador. Evidencia com hashes:
 O workflow `winner-arm32-qemu.yml` usa esse teste, instala apenas
 Clang/LLVM/QEMU e publica os arquivos ELF quando executado.
 
+## Winner: teste diferencial ampliado (2026-10-12)
+
+O reconstrutor existente identifica `winner()` a partir de um ELF ARM32, inclusive
+sem simbolos, nos niveis Clang `-O1/-O2/-O3/-Os/-Oz`. O gerador continua
+limitado aos padroes de instrucoes comprovados, **nao e descompilacao generica**.
+
+A suite nativa agora cobre **262.144** tabuleiros de quatro valores cada,
+**65.536** tabuleiros com inteiros aleatorios deterministas e **4** casos
+extremos: **327.684 casos por configuracao**. Um teste local com o
+binario `-O1` resultou em **zero divergencias**; o C++ tambem compilou
+para ARM32. O verificador independente `tools/reconstruct_winner.py`
+confere a tabela de `.rodata`, os desvios e a sequencia completa
+de instrucoes desse padrao e recusa alteracoes nao suportadas.
+
+Evidencia: `results/winner_extended_local_2026-10-12.json`.
+Os workflows do GitHub Actions continuam falhando sem etapas
+disponiveis; **a nova rodada de cinco otimizacoes e o QEMU ainda
+nao tiveram conclusao confirmada nesta revisao**.
+
 ## Qual é o próximo objetivo?
 
 Ampliar o decodificador ARM/Thumb-2, reconhecer os limites reais das funções e validar os mapas de chamadas em binários ARM reais. A ferramenta `arm_functions.py` gera **candidatos** a partir de chamadas diretas ARM32 `BL` e Thumb-2 `BL`/`BLX` imediato, mas não cobre instruções Thumb-2 em geral, chamadas indiretas, mudanças dinâmicas de modo nem limites completos das funções. Depois, avançar para pseudocódigo e reconstrução verificável em C/C++.
