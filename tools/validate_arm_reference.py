@@ -18,7 +18,7 @@ CASES={
  "thumb":("thumb",".syntax unified\n.thumb\n.global start\n.thumb_func\nstart:\n bl callee\n bx lr\n.thumb_func\ncallee:\n bx lr\n"),
  "thumb_to_arm":("thumb",".syntax unified\n.thumb\n.global start\n.thumb_func\nstart:\n blx callee\n bx lr\n.p2align 2\n.arm\ncallee:\n bx lr\n")
 }
-CALL=re.compile(r"^\\s*([0-9a-f]+):\\s+[0-9a-f]+\\s+(?:blx|bl)\\s+0x([0-9a-f]+)\\b",re.I|re.M)
+CALL=re.compile(r"^\s*([0-9a-f]+):\s+[0-9a-f]+\s+(?:blx|bl)\s+0x([0-9a-f]+)\b",re.I|re.M)
 
 def validate(clang="clang",objdump="llvm-objdump"):
     cases=[]
@@ -54,7 +54,7 @@ def main():
     p.add_argument("--output",type=Path)
     args=p.parse_args()
     report=validate(args.clang,args.llvm_objdump)
-    content=json.dumps(report,indent=2,ensure_ascii=False)+"\\n"
+    content=json.dumps(report,indent=2,ensure_ascii=False)+"\n"
     if args.output:
         args.output.parent.mkdir(parents=True,exist_ok=True)
         args.output.write_text(content,encoding="utf-8")
