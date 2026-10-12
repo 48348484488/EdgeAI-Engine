@@ -18,7 +18,7 @@ CASES={
  "thumb":("thumb",".syntax unified\n.thumb\n.global start\n.thumb_func\nstart:\n bl callee\n bx lr\n.thumb_func\ncallee:\n bx lr\n"),
  "thumb_to_arm":("thumb",".syntax unified\n.thumb\n.global start\n.thumb_func\nstart:\n blx callee\n bx lr\n.p2align 2\n.arm\ncallee:\n bx lr\n")
 }
-CALL=re.compile(r"^\\s*([0-9a-f]+):\\s+[0-9a-f]+\\s+(?:blx|bl)\\s+0x([0-9a-f]+)\\b",re.I)
+CALL=re.compile(r"^\\s*([0-9a-f]+):\\s+[0-9a-f]+\\s+(?:blx|bl)\\s+0x([0-9a-f]+)\\b",re.I|re.M)
 
 def validate(clang="clang",objdump="llvm-objdump"):
     cases=[]
