@@ -113,19 +113,28 @@ def analyze(instructions, function=None, max_instructions=20000):
         for dst in successors[pc]:
             if dst in reachable:
                 predecessors[dst].add(pc)
-    dominators = {pc: ({entry} if pc == entry else set(reachable)) for pc in reachable}
+    # Integer bitsets avoid allocating O(V^2) Python-set elements on large
+    # graphs and make dominator intersections efficient on modest CPUs.
+    order = sorted(reachable)
+    bits = {pc: 1 << i for i, pc in enumerate(order)}
+    all_bits = (1 << len(order)) - 1
+    dominators = {pc: (bits[pc] if pc == entry else all_bits) for pc in order}
     changed = True
     while changed:
         changed = False
-        for pc in sorted(reachable - {entry}):
+        for pc in order:
+            if pc == entry:
+                continue
             incoming = predecessors[pc]
-            shared = set.intersection(*(dominators[p] for p in incoming)) if incoming else set()
-            new = {pc} | shared
+            shared = all_bits
+            for pred in incoming:
+                shared &= dominators[pred]
+            new = bits[pc] | (shared if incoming else 0)
             if new != dominators[pc]:
                 dominators[pc] = new
                 changed = True
-    back_edges = [(src, dst) for src in sorted(reachable) for dst in sorted(successors[src])
-                  if dst in dominators[src]]
+    back_edges = [(src, dst) for src in order for dst in sorted(successors[src])
+                  if dst in bits and dominators[src] & bits[dst]]
     loops = defaultdict(lambda: {'latches': set(), 'nodes': set()})
     for latch, header in back_edges:
         nodes = {header, latch}
