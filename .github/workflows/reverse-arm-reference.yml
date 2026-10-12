@@ -10,6 +10,7 @@ on:
       - 'examples/reverse/tictactoe.c'
       - 'tests/test_arm*.py'
       - 'tests/test_thumb_calls.py'
+      - 'tests/test_tictactoe_board_flow.py'
       - '.github/workflows/reverse-arm-reference.yml'
   pull_request:
   workflow_dispatch:
@@ -49,6 +50,8 @@ jobs:
         run: python3 -m unittest discover -s tests -p 'test_arm_symbolic_flow.py' -v
       - name: Inventory memory accesses in compiled game
         run: python3 tools/inspect_tictactoe_memory.py
+      - name: Verify real board load and store
+        run: python3 -m unittest discover -s tests -p 'test_tictactoe_board_flow.py' -v
       - name: Test compiled tic-tac-toe game
         run: python3 tools/validate_tictactoe_arm.py
       - name: Real ELF validation against LLVM
