@@ -1,0 +1,87 @@
+{
+  "reference": "ARM32 compiled tic-tac-toe ELF after llvm-objcopy --strip-all",
+  "original_source_used_for_generation": false,
+  "stripped_elf_tested": true,
+  "symbol_table_present_after_stripping": false,
+  "extraction": {
+    "function": "winner",
+    "source": "ARM32 stripped ELF PT_LOAD + instruction fingerprint",
+    "function_address": "0x1000",
+    "table_address": "0x11108",
+    "table_symbol": null,
+    "board_address": "0x21120",
+    "board_cells": 9,
+    "triplets": [
+      [
+        0,
+        1,
+        2
+      ],
+      [
+        3,
+        4,
+        5
+      ],
+      [
+        6,
+        7,
+        8
+      ],
+      [
+        0,
+        3,
+        6
+      ],
+      [
+        1,
+        4,
+        7
+      ],
+      [
+        2,
+        5,
+        8
+      ],
+      [
+        0,
+        4,
+        8
+      ],
+      [
+        2,
+        4,
+        6
+      ]
+    ],
+    "loop_iterations": 8,
+    "board_load_pcs": [
+      "0x1030",
+      "0x1034",
+      "0x1038"
+    ],
+    "table_load_pcs": [
+      "0x1024",
+      "0x1028",
+      "0x102c"
+    ]
+  },
+  "compiler": "clang 17.0.0; --target=armv7-none-eabi -marm -O1",
+  "recovery_regressions": {
+    "tests": 5,
+    "passed": 5,
+    "failures": 0
+  },
+  "prior_unstripped_regressions": {
+    "tests": 4,
+    "passed": 4,
+    "failures": 0
+  },
+  "native_differential": {
+    "tested_cases": 85223,
+    "mismatches": 0,
+    "passed": true
+  },
+  "arm32_candidate_compiled": true,
+  "qemu_arm_execution": false,
+  "caveat": "Narrow clang ARM -O1 fingerprint using valid ELF32 PT_LOAD headers. Reconstructed board capacity is a minimum from recovered triplets. Does not handle arbitrary stripped native executables or recover original C++ source."
+}
