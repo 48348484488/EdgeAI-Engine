@@ -63,6 +63,8 @@ jobs:
         run: python3 -m unittest discover -s tests -p 'test_tictactoe_board_flow.py' -v
       - name: Test compiled tic-tac-toe game
         run: python3 tools/validate_tictactoe_arm.py
+      - name: Verify graph structure summaries
+        run: python3 -m unittest discover -s tests -p 'test_arm_graph_structure.py' -v
       - name: Verify ARM control-flow IR
         run: python3 -m unittest discover -s tests -p 'test_arm_ir_graph.py' -v
       - name: Verify ARM instruction IR lifting
