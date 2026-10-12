@@ -1,0 +1,93 @@
+{
+  "architecture": "ARM32 Linux EABI",
+  "compiler": "Clang + LLD",
+  "libc_required": false,
+  "gcc_arm_required": false,
+  "emulator": null,
+  "execution_status": "not_executed_missing_qemu",
+  "runs": [
+    {
+      "optimization": "-O1",
+      "recognized_pattern": "O1",
+      "elf": {
+        "elf_class": "ELF32",
+        "machine": "ARM",
+        "type": "ET_EXEC",
+        "dynamic_interpreter": false,
+        "entry": "0x2033c",
+        "size_bytes": 3656,
+        "sha256": "7157aa7bbcd15765c3760438e9ceaf90807f15e2cbf1c58fb4099512d728cdac"
+      },
+      "execution_status": "not_executed",
+      "behavior": null
+    },
+    {
+      "optimization": "-O2",
+      "recognized_pattern": "O2_or_O3",
+      "elf": {
+        "elf_class": "ELF32",
+        "machine": "ARM",
+        "type": "ET_EXEC",
+        "dynamic_interpreter": false,
+        "entry": "0x2033c",
+        "size_bytes": 3656,
+        "sha256": "c3af4723151656d62081e051d69d5fee6045b63f74e080f57a01586af3c194f7"
+      },
+      "execution_status": "not_executed",
+      "behavior": null
+    },
+    {
+      "optimization": "-O3",
+      "recognized_pattern": "O2_or_O3",
+      "elf": {
+        "elf_class": "ELF32",
+        "machine": "ARM",
+        "type": "ET_EXEC",
+        "dynamic_interpreter": false,
+        "entry": "0x2033c",
+        "size_bytes": 3656,
+        "sha256": "f7b3fa55782778ae842c230d97a303665d4eb1f19535aafe2f473fc678da0652"
+      },
+      "execution_status": "not_executed",
+      "behavior": null
+    },
+    {
+      "optimization": "-Os",
+      "recognized_pattern": "Os",
+      "elf": {
+        "elf_class": "ELF32",
+        "machine": "ARM",
+        "type": "ET_EXEC",
+        "dynamic_interpreter": false,
+        "entry": "0x2033c",
+        "size_bytes": 3656,
+        "sha256": "fe1762909ab41627af60b0cb95aac5178c2ba7b43d82f2f684401a530f5ce302"
+      },
+      "execution_status": "not_executed",
+      "behavior": null
+    },
+    {
+      "optimization": "-Oz",
+      "recognized_pattern": "Oz",
+      "elf": {
+        "elf_class": "ELF32",
+        "machine": "ARM",
+        "type": "ET_EXEC",
+        "dynamic_interpreter": false,
+        "entry": "0x2033c",
+        "size_bytes": 3656,
+        "sha256": "bcf951420dc5c359eb3023f87b1541fb4c3d45a080cfb8538f434a27b6b9f14e"
+      },
+      "execution_status": "not_executed",
+      "behavior": null
+    }
+  ],
+  "qemu_tested_cases": 0,
+  "qemu_mismatches": 0,
+  "compiled_runners": 5,
+  "unit_tests": {
+    "passed": 3,
+    "failed": 0
+  },
+  "note": "Real Clang/LLD static ARM ELF compile and ELF header verification, QEMU execution pending due missing emulator in local environment."
+}
