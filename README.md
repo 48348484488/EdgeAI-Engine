@@ -58,6 +58,22 @@ The neural responses from the untrained development fixture were non-empty but n
 
 Linux GitHub Actions is the authoritative gate for actual peak RSS. Windows results are reported separately.
 
+## Experimental reverse-engineering module
+
+A new read-only ELF function inventory utility is available at
+[`tools/elf_inspect.py`](tools/elf_inspect.py). It reports named function
+symbols, addresses, sizes, and ELF metadata as JSON, without executing
+the input binary or requiring a GPU.
+
+```bash
+python3 tools/elf_inspect.py /path/to/libGame.so --max-functions 100
+python3 -m unittest discover -s tests -p test_elf_inspect.py -v
+```
+
+This is the first **static-inspection** building block, not a decompiler:
+stripped functions, ARM/Thumb instruction decoding and C++ reconstruction
+are not yet supported. See [scope and limitations](docs/elf-inspection.md).
+
 ## Repository layout
 
 ```text
