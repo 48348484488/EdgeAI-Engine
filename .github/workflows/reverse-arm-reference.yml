@@ -58,11 +58,15 @@ jobs:
       - name: Verify play register evidence
         run: python3 -m unittest discover -s tests -p 'test_arm_play_evidence.py' -v
       - name: Inventory memory accesses in compiled game
-        run: python3 tools/inspect_tictactoe_memory.py
+        run: |
+          mkdir -p results
+          python3 tools/inspect_tictactoe_memory.py | tee results/arm_play_inspection_latest.json
       - name: Verify real board load and store
         run: python3 -m unittest discover -s tests -p 'test_tictactoe_board_flow.py' -v
       - name: Test compiled tic-tac-toe game
         run: python3 tools/validate_tictactoe_arm.py
+      - name: Verify compiled ARM play outcome classes
+        run: python3 -m unittest discover -s tests -p 'test_arm_play_outcomes.py' -v
       - name: Verify unsigned ARM branch constraints
         run: python3 -m unittest discover -s tests -p 'test_arm_unsigned_paths.py' -v
       - name: Verify symbolic path constraints
@@ -97,4 +101,5 @@ jobs:
             results/arm_reference_latest.json
             results/play_reconstruction_test.json
             results/play_arm_emulation.json
+            results/arm_play_inspection_latest.json
           if-no-files-found: warn
