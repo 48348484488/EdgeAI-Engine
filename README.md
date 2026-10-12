@@ -548,6 +548,30 @@ apenas o padrao ARM32 Clang O1 reconhecido. C++ de alto nivel e
 prototipo continuam previstos por um molde. A rodada acima nao
 executou QEMU e nao representa aprovacao do GitHub Actions.
 
+## IR estrutural de laços ARM32 (2026-10-12)
+
+O novo `tools/arm_loop_analysis.py` identifica **laços naturais por dominadores**
+e arestas de retorno em qualquer função ARM32 selecionada no ELF, sem
+regras específicas do jogo da velha. Registra entradas, saídas, candidatos
+a contadores, leituras e escritas indexadas, inclusive endereçamento
+pós-indexado (`LDR R3, [R2], #4`). O relatório de
+`tools/inspect_tictactoe_memory.py` passa a incluir
+`control_flow_structure` para `winner`, `play` e `start`.
+
+A implementação foi testada localmente em **9 cenários, 9 aprovados**,
+incluindo um segundo programa ARM32 real (`examples/reverse/array_sum.c`),
+laços aninhados e rejeição de laços falsos. Um confronto de cinco variantes
+Clang 17 do jogo registrou 1 laço em `-O1`, `-Os` e `-Oz`, e nenhum em
+`-O2`/`-O3`, pois essas otimizações expandiram o laço em código sem
+aresta de retorno. Evidências e hashes dos ELFs estão em
+`results/arm_loop_variants_local_2026-10-12.json`.
+
+**Limites:** detectar um laço de máquina não é reconstruir seu `for`
+original. Valores dos registradores, aliasing, laços irreduzíveis e
+reconhecimento sem nome/limite da função ainda exigem novas etapas.
+Esta rodada testou ELFs ARM32 locais, sem executar ARM sob QEMU; o
+GitHub Actions ainda precisa de validação independente.
+
 ## Qual é o próximo objetivo?
 
 Ampliar o decodificador ARM/Thumb-2, reconhecer os limites reais das funções e validar os mapas de chamadas em binários ARM reais. A ferramenta `arm_functions.py` gera **candidatos** a partir de chamadas diretas ARM32 `BL` e Thumb-2 `BL`/`BLX` imediato, mas não cobre instruções Thumb-2 em geral, chamadas indiretas, mudanças dinâmicas de modo nem limites completos das funções. Depois, avançar para pseudocódigo e reconstrução verificável em C/C++.
