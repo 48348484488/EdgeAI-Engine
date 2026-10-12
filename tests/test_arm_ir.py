@@ -13,6 +13,13 @@ class IRTests(unittest.TestCase):
         self.assertEqual([n["op"] for n in ir],["guard_gt_unsigned","guard_not_equal","store_indexed","tail_call"])
         cpp=m.emit_cpp(ir)
         self.assertIn("board[position] = player;",cpp)
+    def test_generic_expression_ir(self):
+        names={"r0":"arg0","r1":"arg1"}
+        self.assertEqual(m.emit_expression({"op":"binary","kind":"add","lhs":"r0","rhs":"r1"},names),"(arg0 + arg1)")
+        self.assertEqual(m.emit_expression({"op":"binary","kind":"ult","lhs":"r0","rhs":9},names),"(arg0 < 9)")
+        with self.assertRaises(ValueError):
+            m.emit_expression({"op":"binary","kind":"divide","lhs":"r0","rhs":2},names)
+
     def test_unknown_memory_pattern_rejected(self):
         rules={"max_position":8,"empty_value":0,"rejection_value":-1,"success_target":"winner"}
         read={"board_relation":"board_base_dynamic_index","operands":"r3, [r2, r0, lsl #2]"}
