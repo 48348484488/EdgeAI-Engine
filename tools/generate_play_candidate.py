@@ -40,6 +40,16 @@ def generate(report):
     comparisons=[x for x in ev if x["kind"]=="comparison"]
     if not reads or not writes or not comparisons:
         raise ValueError("insufficient compiled binary evidence for template")
+    # Prove that the indexed store writes the second argument (r1)
+    # to board[r0], instead of silently assuming it in the C++ skeleton.
+    import re
+    store_operand=writes[0]["operands"]
+    store_match=re.fullmatch(r"r(\d+), \[r(\d+), r(\d+), lsl #2\]",store_operand)
+    if not store_match or tuple(store_match.groups())!=("1","2","0"):
+        raise ValueError("unsupported play store: cannot establish board[r0] = r1")
+    load_match=re.fullmatch(r"r\d+, \[r2, r0, lsl #2\]",reads[0]["operands"])
+    if not load_match:
+        raise ValueError("unsupported board read index")
     inferred=rules.infer(ROOT/"examples/reverse/tictactoe.c")
     return {"candidate_cpp":CPP.format(**inferred),
             "generation":"ARM_pattern_inference_with_C++_template",
