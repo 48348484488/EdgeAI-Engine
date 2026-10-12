@@ -56,7 +56,7 @@ def validate(source=SOURCE, harness=HARNESS, output=ROOT/'results/winner_reconst
             'reference_arm_optimization': '-O'+optimization,
             'arm_candidate_compiled': candidate_arm.is_file(),
             'native_differential': behavior,
-            'comparisons': {'all_ternary_boards': 19683, 'uniform_extreme_boards': 4,
+            'comparisons': {'all_four_value_boards': 262144, 'uniform_extreme_boards': 4,
                             'deterministic_full_width_boards': 65536},
             'original_source_used_for_generation': False,
             'original_source_used_for_differential_reference': True,
@@ -65,7 +65,7 @@ def validate(source=SOURCE, harness=HARNESS, output=ROOT/'results/winner_reconst
             'limitations': ('ELF still has symbol names; winner structure and equality/zero test '
                             'recognized from one clang ARM -O1 pattern, not general autonomous C++ recovery')
         }
-        if not behavior['passed'] or behavior['tested_cases'] != 85223:
+        if not behavior['passed'] or behavior['tested_cases'] != 327684:
             raise AssertionError('winner candidate did not pass differential test')
         output = Path(output)
         candidate_output = Path(candidate_output)
