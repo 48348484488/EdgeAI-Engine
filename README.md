@@ -163,6 +163,21 @@ python3 tools/inspect_tictactoe_memory.py
 O relatorio **nao afirma** que cada instrucao acessa o tabuleiro:
 comprovar essa relacao exige resolver os registradores e os enderecos efetivos.
 
+## Endereços de memória indexados
+
+O diagnóstico do jogo ARM inclui uma resolução conservadora de acessos
+`LDR` e `STR` com deslocamento imediato ou registrador indexado, por
+exemplo `[r1, r3, lsl #2]`. Os acessos ao símbolo `board` somente são
+classificados como confirmados quando o endereço efetivo é conhecido e
+está dentro de seus 36 bytes.
+
+```bash
+python3 tools/inspect_tictactoe_memory.py
+```
+
+Valores desconhecidos continuam marcados como não resolvidos. A análise
+linear ainda não infere registradores através de todos os desvios e chamadas.
+
 ## Qual é o próximo objetivo?
 
 Ampliar o decodificador ARM/Thumb-2, reconhecer os limites reais das funções e validar os mapas de chamadas em binários ARM reais. A ferramenta `arm_functions.py` gera **candidatos** a partir de chamadas diretas ARM32 `BL` e Thumb-2 `BL`/`BLX` imediato, mas não cobre instruções Thumb-2 em geral, chamadas indiretas, mudanças dinâmicas de modo nem limites completos das funções. Depois, avançar para pseudocódigo e reconstrução verificável em C/C++.
