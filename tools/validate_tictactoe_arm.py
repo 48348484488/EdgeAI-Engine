@@ -29,7 +29,7 @@ def run():
         if set(symbols)!={"winner","play","start"}:
             raise RuntimeError("LLVM did not find the expected game functions")
         calls={(int(site,16),int(target,16)) for site,target in
-               re.findall(r"^\\s*([0-9a-fA-F]+):\\s+[0-9a-fA-F]+\\s+bl\\s+0x([0-9a-fA-F]+)",disassembly,re.M)}
+               re.findall(r"^\s*([0-9a-fA-F]+):\s+[0-9a-fA-F]+\s+bl\s+0x([0-9a-fA-F]+)",disassembly,re.M)}
         calls_from_start={(a,b) for a,b in calls if a>=symbols["start"]}
         if not calls_from_start: raise RuntimeError("no direct calls identified by LLVM")
         edgeai=functions.discover(binary.read_bytes(),symbols["start"],"arm")
