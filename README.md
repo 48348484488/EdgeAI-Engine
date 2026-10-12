@@ -289,6 +289,18 @@ um desvio de igualdade. Isso nao prova automaticamente qual caminho
 corresponde a uma jogada aceita ou rejeitada: para isso ainda faltam
 analise semantica e associacao das instrucoes de retorno.
 
+## Rastreio de resultados por caminho de play()
+
+`tools/arm_play_paths.py` percorre os desvios condicionais presentes
+na funcao compilada e assinala se cada caminho **pode alcancar**
+uma gravacao no tabuleiro, a definicao do retorno -1, uma saida
+por BX LR ou o salto para winner. O resultado aparece em
+`path_events` no relatorio de `inspect_tictactoe_memory.py`.
+
+Sao eventos possivelmente alcancaveis, nao provas de que a condicao
+e suficiente para aceitar/rejeitar uma jogada: faltam condicoes de
+caminho e estados dos registradores.
+
 ## Qual é o próximo objetivo?
 
 Ampliar o decodificador ARM/Thumb-2, reconhecer os limites reais das funções e validar os mapas de chamadas em binários ARM reais. A ferramenta `arm_functions.py` gera **candidatos** a partir de chamadas diretas ARM32 `BL` e Thumb-2 `BL`/`BLX` imediato, mas não cobre instruções Thumb-2 em geral, chamadas indiretas, mudanças dinâmicas de modo nem limites completos das funções. Depois, avançar para pseudocódigo e reconstrução verificável em C/C++.
