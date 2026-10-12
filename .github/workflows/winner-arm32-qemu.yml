@@ -1,0 +1,37 @@
+name: Winner ARM32 QEMU validation
+
+on:
+  push:
+    paths:
+      - 'tools/recover_winner*.py'
+      - 'tools/validate_winner_qemu.py'
+      - 'tools/validate_winner_reconstruction.py'
+      - 'tests/winner_differential_harness.cpp'
+      - 'tests/test_winner_qemu_contract.py'
+      - 'examples/reverse/tictactoe.c'
+      - '.github/workflows/winner-arm32-qemu.yml'
+  workflow_dispatch:
+
+jobs:
+  qemu-winner:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install real ARM32 cross toolchain and emulator
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y clang lld llvm qemu-user gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf
+          arm-linux-gnueabihf-gcc --version | head -n 1
+          qemu-arm --version | head -n 1
+      - name: Validate runner fail-closed behavior and ARM32 ELF encoding
+        run: python3 -m unittest discover -s tests -p 'test_winner_qemu_contract.py' -v
+      - name: Run genuine ARM32 winner differential under QEMU
+        run: python3 tools/validate_winner_qemu.py --output results/winner_qemu_arm32.json
+      - name: Upload ARM32 execution evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: actual-arm32-winner-qemu
+          path: results/winner_qemu_arm32.json
+          if-no-files-found: warn
