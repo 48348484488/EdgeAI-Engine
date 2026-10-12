@@ -36,6 +36,7 @@ def run(output=Path("results/play_reconstruction_test.json")):
                 "evidence":info["binary_evidence"],
                 "source_assumptions":info["not_inferred_from_binary"],
                 "inferred_from_binary":info["inferred_from_binary"],
+                "intermediate_representation":info["intermediate_representation"],
                 "arm32_candidate_compiled":arm_candidate.is_file(),
                 "native_behavior_test":behavior,
                 "binary_bytes_compared":False,
