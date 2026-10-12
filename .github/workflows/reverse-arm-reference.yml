@@ -1,0 +1,38 @@
+name: Reverse engineering ARM reference
+
+on:
+  push:
+    paths:
+      - 'tools/arm_*.py'
+      - 'tools/validate_arm_reference.py'
+      - 'tests/test_arm*.py'
+      - 'tests/test_thumb_calls.py'
+      - '.github/workflows/reverse-arm-reference.yml'
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  reference:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install ARM compiler and disassembler
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y clang lld llvm
+      - name: Unit tests
+        run: |
+          python3 -m unittest discover -s tests -p 'test_arm_cfg.py' -v
+          python3 -m unittest discover -s tests -p 'test_arm_functions.py' -v
+          python3 -m unittest discover -s tests -p 'test_thumb_calls.py' -v
+      - name: Real ELF validation against LLVM
+        run: |
+          python3 tools/validate_arm_reference.py --output results/arm_reference_latest.json
+      - name: Upload validation evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: arm-reference-validation
+          path: results/arm_reference_latest.json
+          if-no-files-found: warn
