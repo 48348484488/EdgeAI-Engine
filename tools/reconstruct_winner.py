@@ -101,8 +101,12 @@ def reconstruct(elf):
                   ins['args'] == 'r2, r1, r1, lsl #1'), -1)
     if start < 0 or len(code) - start != len(LOOP_PATTERN):
         raise ValueError('unrecognized winner loop extent')
-    if not any(ins['op'] == 'mov' and ins['args'] == 'r1, #0' for ins in code[:start]):
-        raise ValueError('no verified loop initialization')
+    prologue = code[:start]
+    if len(prologue) != 7 or [(x['op']) for x in prologue] != [
+            'push', 'add', 'mov', 'movw', 'movt', 'movw', 'movt']:
+        raise ValueError('unsupported winner prologue')
+    if prologue[0]['args'] != '{r4, r5, r11, lr}' or prologue[1]['args'] != 'r11, sp, #8' or prologue[2]['args'] != 'r1, #0':
+        raise ValueError('unsupported winner loop initialization')
     for ins, (op, pat) in zip(code[start:], LOOP_PATTERN):
         if ins['op'] != op or not re.fullmatch(pat, ins['args']):
             raise ValueError('unsupported winner instruction at ' + hex(ins['pc']) + ': ' + ins['op'] + ' ' + ins['args'])
