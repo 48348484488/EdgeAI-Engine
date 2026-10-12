@@ -9,6 +9,7 @@ on:
       - 'tools/inspect_tictactoe_memory.py'
       - 'tools/arm_play_evidence.py'
       - 'tools/generate_play_candidate.py'
+      - 'tools/infer_play_rules.py'
       - 'tools/validate_play_reconstruction.py'
       - 'tests/play_differential_harness.cpp'
       - 'examples/reverse/tictactoe.c'
