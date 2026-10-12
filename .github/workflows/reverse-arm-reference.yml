@@ -63,6 +63,8 @@ jobs:
         run: python3 -m unittest discover -s tests -p 'test_tictactoe_board_flow.py' -v
       - name: Test compiled tic-tac-toe game
         run: python3 tools/validate_tictactoe_arm.py
+      - name: Verify unsigned ARM branch constraints
+        run: python3 -m unittest discover -s tests -p 'test_arm_unsigned_paths.py' -v
       - name: Verify symbolic path constraints
         run: python3 -m unittest discover -s tests -p 'test_arm_path_constraints.py' -v
       - name: Verify compiled ARM path events
