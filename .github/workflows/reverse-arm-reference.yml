@@ -13,6 +13,10 @@ on:
       - 'tools/infer_play_rules.py'
       - 'tools/validate_play_reconstruction.py'
       - 'tools/validate_play_arm_emulation.py'
+      - 'tools/recover_winner.py'
+      - 'tools/validate_winner_reconstruction.py'
+      - 'tests/winner_differential_harness.cpp'
+      - 'tests/test_recover_winner.py'
       - 'tests/play_differential_harness.cpp'
       - 'examples/reverse/tictactoe.c'
       - 'tests/test_arm*.py'
@@ -89,6 +93,10 @@ jobs:
         run: python3 tools/validate_play_reconstruction.py
       - name: Differential ARM32 execution under QEMU
         run: python3 tools/validate_play_arm_emulation.py
+      - name: Recover winner directly from compiled ARM ELF
+        run: python3 -m unittest discover -s tests -p 'test_recover_winner.py' -v
+      - name: Differential validation of reconstructed winner
+        run: python3 tools/validate_winner_reconstruction.py
       - name: Real ELF validation against LLVM
         run: |
           python3 tools/validate_arm_reference.py --output results/arm_reference_latest.json
@@ -102,4 +110,6 @@ jobs:
             results/play_reconstruction_test.json
             results/play_arm_emulation.json
             results/arm_play_inspection_latest.json
+            results/winner_reconstruction_test.json
+            results/winner_candidate.cpp
           if-no-files-found: warn
