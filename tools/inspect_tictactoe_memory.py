@@ -18,6 +18,9 @@ flow_spec.loader.exec_module(symbolic_flow)
 play_spec=importlib.util.spec_from_file_location("edgeai_play_evidence",ROOT/"tools"/"arm_play_evidence.py")
 play_evidence=importlib.util.module_from_spec(play_spec)
 play_spec.loader.exec_module(play_evidence)
+branch_spec=importlib.util.spec_from_file_location("edgeai_compiled_branches",ROOT/"tools"/"arm_compiled_branches.py")
+compiled_branches=importlib.util.module_from_spec(branch_spec)
+branch_spec.loader.exec_module(compiled_branches)
 
 def evaluate():
     with tempfile.TemporaryDirectory() as directory:
@@ -57,6 +60,7 @@ def evaluate():
                   "memory_access_count":len(accesses),"accesses":accesses}
             if name=="play":
                 item["register_evidence"]=play_evidence.report(instructions,board_start)
+                item["control_flow"]=compiled_branches.analyze(instructions)
             functions.append(item)
         if {item["name"] for item in functions}!={"start","play","winner"}:
             raise RuntimeError("expected game functions absent")
