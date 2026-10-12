@@ -14,9 +14,11 @@ on:
       - 'tools/validate_play_reconstruction.py'
       - 'tools/validate_play_arm_emulation.py'
       - 'tools/recover_winner.py'
+      - 'tools/recover_winner_stripped.py'
       - 'tools/validate_winner_reconstruction.py'
       - 'tests/winner_differential_harness.cpp'
       - 'tests/test_recover_winner.py'
+      - 'tests/test_recover_winner_stripped.py'
       - 'tests/play_differential_harness.cpp'
       - 'examples/reverse/tictactoe.c'
       - 'tests/test_arm*.py'
@@ -95,8 +97,13 @@ jobs:
         run: python3 tools/validate_play_arm_emulation.py
       - name: Recover winner directly from compiled ARM ELF
         run: python3 -m unittest discover -s tests -p 'test_recover_winner.py' -v
+      - name: Recover winner without ELF symbols
+        run: python3 -m unittest discover -s tests -p 'test_recover_winner_stripped.py' -v
       - name: Differential validation of reconstructed winner
         run: python3 tools/validate_winner_reconstruction.py
+      - name: Differential validation with stripped winner ELF
+        run: |
+          python3 tools/validate_winner_reconstruction.py --strip --output results/winner_stripped_test.json --candidate-output results/winner_stripped_candidate.cpp
       - name: Real ELF validation against LLVM
         run: |
           python3 tools/validate_arm_reference.py --output results/arm_reference_latest.json
@@ -112,4 +119,6 @@ jobs:
             results/arm_play_inspection_latest.json
             results/winner_reconstruction_test.json
             results/winner_candidate.cpp
+            results/winner_stripped_test.json
+            results/winner_stripped_candidate.cpp
           if-no-files-found: warn
