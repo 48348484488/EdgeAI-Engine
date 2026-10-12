@@ -40,6 +40,8 @@ jobs:
         run: python3 -m unittest discover -s tests -p 'test_arm_memory.py' -v
       - name: Test ARM memory through CFG
         run: python3 -m unittest discover -s tests -p 'test_arm_memory_flow.py' -v
+      - name: Test ARM memory flow
+        run: python3 -m unittest discover -s tests -p 'test_arm_memory_flow.py' -v
       - name: Test compiled tic-tac-toe game
         run: python3 tools/validate_tictactoe_arm.py
       - name: Real ELF validation against LLVM
