@@ -1,0 +1,54 @@
+{
+  "date": "2026-10-12",
+  "project": "EdgeAI-Engine",
+  "stage": "generic CFG postdominator/reconvergence analysis",
+  "method": "Independent local LLVM ARM32 disassembly probe; matching generic CFG analyzer updates and tests published to GitHub",
+  "compile_target": "armv7-none-eabi, -marm -O1 -fno-inline",
+  "arm_elf_sha256": "bdde6f4b36657c60f9c5a46b3664e9e30746b04d50188626cc181bf0bc7bba1d",
+  "local_unit_tests": {
+    "passed": 8,
+    "failed": 0,
+    "large_graph_nodes": 3000
+  },
+  "compiled_functions": {
+    "winner": {
+      "branch_count": 2,
+      "branches": [
+        {
+          "pc": "0x105c",
+          "classification": "reconverging",
+          "merge": "0x1070"
+        },
+        {
+          "pc": "0x1068",
+          "classification": "reconverging",
+          "merge": "0x1070"
+        }
+      ]
+    },
+    "play": {
+      "branch_count": 2,
+      "branches": [
+        {
+          "pc": "0x1078",
+          "classification": "exit_only",
+          "merge": null
+        },
+        {
+          "pc": "0x108c",
+          "classification": "exit_only",
+          "merge": null
+        }
+      ]
+    },
+    "start": {
+      "branch_count": 0,
+      "branches": []
+    }
+  },
+  "constraints": [
+    "Structural CFG analysis; cannot prove ARM register values, loop termination, or C++ source equivalence",
+    "Native Python probe over LLVM-disassembled ARM32; full GitHub runner remains unverified",
+    "No QEMU execution in this run"
+  ]
+}
