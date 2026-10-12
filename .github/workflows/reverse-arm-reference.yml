@@ -103,6 +103,8 @@ jobs:
         run: python3 tools/validate_play_reconstruction.py
       - name: Differential ARM32 execution under QEMU
         run: python3 tools/validate_play_arm_emulation.py
+      - name: Cross-check winner via independent ARM32 ELF verifier
+        run: python3 -m unittest discover -s tests -p 'test_arm_winner_reconstruct.py' -v
       - name: Recover winner directly from compiled ARM ELF
         run: python3 -m unittest discover -s tests -p 'test_recover_winner.py' -v
       - name: Recover winner without ELF symbols
