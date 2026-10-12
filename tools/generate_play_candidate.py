@@ -20,12 +20,12 @@ rule_spec.loader.exec_module(rules)
 CPP='''// C++ structural template, with guard values inferred from ARM evidence.
 extern "C" volatile int board[9];
 extern "C" int winner(void);
-extern "C" int play(int position, int player) {
+extern "C" int play(int position, int player) {{
     if ((unsigned)position > {max_position}u || board[position] != {empty_value})
         return {rejection_value};
     board[position] = player;
     return winner();
-}
+}}
 '''
 
 def generate(report):
