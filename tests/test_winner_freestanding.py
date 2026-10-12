@@ -1,5 +1,6 @@
 """Real Clang/LLD ARM32 compile checks, without pretending to run QEMU."""
 import json
+import hashlib
 from pathlib import Path
 import sys
 import tempfile
@@ -11,10 +12,15 @@ from validate_winner_freestanding import validate, verify_static_arm_elf
 class FreestandingTests(unittest.TestCase):
     def test_five_arm32_static_binary_links(self):
         with tempfile.TemporaryDirectory() as td:
-            report=validate(Path(td)/'report.json',qemu=None)
+            output=Path(td)/'binaries'
+            report=validate(Path(td)/'report.json',qemu=None,save_runners=output)
             self.assertEqual(report['compiled_runners'],5)
             self.assertEqual(report['execution_status'],'not_executed_missing_qemu')
             self.assertEqual(report['qemu_tested_cases'],0)
+            for entry in report['runs']:
+                saved=output/('winner_arm32_'+entry['optimization'].replace('-','')+'.elf')
+                self.assertTrue(saved.is_file())
+                self.assertEqual(hashlib.sha256(saved.read_bytes()).hexdigest(),entry['elf']['sha256'])
             self.assertTrue(all(entry['elf']['machine']=='ARM' and
                                 not entry['elf']['dynamic_interpreter'] and
                                 entry['elf']['type']=='ET_EXEC' for entry in report['runs']))
