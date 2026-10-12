@@ -5,8 +5,8 @@
   "compiler": "clang 17.0.0 (Swift LLVM build 10999b6d034f)",
   "algorithm": "dominance-based natural loops plus indexed memory accesses",
   "test_run": {
-    "local_unit_tests": 8,
-    "passed": 8,
+    "local_unit_tests": 9,
+    "passed": 9,
     "failed": 0,
     "ARM_elf_disassembly_verified": true,
     "QEMU_executed": false
@@ -70,5 +70,18 @@
     }
   ],
   "interpretation": "With Clang 17 ARM32, O2/O3 unroll this source-level loop; lack of a natural machine-code loop is not failure to identify a real back edge.",
-  "limitations": "Structural CFG only. Does not infer source-level loops from unrolled code and does not reconstruct arbitrary C++. CI and ARM/QEMU unverified for this change."
+  "limitations": "Structural CFG only. Does not infer source-level loops from unrolled code and does not reconstruct arbitrary C++. CI and ARM/QEMU unverified for this change.",
+  "additional_fixture": {
+    "source": "examples/reverse/array_sum.c",
+    "function": "sum_array",
+    "compiler_optimization": "-O1",
+    "natural_loop_count": 1,
+    "post_indexed_memory_load": {
+      "instruction": "LDR",
+      "base_register": "r2",
+      "stride_bytes": 4,
+      "writeback": true
+    },
+    "result": "passed on real ARM32 ELF"
+  }
 }
