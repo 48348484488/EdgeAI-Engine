@@ -3,9 +3,9 @@
 import re
 
 ACCESS=re.compile(r"^(r\d+),\s*\[(r\d+)(?:,\s*(#[+-]?\d+|r\d+)(?:,\s*lsl\s*#(\d+))?)?\]$")
-MOV=re.compile(r"^(r\d+),\s*#([+-]?\d+)$")
-ADD=re.compile(r"^(r\d+),\s*(r\d+),\s*#([+-]?\d+)$")
-MOVW=re.compile(r"^(r\d+),\s*#(\d+)$")
+MOV=re.compile(r"^(r\d+),\s*#([+-]?(?:0x[0-9a-fA-F]+|\d+))$")
+ADD=re.compile(r"^(r\d+),\s*(r\d+),\s*#([+-]?(?:0x[0-9a-fA-F]+|\d+))$")
+MOVW=re.compile(r"^(r\d+),\s*#(0x[0-9a-fA-F]+|\d+)$")
 
 def resolve(operands, registers):
     match=ACCESS.match(operands.strip())
@@ -31,7 +31,18 @@ def walk(instructions, initial=None):
     for ins in instructions:
         op=ins["mnemonic"].lower()
         args=ins["operands"]
-        if op in ("mov","movs"):
+        if op in ("movw","movt"):
+            match=MOVW.match(args)
+            if not match:
+                registers.clear()
+            elif op=="movw":
+                registers[match[1]]=int(match[2],0)&0xffff
+            elif match[1] in registers:
+                registers[match[1]]=(registers[match[1]]&0xffff)|((int(match[2],0)&0xffff)<<16)
+        elif op in ("cmp","cmn","tst","teq"):
+            # Comparisons affect flags but do not modify general registers.
+            pass
+        elif op in ("mov","movs"):
             match=MOV.match(args)
             if match: registers[match[1]]=int(match[2],0)&0xffffffff
             else: registers.clear()
@@ -43,7 +54,10 @@ def walk(instructions, initial=None):
             else: registers.clear()
         elif op.startswith(("ldr","str")):
             address=resolve(args,registers)
+            match=ACCESS.match(args)
+            base=registers.get(match[2]) if match else None
             accesses.append({"pc":ins["pc"],"mnemonic":op,"operands":args,
+                             "base_address":hex(base) if base is not None else None,
                              "resolved_address":hex(address) if address is not None else None})
             if op.startswith("ldr"):
                 match=ACCESS.match(args)
