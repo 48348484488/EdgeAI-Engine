@@ -17,6 +17,8 @@ on:
       - 'tools/recover_winner_stripped.py'
       - 'tools/recover_winner_variants.py'
       - 'tools/validate_winner_variants.py'
+      - 'tools/validate_winner_qemu.py'
+      - 'tests/test_winner_qemu_contract.py'
       - 'tools/validate_winner_reconstruction.py'
       - 'tests/winner_differential_harness.cpp'
       - 'tests/test_recover_winner.py'
@@ -111,6 +113,10 @@ jobs:
         run: python3 -m unittest discover -s tests -p 'test_recover_winner_variants.py' -v
       - name: Differential comparison across Clang O1 O2 O3 Os Oz
         run: python3 tools/validate_winner_variants.py --output results/winner_variants_validation.json
+      - name: QEMU runner fail-closed contract tests
+        run: python3 -m unittest discover -s tests -p 'test_winner_qemu_contract.py' -v
+      - name: Actual ARM32 differential with GCC-built binaries under QEMU
+        run: python3 tools/validate_winner_qemu.py --output results/winner_qemu_arm32.json
       - name: Real ELF validation against LLVM
         run: |
           python3 tools/validate_arm_reference.py --output results/arm_reference_latest.json
@@ -131,4 +137,5 @@ jobs:
             results/winner_variants_validation.json
             results/winner_variant_*.json
             results/winner_variant_*.cpp
+            results/winner_qemu_arm32.json
           if-no-files-found: warn
