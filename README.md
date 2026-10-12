@@ -212,7 +212,10 @@ candidato com a funcao C original. O teste enumera os `3^9` tabuleiros,
 13 posicoes de -2 a 10 e 3 valores de jogador (767.637 casos). Verifica tanto
 o retorno quanto todas as 9 casas apos a chamada.
 
-O gerador agora extrai do ARM os valores da comparacao de posicao, a\ncomparacao com zero, o retorno de rejeicao e a referencia a `winner()`.\nContudo, a assinatura C++, a estrutura do algoritmo e a implementacao de\n`winner()` continuam fornecidas pelo modelo de sintese. Por isso, mesmo com
+O gerador agora extrai do ARM os valores da comparacao de posicao, a
+comparacao com zero, o retorno de rejeicao e a referencia a `winner()`.
+Contudo, a assinatura C++, a estrutura do algoritmo e a implementacao de
+`winner()` continuam fornecidas pelo modelo de sintese. Por isso, mesmo com
 comportamento identico no teste, nao representa decompilacao autonoma.
 O relatorio fica em `results/play_reconstruction_test.json` no CI como
 artefato e especifica as hipoteses nao inferidas. O candidato **nao e
