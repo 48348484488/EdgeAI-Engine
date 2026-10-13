@@ -631,6 +631,31 @@ completo de engenharia reversa ainda tem incompatibilidades com
 padroes de instrucoes LLVM usados nos validadores antigos. Esta etapa nao emite
 codigo C++ executavel nem recupera condicoes de alto nivel.
 
+## Efeitos ARM32 ligados a IR estruturada (2026-10-13)
+
+`tools/arm_semantic_ir.py` adiciona instrucoes reconhecidas
+(atribuicao, comparacao, aritmetica, shifts, desvios, leituras
+e escritas em memoria) ao grafo estruturado. Cada efeito contem
+o endereco ARM e os lacos/bracos condicionais associados.
+Modos de enderecamento nao reconhecidos sao marcados
+`unsupported`; enderecos de memoria **nao** significam que
+a origem de um objeto tenha sido demonstrada.
+
+Um teste local com uma copia de SHA Git identico ao modulo
+publicado analisou as instrucoes ARM32 compiladas:
+`winner()` 27/29 reconhecidas; `play()` 10/11;
+`sum_array()` 10/11. O relatorio esta em
+`results/arm_semantic_ir_local_2026-10-13.json`.
+A suite automatizada adicional esta em
+`tests/test_arm_semantic_ir.py` e foi incorporada ao
+workflow `ARM structured IR validation`.
+
+**Limites:** isso ainda nao realiza fluxo simbolico de
+registradores ou geracao C++ equivalente. Na rodada de 13/10,
+os jobs do GitHub falharam sem logs/etapas; nao ha aprovacao
+integrada desta revisao. A versao anterior da IR estrutural
+teve workflow aprovado em `38418077778`.
+
 ## Qual é o próximo objetivo?
 
 Ampliar o decodificador ARM/Thumb-2, reconhecer os limites reais das funções e validar os mapas de chamadas em binários ARM reais. A ferramenta `arm_functions.py` gera **candidatos** a partir de chamadas diretas ARM32 `BL` e Thumb-2 `BL`/`BLX` imediato, mas não cobre instruções Thumb-2 em geral, chamadas indiretas, mudanças dinâmicas de modo nem limites completos das funções. Depois, avançar para pseudocódigo e reconstrução verificável em C/C++.
