@@ -1,0 +1,42 @@
+{
+  "date": "2026-10-13",
+  "module": "tools/arm_loop_predicates.py",
+  "module_git_blob_sha": "e11f6a5c3c648d602d4502f88873a92f0fc9854b",
+  "local_test_cases": {
+    "passed": 3,
+    "failed": 0
+  },
+  "analyses": [
+    {
+      "function": "winner",
+      "elf_sha256": "6d6d534c05e16ded513dfd14252a5c223d38adba426c6457666fbba2d2bd23db",
+      "loop_header": "0x101c",
+      "backedge_pc": "0x1068",
+      "counter_register": "r1",
+      "step": 1,
+      "compare_pc": "0x1064",
+      "bound": 8,
+      "backedge_expression": "r1_next != 8",
+      "early_exit_pcs": [
+        "0x105c"
+      ],
+      "recognized_memory_accesses_in_loop": 6,
+      "iteration_count_proven": false
+    },
+    {
+      "function": "sum_array",
+      "elf_sha256": "12a9773bb5876d37b3ee06b54e894c5458fd92b21dab76968c545d04bd60dce1",
+      "loop_header": "0x1010",
+      "backedge_pc": "0x101c",
+      "counter_register": "r1",
+      "step": -1,
+      "flag_producer_pc": "0x1018",
+      "bound": 0,
+      "backedge_expression": "r1_next != 0",
+      "early_exit_pcs": [],
+      "recognized_memory_accesses_in_loop": 1,
+      "iteration_count_proven": false
+    }
+  ],
+  "limitations": "Syntactic counter candidate and early-exit evidence, not loop termination/induction proof or C++ equivalence. GitHub Actions run 38432423641 failed without job steps."
+}
