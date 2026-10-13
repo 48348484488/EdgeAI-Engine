@@ -6,12 +6,14 @@ on:
       - 'tools/arm_structured_ir.py'
       - 'tools/arm_semantic_ir.py'
       - 'tools/arm_register_flow_ir.py'
+      - 'tools/arm_loop_predicates.py'
       - 'tools/arm_control_regions.py'
       - 'tools/arm_loop_analysis.py'
       - 'tests/test_arm_structured_ir.py'
       - 'tests/test_arm_semantic_ir.py'
       - 'tests/test_arm_register_flow_ir.py'
       - 'tests/test_arm_flags_flow.py'
+      - 'tests/test_arm_loop_predicates.py'
       - 'tests/test_arm_control_regions.py'
       - 'tests/test_arm_loop_analysis.py'
       - 'examples/reverse/tictactoe.c'
@@ -45,6 +47,8 @@ jobs:
         run: python3 -m unittest discover -s tests -p 'test_arm_register_flow_ir.py' -v
       - name: Verify ARM flag-setting operations on real ELF
         run: python3 -m unittest discover -s tests -p 'test_arm_flags_flow.py' -v
+      - name: Verify ARM loop counter and backedge predicates
+        run: python3 -m unittest discover -s tests -p 'test_arm_loop_predicates.py' -v
       - name: Generate real ARM32 function IR
         run: |
           mkdir -p results
@@ -91,7 +95,20 @@ jobs:
               assert decisions[0]['predicate']==condition, function
               assert decisions[0]['edge_proven']==edge, function
               assert data['semantic_coverage']['unsupported']==0, function
-          print('ARM32 structured IR with flags: real ELF analyses verified')
+          winner=json.loads(Path('results/winner_structured_ir.json').read_text())
+          sum_data=json.loads(Path('results/sum_array_structured_ir.json').read_text())
+          for data,delta,bound,mode,early in [
+              (winner,1,8,'cmp_after_update',True),
+              (sum_data,-1,0,'update_sets_zero',False)]:
+              loops=data['loop_predicates']['loops']
+              assert len(loops)==1,loops
+              candidate=loops[0]['latches']
+              assert len(candidate)==1 and candidate[0]['status']=='counter_candidate',candidate
+              assert candidate[0]['delta']==delta and candidate[0]['bound']==bound,candidate
+              assert candidate[0]['compare_mode']==mode,candidate
+              assert bool(loops[0]['early_exit_edges'])==early,loops
+              assert candidate[0]['iteration_count_proven'] is False
+          print('ARM32 structural IR and loop predicates: real ELF checks verified')
           PY
       - name: Upload ARM structural evidence
         if: always()
