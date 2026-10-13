@@ -147,8 +147,10 @@ def analyze_instructions(instructions, function=None):
     # Preserve the previous proven control-flow outline. This next pass only
     # attaches decoded effects; it never promotes opcode shapes to C++ proof.
     semantic = load('arm_semantic_ir')
-    return semantic.attach(build(cfg, regions.analyze(cfg)), instructions,
-                           reachable_pcs=cfg['reachable_pcs'])
+    effects = semantic.attach(build(cfg, regions.analyze(cfg)), instructions,
+                              reachable_pcs=cfg['reachable_pcs'])
+    register_flow = load('arm_register_flow_ir')
+    return register_flow.analyze(cfg, effects)
 
 
 def main():
