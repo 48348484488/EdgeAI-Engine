@@ -80,8 +80,19 @@ def _disassembly(elf_path):
 
 
 def _verify_instructions(instructions, table_address, board_address):
-    expected = [
+    """Accept only two fully verified Clang ARM -O1 winner loop fingerprints.
+
+    LLVM 17 and LLVM 18 choose different load schedules and boolean-test
+    implementations. Reordering by itself is not safe: each full tail is
+    matched separately, including register uses, exit test and back edge.
+    """
+    common_prefix = [
+        ('push', '{r4, r5, r11, lr}'),
+        ('add', 'r11, sp, #8'),
         ('mov', 'r1, #0'),
+    ]
+    # Each tuple is opcode, operands. Branch targets are checked below.
+    llvm17 = [
         ('add', 'r2, r1, r1, lsl #1'),
         ('mov', 'r3, r12'),
         ('ldrb', 'r2, [r3, r2]!'),
@@ -98,45 +109,85 @@ def _verify_instructions(instructions, table_address, board_address):
         ('lsr', 'r4, r4, #5'),
         ('orrs', 'r3, r3, r4'),
         ('moveq', 'r0, r2'),
+        ('beq', None),
         ('add', 'r1, r1, #1'),
         ('cmp', 'r1, #8'),
+        ('bne', None),
+        ('mov', 'r0, #0'),
+        ('pop', '{r4, r5, r11, pc}'),
+    ]
+    llvm18 = [
+        ('add', 'r2, r1, r1, lsl #1'),
+        ('mov', 'r3, r12'),
+        ('ldrb', 'r2, [r3, r2]!'),
+        ('ldr', 'r2, [lr, r2, lsl #2]'),
+        ('ldrb', 'r4, [r3, #0x1]'),
+        ('ldrb', 'r3, [r3, #0x2]'),
+        ('ldr', 'r4, [lr, r4, lsl #2]'),
+        ('eor', 'r5, r2, r4'),
+        ('ldr', 'r3, [lr, r3, lsl #2]'),
+        ('eor', 'r3, r4, r3'),
+        ('orr', 'r3, r5, r3'),
+        ('clz', 'r3, r3'),
+        ('lsr', 'r3, r3, #5'),
+        ('cmp', 'r2, #0'),
+        ('mov', 'r4, r2'),
+        ('movwne', 'r4, #0x1'),
+        ('ands', 'r3, r3, r4'),
+        ('movne', 'r0, r2'),
+        ('cmp', 'r3, #1'),
+        ('beq', None),
+        ('add', 'r1, r1, #1'),
+        ('cmp', 'r1, #8'),
+        ('bne', None),
         ('mov', 'r0, #0'),
         ('pop', '{r4, r5, r11, pc}'),
     ]
     pairs = [(op, operands) for _, op, operands in instructions]
-    position = 0
-    for item in expected:
-        try:
-            position = pairs.index(item, position) + 1
-        except ValueError:
-            raise ValueError('unverified winner ARM opcode/ordering: ' + repr(item)) from None
+    if pairs[:3] != common_prefix:
+        raise ValueError('unverified winner ARM opcode/prologue')
+
     def pointer(reg):
-        vals = []
-        for _, op, operands in instructions:
-            m = re.fullmatch(rf'{reg}, #(0x[0-9a-fA-F]+|\d+)', operands)
-            if m and op in ('movw', 'movt'):
-                vals.append((op, int(m[1], 0)))
-        if len(vals) != 2 or {op for op, _ in vals} != {'movw', 'movt'}:
-            raise ValueError('cannot prove symbol pointer in ' + reg)
-        return next(v for op, v in vals if op == 'movw') | (next(v for op, v in vals if op == 'movt') << 16)
+        values = []
+        for _, op, operands in instructions[3:7]:
+            match = re.fullmatch(rf'{reg}, #(0x[0-9a-fA-F]+|\d+)', operands)
+            if match and op in ('movw', 'movt'):
+                values.append((op, int(match[1], 0)))
+        if len(values) != 2 or [op for op, _ in values] != ['movw', 'movt']:
+            raise ValueError('unverified winner ARM symbol pointer: ' + reg)
+        return values[0][1] | (values[1][1] << 16)
+
+    if [op for op, _ in pairs[3:7]] != ['movw', 'movt', 'movw', 'movt']:
+        raise ValueError('unverified winner ARM pointer setup')
     if pointer('r12') != table_address or pointer('lr') != board_address:
         raise ValueError('rodata or board pointer does not match ELF symbols')
-    branches = [(pc, operands) for pc, op, operands in instructions if op == 'bne']
-    back_edge_pc = next((pc for pc, op, args in instructions if op == 'add' and args == 'r2, r1, r1, lsl #1'), None)
-    if len(branches) != 1 or not branches[0][1].startswith(hex(back_edge_pc)):
-        raise ValueError('winner loop back-edge was not verified')
-    if sum(op == 'beq' for _, op, _ in instructions) != 1:
-        raise ValueError('winner early-exit branch was not verified')
-    if len(instructions) != 29:
-        raise ValueError('winner instruction count differs from verified LLVM pattern')
-    permitted = {'push', 'add', 'mov', 'movw', 'movt', 'ldrb', 'ldr', 'eor',
-                 'orrs', 'movwne', 'clz', 'lsr', 'moveq', 'beq', 'cmp', 'bne', 'pop'}
-    unexpected = [(hex(pc), op) for pc, op, _ in instructions if op not in permitted]
-    if unexpected:
-        raise ValueError('unexpected winner opcodes: ' + repr(unexpected))
-    return {'instruction_count': len(instructions), 'loop_back_edge': hex(back_edge_pc),
+
+    tail = pairs[7:]
+    accepted = None
+    for name, expected in [('llvm17', llvm17), ('llvm18', llvm18)]:
+        if len(tail) != len(expected):
+            continue
+        if all(actual_op == expected_op and
+               (expected_args is None or actual_args == expected_args)
+               for (actual_op, actual_args), (expected_op, expected_args)
+               in zip(tail, expected)):
+            accepted = name
+            break
+    if accepted is None:
+        raise ValueError('unverified winner ARM opcode/ordering or boolean test')
+    byop = {op: (pc, operands) for pc, op, operands in instructions if op in ('beq', 'bne')}
+    if set(byop) != {'beq', 'bne'}:
+        raise ValueError('unverified winner ARM branch count')
+    loop_head = instructions[7][0]
+    last_pc = instructions[-1][0]
+    for name, required in [('beq', last_pc), ('bne', loop_head)]:
+        match = re.match(r'^0x([0-9a-fA-F]+)(?:\s|$)', byop[name][1])
+        if not match or int(match[1], 16) != required:
+            raise ValueError('unverified winner ARM branch destination')
+    return {'instruction_count': len(instructions), 'loop_back_edge': hex(loop_head),
             'table_symbol_address': hex(table_address), 'board_symbol_address': hex(board_address),
-            'compiler_pattern': 'LLVM ARM32 -O1 table lookup / XOR equality / CLZ nonzero guard'}
+            'compiler_pattern': 'clang ARM -O1 / ' + accepted + ' winner loop fingerprint'}
+
 
 
 def reconstruct(elf_path):
