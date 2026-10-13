@@ -11,11 +11,13 @@ on:
       - 'tests/test_arm_structured_ir.py'
       - 'tests/test_arm_semantic_ir.py'
       - 'tests/test_arm_register_flow_ir.py'
+      - 'tests/test_arm_flags_flow.py'
       - 'tests/test_arm_control_regions.py'
       - 'tests/test_arm_loop_analysis.py'
       - 'examples/reverse/tictactoe.c'
       - 'examples/reverse/array_sum.c'
       - 'examples/reverse/arm_branch_increment.S'
+      - 'examples/reverse/arm_flags_reference.S'
       - '.github/workflows/reverse-structured-ir.yml'
   pull_request:
   workflow_dispatch:
@@ -41,6 +43,8 @@ jobs:
         run: python3 -m unittest discover -s tests -p 'test_arm_semantic_ir.py' -v
       - name: Verify register dataflow and CMP-to-BNE expressions
         run: python3 -m unittest discover -s tests -p 'test_arm_register_flow_ir.py' -v
+      - name: Verify ARM flag-setting operations on real ELF
+        run: python3 -m unittest discover -s tests -p 'test_arm_flags_flow.py' -v
       - name: Generate real ARM32 function IR
         run: |
           mkdir -p results
@@ -51,6 +55,10 @@ jobs:
           python3 tools/arm_structured_ir.py results/array_structural_arm.elf --function sum_array --output results/sum_array_structured_ir.json
           clang --target=armv7-none-eabi -marm -nostdlib -fuse-ld=lld -Wl,-Ttext=0x1000 -Wl,-e,start examples/reverse/arm_branch_increment.S -o results/guard_structural_arm.elf
           python3 tools/arm_structured_ir.py results/guard_structural_arm.elf --function increment_guard --output results/increment_guard_structured_ir.json
+          clang --target=armv7-none-eabi -marm -nostdlib -fuse-ld=lld -Wl,-Ttext=0x1000 -Wl,-e,start examples/reverse/arm_flags_reference.S -o results/flags_structural_arm.elf
+          python3 tools/arm_structured_ir.py results/flags_structural_arm.elf --function sub_flag_guard --output results/sub_flag_guard_ir.json
+          python3 tools/arm_structured_ir.py results/flags_structural_arm.elf --function unsigned_flag_guard --output results/unsigned_flag_guard_ir.json
+          python3 tools/arm_structured_ir.py results/flags_structural_arm.elf --function shifted_flag_guard --output results/shifted_flag_guard_ir.json
       - name: Validate generated IR summaries
         run: |
           python3 - <<'PY'
@@ -74,7 +82,16 @@ jobs:
           assert branches[0]['source']['left']['operation']=='add'
           assert branches[0]['source']['left']['left']['register']=='r0'
           assert branches[0]['source']['right']['value']==8
-          print('ARM32 structured IR: real ELF analyses verified')
+          for function,condition,edge in [('sub_flag_guard','eq','taken'),
+                                          ('unsigned_flag_guard','hi','taken'),
+                                          ('shifted_flag_guard','eq','fallthrough')]:
+              data=json.loads(Path('results/'+function+'_ir.json').read_text())
+              decisions=data['register_flow']['branch_conditions']
+              assert len(decisions)==1, (function,decisions)
+              assert decisions[0]['predicate']==condition, function
+              assert decisions[0]['edge_proven']==edge, function
+              assert data['semantic_coverage']['unsupported']==0, function
+          print('ARM32 structured IR with flags: real ELF analyses verified')
           PY
       - name: Upload ARM structural evidence
         if: always()
@@ -86,4 +103,7 @@ jobs:
             results/play_structured_ir.json
             results/sum_array_structured_ir.json
             results/increment_guard_structured_ir.json
+            results/sub_flag_guard_ir.json
+            results/unsigned_flag_guard_ir.json
+            results/shifted_flag_guard_ir.json
           if-no-files-found: warn
