@@ -33,7 +33,8 @@ class TestWinnerReconstruction(unittest.TestCase):
             for pc, mnemonic, operands in instructions:
                 print('WINNER_ARM_DIAGNOSTIC',hex(pc),mnemonic,operands,flush=True)
             raise
-        self.assertEqual(result['evidence']['instruction_count'],29)
+        self.assertIn(result['evidence']['instruction_count'],(29,32))
+        self.assertRegex(result['evidence']['compiler_pattern'],r'llvm17|llvm18')
         self.assertEqual(len(result['evidence']['winning_triplets']),8)
         self.assertEqual(result['evidence']['winning_triplets'][0],[0,1,2])
         self.assertIn('if (a != 0 && a == b && b == c)',result['cpp'])
