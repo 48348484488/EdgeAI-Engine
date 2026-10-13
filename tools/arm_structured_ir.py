@@ -150,7 +150,10 @@ def analyze_instructions(instructions, function=None):
     effects = semantic.attach(build(cfg, regions.analyze(cfg)), instructions,
                               reachable_pcs=cfg['reachable_pcs'])
     register_flow = load('arm_register_flow_ir')
-    return register_flow.analyze(cfg, effects)
+    enriched = register_flow.analyze(cfg, effects)
+    loop_predicates = load('arm_loop_predicates')
+    enriched['loop_predicates'] = loop_predicates.analyze(cfg, enriched)
+    return enriched
 
 
 def main():
