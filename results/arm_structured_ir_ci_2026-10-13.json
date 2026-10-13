@@ -1,0 +1,28 @@
+{
+  "date": "2026-10-13",
+  "workflow": "ARM structured IR validation",
+  "workflow_run_id": 38418077778,
+  "run_url": "https://github.com/48348484488/EdgeAI-Engine/actions/runs/38418077778",
+  "commit": "cbde0dc07b5995353edd4fae4f72b56da778f161",
+  "conclusion": "success",
+  "validated_steps": [
+    "Verify CFG loops and postdominators",
+    "Verify structured IR, including compiled ARM ELF cases",
+    "Generate real ARM32 function IR",
+    "Validate generated IR summaries",
+    "Upload ARM structural evidence"
+  ],
+  "extracted_functions": [
+    "winner",
+    "play",
+    "sum_array"
+  ],
+  "artifact": {
+    "name": "edgeai-arm-structured-ir",
+    "id": 11824079527,
+    "url": "https://github.com/48348484488/EdgeAI-Engine/actions/runs/38418077778/artifacts/11824079527",
+    "sha256": "2b96deb43e41102803754c8947eb3dde34205268aabeca6f271c912e5eb29857"
+  },
+  "scope": "Structural IR for known ARM32 CFG: loops, basic reconverging if/else, exit dispatch, unresolved branch fallback. No generic C++ emission or semantic equivalence proof.",
+  "legacy_full_reference": "Separate older broad workflow still has clang instruction fingerprint compatibility issues; dedicated structural workflow succeeded."
+}
