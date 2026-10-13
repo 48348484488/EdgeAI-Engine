@@ -1,0 +1,44 @@
+{
+  "date": "2026-10-13",
+  "project": "EdgeAI Engine",
+  "validation": "Independent local execution of byte-identical GitHub code",
+  "git_blobs": {
+    "arm_semantic_ir.py": "bee12eb91f53d8425092af45d4f5ad9b7d362b8e",
+    "arm_register_flow_ir.py": "2a04db2a11a973589746bf24a74b52d2f53caa31"
+  },
+  "target": "Clang ARMv7 -marm ELF32, llvm-objdump",
+  "unit_tests": {
+    "original_register_flow": 9,
+    "new_flags": 14,
+    "all_passed": true
+  },
+  "real_arm32_assembly": {
+    "sub_flag_guard": {
+      "instruction_count": 7,
+      "recognized": 7,
+      "unsupported": 0,
+      "branch_predicate": "eq",
+      "proven_edge": "taken"
+    },
+    "unsigned_flag_guard": {
+      "instruction_count": 7,
+      "recognized": 7,
+      "unsupported": 0,
+      "branch_predicate": "hi",
+      "proven_edge": "taken"
+    },
+    "shifted_flag_guard": {
+      "instruction_count": 7,
+      "recognized": 7,
+      "unsupported": 0,
+      "branch_predicate": "eq",
+      "proven_edge": "fallthrough"
+    }
+  },
+  "limitations": [
+    "Recognized instruction shapes and constant propagation, not general decompilation",
+    "No register/memory alias proof",
+    "SUBS/ADDS and shifts support only Z-based proof for EQ/NE; no inference of carry or overflow from them",
+    "Full GitHub Actions attempt failed without step logs; runner validation pending"
+  ]
+}
