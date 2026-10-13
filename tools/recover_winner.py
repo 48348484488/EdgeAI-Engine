@@ -116,19 +116,42 @@ def recover(elf_path):
         raise ValueError('loop bound and backward branch not evidenced')
     # Exact compiler fingerprint for (a != 0 && a == b && b == c):
     # clang -O1 combines XOR differences and a CLZ-based zero test.
-    pattern = [
-        ('eor', 'r5, r2, r4'), ('eor', 'r3, r4, r3'),
-        ('orrs', 'r3, r5, r3'), ('movwne', 'r3, #0x1'),
-        ('clz', 'r4, r2'), ('lsr', 'r4, r4, #5'),
-        ('orrs', 'r3, r3, r4'), ('moveq', 'r0, r2')
-    ]
+    fingerprints = {
+        'llvm17_xor_clz': [
+            ('eor', 'r5, r2, r4'), ('eor', 'r3, r4, r3'),
+            ('orrs', 'r3, r5, r3'), ('movwne', 'r3, #0x1'),
+            ('clz', 'r4, r2'), ('lsr', 'r4, r4, #5'),
+            ('orrs', 'r3, r3, r4'), ('moveq', 'r0, r2')
+        ],
+        'llvm18_xor_clz': [
+            ('eor', 'r5, r2, r4'), ('eor', 'r3, r4, r3'),
+            ('orr', 'r3, r5, r3'), ('clz', 'r3, r3'),
+            ('lsr', 'r3, r3, #5'), ('cmp', 'r2, #0'),
+            ('mov', 'r4, r2'), ('movwne', 'r4, #0x1'),
+            ('ands', 'r3, r3, r4'), ('movne', 'r0, r2'),
+            ('cmp', 'r3, #1')
+        ]
+    }
     actual = [(x['op'], x['args']) for x in ins]
-    cursor = 0
-    for expected in pattern:
+    matched_fingerprint = None
+    for fingerprint, pattern in fingerprints.items():
+        cursor = 0
         try:
-            cursor = actual.index(expected, cursor) + 1
-        except ValueError as exc:
-            raise ValueError('unsupported winner boolean-test pattern: ' + str(expected)) from exc
+            for expected in pattern:
+                cursor = actual.index(expected, cursor) + 1
+        except ValueError:
+            continue
+        matched_fingerprint = fingerprint
+        break
+    if matched_fingerprint is None:
+        raise ValueError('unsupported winner boolean-test pattern (LLVM17/LLVM18)')
+    # The exact ARM instruction schedule, flags and branch targets must be
+    # independently confirmed by the stricter full-function verifier.
+    from arm_winner_reconstruct import _verify_instructions
+    _verify_instructions(
+        [(x['pc'], x['op'], x['args']) for x in ins],
+        table['address'], board['address']
+    )
     if not any(x['op'] == 'mov' and x['args'] == 'r0, #0' for x in ins):
         raise ValueError('zero fallback missing')
     return {
@@ -138,7 +161,7 @@ def recover(elf_path):
         'triplets': rows, 'loop_iterations': len(rows),
         'board_load_pcs': [hex(x['pc']) for x in board_reads],
         'table_load_pcs': [hex(x['pc']) for x in table_reads],
-        'boolean_test': 'compiler_pattern_xor_clz_zero_and_equality',
+        'boolean_test': matched_fingerprint,
         'constraints': [
             'Relies on unstripped ELF symbol names board and winner.lines',
             'Recognizes a specific clang ARM -O1 instruction pattern',
