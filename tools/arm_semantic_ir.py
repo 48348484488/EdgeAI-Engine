@@ -15,7 +15,7 @@ SHIFT = re.compile(rf'^({REG}),\s*lsl\s+#(\d+)$')
 TARGET = re.compile(r'^0x([0-9a-fA-F]+)(?:\s|$)')
 CONDITIONS = ('eq','ne','hi','ls','cs','cc','ge','lt','gt','le','mi','pl','vs','vc')
 MEMORY = {'ldr','ldrb','ldrh','str','strb','strh'}
-BINARY = {'add','sub','and','ands','orr','orrs','eor'}
+BINARY = {'add','adds','sub','subs','and','ands','orr','orrs','eor','eors'}
 
 
 def _value(raw):
@@ -37,13 +37,16 @@ def decode(row):
         if op.endswith(cond) and op[:-2] in {'mov','movw','movt'}:
             base,predicate=op[:-2],cond
             break
-    if base in {'mov','movw','movt'}:
+    if op == 'movs':
+        base = 'movs'
+    if base in {'mov','movs','movw','movt'}:
         m=PAIR.fullmatch(args)
         if m:
             if base in {'movw','movt'} and not m[2].startswith('#'):
                 return _unknown(pc,op,args,'move-wide requires immediate')
             return {**basic,'kind':'assignment','operation':base,'destination':m[1],
-                    'source':_value(m[2]),'predicate':predicate}
+                    'source':_value(m[2]),'predicate':predicate,
+                    'sets_flags':base=='movs'}
     if op in {'cmp','cmn','tst'}:
         m=PAIR.fullmatch(args)
         if m:
@@ -60,11 +63,12 @@ def decode(row):
         if m and not m[2].startswith('#'):
             return {**basic,'kind':'unary','operation':op,
                     'destination':m[1],'source':m[2]}
-    if op in {'lsl','lsr','asr'}:
+    if op in {'lsl','lsr','asr','lsls','lsrs','asrs'}:
         m=TRIPLE.fullmatch(args)
         if m:
             return {**basic,'kind':'shift','operation':op,'destination':m[1],
-                    'source':m[2],'amount':_value(m[3])}
+                    'source':m[2],'amount':_value(m[3]),
+                    'sets_flags':op.endswith('s')}
     if op in MEMORY:
         m=MEM.fullmatch(args)
         if m:
