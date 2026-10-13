@@ -656,6 +656,37 @@ os jobs do GitHub falharam sem logs/etapas; nao ha aprovacao
 integrada desta revisao. A versao anterior da IR estrutural
 teve workflow aprovado em `38418077778`.
 
+## Fluxo simbolico de registradores ARM32 (2026-10-13)
+
+O modulo `tools/arm_register_flow_ir.py` conecta os efeitos
+de instrucoes a arestas do CFG. Propaga origens de registradores,
+constantes de 32 bits, somas/subtracoes e comparacoes `CMP`,
+associando `BEQ`/`BNE` a expressao que alimenta os flags.
+Na juncao de caminhos, conserva somente expressoes iguais;
+escritas condicionais, chamadas e instrucoes desconhecidas
+invalidam fatos nao comprovados. Loops usam ponto fixo
+limitado, com teto de profundidade e de processamento.
+
+**Validacao local:** 9 testes sinteticos passaram. ELF ARM32
+compilado com a sequencia `ADD R1,R0,#1; CMP R1,#8;
+BNE` confirmou a dependência simbolica `(R0 + 1) != 8`.
+Tambem foram analisadas as funcoes reais `play` (11/11
+instrucoes percorridas), `winner` (29/29) e
+`sum_array` (11/11). O rastreio preservou a origem da
+leitura de memoria no teste da casa em `play`.
+
+A referencia reproduzivel esta em
+`results/arm_register_flow_local_2026-10-13.json`.
+O workflow independente da IR inclui agora
+`tests/test_arm_register_flow_ir.py`, com teste de
+compilacao ARM32 real. As execucoes desta revisao no
+GitHub Actions terminaram sem etapas/logs; portanto a
+suite **ainda nao esta aprovada no CI**.
+
+**Limites:** condicoes simbolicas nao comprovam a
+possibilidade de um caminho; nao ha rastreio completo de
+memoria, semantica Thumb nem C++ gerado automaticamente.
+
 ## Qual é o próximo objetivo?
 
 Ampliar o decodificador ARM/Thumb-2, reconhecer os limites reais das funções e validar os mapas de chamadas em binários ARM reais. A ferramenta `arm_functions.py` gera **candidatos** a partir de chamadas diretas ARM32 `BL` e Thumb-2 `BL`/`BLX` imediato, mas não cobre instruções Thumb-2 em geral, chamadas indiretas, mudanças dinâmicas de modo nem limites completos das funções. Depois, avançar para pseudocódigo e reconstrução verificável em C/C++.
