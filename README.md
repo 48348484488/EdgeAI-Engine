@@ -620,8 +620,15 @@ Clang e llvm-objdump estiverem disponiveis.
 
 Os **9 testes sinteticos** passaram no ambiente local, e ambos
 os programas de referencia compilaram para ELF ARM32.
-**A integracao end-to-end dos dois ELFs com esta IR ainda nao
-foi confirmada no runner do GitHub.** Esta etapa nao emite
+**A integracao da IR foi validada no GitHub Actions** no workflow
+`ARM structured IR validation`, execucao
+`38418077778` (conclusao `success`). Esse workflow compilou os
+ELFs ARM32 e gerou relatorios de `winner`, `play` e
+`sum_array`, publicados no artefato `edgeai-arm-structured-ir`.
+O resultado rastreavel esta em
+`results/arm_structured_ir_ci_2026-10-13.json`. O workflow legado
+completo de engenharia reversa ainda tem incompatibilidades com
+padroes de instrucoes LLVM usados nos validadores antigos. Esta etapa nao emite
 codigo C++ executavel nem recupera condicoes de alto nivel.
 
 ## Qual é o próximo objetivo?
