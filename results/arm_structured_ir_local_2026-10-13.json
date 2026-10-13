@@ -1,0 +1,36 @@
+{
+  "date": "2026-10-13",
+  "feature": "conservative ARM32 structured intermediate representation",
+  "module": "tools/arm_structured_ir.py",
+  "unit_tests": {
+    "executed_locally": 9,
+    "passed": 9,
+    "failed": 0,
+    "command": "python3 -m unittest -q test_arm_structured_ir.py",
+    "covered": [
+      "linear-arm if/else",
+      "natural loop branch",
+      "exit dispatch",
+      "nested-loop parent",
+      "overlapping-arm rejection",
+      "unknown-control fail-closed",
+      "invalid CFG decision edge",
+      "instruction budget",
+      "mismatched function entry"
+    ]
+  },
+  "compiler": "clang 17.0.0, target armv7-none-eabi, -marm -O1",
+  "compiled_arm32_fixtures": [
+    {
+      "fixture": "examples/reverse/tictactoe.c",
+      "elf_sha256": "6d6d534c05e16ded513dfd14252a5c223d38adba426c6457666fbba2d2bd23db"
+    },
+    {
+      "fixture": "examples/reverse/array_sum.c",
+      "elf_sha256": "12a9773bb5876d37b3ee06b54e894c5458fd92b21dab76968c545d04bd60dce1"
+    }
+  ],
+  "end_to_end_analysis_of_compiled_elf_in_this_run": false,
+  "github_actions_status": "failure, job steps/logs unavailable in connector",
+  "limitations": "Control-flow structure only. No C++ emission, proof of branch predicates, exact source recovery, or native/QEMU differential for this module."
+}
