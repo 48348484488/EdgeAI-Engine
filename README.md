@@ -598,6 +598,32 @@ e o workflow salva `arm_winner_regions_latest.json` e
 nem prova de que o programa encerra; GitHub Actions continua
 sem validacao completa nesta revisao.
 
+## IR estrutural inicial: if/else e lacos naturais (2026-10-13)
+
+`tools/arm_structured_ir.py` combina os graficos de
+`arm_loop_analysis.py` e os pos-dominadores de
+`arm_control_regions.py` para gerar uma IR JSON independente
+de nomes de funcoes, com nos `natural_loop`, `loop_branch`,
+`if_else` (somente bracos simples, separados e com convergencia
+demonstrada) e `exit_dispatch`. Condicoes sem prova, fluxos
+indiretos desconhecidos e bifurcacoes complexas permanecem
+`unstructured`, em vez de gerar C++ possivelmente incorreto.
+
+Execucao: `python3 tools/arm_structured_ir.py jogo.elf
+--function winner --output results/winner_structured.json`.
+
+`tests/test_arm_structured_ir.py` valida grafos sinteticos,
+aninhamento de lacos, caminhos sobrepostos e rejeicao de
+evidencia alterada, alem de incluir um teste de integracao
+que compila ARM32 do jogo da velha e de `array_sum` quando
+Clang e llvm-objdump estiverem disponiveis.
+
+Os **9 testes sinteticos** passaram no ambiente local, e ambos
+os programas de referencia compilaram para ELF ARM32.
+**A integracao end-to-end dos dois ELFs com esta IR ainda nao
+foi confirmada no runner do GitHub.** Esta etapa nao emite
+codigo C++ executavel nem recupera condicoes de alto nivel.
+
 ## Qual é o próximo objetivo?
 
 Ampliar o decodificador ARM/Thumb-2, reconhecer os limites reais das funções e validar os mapas de chamadas em binários ARM reais. A ferramenta `arm_functions.py` gera **candidatos** a partir de chamadas diretas ARM32 `BL` e Thumb-2 `BL`/`BLX` imediato, mas não cobre instruções Thumb-2 em geral, chamadas indiretas, mudanças dinâmicas de modo nem limites completos das funções. Depois, avançar para pseudocódigo e reconstrução verificável em C/C++.
