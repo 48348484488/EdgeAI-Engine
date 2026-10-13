@@ -1,0 +1,63 @@
+{
+  "date": "2026-10-13",
+  "module": "tools/arm_register_flow_ir.py",
+  "module_git_blob_sha": "b191b6ff82b046459c07be18b41e80a24a9b4bd9",
+  "local_tests": {
+    "synthetic_cases": 9,
+    "passed": 9,
+    "failed": 0
+  },
+  "fixtures": {
+    "tictactoe_elf_sha256": "6d6d534c05e16ded513dfd14252a5c223d38adba426c6457666fbba2d2bd23db",
+    "array_sum_elf_sha256": "12a9773bb5876d37b3ee06b54e894c5458fd92b21dab76968c545d04bd60dce1"
+  },
+  "real_arm32": [
+    {
+      "function": "play",
+      "decoded_instruction_count": 11,
+      "reached": 11,
+      "conditional_branches": 2,
+      "unsupported": [
+        "0x1090"
+      ],
+      "provenance": {
+        "branch_pc": "0x108c",
+        "comparison_pc": "0x1088",
+        "compared_register": "r3",
+        "register_source_load_pc": "0x1084",
+        "compared_to": 0,
+        "branch_resolution": "not_proven"
+      }
+    },
+    {
+      "function": "winner",
+      "decoded_instruction_count": 29,
+      "reached": 29,
+      "conditional_branches": 2,
+      "unsupported": [
+        "0x1000",
+        "0x101c"
+      ],
+      "branch_resolution": "not_proven"
+    },
+    {
+      "function": "sum_array",
+      "decoded_instruction_count": 11,
+      "reached": 11,
+      "conditional_branches": 2,
+      "unsupported": [
+        "0x1018"
+      ],
+      "provenance": {
+        "branch_pc": "0x1004",
+        "comparison_pc": "0x1000",
+        "source_register": "r1",
+        "source": "entry_register",
+        "compared_to": 0,
+        "branch_resolution": "not_proven"
+      }
+    }
+  ],
+  "validation": "Exact Git blob content was independently run in local Python, and results examined on compiled ELF instructions. GitHub Actions workflow failed with no job step logs (not proof of code failure).",
+  "limitations": "Only symbolic expression provenance, partial ARM op decoding, conservative joins. No generalized stateful memory alias proof, C++ emission, or complete ARM32 execution."
+}
