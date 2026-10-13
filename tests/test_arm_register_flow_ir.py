@@ -148,7 +148,7 @@ class RegisterFlowTests(unittest.TestCase):
                     self.assertLessEqual(regflow['analyzed_instructions'],
                                          len(result['instruction_effects']))
                     self.assertIsInstance(regflow['branch_conditions'],list)
-                    self.assertIn('No',regflow['scope'])
+                    self.assertIn('no memory alias proof',regflow['scope'])
 
 
 if __name__=='__main__':
