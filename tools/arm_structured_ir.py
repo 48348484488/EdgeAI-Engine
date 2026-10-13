@@ -144,7 +144,11 @@ def analyze_instructions(instructions, function=None):
     loops = load('arm_loop_analysis')
     regions = load('arm_control_regions')
     cfg = loops.analyze(instructions, function)
-    return build(cfg, regions.analyze(cfg))
+    # Preserve the previous proven control-flow outline. This next pass only
+    # attaches decoded effects; it never promotes opcode shapes to C++ proof.
+    semantic = load('arm_semantic_ir')
+    return semantic.attach(build(cfg, regions.analyze(cfg)), instructions,
+                           reachable_pcs=cfg['reachable_pcs'])
 
 
 def main():
