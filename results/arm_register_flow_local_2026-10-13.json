@@ -5,7 +5,8 @@
   "local_tests": {
     "synthetic_cases": 9,
     "passed": 9,
-    "failed": 0
+    "failed": 0,
+    "additional_real_arm32_fixture_passed": true
   },
   "fixtures": {
     "tictactoe_elf_sha256": "6d6d534c05e16ded513dfd14252a5c223d38adba426c6457666fbba2d2bd23db",
@@ -59,5 +60,16 @@
     }
   ],
   "validation": "Exact Git blob content was independently run in local Python, and results examined on compiled ELF instructions. GitHub Actions workflow failed with no job step logs (not proof of code failure).",
-  "limitations": "Only symbolic expression provenance, partial ARM op decoding, conservative joins. No generalized stateful memory alias proof, C++ emission, or complete ARM32 execution."
+  "limitations": "Only symbolic expression provenance, partial ARM op decoding, conservative joins. No generalized stateful memory alias proof, C++ emission, or complete ARM32 execution.",
+  "additional_arm32_fixture": {
+    "source": "examples/reverse/arm_branch_increment.S",
+    "function": "increment_guard",
+    "compiled_instructions": 7,
+    "entry": "0x1000",
+    "compare_branch": "0x1008",
+    "recognized_symbolic_expression": "(r0 + 1) != 8",
+    "branch_proven_without_input_value": false,
+    "local_compilation": "success",
+    "independent_validation": "success"
+  }
 }
