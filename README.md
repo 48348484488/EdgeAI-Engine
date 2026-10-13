@@ -687,6 +687,35 @@ suite **ainda nao esta aprovada no CI**.
 possibilidade de um caminho; nao ha rastreio completo de
 memoria, semantica Thumb nem C++ gerado automaticamente.
 
+## ARM32 flags: ADDS, SUBS, MOVS, LSRS e BHI (2026-10-13)
+
+A IR de instrucoes `tools/arm_semantic_ir.py` agora reconhece
+`ADDS`, `SUBS`, `MOVS`, `LSLS`, `LSRS` e `ASRS`.
+`tools/arm_register_flow_ir.py` propaga o resultado de 32 bits,
+deslocamentos, e a condicao `Z` produzida por essas instrucoes.
+Consegue ligar comparacoes `CMP` com ramificacoes sem sinal
+(`BHI`, `BLS`, `BCS`, `BCC`) e sinalizadas
+(`BGE`, `BLT`, `BGT`, `BLE`) quando ambos os
+operandos sao constantes comprovadas.
+
+**Evidencia:** 23 testes locais passaram (9 de fluxo anteriores
++ 14 novos casos de flags). Um ELF ARM32 de referencia compilado
+a partir de `examples/reverse/arm_flags_reference.S` verificou
+tres guardas com 7/7 instrucoes reconhecidas cada: `SUBS/BEQ`,
+`CMP/BHI` e `LSRS/BEQ`. Os desvios comprovados foram,
+respectivamente, tomado, tomado e nao tomado. Os testes de
+regressao do modulo estao em `tests/test_arm_flags_flow.py`.
+O resultado local esta em
+`results/arm_flags_validation_2026-10-13.json`.
+
+**Limites:** o processamento de flags de `ADDS/SUBS/LSRS`
+prova apenas a condicao zero para `BEQ/BNE`. Nao recupera
+carry/overflow dessas operacoes; `BHI` e outros saltos
+de magnitude so sao resolvidos a partir de `CMP` com
+valores constantes. A rodada do GitHub Actions falhou
+sem disponibilizar etapas, inclusive apos uma reexecucao,
+logo a nova revisao ainda nao tem aprovacao completa no CI.
+
 ## Qual é o próximo objetivo?
 
 Ampliar o decodificador ARM/Thumb-2, reconhecer os limites reais das funções e validar os mapas de chamadas em binários ARM reais. A ferramenta `arm_functions.py` gera **candidatos** a partir de chamadas diretas ARM32 `BL` e Thumb-2 `BL`/`BLX` imediato, mas não cobre instruções Thumb-2 em geral, chamadas indiretas, mudanças dinâmicas de modo nem limites completos das funções. Depois, avançar para pseudocódigo e reconstrução verificável em C/C++.
