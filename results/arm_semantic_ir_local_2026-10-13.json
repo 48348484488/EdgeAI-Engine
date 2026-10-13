@@ -1,0 +1,45 @@
+{
+  "date": "2026-10-13",
+  "project": "EdgeAI-Engine",
+  "module": "tools/arm_semantic_ir.py",
+  "module_git_blob_sha": "b9b477c68b3b950a08d8e49fe236f4a95adb9de7",
+  "verification": "Independent local byte-identical copy of committed module",
+  "target": "armv7-none-eabi -marm -O1",
+  "fixtures": [
+    {
+      "function": "winner",
+      "instruction_count": 29,
+      "recognized": 27,
+      "unsupported": 2,
+      "memory_reads": 6,
+      "memory_writes": 0
+    },
+    {
+      "function": "play",
+      "instruction_count": 11,
+      "recognized": 10,
+      "unsupported": 1,
+      "memory_reads": 1,
+      "memory_writes": 1
+    },
+    {
+      "function": "sum_array",
+      "instruction_count": 11,
+      "recognized": 10,
+      "unsupported": 1,
+      "memory_reads": 1,
+      "memory_writes": 0
+    }
+  ],
+  "local_smoke_checks": {
+    "passed": true,
+    "checks": [
+      "scaled-register load",
+      "unknown rotate address fail-closed",
+      "predicated MOV retains predicate",
+      "post-index load and increment",
+      "attachment to loop/conditional regions"
+    ]
+  },
+  "limitations": "No SSA/dataflow semantics, alias proof or C++ emission. Full repository CI on 2026-10-13 failed before recording job steps; separate local exact-module smoke validation succeeded."
+}
