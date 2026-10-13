@@ -147,8 +147,12 @@ def recover(elf_path):
         raise ValueError('unsupported winner boolean-test pattern (LLVM17/LLVM18)')
     # The exact ARM instruction schedule, flags and branch targets must be
     # independently confirmed by the stricter full-function verifier.
-    from arm_winner_reconstruct import _verify_instructions
-    _verify_instructions(
+    import importlib.util
+    verifier_path = Path(__file__).with_name('arm_winner_reconstruct.py')
+    verifier_spec = importlib.util.spec_from_file_location('edgeai_winner_verifier', verifier_path)
+    verifier = importlib.util.module_from_spec(verifier_spec)
+    verifier_spec.loader.exec_module(verifier)
+    verifier._verify_instructions(
         [(x['pc'], x['op'], x['args']) for x in ins],
         table['address'], board['address']
     )
