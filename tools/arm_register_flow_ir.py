@@ -25,6 +25,8 @@ def _depth(expr):
         return 0
     if expr['kind'] == 'binary_expression':
         return 1 + max(_depth(expr['left']), _depth(expr['right']))
+    if expr['kind'] == 'shift_expression':
+        return 1 + max(_depth(expr['value']), _depth(expr['amount']))
     return 1
 
 
@@ -45,6 +47,42 @@ def _binary(op, left, right, limit):
             'left': left, 'right': right, 'width_bits': 32}
 
 
+def _shift(op, value, amount, limit):
+    if value is None or amount is None:
+        return None
+    base = op.rstrip('s')
+    if base not in ('lsl', 'lsr', 'asr'):
+        return None
+    if amount['kind'] == 'constant':
+        n = amount['value']
+        if n > 32 or (base == 'lsl' and n == 32):
+            return None
+        if value['kind'] == 'constant':
+            number = value['value']
+            if base == 'lsl':
+                return _constant(number << n)
+            if base == 'lsr':
+                return _constant(number >> n)
+            signed = number if number < 0x80000000 else number - 0x100000000
+            return _constant(signed >> n)
+    if 1 + max(_depth(value), _depth(amount)) > limit:
+        return None
+    return {'kind': 'shift_expression', 'operation': base, 'value': value,
+            'amount': amount, 'width_bits': 32}
+
+
+def _flag_zero_test(state, result, pc):
+    if result is None:
+        state.pop('$comparison', None)
+    else:
+        state['$comparison'] = {'operation': 'zero_test', 'left': result,
+                                'right': _constant(0), 'source_pc': pc}
+
+
+def _signed32(value):
+    return value if value < 0x80000000 else value - 0x100000000
+
+
 def _transfer(effect, incoming, depth_limit):
     state = dict(incoming)
     kind = effect['kind']
@@ -52,12 +90,14 @@ def _transfer(effect, incoming, depth_limit):
         dest = effect['destination']
         if effect.get('predicate'):
             state.pop(dest, None)
-        elif effect['operation'] == 'mov':
+        elif effect['operation'] in ('mov', 'movs'):
             value = _resolve(effect['source'], state)
             if value is None:
                 state.pop(dest, None)
             else:
                 state[dest] = value
+            if effect.get('sets_flags'):
+                _flag_zero_test(state, value, effect['pc'])
         elif effect['operation'] == 'movw':
             state[dest] = _constant(effect['source']['value'] & 0xffff)
         elif effect['operation'] == 'movt':
@@ -68,25 +108,27 @@ def _transfer(effect, incoming, depth_limit):
                 state.pop(dest, None)
     elif kind == 'binary':
         dest = effect['destination']
-        value = _binary(effect['operation'], state.get(effect['lhs']),
+        operation = effect['operation']
+        value = _binary(operation[:-1] if operation.endswith('s') else operation, state.get(effect['lhs']),
                         _resolve(effect['rhs'], state), depth_limit)
         if value is None:
             state.pop(dest, None)
         else:
             state[dest] = value
         if effect['sets_flags']:
-            state.pop('$comparison', None)
+            _flag_zero_test(state, value, effect['pc'])
     elif kind == 'flag_test':
-        if effect['operation'] != 'cmp':
-            state.pop('$comparison', None)
+        a = state.get(effect['lhs'])
+        b = _resolve(effect['rhs'], state)
+        op = effect['operation']
+        if op == 'cmp' and a is not None and b is not None:
+            state['$comparison'] = {'operation': 'cmp', 'left': a, 'right': b,
+                                    'source_pc': effect['pc']}
+        elif op in ('cmn', 'tst') and a is not None and b is not None:
+            result = _binary('add' if op == 'cmn' else 'and', a, b, depth_limit)
+            _flag_zero_test(state, result, effect['pc'])
         else:
-            a = state.get(effect['lhs'])
-            b = _resolve(effect['rhs'], state)
-            if a is None or b is None:
-                state.pop('$comparison', None)
-            else:
-                state['$comparison'] = {'operation': 'cmp', 'left': a, 'right': b,
-                                        'source_pc': effect['pc']}
+            state.pop('$comparison', None)
     elif kind == 'memory_read':
         # The origin PC is known; the runtime memory value is not. A repeated
         # load instruction may produce different values on different iterations.
@@ -96,7 +138,16 @@ def _transfer(effect, incoming, depth_limit):
     elif kind == 'memory_write':
         if effect['address']['mode'] != 'offset':
             state.pop(effect['address']['base'], None)
-    elif kind in ('unary', 'shift'):
+    elif kind == 'shift':
+        value = _shift(effect['operation'], state.get(effect['source']),
+                       _resolve(effect['amount'], state), depth_limit)
+        if value is None:
+            state.pop(effect['destination'], None)
+        else:
+            state[effect['destination']] = value
+        if effect.get('sets_flags'):
+            _flag_zero_test(state, value, effect['pc'])
+    elif kind == 'unary':
         state.pop(effect['destination'], None)
     elif kind == 'direct_branch':
         if effect.get('call'):
@@ -120,7 +171,7 @@ def _join(old, incoming):
 def _comparison_condition(effect, state):
     cond = effect.get('predicate')
     compare = state.get('$comparison')
-    if cond not in ('eq', 'ne') or compare is None:
+    if cond not in ('eq', 'ne', 'hi', 'ls', 'cs', 'cc', 'ge', 'lt', 'gt', 'le') or compare is None or (cond not in ('eq','ne') and compare['operation'] != 'cmp'):
         return {'predicate': cond, 'source': None, 'status': 'unknown_flags'}
     return {'predicate': cond, 'source': compare,
             'status': 'symbolic_expression_only'}
@@ -129,12 +180,28 @@ def _comparison_condition(effect, state):
 def _taken_proven(effect, state):
     cond = effect.get('predicate')
     cmp = state.get('$comparison')
-    if cond not in ('eq', 'ne') or cmp is None:
+    if cond not in ('eq', 'ne', 'hi', 'ls', 'cs', 'cc', 'ge', 'lt', 'gt', 'le') or cmp is None:
+        return None
+    if cond not in ('eq','ne') and cmp['operation'] != 'cmp':
         return None
     a, b = cmp['left'], cmp['right']
     if a['kind'] == b['kind'] == 'constant':
         eq = a['value'] == b['value']
-        return eq if cond == 'eq' else not eq
+        if cond == 'eq':
+            return eq
+        if cond == 'ne':
+            return not eq
+        if cond == 'hi':
+            return a['value'] > b['value']
+        if cond == 'ls':
+            return a['value'] <= b['value']
+        if cond == 'cs':
+            return a['value'] >= b['value']
+        if cond == 'cc':
+            return a['value'] < b['value']
+        signed_a, signed_b = _signed32(a['value']), _signed32(b['value'])
+        return {'ge':signed_a >= signed_b, 'lt':signed_a < signed_b,
+                'gt':signed_a > signed_b, 'le':signed_a <= signed_b}[cond]
     return None
 
 
@@ -165,7 +232,7 @@ def analyze(cfg, outline, max_steps=150000, expression_depth=5):
         after = _transfer(eff, before, expression_depth)
         definite = _taken_proven(eff, before) if eff['kind'] == 'direct_branch' else None
         for dst, edge_kind in successors[pc]:
-            if definite is not None and eff.get('predicate') in ('eq', 'ne'):
+            if definite is not None and eff.get('predicate') in ('eq','ne','hi','ls','cs','cc','ge','lt','gt','le'):
                 if edge_kind == 'taken' and not definite:
                     continue
                 if edge_kind == 'fallthrough' and definite:
