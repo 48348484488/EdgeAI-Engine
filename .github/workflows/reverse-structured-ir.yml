@@ -1,0 +1,65 @@
+name: ARM structured IR validation
+
+on:
+  push:
+    paths:
+      - 'tools/arm_structured_ir.py'
+      - 'tools/arm_control_regions.py'
+      - 'tools/arm_loop_analysis.py'
+      - 'tests/test_arm_structured_ir.py'
+      - 'tests/test_arm_control_regions.py'
+      - 'tests/test_arm_loop_analysis.py'
+      - 'examples/reverse/tictactoe.c'
+      - 'examples/reverse/array_sum.c'
+      - '.github/workflows/reverse-structured-ir.yml'
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  structural-ir:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install LLVM ARM compiler and objdump
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y clang lld llvm
+          clang --version | head -n 1
+      - name: Verify CFG loops and postdominators
+        run: |
+          python3 -m unittest discover -s tests -p 'test_arm_loop_analysis.py' -v
+          python3 -m unittest discover -s tests -p 'test_arm_control_regions.py' -v
+      - name: Verify structured IR, including compiled ARM ELF cases
+        run: python3 -m unittest discover -s tests -p 'test_arm_structured_ir.py' -v
+      - name: Generate real ARM32 function IR
+        run: |
+          mkdir -p results
+          clang --target=armv7-none-eabi -marm -O1 -fno-inline -nostdlib -fuse-ld=lld -Wl,-Ttext=0x1000 -Wl,-e=start examples/reverse/tictactoe.c -o results/game_structural_arm.elf
+          clang --target=armv7-none-eabi -marm -O1 -fno-inline -nostdlib -fuse-ld=lld -Wl,-Ttext=0x1000 -Wl,-e=start examples/reverse/array_sum.c -o results/array_structural_arm.elf
+          python3 tools/arm_structured_ir.py results/game_structural_arm.elf --function winner --output results/winner_structured_ir.json
+          python3 tools/arm_structured_ir.py results/game_structural_arm.elf --function play --output results/play_structured_ir.json
+          python3 tools/arm_structured_ir.py results/array_structural_arm.elf --function sum_array --output results/sum_array_structured_ir.json
+      - name: Validate generated IR summaries
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          for function in ('winner','play','sum_array'):
+              data=json.loads(Path('results/'+function+'_structured_ir.json').read_text())
+              assert data['proof_status']=='structural_only', (function,data)
+              assert not data['proof_status']=='unknown_control_flow',function
+          assert len(json.loads(Path('results/winner_structured_ir.json').read_text())['loops'])==1
+          assert len(json.loads(Path('results/sum_array_structured_ir.json').read_text())['loops'])==1
+          print('ARM32 structured IR: real ELF analyses verified')
+          PY
+      - name: Upload ARM structural evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: edgeai-arm-structured-ir
+          path: |
+            results/winner_structured_ir.json
+            results/play_structured_ir.json
+            results/sum_array_structured_ir.json
+          if-no-files-found: warn
