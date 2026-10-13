@@ -15,6 +15,7 @@ on:
       - 'tests/test_arm_loop_analysis.py'
       - 'examples/reverse/tictactoe.c'
       - 'examples/reverse/array_sum.c'
+      - 'examples/reverse/arm_branch_increment.S'
       - '.github/workflows/reverse-structured-ir.yml'
   pull_request:
   workflow_dispatch:
@@ -48,6 +49,8 @@ jobs:
           python3 tools/arm_structured_ir.py results/game_structural_arm.elf --function winner --output results/winner_structured_ir.json
           python3 tools/arm_structured_ir.py results/game_structural_arm.elf --function play --output results/play_structured_ir.json
           python3 tools/arm_structured_ir.py results/array_structural_arm.elf --function sum_array --output results/sum_array_structured_ir.json
+          clang --target=armv7-none-eabi -marm -nostdlib -fuse-ld=lld -Wl,-Ttext=0x1000 -Wl,-e,start examples/reverse/arm_branch_increment.S -o results/guard_structural_arm.elf
+          python3 tools/arm_structured_ir.py results/guard_structural_arm.elf --function increment_guard --output results/increment_guard_structured_ir.json
       - name: Validate generated IR summaries
         run: |
           python3 - <<'PY'
@@ -64,6 +67,13 @@ jobs:
               assert isinstance(data['register_flow']['branch_conditions'], list), function
           assert len(json.loads(Path('results/winner_structured_ir.json').read_text())['loops'])==1
           assert len(json.loads(Path('results/sum_array_structured_ir.json').read_text())['loops'])==1
+          guard=json.loads(Path('results/increment_guard_structured_ir.json').read_text())
+          branches=guard['register_flow']['branch_conditions']
+          assert len(branches)==1, branches
+          assert branches[0]['predicate']=='ne'
+          assert branches[0]['source']['left']['operation']=='add'
+          assert branches[0]['source']['left']['left']['register']=='r0'
+          assert branches[0]['source']['right']['value']==8
           print('ARM32 structured IR: real ELF analyses verified')
           PY
       - name: Upload ARM structural evidence
@@ -75,4 +85,5 @@ jobs:
             results/winner_structured_ir.json
             results/play_structured_ir.json
             results/sum_array_structured_ir.json
+            results/increment_guard_structured_ir.json
           if-no-files-found: warn
