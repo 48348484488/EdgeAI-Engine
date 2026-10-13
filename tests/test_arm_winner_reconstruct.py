@@ -23,7 +23,16 @@ class TestWinnerReconstruction(unittest.TestCase):
         cls.tmp.cleanup()
 
     def test_extract_from_real_arm_elf(self):
-        result=reconstruct.reconstruct(self.elf)
+        try:
+            result=reconstruct.reconstruct(self.elf)
+        except ValueError:
+            # A different LLVM version may emit a different instruction
+            # sequence. Preserve the exact disassembly in CI diagnostics.
+            entry, instructions=reconstruct._disassembly(self.elf)
+            print('WINNER_ARM_DIAGNOSTIC_ENTRY',hex(entry),flush=True)
+            for pc, mnemonic, operands in instructions:
+                print('WINNER_ARM_DIAGNOSTIC',hex(pc),mnemonic,operands,flush=True)
+            raise
         self.assertEqual(result['evidence']['instruction_count'],29)
         self.assertEqual(len(result['evidence']['winning_triplets']),8)
         self.assertEqual(result['evidence']['winning_triplets'][0],[0,1,2])
