@@ -716,6 +716,35 @@ valores constantes. A rodada do GitHub Actions falhou
 sem disponibilizar etapas, inclusive apos uma reexecucao,
 logo a nova revisao ainda nao tem aprovacao completa no CI.
 
+## Condicoes de lacos ARM32 recuperadas (2026-10-13)
+
+`tools/arm_loop_predicates.py` vincula os lacos naturais da
+IR ao desvio de retorno, ao produtor dos flags e a unica
+atualizacao simples de um possivel contador. O relatorio
+mostra acesso a memoria e arestas de saida antecipada,
+preservando casos ambiguos como nao resolvidos.
+A rotina integrada e `tools/arm_structured_ir.py`.
+
+**ARM32 real testado localmente:**
+- `winner()`: atualiza `r1 += 1`, compara `r1 != 8`
+  e possui saida antecipada dentro do laco.
+- `sum_array()`: usa `subs r1, r1, #1` e repete
+  enquanto o resultado nao for zero.
+
+O modulo publicado tem hash Git
+`e11f6a5c3c648d602d4502f88873a92f0fc9854b`,
+identico ao arquivo usado nos 3 testes locais aprovados.
+O relatorio esta em
+`results/arm_loop_predicates_local_2026-10-13.json`.
+O conjunto novo de testes completos e
+`tests/test_arm_loop_predicates.py`.
+
+**Limites:** sao candidatos de contador, nao prova
+de termino, quantidade de iteracoes ou C++ equivalente.
+O workflow ARM estruturado foi atualizado, mas a execucao
+`38432423641` nao passou e nao disponibilizou etapas de job
+para diagnostico.
+
 ## Qual é o próximo objetivo?
 
 Ampliar o decodificador ARM/Thumb-2, reconhecer os limites reais das funções e validar os mapas de chamadas em binários ARM reais. A ferramenta `arm_functions.py` gera **candidatos** a partir de chamadas diretas ARM32 `BL` e Thumb-2 `BL`/`BLX` imediato, mas não cobre instruções Thumb-2 em geral, chamadas indiretas, mudanças dinâmicas de modo nem limites completos das funções. Depois, avançar para pseudocódigo e reconstrução verificável em C/C++.
