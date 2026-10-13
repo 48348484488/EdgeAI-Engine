@@ -125,6 +125,30 @@ class RegisterFlowTests(unittest.TestCase):
 
     @unittest.skipUnless(shutil.which('clang') and shutil.which('llvm-objdump'),
                          'ARM32 Clang and llvm-objdump required')
+    def test_compiled_add_cmp_bne_dependency(self):
+        loops = load('arm_loop_analysis')
+        structured = load('arm_structured_ir')
+        with tempfile.TemporaryDirectory() as temp:
+            elf = Path(temp)/'guard.elf'
+            subprocess.run(['clang','--target=armv7-none-eabi','-marm',
+                '-nostdlib','-fuse-ld=lld','-Wl,-Ttext=0x1000',
+                '-Wl,-e,start',str(ROOT/'examples/reverse/arm_branch_increment.S'),
+                '-o',str(elf)],check=True,capture_output=True)
+            listing = subprocess.run(['llvm-objdump','-d',str(elf)],
+                                     check=True,capture_output=True,text=True).stdout
+        ins = loops.disassemble_function(listing,'increment_guard')
+        output = structured.analyze_instructions(ins,'increment_guard')
+        branches = output['register_flow']['branch_conditions']
+        self.assertEqual(len(branches),1)
+        predicate = branches[0]
+        self.assertEqual(predicate['predicate'],'ne')
+        self.assertEqual(predicate['source']['left']['operation'],'add')
+        self.assertEqual(predicate['source']['left']['left']['register'],'r0')
+        self.assertEqual(predicate['source']['right']['value'],8)
+        self.assertIsNone(predicate['edge_proven'])
+
+    @unittest.skipUnless(shutil.which('clang') and shutil.which('llvm-objdump'),
+                         'ARM32 Clang and llvm-objdump required')
     def test_compiled_arm32_function_reports(self):
         loops = load('arm_loop_analysis')
         structured = load('arm_structured_ir')
