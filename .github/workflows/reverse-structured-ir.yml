@@ -5,10 +5,12 @@ on:
     paths:
       - 'tools/arm_structured_ir.py'
       - 'tools/arm_semantic_ir.py'
+      - 'tools/arm_register_flow_ir.py'
       - 'tools/arm_control_regions.py'
       - 'tools/arm_loop_analysis.py'
       - 'tests/test_arm_structured_ir.py'
       - 'tests/test_arm_semantic_ir.py'
+      - 'tests/test_arm_register_flow_ir.py'
       - 'tests/test_arm_control_regions.py'
       - 'tests/test_arm_loop_analysis.py'
       - 'examples/reverse/tictactoe.c'
@@ -36,6 +38,8 @@ jobs:
         run: python3 -m unittest discover -s tests -p 'test_arm_structured_ir.py' -v
       - name: Verify conservative ARM instruction effects
         run: python3 -m unittest discover -s tests -p 'test_arm_semantic_ir.py' -v
+      - name: Verify register dataflow and CMP-to-BNE expressions
+        run: python3 -m unittest discover -s tests -p 'test_arm_register_flow_ir.py' -v
       - name: Generate real ARM32 function IR
         run: |
           mkdir -p results
@@ -56,6 +60,8 @@ jobs:
               assert len(data['instruction_effects']) > 0, function
               assert data['semantic_coverage']['recognized'] > 0, function
               assert data['semantic_coverage']['recognized'] + data['semantic_coverage']['unsupported'] == len(data['instruction_effects'])
+              assert 0 < data['register_flow']['analyzed_instructions'] <= len(data['instruction_effects']), function
+              assert isinstance(data['register_flow']['branch_conditions'], list), function
           assert len(json.loads(Path('results/winner_structured_ir.json').read_text())['loops'])==1
           assert len(json.loads(Path('results/sum_array_structured_ir.json').read_text())['loops'])==1
           print('ARM32 structured IR: real ELF analyses verified')
