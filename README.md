@@ -47,6 +47,22 @@ Nenhum dos 1.747 simbolos ELF tinha `player`, `camera`, `position` ou
 jogadores nao exista**, apenas que nao esta exposta com esses nomes.
 
 
+### Validacao ARM64 contra quatro entradas reais do motor Unity
+
+A EdgeAI executou seu parser, construtor de CFG e o comparador
+`tools/aarch64_llvm_crosscheck.py` no pipeline publico do Oxide,
+[execucao #38566956506](https://github.com/48348484488/oxide/actions/runs/38566956506).
+**37 testes passaram**, com concordancia exata de endereco e classe de
+instrucao nos **57/57** desvios/chamadas de quatro simbolos reais
+de `libunity.so` (3 de UnitySendMessage, 32 de UnityInitialize,
+5 de UnityShutdown e 17 de JNI_OnLoad).
+
+A ferramenta `tools/aarch64_dispatch_bounds.py`, na
+[execucao #38565737985](https://github.com/48348484488/oxide/actions/runs/38565737985),
+identificou em `libloader.so` dois despachos com guarda local
+`CMP/B.HI` e indice maximo 7. Nenhum desses resultados recuperou C++,
+funcao de gameplay, posicao de jogador nem matriz de camera.
+
 ### ARM64: grafo e classificacao de saltos indiretos (sem execucao)
 
 O modulo `tools/aarch64_cfg.py` transforma transferencias conhecidas em
