@@ -34,6 +34,19 @@ de `libloader.so`, encontrando 117 candidatos nos 4.524 bytes
 indicados pelo simbolo. Isso nao prova semantica, alcançabilidade,
 decompilacao nem descoberta de coordenadas de jogadores.
 
+### Busca de simbolos da biblioteca IL2CPP ARM64
+
+`tools/aarch64_symbol_triage.py` filtra, por substrings exatas
+case-insensitive, **somente nomes STT_FUNC** preservados em ELF64, usando
+streaming e `mmap`. Os testes AArch64 com compiler real e a leitura da
+biblioteca IL2CPP do Oxide passaram no
+[workflow #38563095341](https://github.com/48348484488/oxide/actions/runs/38563095341).
+Nenhum dos 1.747 simbolos ELF tinha `player`, `camera`, `position` ou
+`network` no nome; quatro resultados para `transform` pertencem ao
+`std::__ndk1::collate` de C++. **Nao significa que a logica de
+jogadores nao exista**, apenas que nao esta exposta com esses nomes.
+
+
 ### ARM64: grafo e classificacao de saltos indiretos (sem execucao)
 
 O modulo `tools/aarch64_cfg.py` transforma transferencias conhecidas em
