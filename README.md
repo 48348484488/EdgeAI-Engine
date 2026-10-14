@@ -22,6 +22,23 @@ e publica JSON — **sem executar o jogo, desativar protecoes ou
 inferir posicoes de jogadores**. Esses metadados nao equivalem a
 decompilacao nem substituem o runtime Android.
 
+### Recuperação estática de tabela ARM64 e integração ao CFG
+
+Os módulos `tools/aarch64_table_entries.py` e
+`tools/aarch64_table_cfg.py` leem somente tabelas de deslocamentos
+ARM64 quando o endereço-base, a guarda local e os segmentos ELF
+foram verificados. Todos os destinos devem permanecer dentro da
+função e coincidir com entradas de blocos básicos. O grafo mantém
+as arestas recuperadas como **candidatas**, não como execução real.
+
+[Execução #38570216758](https://github.com/48348484488/oxide/actions/runs/38570216758):
+**51 testes aprovados**, 8 entradas em uma tabela do `libloader.so`
+original. [Execução #38570970178](https://github.com/48348484488/oxide/actions/runs/38570970178):
+**65 testes aprovados**; 6 destinos distintos e 6 arestas novas no
+CFG (174 → 180). A entrada principal ainda alcança somente 4 dos
+147 blocos no modelo parcial. Não foram recuperados dados de partida,
+posições de jogadores, matriz de câmera ou código C++ original.
+
 ### Argumentos de entrada ARM64 e comparações verificadas
 
 `tools/aarch64_arg_guards.py` rastreia cópias conservadoras de `W/X0..7`
