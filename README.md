@@ -22,6 +22,21 @@ e publica JSON — **sem executar o jogo, desativar protecoes ou
 inferir posicoes de jogadores**. Esses metadados nao equivalem a
 decompilacao nem substituem o runtime Android.
 
+### Argumentos de entrada ARM64 e comparações verificadas
+
+`tools/aarch64_arg_guards.py` rastreia cópias conservadoras de `W/X0..7`
+para registradores preservados `W/X19..28` e comparações com imediato
+seguidas de `B.EQ` ou `B.NE`. Interrompe inferências quando um efeito
+sobre o registrador é desconhecido, há escrita intermediária, desvio
+incondicional ou entrada por salto no intervalo analisado.
+
+Na [execução real #38570345080](https://github.com/48348484488/oxide/actions/runs/38570345080),
+**59 testes passaram**. A EdgeAI encontrou em `UnityInitialize` original
+a cadeia `MOV W21,W1` → `CMP W21,#0x2E0` → `B.NE`, indicando
+uma comparação *candidata* do segundo argumento com **736**. A verificação
+não determina a semântica desse valor, o caminho tomado, nem recupera
+dados de jogador ou câmera.
+
 ### AArch64: mapeamento de desvios compilados
 
 O utilitario `tools/aarch64_branch_map.py` localiza transferencias de controle
