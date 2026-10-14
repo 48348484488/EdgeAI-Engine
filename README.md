@@ -34,6 +34,21 @@ de `libloader.so`, encontrando 117 candidatos nos 4.524 bytes
 indicados pelo simbolo. Isso nao prova semantica, alcançabilidade,
 decompilacao nem descoberta de coordenadas de jogadores.
 
+### ARM64: grafo e classificacao de saltos indiretos (sem execucao)
+
+O modulo `tools/aarch64_cfg.py` transforma transferencias conhecidas em
+**blocos e arestas candidatas**. `tools/aarch64_indirect_audit.py` compara
+o resultado com um disassembly LLVM e reconhece o padrao exato
+`ADR → LDRSW → ADD → BR`. O classificador **nao consulta tabelas de desvio
+nem inventa alvos**.
+
+No [workflow publico do Oxide #38562481574](https://github.com/48348484488/oxide/actions/runs/38562481574),
+**18 testes passaram** e o `JNI_OnLoad` real de `libloader.so`
+apresentou **117 instrucoes de controle conferidas com LLVM**,
+**147 blocos**, **174 arestas**, **7 distribuidores indiretos por tabela**
+e **1 chamada indireta**. Sao resultados de analise estatica do ELF,
+nao de decompilacao autonoma nem de execucao do jogo.
+
 ## O que já faz?
 
 | Recurso | Resultado atual |
