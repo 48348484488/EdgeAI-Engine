@@ -22,6 +22,18 @@ e publica JSON — **sem executar o jogo, desativar protecoes ou
 inferir posicoes de jogadores**. Esses metadados nao equivalem a
 decompilacao nem substituem o runtime Android.
 
+### AArch64: mapeamento de desvios compilados
+
+O utilitario `tools/aarch64_branch_map.py` localiza transferencias de controle
+AArch64 (`B`, `BL`, `B.cond`, `CBZ`, `TBZ`, `RET`, `BR` e `BLR`) dentro
+de uma funcao conhecida de biblioteca ELF64 no APK. Nao executa o jogo.
+Ha testes reais de compilacao AArch64 em `tests/test_aarch64_branch_map.py`.
+
+O adaptador no Oxide foi validado em runner publico sobre `JNI_OnLoad`
+de `libloader.so`, encontrando 117 candidatos nos 4.524 bytes
+indicados pelo simbolo. Isso nao prova semantica, alcançabilidade,
+decompilacao nem descoberta de coordenadas de jogadores.
+
 ## O que já faz?
 
 | Recurso | Resultado atual |
