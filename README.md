@@ -6,6 +6,22 @@ O objetivo é analisar arquivos compilados, entender como o código funciona e, 
 
 > **Estado atual:** projeto experimental. Já existem ferramentas de análise de binários e um motor de IA compacto, mas **a reconstrução automática em C/C++ ainda não está pronta**.
 
+### Integração com o Oxide ARM64 (análise estática, sem executar o jogo)
+
+O analisador `tools/inspect_arm64_split.py` reutiliza o parser ELF da EdgeAI
+para inspecionar, por streaming e mmap, `libil2cpp.so`, `libunity.so` e
+`libloader.so` dentro de um split APK. Suporta arquivos de ate 320 MiB
+por biblioteca, incluindo `libil2cpp.so` de 236 MB (acima do limite
+do comando legado), sem carregar o binario inteiro na memoria Python.
+
+Ele identifica arquitetura, simbolos nomeados que sobreviveram ao strip,
+dependencias ELF `DT_NEEDED`, SONAME, tamanho e SHA-256. A
+[validacao em CI](.github/workflows/oxide-arm64-elf-audit.yml) usa o
+split ARM64 original do repositorio publico Oxide, confere seu hash
+e publica JSON — **sem executar o jogo, desativar protecoes ou
+inferir posicoes de jogadores**. Esses metadados nao equivalem a
+decompilacao nem substituem o runtime Android.
+
 ## O que já faz?
 
 | Recurso | Resultado atual |
