@@ -6,6 +6,21 @@ O objetivo é analisar arquivos compilados, entender como o código funciona e, 
 
 > **Estado atual:** projeto experimental. Já existem ferramentas de análise de binários e um motor de IA compacto, mas **a reconstrução automática em C/C++ ainda não está pronta**.
 
+### Novo teste cego: jogo público desconhecido pela EdgeAI
+
+Selecionamos [Frost-Phoenix/2048-cli](https://github.com/Frost-Phoenix/2048-cli),
+um jogo MIT em C, com aproximadamente **22 definições candidatas de funções**.
+O commit original foi fixado para evitar mudanças inesperadas.
+A [rotina ARM64 isolada](.github/workflows/blind-external-game.yml)
+compila o jogo em um job e transfere **apenas binários ELF** ao analisador em
+outro job; o código-fonte não é entrada da EdgeAI. Há também comparação
+independente com Ghidra, identificada explicitamente como backend externo.
+
+**Estado:** [execução #38967403930](https://github.com/48348484488/EdgeAI-Engine/actions/runs/38967403930)
+**falhou antes de executar etapas**, e o teste de análise foi ignorado.
+**Nenhuma função desse jogo foi ainda confirmada como descompilada**.
+[Diagnóstico e critérios](docs/blind_external_game_2048_2026-10-16.md).
+
 ### Jogo completo de teste: reconstrução funcional ARM32
 
 O novo teste do jogo da velha conecta três candidatos C++ (`winner`,
