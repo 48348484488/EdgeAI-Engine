@@ -4,7 +4,7 @@
 
 O objetivo é analisar arquivos compilados, entender como o código funciona e, futuramente, ajudar a reconstruir funções equivalentes em C/C++. O projeto foi pensado para funcionar **localmente, sem GPU e com baixo consumo de recursos**.
 
-> **Estado atual:** projeto experimental. Já existem ferramentas de análise de binários e um motor de IA compacto, mas **a reconstrução automática em C/C++ ainda não está pronta**.
+> **Estado atual:** projeto experimental com **reconstrução automática parcial de C++ a partir de ARM64**, comprovada em funções pequenas e intermediárias. Ainda **não** descompila jogos inteiros nem recupera o código-fonte original de forma geral.
 
 ### Novo teste cego: jogo público desconhecido pela EdgeAI
 
