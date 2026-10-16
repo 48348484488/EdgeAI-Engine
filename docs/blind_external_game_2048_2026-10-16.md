@@ -1,3 +1,50 @@
+## Atualização confirmada: 13 funções do 2048 (16/10/2026)
+
+A ferramenta [`aarch64_printf_lifter.py`](../tools/aarch64_printf_lifter.py)
+adicionou reconstrução **limitada e verificável** de rotinas ARM64 que chamam
+`__printf_chk`: lê formatos e textos da seção `.rodata` no próprio ELF,
+resolve o símbolo dinâmico no PLT e interpreta `ADRP+ADD`/argumentos
+constantes. Rejeita especificadores não modelados, saltos, frames de pilha
+incompatíveis e endereços fora da região. **Não recebe fonte original nem
+tabela de símbolos do jogo**; nomes dos símbolos importados da libc
+continuam disponíveis no ELF stripped.
+
+A análise em lote [`aarch64_multistage_batch.py`](../tools/aarch64_multistage_batch.py)
+passou de 11 para **13 arquivos C++ gerados e compilados**, dentre 27 entradas
+candidatas. Isso corresponde a **13 das 23 funções nomeadas do jogo (56,52%)**,
+com **350 instruções ARM64 traduzidas**. A biblioteca com as 13 foi ligada
+sem erros.
+
+As duas novas funções têm saída fixa, portanto sua validação não é contada
+como milhares de casos:
+
+| Endereço | Nome descoberto após geração | Instruções | Saída validada |
+|---|---|---:|---|
+| `0x4015f4` | `print_win` | 23 | 27 bytes iguais à referência |
+| `0x401650` | `print_game_over` | 23 | 27 bytes iguais à referência |
+
+O teste compilou as duas definições C originais com os macros MIT do jogo,
+em programa independente **depois** de gerar o C++. Também recompilou
+um único executável com todos os 13 candidatos e repetiu a comparação de
+saída. Os **1.200.088 testes diferenciais das 11 funções anteriores** foram
+reexecutados contra a nova biblioteca com zero divergências. **Dezenove
+testes de regressão** passaram, incluindo mutação de string na seção
+`.rodata`, rejeição de `%n` e endereços inválidos.
+
+[Relatório JSON](../results/blind_2048_thirteen_function_reconstruction_2026-10-16.json)
+e [testes desta expansão](../tests/test_aarch64_printf_lifter.py).
+Para executar os testes de integração com o ELF real, definir
+`EDGEAI_BLIND_2048_ELF` para o ELF stripped e instalar `llvm-objdump`
+e `g++`.
+
+**Ainda faltam 10 funções nomeadas** para a meta de reconstrução
+funcional completa. Elas requerem operações de pilha, dados temporários,
+importações, chamadas e I/O não cobertos por esses tradutores.
+As assinaturas são hipóteses e a cobertura percentual é exclusivamente por
+contagem de funções; o jogo como programa completo **não foi recompilado**.
+
+---
+
 # EdgeAI — teste cego de engenharia reversa do jogo externo 2048-cli
 
 Última atualização: 16 de outubro de 2026.
