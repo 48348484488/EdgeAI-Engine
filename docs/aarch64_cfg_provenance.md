@@ -42,7 +42,7 @@ desvios diretos com LLVM.
 **Limites:** continua sendo uma prova apenas *sob as arestas estaticas
 representadas*. Desvios indiretos ainda nao resolvidos podem abrir caminhos
 ausentes; entradas externas no meio da funcao nao sao descartadas. O modulo
-nao le entradas de tabelas, nao verifica guardas de indice, nao reconstru
+nao le entradas de tabelas, nao verifica guardas de indice, nao reconstrói
 C++ e nao comprova alcance em runtime. Nenhum dado de jogo/ESP e inferido.
 
 ## Evidencia
