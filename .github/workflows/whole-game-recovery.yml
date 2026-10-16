@@ -1,0 +1,56 @@
+name: EdgeAI whole tiny ARM32 game recovery check
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "tools/recover_start_arm.py"
+      - "tools/validate_whole_tictactoe.py"
+      - "tools/recover_winner.py"
+      - "tools/generate_play_candidate.py"
+      - "examples/reverse/tictactoe.c"
+      - "tests/test_recover_start_arm.py"
+      - "tests/whole_game_differential_harness.cpp"
+      - ".github/workflows/whole-game-recovery.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  compiled-game-reconstruction:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install ARM32 compiler and LLVM
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends clang lld llvm
+      - name: Validate binary-only recovery of game start
+        run: python3 -m unittest discover -s tests -p 'test_recover_start_arm.py' -v
+      - name: Recover and validate whole small game
+        run: |
+          python3 tools/validate_whole_tictactoe.py --output results/whole_game_rebuild.json
+      - name: Check non-autonomous decompilation disclosures
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          r=json.loads(Path('results/whole_game_rebuild.json').read_text())
+          assert r['status']=='WHOLE_SMALL_GAME_BEHAVIORAL_TEST_PASS'
+          assert r['native_differential']['tested_cases']==278528
+          assert r['native_differential']['mismatches']==0
+          assert r['original_C_source_used_for_play_rules'] is True
+          assert r['whole_game_autonomous_decompilation'] is False
+          assert r['compiled_arm32_candidates']==['winner','play','start']
+          print('EDGEAI_3_FUNCTION_SCRIPTED_GAME=PASS_SOURCE_ASSISTED')
+          PY
+      - name: Upload evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: edgeai-whole-tiny-game-source-assisted-report
+          path: results/whole_game_rebuild.json
+          retention-days: 14
+          if-no-files-found: warn
