@@ -77,7 +77,7 @@ def lift(entry,rows,mem_size=64):
             width=32 if m[1]=='w' else 64
             u=f'uint{width}_t';s=f'int{width}_t'
             expr=(f'{{ {u} a={u}({lhs}),b={u}({rhs}),d=a-b; '
-                  f'Z=(d==0); N=({s}(d)<0); C=(a>=b); '
+                  f'Z=(d==0); N=((d>>{width-1})&1)!=0; C=(a>=b); '
                   f'V=(((a^b)&(a^d))>>{width-1})!=0; }}')
         elif op=='ldr':
             m=LOAD.fullmatch(args)
