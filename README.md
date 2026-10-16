@@ -6,6 +6,24 @@ O objetivo é analisar arquivos compilados, entender como o código funciona e, 
 
 > **Estado atual:** projeto experimental. Já existem ferramentas de análise de binários e um motor de IA compacto, mas **a reconstrução automática em C/C++ ainda não está pronta**.
 
+### Jogo completo de teste: reconstrução funcional ARM32
+
+O novo teste do jogo da velha conecta três candidatos C++ (`winner`,
+`play` e `start`) em uma execução única. O extrator de `start`
+descobriu cinco chamadas diretamente de um ELF ARM32 compilado,
+sem consultar o código-fonte para essa função.
+
+A comparação local de `start` recuperada e implementações-modelo
+manuais de `winner`/`play` passou em **278.528 estados iniciais**
+com zero divergências de retorno e tabuleiro. **Isso não comprova
+recuperação autônoma de todo o jogo.** O pipeline que gera as três
+funções em conjunto foi integrado, mas o CI ainda falha sem logs
+utilizáveis; `play` continua apoiado em regras extraídas do
+fonte de exemplo.
+
+[Relatório detalhado](docs/whole_game_checkpoint_2026-10-16.md)
+e [pipeline de teste](.github/workflows/whole-game-recovery.yml).
+
 ### Integração com o Oxide ARM64 (análise estática, sem executar o jogo)
 
 O analisador `tools/inspect_arm64_split.py` reutiliza o parser ELF da EdgeAI
