@@ -39,6 +39,15 @@ CFG (174 → 180). A entrada principal ainda alcança somente 4 dos
 147 blocos no modelo parcial. Não foram recuperados dados de partida,
 posições de jogadores, matriz de câmera ou código C++ original.
 
+### Nova análise ARM64 entre blocos básicos
+
+`tools/aarch64_cfg_provenance.py` rastreia valores `ADRP + ADD` entre
+ramificações do CFG, rejeitando caminhos incompletos ou que sobrescrevem
+o registrador. **12 testes locais com casos controlados passaram**;
+o GitHub Actions ainda não confirmou essa revisão. O resultado é uma
+**hipótese estática**, não execução do Oxide nem reconstrução automática.
+[Detalhes e execução](docs/aarch64_cfg_provenance.md).
+
 ### Argumentos de entrada ARM64 e comparações verificadas
 
 `tools/aarch64_arg_guards.py` rastreia cópias conservadoras de `W/X0..7`
