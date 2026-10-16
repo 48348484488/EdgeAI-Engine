@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Try each stripped ARM64 function entry, produce fail-closed C++ lift coverage.
+"""Try all source-blind ELF function candidates, then link previously lifted leaves.
 
-Every entry discovered directly from the ELF is attempted. Source code and
-symbol tables are never read by this program. Accepted ABI is a heuristic
-for fixed 16 x uint32_t board pointers and must be validated independently.
+Each candidate is discovered by decoding stripped ARM64 executable bytes.
+The independent original source and symbol oracle are never read here.
+Emitted C++ is NOT marked behaviorally equivalent until differential testing.
 """
 import argparse
 import json
@@ -11,6 +11,8 @@ from pathlib import Path
 from aarch64_stripped_discovery import analyze
 from aarch64_leaf_lifter import run as lift_reader
 from aarch64_mutating_lifter import run as lift_mutator
+from aarch64_scalar_lifter import run as lift_scalar
+from aarch64_linked_lifter import run as lift_linked
 
 
 def run_all(elf, directory):
@@ -21,7 +23,9 @@ def run_all(elf, directory):
     for x in scan['candidate_entries']:
         entry = int(x['address'], 16)
         attempts = []
-        for typ, fn in [('read_only_leaf',lift_reader),('mutating_leaf',lift_mutator)]:
+        for typ, fn in [('read_only_leaf',lift_reader),
+                        ('mutating_leaf',lift_mutator),
+                        ('scalar_leaf',lift_scalar)]:
             try:
                 cpp, info = fn(elf,entry)
                 if not cpp or not info.get('source_read') is False or not info.get('symbols_used') is False:
@@ -31,12 +35,37 @@ def run_all(elf, directory):
                 rows.append({'address':hex(entry), 'status':'CPP_EMITTED_UNVALIDATED',
                     'lifter':typ, 'file':file_name,
                     'instructions':info.get('instructions_translated',info.get('instruction_count')),
-                    'ABI_assumption':info.get('known_abi_assumption',info.get('return_abi_assumption'))})
+                    'ABI_assumption':info.get('known_abi_assumption',
+                                       info.get('return_abi_assumption',info.get('assumed_abi')))})
                 break
             except (ValueError,RuntimeError,KeyError) as err:
                 attempts.append({'lifter':typ,'why':str(err)[:160]})
         else:
             rows.append({'address':hex(entry),'status':'UNSUPPORTED','attempts':attempts})
+
+    # Bind direct BL addresses to candidates lifted in phase one. The mapping
+    # contains no function names, source, oracle or external decompiler output.
+    phase1=directory/'phase1_lifters.json'
+    phase1.write_text(json.dumps({'stripped_elf_sha256':scan['input_sha256'],
+                                  'source_read':False,'symbols_used':False,
+                                  'functions':rows})+'\n')
+    for index,row in enumerate(rows):
+        if row['status']!='UNSUPPORTED':
+            continue
+        entry=int(row['address'],16)
+        try:
+            cpp,info=lift_linked(elf,entry,phase1)
+            if info.get('symbols_used') is not False or info.get('source_read') is not False:
+                raise ValueError('not blind')
+            file_name=f'candidate_{entry:x}.cpp'
+            (directory/file_name).write_text(cpp,encoding='utf-8')
+            rows[index]={'address':hex(entry),'status':'CPP_EMITTED_UNVALIDATED',
+                'lifter':'linked_caller','file':file_name,
+                'instructions':info['instruction_count'],'ABI_assumption':info['assumed_abi'],
+                'callee_candidates':info['callee_candidates']}
+        except (ValueError,RuntimeError,KeyError) as err:
+            row['attempts'].append({'lifter':'linked_caller','why':str(err)[:160]})
+    phase1.unlink()
     accepted=[x for x in rows if x['status']=='CPP_EMITTED_UNVALIDATED']
     return {
         'tool':'EdgeAI blind AArch64 small-game batch lifter',
