@@ -1,0 +1,119 @@
+{
+  "version": "EdgeAI blinded external game 2048 multi-stage 11 function audit",
+  "timestamp_date": "2026-10-16",
+  "upstream_repository": "Frost-Phoenix/2048-cli",
+  "upstream_commit": "53f4da8249cbe9bce17e0daefbd7903f4a4684be",
+  "license": "MIT",
+  "compilation_workflow": "https://github.com/48348484488/oxide/actions/runs/38969071956",
+  "original_source_used_to_generate_cpp": false,
+  "stripped_elf_sha256": "a3ca49d16ca6428291574ebd3f7c54153ef0913f8aa1eee4279408c3bf9d499b",
+  "stripped_function_entry_candidates": 27,
+  "source_oracle_game_function_count": 23,
+  "named_game_entries_found_using_stripped_elf": 23,
+  "cpp_emitted_candidates": 11,
+  "native_cpp_bundle_compile_status": "SUCCEEDED",
+  "validated_named_game_functions": 11,
+  "unsupported_candidates": 16,
+  "functions_not_reconstructed_by_oracle_count": 12,
+  "function_count_coverage_percent": 47.83,
+  "translated_aarch64_instructions": 304,
+  "prior_six_compared_cases": 700048,
+  "new_five_compared_cases": 500040,
+  "total_compared_cases": 1200088,
+  "total_observed_divergences": 0,
+  "synthetic_regression_tests": 9,
+  "synthetic_compiled_aarch64_examples": 1,
+  "synthetic_native_cpp_cases": 5120,
+  "oracle_is_used_only_after_generation": true,
+  "abi_signatures_are_assumed": true,
+  "entries": [
+    {
+      "entry": "0x4009e8",
+      "post_oracle_name": "_slide_col",
+      "lifter": "three_arg_memory_leaf",
+      "instructions": 53,
+      "differential_comparisons": 100008
+    },
+    {
+      "entry": "0x400abc",
+      "post_oracle_name": "_rotate_board",
+      "lifter": "mutating_leaf",
+      "instructions": 40,
+      "differential_comparisons": 100007
+    },
+    {
+      "entry": "0x400b5c",
+      "post_oracle_name": "_empty_cells_left",
+      "lifter": "read_only_leaf",
+      "instructions": 17,
+      "differential_comparisons": 100005
+    },
+    {
+      "entry": "0x400ba0",
+      "post_oracle_name": "_can_slide_up",
+      "lifter": "read_only_leaf",
+      "instructions": 23,
+      "differential_comparisons": 100005
+    },
+    {
+      "entry": "0x400d58",
+      "post_oracle_name": "board_can_move",
+      "lifter": "linked_caller",
+      "instructions": 27,
+      "differential_comparisons": 100007
+    },
+    {
+      "entry": "0x400dc4",
+      "post_oracle_name": "board_win",
+      "lifter": "read_only_leaf",
+      "instructions": 18,
+      "differential_comparisons": 100005
+    },
+    {
+      "entry": "0x400e0c",
+      "post_oracle_name": "board_move_up",
+      "lifter": "two_arg_board_score_caller",
+      "instructions": 23,
+      "differential_comparisons": 100008
+    },
+    {
+      "entry": "0x400e68",
+      "post_oracle_name": "board_move_down",
+      "lifter": "two_arg_board_score_caller",
+      "instructions": 20,
+      "differential_comparisons": 100008
+    },
+    {
+      "entry": "0x400eb8",
+      "post_oracle_name": "board_move_left",
+      "lifter": "two_arg_board_score_caller",
+      "instructions": 20,
+      "differential_comparisons": 100008
+    },
+    {
+      "entry": "0x400f08",
+      "post_oracle_name": "board_move_right",
+      "lifter": "two_arg_board_score_caller",
+      "instructions": 20,
+      "differential_comparisons": 100008
+    },
+    {
+      "entry": "0x400f58",
+      "post_oracle_name": "_get_color",
+      "lifter": "scalar_leaf",
+      "instructions": 43,
+      "differential_comparisons": 200019
+    }
+  ],
+  "validation_method": "C++ emitted from ELF stripped; compiled with g++ -O2 native Linux x86-64. Independent C oracles read after generation, compared return values, all 16 board cells and score as applicable. Seeded deterministic board fuzz and edge cases.",
+  "limitations": [
+    "Partial ARM64 instruction support: many operations, stack layouts and external library calls still unsupported.",
+    "Function entry recall applies only to the 23 post-hoc named game functions in this specific ELF.",
+    "Exact function signatures and pointer argument meaning not inferred: provided as ABI testing contract.",
+    "Observed equality over selected inputs is not mathematical proof of equivalence.",
+    "Whole original executable, user interface and gameplay resources have not been recovered or recompiled.",
+    "Compiler validation performed locally; private EdgeAI GitHub Actions runners previously failed before job steps."
+  ],
+  "entire_game_decompiled": false,
+  "universal_behavioral_equivalence_proven": false
+}
