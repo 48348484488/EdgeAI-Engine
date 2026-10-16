@@ -1,0 +1,54 @@
+{
+  "benchmark": "External MIT-licensed 2048-cli",
+  "date": "2026-10-16",
+  "upstream_repository": "https://github.com/Frost-Phoenix/2048-cli",
+  "upstream_commit": "53f4da8249cbe9bce17e0daefbd7903f4a4684be",
+  "target": "ELF64 AArch64 GCC -O1, stripped",
+  "binary_sha256": "a3ca49d16ca6428291574ebd3f7c54153ef0913f8aa1eee4279408c3bf9d499b",
+  "source_or_symbol_table_read_in_generation": false,
+  "dynamic_import_symbols_read_from_plt": true,
+  "reconstructed_cpp_candidate_count": 13,
+  "named_game_function_count_after_oracle": 23,
+  "named_game_function_coverage_percent": 56.52,
+  "stripped_entry_candidates": 27,
+  "undecoded_entry_candidates": 14,
+  "translated_instructions": 350,
+  "cpp_linked_build": "SUCCEEDED",
+  "previous_eleven_behavioral_cases": 1200088,
+  "previous_eleven_case_divergences": 0,
+  "new_terminal_functions": [
+    {
+      "entry": "0x4015f4",
+      "posthoc_name": "print_win",
+      "instruction_count": 23,
+      "external_printf_calls": 4,
+      "independent_oracle_stdout_length_bytes": 27,
+      "stdout_sha256": "8b1fdcfa3714282a536de95b307775c40776ff87f51bc56ec776b3b32af20ecc",
+      "byte_equal": true
+    },
+    {
+      "entry": "0x401650",
+      "posthoc_name": "print_game_over",
+      "instruction_count": 23,
+      "external_printf_calls": 4,
+      "independent_oracle_stdout_length_bytes": 27,
+      "stdout_sha256": "891803cdefd308595b2dd46327456d07e6dee455ef94fc8aeb4693fe5f5bbcf4",
+      "byte_equal": true
+    }
+  ],
+  "previous_retested_in_13_function_library": true,
+  "regression_tests_passed": 19,
+  "regression_tests_failed": 0,
+  "oracle": "Original MIT-licensed C definitions and macros compiled independently AFTER translation; output compared byte for byte",
+  "new_method": "Bounded .rodata ELF section extraction, ADRP+ADD static provenance, dynamic PLT symbol resolution, safe subset __printf_chk format conversion",
+  "code_generated_does_not_restore_original_source": true,
+  "overall_program_rebuilt": false,
+  "mathematically_proven_semantic_equivalence": false,
+  "limitations": [
+    "Only a restricted no-argument, constant-format __printf_chk wrapper is translated.",
+    "The two printing routines each have a deterministic 27-byte stdout output; this is not a large differential sample.",
+    "Ten named game functions remain without verified C++ recovery.",
+    "Imported dynamic symbol names survive stripping and are consulted to identify libc API, unlike original game function names.",
+    "Signatures are assumptions and the game UI/input loop is not recompiled."
+  ]
+}
