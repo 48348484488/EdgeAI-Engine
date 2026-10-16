@@ -1,0 +1,59 @@
+{
+  "date": "2026-10-16",
+  "game": "Frost-Phoenix/2048-cli",
+  "upstream_revision": "53f4da8249cbe9bce17e0daefbd7903f4a4684be",
+  "external_build_run": "https://github.com/48348484488/oxide/actions/runs/38969071956",
+  "input": "stripped AArch64 ELF; no source or symbol names during reconstruction",
+  "stripped_sha256": "a3ca49d16ca6428291574ebd3f7c54153ef0913f8aa1eee4279408c3bf9d499b",
+  "source_used_to_generate_reconstruction": false,
+  "symbol_oracle_used_after_generation": true,
+  "stripped_candidate_entries": 27,
+  "named_game_entry_matches": 23,
+  "named_game_functions": 23,
+  "reconstructed_cpp_functions": 3,
+  "coverage_of_named_game_functions_percent": 13.04,
+  "reconstructed": [
+    {
+      "pc": "0x400b5c",
+      "name_recovered_from_oracle_only": "_empty_cells_left",
+      "instructions": 17,
+      "cpp_compiled": true,
+      "differential_comparisons": 100005,
+      "differences": 0
+    },
+    {
+      "pc": "0x400ba0",
+      "name_recovered_from_oracle_only": "_can_slide_up",
+      "instructions": 23,
+      "cpp_compiled": true,
+      "differential_comparisons": 100005,
+      "differences": 0
+    },
+    {
+      "pc": "0x400dc4",
+      "name_recovered_from_oracle_only": "board_win",
+      "instructions": 18,
+      "cpp_compiled": true,
+      "differential_comparisons": 100005,
+      "differences": 0
+    }
+  ],
+  "total_instructions_translated": 58,
+  "total_compared_cases": 300015,
+  "total_differences": 0,
+  "validation": "Native C++ compiled with g++ -O2, original upstream function bodies built separately with gcc -O2 after candidate generation; deterministic pseudorandom 16-word boards and boundary cases",
+  "regression_tests": {
+    "entry_discovery_passed": 5,
+    "leaf_lifter_passed": 5,
+    "compiler_backed": true
+  },
+  "known_interface_assumption": "int32_t f(const uint32_t* sixteen_word_board)",
+  "whole_game_decompiled": false,
+  "behavioral_equivalence_for_arbitrary_inputs_proven": false,
+  "limitations": [
+    "Remaining 20 known game functions not reconstructed",
+    "Memory writes, calls, complex stack frames and many AArch64 instructions unsupported",
+    "Only narrow read-only integer-buffer functions; no automatic original variable or function names",
+    "External Ghidra not used to generate these functions"
+  ]
+}
