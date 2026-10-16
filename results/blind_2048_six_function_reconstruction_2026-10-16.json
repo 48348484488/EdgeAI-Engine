@@ -1,0 +1,98 @@
+{
+  "title": "Blind ARM64 2048 game six-function recovery evidence",
+  "date": "2026-10-16",
+  "source_repo": "Frost-Phoenix/2048-cli",
+  "pinned_commit": "53f4da8249cbe9bce17e0daefbd7903f4a4684be",
+  "license": "MIT",
+  "public_compilation_run": "https://github.com/48348484488/oxide/actions/runs/38969071956",
+  "stripped_elf_sha256": "a3ca49d16ca6428291574ebd3f7c54153ef0913f8aa1eee4279408c3bf9d499b",
+  "symbol_oracle_sha256": "fdbd492e32f697c04f4943124ced022981ea08882ec4b5a5f5b572d874712dd0",
+  "discovery_source": "stripped AArch64 ELF only",
+  "symbols_or_original_source_used_during_generation": false,
+  "oracle_reference_consulted_after_generation": true,
+  "entry_candidates_detected": 27,
+  "game_named_functions_per_post_hoc_oracle": 23,
+  "emitted_cpp_candidates": 6,
+  "validated_cpp_game_functions": 6,
+  "unsupported_candidate_entries": 21,
+  "coverage_named_functions_percent": 26.09,
+  "translated_instructions": 168,
+  "differential_comparisons": 700048,
+  "differential_differences": 0,
+  "local_regression_tests_passed": 24,
+  "local_regression_tests_failed": 0,
+  "generated_functions": [
+    {
+      "entry": "0x400abc",
+      "lifter": "mutating_leaf",
+      "oracle_name_after_generation": "_rotate_board",
+      "instructions": 40,
+      "comparisons": 100007,
+      "observables": "state_only",
+      "differences": 0,
+      "recompiled_cpp": true
+    },
+    {
+      "entry": "0x400b5c",
+      "lifter": "read_only_leaf",
+      "oracle_name_after_generation": "_empty_cells_left",
+      "instructions": 17,
+      "comparisons": 100005,
+      "observables": "return_and_state",
+      "differences": 0,
+      "recompiled_cpp": true
+    },
+    {
+      "entry": "0x400ba0",
+      "lifter": "read_only_leaf",
+      "oracle_name_after_generation": "_can_slide_up",
+      "instructions": 23,
+      "comparisons": 100005,
+      "observables": "return_and_state",
+      "differences": 0,
+      "recompiled_cpp": true
+    },
+    {
+      "entry": "0x400d58",
+      "lifter": "linked_caller",
+      "oracle_name_after_generation": "board_can_move",
+      "instructions": 27,
+      "comparisons": 100007,
+      "observables": "return_and_state",
+      "differences": 0,
+      "recompiled_cpp": true
+    },
+    {
+      "entry": "0x400dc4",
+      "lifter": "read_only_leaf",
+      "oracle_name_after_generation": "board_win",
+      "instructions": 18,
+      "comparisons": 100005,
+      "observables": "return_and_state",
+      "differences": 0,
+      "recompiled_cpp": true
+    },
+    {
+      "entry": "0x400f58",
+      "lifter": "scalar_leaf",
+      "oracle_name_after_generation": "_get_color",
+      "instructions": 43,
+      "comparisons": 200019,
+      "observables": "return",
+      "differences": 0,
+      "recompiled_cpp": true
+    }
+  ],
+  "whole_game_decompiled": false,
+  "original_source_recovered": false,
+  "ABI_prototypes_inferred_automatically": false,
+  "test_coverage_exhaustive": false,
+  "validation_method": "C++ generated from stripped ELF; g++-O2 shared lib; original C oracles compiled separately only after generation, tested deterministic edge/random boards and scalar values",
+  "limitations": [
+    "All six outputs depend on ABI assumptions and an incomplete ARM64 subset.",
+    "The linked caller only recognizes an explicitly bounded paired frame pattern and known generated callees.",
+    "Remaining 17 of 23 named game functions not reconstructed or behaviorally tested.",
+    "No complete game binary was recompiled or run from recovered source.",
+    "Observed equality on selected inputs does not establish universal equivalence."
+  ]
+}
