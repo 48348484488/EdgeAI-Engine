@@ -16,10 +16,8 @@ compila o jogo em um job e transfere **apenas binários ELF** ao analisador em
 outro job; o código-fonte não é entrada da EdgeAI. Há também comparação
 independente com Ghidra, identificada explicitamente como backend externo.
 
-**Estado:** [execução #38967403930](https://github.com/48348484488/EdgeAI-Engine/actions/runs/38967403930)
-**falhou antes de executar etapas**, e o teste de análise foi ignorado.
-**Nenhuma função desse jogo foi ainda confirmada como descompilada**.
-[Diagnóstico e critérios](docs/blind_external_game_2048_2026-10-16.md).
+**Resultado agora validado:** o [build externo público do 2048](https://github.com/48348484488/oxide/actions/runs/38969071956) passou. A EdgeAI encontrou as entradas das **23 funções nomeadas do jogo** usando somente o ELF stripped e gerou C++ recompilável para **3 funções** (58 instruções). Os testes diferenciais fizeram **300.015 comparações, com zero divergências**. O código-fonte foi utilizado apenas depois da geração para validação; ainda faltam 20 funções e a reconstrução do processo completo.
+[Relatório, limites e reprodução](docs/blind_external_game_2048_2026-10-16.md).
 
 ### Jogo completo de teste: reconstrução funcional ARM32
 
