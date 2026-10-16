@@ -1,0 +1,174 @@
+name: EdgeAI blind external 2048 ARM64 decompilation audit
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/blind-external-game.yml"
+      - "tools/blind_game_report.py"
+      - "tools/edgeai_ghidra_export.py"
+      - "tools/aarch64_batch_audit.py"
+      - "tests/test_blind_game_report.py"
+
+permissions:
+  contents: read
+
+jobs:
+  compile-source-isolated:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Get exact external project revision, not EdgeAI
+        uses: actions/checkout@v4
+        with:
+          repository: Frost-Phoenix/2048-cli
+          ref: 53f4da8249cbe9bce17e0daefbd7903f4a4684be
+          path: upstream
+          persist-credentials: false
+      - name: Cross compiler
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends gcc-aarch64-linux-gnu binutils-aarch64-linux-gnu
+      - name: Compile untouched upstream source into ARM64 ELF
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p binary
+          grep -qi 'MIT License' upstream/LICENSE
+          aarch64-linux-gnu-gcc -O1 -g0 -fno-inline -fno-omit-frame-pointer -no-pie \
+            -Iupstream/include upstream/src/*.c -o binary/2048-unstripped.aarch64.elf -lm
+          aarch64-linux-gnu-strip --strip-all \
+            -o binary/2048-stripped.aarch64.elf binary/2048-unstripped.aarch64.elf
+          file binary/*.elf
+          # Source checkout will NOT be uploaded to the analysis job.
+          python3 - <<'PY'
+          import hashlib,json,subprocess
+          from pathlib import Path
+          f=Path('binary/2048-unstripped.aarch64.elf')
+          symbols=subprocess.check_output(['aarch64-linux-gnu-nm','--defined-only','--format=posix',str(f)],text=True)
+          funcs={}
+          for line in symbols.splitlines():
+              cols=line.split()
+              if len(cols)>=3 and cols[1] in ('T','t') and cols[0] not in ('_start','_init','_fini','frame_dummy','register_tm_clones','deregister_tm_clones','__do_global_dtors_aux'):
+                  funcs[cols[0]]=cols[2]
+          metadata={
+              'upstream_repository':'Frost-Phoenix/2048-cli',
+              'upstream_commit':'53f4da8249cbe9bce17e0daefbd7903f4a4684be',
+              'license':'MIT',
+              'compiler':'aarch64-linux-gnu-gcc -O1 -fno-inline -no-pie',
+              'architecture':'AArch64',
+              'binary_sha256':hashlib.sha256(f.read_bytes()).hexdigest(),
+              'stripped_sha256':hashlib.sha256(Path('binary/2048-stripped.aarch64.elf').read_bytes()).hexdigest(),
+              'eligible_named_functions':len(funcs),
+              'names_exported_to_recovery':True,
+              'source_used_in_analysis':False,
+              'decompiler_received_source':False,
+              'blind_requirement_met':True
+          }
+          Path('binary/build-metadata.json').write_text(json.dumps(metadata,indent=2)+'\n')
+          print('UPSTREAM_ELF_SHA256='+metadata['binary_sha256'])
+          print('ELF_NAMED_FUNCTIONS='+str(len(funcs)))
+          PY
+      - name: Transfer only ARM64 ELF artifacts and provenance, never the source
+        uses: actions/upload-artifact@v4
+        with:
+          name: blind-2048-arm64-binaries
+          path: binary/
+          retention-days: 14
+          if-no-files-found: error
+
+  analyze-binary-only:
+    needs: compile-source-isolated
+    runs-on: ubuntu-24.04
+    timeout-minutes: 50
+    steps:
+      - name: Checkout EdgeAI only (not the upstream game source)
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Receive compiled ELF only
+        uses: actions/download-artifact@v4
+        with:
+          name: blind-2048-arm64-binaries
+          path: input
+      - name: Verify repository separation and hashes
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -s input/2048-unstripped.aarch64.elf
+          test -s input/2048-stripped.aarch64.elf
+          test ! -e upstream/src/main.c
+          test ! -e upstream/src/board.c
+          python3 - <<'PY'
+          import hashlib,json
+          from pathlib import Path
+          m=json.loads(Path('input/build-metadata.json').read_text())
+          assert m['source_used_in_analysis'] is False
+          assert hashlib.sha256(Path('input/2048-unstripped.aarch64.elf').read_bytes()).hexdigest()==m['binary_sha256']
+          assert hashlib.sha256(Path('input/2048-stripped.aarch64.elf').read_bytes()).hexdigest()==m['stripped_sha256']
+          print('BINARY_ONLY_SOURCE_ISOLATION=PASS')
+          PY
+      - name: Install static decoding and JDK for isolated baseline
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends llvm unzip curl ca-certificates
+      - name: Check report fail-closed regressions
+        run: python3 -m unittest discover -s tests -p 'test_blind_game_report.py' -v
+      - name: EdgeAI's own bounded ARM64 static audit (not decompilation)
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p output
+          python3 tools/aarch64_batch_audit.py input/2048-unstripped.aarch64.elf \
+            --max-functions 50 --min-size 4 \
+            --output output/edgeai-static-audit.json
+      - name: Install Ghidra external reference backend with pinned digest
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/edgeai-ghidra
+          curl --fail --location --retry 3 --max-time 600 \
+            'https://github.com/NationalSecurityAgency/ghidra/releases/download/Ghidra_12.1.3_build/ghidra_12.1.3_PUBLIC_20260817.zip' \
+            -o /tmp/edgeai-ghidra/ghidra.zip
+          echo '93a5d11a9ad510622acaaf908c556a7b9b764d338e78a7567f3689bf5081fd54  /tmp/edgeai-ghidra/ghidra.zip' | sha256sum -c -
+          unzip -q /tmp/edgeai-ghidra/ghidra.zip -d /tmp/edgeai-ghidra
+      - name: Set up Ghidra JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25'
+      - name: Produce independent stripped-ELF pseudocode (not EdgeAI C++ recovery)
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p output/ghidra /tmp/edgeai-ghidra/project
+          exe="$(find /tmp/edgeai-ghidra -path '*/support/analyzeHeadless' -type f -print -quit)"
+          test -n "$exe"
+          chmod +x "$exe"
+          "$exe" /tmp/edgeai-ghidra/project Blind2048 \
+            -import "$PWD/input/2048-stripped.aarch64.elf" \
+            -scriptPath "$PWD/tools" \
+            -analysisTimeoutPerFile 400 \
+            -postScript edgeai_ghidra_export.py "$PWD/output/ghidra" \
+            -deleteProject
+          test -s output/ghidra/manifest.json
+      - name: Write exact evidence and do not claim entire game recovered
+        shell: bash
+        run: |
+          python3 tools/blind_game_report.py \
+            --binary input/2048-unstripped.aarch64.elf \
+            --build input/build-metadata.json \
+            --edgeai output/edgeai-static-audit.json \
+            --ghidra output/ghidra/manifest.json \
+            --output output/blind-result.json
+      - name: Preserve analysis and failures
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: edgeai-blind-2048-audit-and-ghidra-pseudocode
+          path: |
+            input/build-metadata.json
+            output/
+          retention-days: 14
+          if-no-files-found: warn
