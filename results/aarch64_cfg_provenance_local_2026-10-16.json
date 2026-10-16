@@ -1,0 +1,40 @@
+{
+  "date": "2026-10-16",
+  "module": "tools/aarch64_cfg_provenance.py",
+  "scope": "local CPU-only, static analysis",
+  "tests_synthetic": {
+    "suite": "tests/test_aarch64_cfg_provenance.py",
+    "ran": 12,
+    "passed": 12,
+    "failed": 0
+  },
+  "compiler_test": {
+    "status": "PASS",
+    "compiler": "Clang 17.0.0",
+    "target": "aarch64-none-elf",
+    "disassembler": "llvm-objdump",
+    "source_type": "small hand-authored AArch64 assembly fixture assembled and linked into a real ELF64",
+    "output_elf_bytes": 5016,
+    "function": "dispatch_test",
+    "entry": "0x1000",
+    "dispatch_pc": "0x1024",
+    "base_candidate": "0x1102c",
+    "adrp_pc": "0x1000",
+    "add_pc": "0x1014",
+    "modeled_reachable_blocks": 4,
+    "static_cfg_base_candidates": 1,
+    "compiled_code_executed": false,
+    "original_oxide_apk_executed": false,
+    "runtime_paths_confirmed": false
+  },
+  "github_actions": {
+    "status": "failure",
+    "error_information": "No job steps were returned and downloadable logs were unavailable for the checked EdgeAI CI run",
+    "validation_passed": false
+  },
+  "limitations": [
+    "Proves agreement only over explicitly modeled CFG edges",
+    "Does not resolve indirect target addresses",
+    "No native ARM64 execution or Unity/Oxide runtime testing"
+  ]
+}
