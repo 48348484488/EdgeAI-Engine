@@ -56,5 +56,42 @@
     "limited ARM64 instruction and memory subset",
     "no full game executable generated",
     "sample equivalence only, not universally proved"
-  ]
+  ],
+  "remaining_named_game_functions_posthoc_oracle": [
+    {
+      "entry": "0x401004",
+      "name": "_print_cell"
+    },
+    {
+      "entry": "0x4011cc",
+      "name": "setBufferedInput"
+    },
+    {
+      "entry": "0x4012d0",
+      "name": "print_score"
+    },
+    {
+      "entry": "0x401404",
+      "name": "print_board"
+    },
+    {
+      "entry": "0x4016ac",
+      "name": "signal_callback_handler"
+    },
+    {
+      "entry": "0x401704",
+      "name": "setup"
+    },
+    {
+      "entry": "0x401758",
+      "name": "main"
+    }
+  ],
+  "cleanroom_package_validation": {
+    "archive_name": "EdgeAI_2048_16_funcoes_V7_verificado.zip",
+    "sha256": "861d924bca40342a160aa60029aa6d5ddc2841ca087e7ab566790b799667d811",
+    "regression_tests_passed": 63,
+    "compilation": "SUCCEEDED",
+    "all_16_cpp_files_byte_identical_to_original_generation": true
+  }
 }
