@@ -1,3 +1,43 @@
+## Atualização: 14 funções (16/10/2026)
+
+A EdgeAI agora emite C++ para **14/23 funções nomeadas do jogo (60,87%)**:
+**442 slots ARM64 traduzidos**, 14 candidatos de 27 e 13 rejeições declaradas.
+A geração recebeu **somente o ELF AArch64 stripped**, revisão upstream
+`53f4da8249cbe9bce17e0daefbd7903f4a4684be`,
+SHA-256 `a3ca49d16ca6428291574ebd3f7c54153ef0913f8aa1eee4279408c3bf9d499b`.
+
+A nova rotina reconstruída é a de instruções de interface
+`0x401484` (nome `print_indicators` conferido somente **depois** da
+reconstrução): **92 instruções**, 18 chamadas de impressão e 126 bytes
+de saída nativa comparados com um programa C original independente,
+**sem divergências**. SHA-256 de ambas as saídas:
+`efe0f74688616d2beff9ec51022e0a68bb849c6c5269bdf4f9388f04a31be559`.
+
+O novo [tradutor de impressão estática](../tools/aarch64_static_printf_sequence_lifter.py)
+usa `.rodata`, `ADRP/ADD`, imports dinâmicos `__printf_chk@plt`,
+registradores AAPCS64 preservados entre chamadas e formatos seguros,
+inclusive `%*s`. Recusa branches, argumentos não constantes,
+frames desbalanceados e chamadas não suportadas. O módulo foi integrado
+ao [pipeline de múltiplas passagens](../tools/aarch64_multistage_batch.py)
+**sem uma tabela de endereços conhecidos do 2048**.
+
+Também reexecutei **1.200.088 casos anteriores** com a biblioteca de 14 funções,
+sem diferenças, e **53 testes de regressão**, todos aprovados; corrigi a
+referência de arquivo C usada por um teste no ZIP anterior. O programa de
+referência da nova função é mantido em
+[`tests/oracles/2048_indicators_oracle.c`](../tests/oracles/2048_indicators_oracle.c)
+com licença MIT, isolado do processo de geração.
+[Resultado completo em JSON](../results/blind_2048_fourteen_function_reconstruction_2026-10-16.json).
+
+**Limitações:** ainda faltam **9 funções nomeadas**. As saídas de impressão
+têm amostras determinísticas, não milhares de execuções distintas.
+As assinaturas de chamada são hipóteses de ABI, e nem a lógica de terminal
+interativa nem o executável inteiro foram reconstruídos. O percentual indica
+**quantidade de funções**, não cobertura de programa nem identidade com
+o código-fonte original. O Ghidra não foi usado nessa reconstrução.
+
+---
+
 ## Atualização confirmada: 13 funções do 2048 (16/10/2026)
 
 A ferramenta [`aarch64_printf_lifter.py`](../tools/aarch64_printf_lifter.py)
