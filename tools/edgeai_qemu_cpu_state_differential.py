@@ -80,7 +80,7 @@ def run_interpreter(code,start,board,*,invert_equal=False,budget=4096):
                 raise ValueError('memory outside input board')
             put(dest,board[(addr-VBASE)//4])
         elif op in ('cbz','cbnz') and len(pieces)==2:
-            target=TARGET.fullmatch(pieces[1])
+            target=re.fullmatch(r'0x([0-9a-fA-F]+)',pieces[1])
             if not target:raise ValueError('unknown compare-and-branch target')
             zero=(get(pieces[0])==0)
             if invert_equal and op=='cbz':zero=not zero
