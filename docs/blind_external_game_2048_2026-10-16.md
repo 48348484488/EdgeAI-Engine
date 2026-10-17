@@ -1,3 +1,60 @@
+## Atualização validada: 16 funções recompiladas em C++ (16/10/2026)
+
+A EdgeAI agora possui **16 das 23 funções nomeadas do jogo 2048 (69,57%)**
+reconstruídas e testadas, com **529 instruções AArch64 traduzidas**.
+O [ELF externo compilado](https://github.com/48348484488/oxide/actions/runs/38969071956)
+foi processado **sem fonte C e sem tabela de símbolos das funções do jogo**.
+O algoritmo examina as 27 entradas candidatas na seção `.text`,
+e as **11 entradas ainda sem suporte** continuam registradas como `UNSUPPORTED`.
+
+### Duas novas funções a partir da análise cega
+
+A ferramenta [`aarch64_stack_vm_lifter.py`](../tools/aarch64_stack_vm_lifter.py)
+identificou por **duas chamadas diretas ao símbolo importado `rand@plt`**
+uma função com quadro de pilha e encontrou sua chamadora por **dois saltos
+`BL` para a primeira**. O gerador não contém os endereços dessas
+funções e lê do próprio ELF a relocação dinâmica de
+`__stack_chk_guard`.
+
+| Endereço ELF (descoberto sem símbolos) | Nome do oráculo, consultado só depois | Instruções |
+|---|---|---:|
+| `0x400bfc` | `board_add_piece` | 67 |
+| `0x400d08` | `board_init` | 20 |
+
+Foi gerado C++ para cada uma usando modelagem limitada de registradores,
+quadros de pilha, `rand`, memória de tabuleiro e saltos ARM64. O
+tradutor é **um gerador de código C++ de baixo nível**, não o recuperador
+do C original. O ABI de entrada `void(uint32_t board[16])` é uma
+**hipótese declarada**, não uma assinatura inferida de forma genérica.
+
+### Testes reais
+
+- **50.000 comparações por função** com o C MIT original compilado
+  separadamente, somando **100.000**, sem divergências.
+- **10.000 casos por função** dentro da biblioteca de 16 funções, outros
+  **20.000**, sem diferenças.
+- Os **1.200.088 casos anteriores** foram reexecutados contra a mesma
+  biblioteca, sem diferenças.
+- **63/63 testes** de regressão passaram; uma nova execução em pasta
+  limpa, extraindo o pacote ZIP, também compilou as 16 e passou os 63.
+- A observação de cada teste das novas funções inclui as 16 casas, as
+  quatro palavras sentinela vizinhas e o próximo valor de `rand`.
+  Tabuleiro totalmente cheio não é um caso válido de
+  `board_add_piece`, porque o programa original executa divisão
+  por zero.
+
+[Resultados JSON](../results/blind_2048_sixteen_function_reconstruction_2026-10-16.json),
+[testes](../tests/test_aarch64_stack_vm_lifter.py) e
+[oráculo C pós-geração](../tests/oracles/2048_board_rand_subset.c).
+Este oráculo, proveniente do 2048-cli MIT, **não é usado pelo gerador**.
+
+**Ainda faltam sete funções nomeadas**, inclusive componentes maiores
+de terminal, entrada e controle do programa. A recuperação de 16 funções
+não significa recuperação do executável inteiro e as verificações
+aleatórias não comprovam equivalência universal.
+
+---
+
 ## Atualização: 14 funções (16/10/2026)
 
 A EdgeAI agora emite C++ para **14/23 funções nomeadas do jogo (60,87%)**:
