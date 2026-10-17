@@ -1,0 +1,60 @@
+{
+  "benchmark": "Frost-Phoenix/2048-cli",
+  "license": "MIT",
+  "date": "2026-10-16",
+  "upstream_commit": "53f4da8249cbe9bce17e0daefbd7903f4a4684be",
+  "stripped_elf_sha256": "a3ca49d16ca6428291574ebd3f7c54153ef0913f8aa1eee4279408c3bf9d499b",
+  "game_symbol_oracle_consulted_only_after_generation": true,
+  "target_original_source_used_during_cpp_generation": false,
+  "candidate_entry_count": 27,
+  "cpp_emitted_count": 16,
+  "game_functions_named_in_posthoc_oracle": 23,
+  "named_game_functions_validated": 16,
+  "named_game_functions_remaining": 7,
+  "coverage_by_named_function_count_percent": 69.57,
+  "translated_arm64_instructions": 529,
+  "compile_status": "SUCCEEDED",
+  "new_entries": [
+    "0x400bfc",
+    "0x400d08"
+  ],
+  "new_instruction_count": 87,
+  "discovery_method": "2 libc rand PLT BL calls in a stack-bearing function; parent has two BL to that discovered entry; GOT canary from ELF dynamic relocation",
+  "stack_guard_got": "0x41ffd8",
+  "prior_function_comparisons_retested": 1200088,
+  "new_function_differential_comparisons_separate_library": 100000,
+  "new_function_differential_comparisons_combined_16_library": 20000,
+  "total_comparisons_executed_this_turn_including_retests": 1320088,
+  "differences_in_validated_cases": 0,
+  "unittest_tests": 63,
+  "unittest_failed": 0,
+  "new_function_validation": {
+    "board_add_piece": {
+      "elf_entry": "0x400bfc",
+      "insns": 67,
+      "isolated_trials": 50000,
+      "combined_trials": 10000,
+      "board_cells_compared": 16,
+      "canary_sentinels_checked": 4,
+      "next_rand_state_compared": true,
+      "full_board_excluded_undefined_original_behavior": true
+    },
+    "board_init": {
+      "elf_entry": "0x400d08",
+      "insns": 20,
+      "isolated_trials": 50000,
+      "combined_trials": 10000,
+      "board_cells_compared": 16,
+      "canary_sentinels_checked": 4,
+      "next_rand_state_compared": true
+    }
+  },
+  "binary_bundle_sha256": "998df6ffb954373005d3bdbf48643d0f8dc5400e7426134b6f5a4e99d2aab4f1",
+  "limitations": [
+    "7 named game functions unreconstructed",
+    "ABI types assumed",
+    "limited ARM64 instruction and memory subset",
+    "no full game executable generated",
+    "sample equivalence only, not universally proved"
+  ]
+}
