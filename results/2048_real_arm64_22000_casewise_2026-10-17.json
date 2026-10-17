@@ -1,0 +1,136 @@
+{
+  "test": "Real original AArch64 ELF QEMU per-call differential against EdgeAI generated native C++",
+  "date": "2026-10-17",
+  "upstream": {
+    "repo": "Frost-Phoenix/2048-cli",
+    "revision": "53f4da8249cbe9bce17e0daefbd7903f4a4684be",
+    "license": "MIT"
+  },
+  "original_elf_sha256": "a3ca49d16ca6428291574ebd3f7c54153ef0913f8aa1eee4279408c3bf9d499b",
+  "machine_run": "https://github.com/48348484488/oxide/actions/runs/39042853626",
+  "machine_artifact_name": "edgeai-2048-v2-original-arm64-per-case-oracle",
+  "qemu_user_mode_real_original_instructions_executed": true,
+  "original_source_used_for_generation_or_comparison": false,
+  "native_cpp_lift_generated_from_stripped_elf": true,
+  "elf_symbol_oracle_used_for_comparison": false,
+  "cases_per_function": 2000,
+  "functions_compared": 11,
+  "individual_calls_compared": 22000,
+  "per_case_rolling_digest_matches": 22000,
+  "divergent_functions": 0,
+  "failure_localization": {
+    "negative_control_mutated": "0x400dc4",
+    "original_machine_entry_used": true,
+    "first_diverging_case": 2,
+    "input_board": [
+      2048,
+      2048,
+      2048,
+      2048,
+      2048,
+      2048,
+      2048,
+      2048,
+      2048,
+      2048,
+      2048,
+      2048,
+      2048,
+      2048,
+      2048,
+      2048
+    ],
+    "original_machine_prefix_digest": "5e9562ed97c30497",
+    "mutated_cpp_prefix_digest": "930975f04977f706",
+    "expected_test_failure": true
+  },
+  "regression_tests_passed": 6,
+  "regression_tests_failed": 0,
+  "machine_case_data_sha256": "8c2f65538b9a4220990f9891be908c047b08694fed5e64780fa7bc6851c4dd6c",
+  "machine_functions": [
+    {
+      "address": "0x4009e8",
+      "role": "board_column_score_leaf",
+      "cases": 2000,
+      "machine_and_cpp_final_fnv64": "e8c8bc12dc58acdb",
+      "all_2000_prefixes_matched": true
+    },
+    {
+      "address": "0x400abc",
+      "role": "mutating_leaf",
+      "cases": 2000,
+      "machine_and_cpp_final_fnv64": "5dd92f3f7f5c6d09",
+      "all_2000_prefixes_matched": true
+    },
+    {
+      "address": "0x400b5c",
+      "role": "read_only_leaf",
+      "cases": 2000,
+      "machine_and_cpp_final_fnv64": "1d0c0d83e19e2140",
+      "all_2000_prefixes_matched": true
+    },
+    {
+      "address": "0x400ba0",
+      "role": "read_only_leaf",
+      "cases": 2000,
+      "machine_and_cpp_final_fnv64": "d123e9f539c41aa8",
+      "all_2000_prefixes_matched": true
+    },
+    {
+      "address": "0x400d58",
+      "role": "read_only_leaf",
+      "cases": 2000,
+      "machine_and_cpp_final_fnv64": "7d79faffc13e93f1",
+      "all_2000_prefixes_matched": true
+    },
+    {
+      "address": "0x400dc4",
+      "role": "read_only_leaf",
+      "cases": 2000,
+      "machine_and_cpp_final_fnv64": "d59ba94d3db750a5",
+      "all_2000_prefixes_matched": true
+    },
+    {
+      "address": "0x400e0c",
+      "role": "board_score_caller",
+      "cases": 2000,
+      "machine_and_cpp_final_fnv64": "f5d245e2f1d7ed7d",
+      "all_2000_prefixes_matched": true
+    },
+    {
+      "address": "0x400e68",
+      "role": "board_score_caller",
+      "cases": 2000,
+      "machine_and_cpp_final_fnv64": "0c0f8fff4658e520",
+      "all_2000_prefixes_matched": true
+    },
+    {
+      "address": "0x400eb8",
+      "role": "board_score_caller",
+      "cases": 2000,
+      "machine_and_cpp_final_fnv64": "2faab1adfa86d0eb",
+      "all_2000_prefixes_matched": true
+    },
+    {
+      "address": "0x400f08",
+      "role": "board_score_caller",
+      "cases": 2000,
+      "machine_and_cpp_final_fnv64": "3ffa20077ec3dbda",
+      "all_2000_prefixes_matched": true
+    },
+    {
+      "address": "0x400f58",
+      "role": "scalar_leaf",
+      "cases": 2000,
+      "machine_and_cpp_final_fnv64": "320f2d15d2c4c771",
+      "all_2000_prefixes_matched": true
+    }
+  ],
+  "caveats": [
+    "FNV64 is a probabilistic rolling fingerprint, not bitwise proof of arbitrary state equivalence.",
+    "ABI roles are explicit model assumptions; names not recovered by original compiler.",
+    "Identical 2000 sampled inputs per function cannot prove all inputs, frame effects or full game correctness.",
+    "Negative control localizes first erroneous input but does not automatically isolate machine instruction PC.",
+    "No new game functions are recovered from this experiment; validation strength, not decompilation coverage, improved."
+  ]
+}
