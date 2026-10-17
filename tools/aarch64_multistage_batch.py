@@ -21,6 +21,7 @@ from aarch64_linked_lifter import run as linked_caller
 from aarch64_move_caller_lifter import run as move_caller
 from aarch64_printf_lifter import run as printf_leaf
 from aarch64_static_printf_sequence_lifter import run as static_printf_sequence
+from aarch64_stack_vm_lifter import generate as generate_stack_pair
 
 LEAVES=(('read_only_leaf',read_leaf),
         ('mutating_leaf',mutable_leaf),
@@ -104,6 +105,28 @@ def run(elf,output,compile_cpp=True):
                     row['attempt_failures'].append({
                         'lifter':'two_arg_board_score_caller','error':str(exc)[:240]})
         if not progress:break
+    # Recover a rand-driven stack leaf and its direct caller from stripped
+    # executable bytes, not game names or hardcoded entry addresses.
+    try:
+        rand_leaf,rand_caller,cpp_leaf,cpp_caller,stack_info=generate_stack_pair(elf)
+        for entry,code,role,count in (
+                (rand_leaf,cpp_leaf,'rand_stack_leaf',stack_info['callee_instructions']),
+                (rand_caller,cpp_caller,'rand_stack_caller',stack_info['caller_instructions'])):
+            row=candidates.get(entry)
+            if row is None or row['status']!='UNSUPPORTED':
+                raise ValueError('ambiguous already-handled stack/rand entry')
+            candidates[entry]=_evidence(row,role,code,{
+                'source_read':False,'symbols_used':False,
+                'instructions_translated':count,
+                'ABI_assumption':stack_info['ABI_assumption']},output)
+    except (ValueError,KeyError,RuntimeError,subprocess.CalledProcessError) as exc:
+        # A different ELF without this exact supported instruction subset
+        # must be reported as unsupported rather than approximated.
+        for row in candidates.values():
+            if row['status']=='UNSUPPORTED':
+                row['attempt_failures'].append({'lifter':'rand_stack_pair',
+                                                'error':str(exc)[:240]})
+
     accepted=[row for row in candidates.values() if row['status']!='UNSUPPORTED']
     report={
         'tool':'EdgeAI ARM64 blind multi-stage batch translator',
