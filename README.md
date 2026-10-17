@@ -6,6 +6,23 @@ O objetivo é analisar arquivos compilados, entender como o código funciona e, 
 
 > **Estado atual:** projeto experimental com **reconstrução automática parcial de C++ a partir de ARM64**, comprovada em funções pequenas e intermediárias. Ainda **não** descompila jogos inteiros nem recupera o código-fonte original de forma geral.
 
+### Nova validação: executando o ELF ARM64 original (QEMU)
+
+Além da reconstrução estática, a EdgeAI agora compara o C++ gerado com
+**instruções ARM64 reais executadas pelo QEMU**, usando o próprio ELF
+stripped do jogo externo. A
+[execução validada](https://github.com/48348484488/oxide/actions/runs/39042853626)
+produziu **22.000 registros por chamada para 11 funções**; todas as
+assinaturas FNV64 coincidiram com o C++ reconstruído. Um controle negativo,
+com uma função propositalmente errada, detectou **a primeira diferença
+no caso 2** e recuperou a entrada exata do tabuleiro. A comparação possui
+[script reproduzível](tools/edgeai_qemu_casewise_compare.py),
+[testes](tests/test_edgeai_qemu_casewise_compare.py) e
+[relatório](docs/2048_real_arm64_casewise_2026-10-17.md).
+
+**Importante:** isso valida funções já traduzidas, não adiciona novas
+funções descompiladas e não prova equivalência para todas as entradas.
+
 ### Novo teste cego: jogo público desconhecido pela EdgeAI
 
 Selecionamos [Frost-Phoenix/2048-cli](https://github.com/Frost-Phoenix/2048-cli),
