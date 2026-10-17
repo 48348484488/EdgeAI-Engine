@@ -20,12 +20,14 @@ from aarch64_multimem_leaf_lifter import run as multimem_leaf
 from aarch64_linked_lifter import run as linked_caller
 from aarch64_move_caller_lifter import run as move_caller
 from aarch64_printf_lifter import run as printf_leaf
+from aarch64_static_printf_sequence_lifter import run as static_printf_sequence
 
 LEAVES=(('read_only_leaf',read_leaf),
         ('mutating_leaf',mutable_leaf),
         ('scalar_leaf',scalar_leaf),
         ('three_arg_memory_leaf',multimem_leaf),
-        ('terminal_printf_leaf',printf_leaf))
+        ('terminal_printf_leaf',printf_leaf),
+        ('terminal_static_sequence',static_printf_sequence))
 
 
 def _evidence(row,typ,src,meta,outdir):
