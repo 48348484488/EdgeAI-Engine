@@ -1,0 +1,67 @@
+{
+  "project": "EdgeAI Engine",
+  "benchmark": "2048-cli external unknown-source blind reconstruction",
+  "date": "2026-10-16",
+  "upstream": "Frost-Phoenix/2048-cli",
+  "revision": "53f4da8249cbe9bce17e0daefbd7903f4a4684be",
+  "license": "MIT",
+  "arm64_build_run": "https://github.com/48348484488/oxide/actions/runs/38969071956",
+  "stripped_elf_sha256": "a3ca49d16ca6428291574ebd3f7c54153ef0913f8aa1eee4279408c3bf9d499b",
+  "source_or_symtab_used_for_emission": false,
+  "plt_dynamic_import_names_used": true,
+  "source_based_oracle_used_after_emission": true,
+  "candidates_from_stripped_elf": 27,
+  "total_named_game_functions_posthoc": 23,
+  "candidate_cpp_emitted_and_linked": 14,
+  "candidate_cpp_unhandled": 13,
+  "named_game_functions_equivalence_sample_validated": 14,
+  "named_game_functions_remaining": 9,
+  "approximate_function_count_coverage_percent": 60.87,
+  "translated_aarch64_instruction_slots": 442,
+  "native_cpp_combined_build": "SUCCEEDED",
+  "prior_board_and_scalar_checks_rerun_on_new_shared_library": 1200088,
+  "prior_board_and_scalar_divergences": 0,
+  "independent_terminal_cases": {
+    "win": {
+      "output_bytes": 27,
+      "identical": true
+    },
+    "game_over": {
+      "output_bytes": 27,
+      "identical": true
+    },
+    "indicators": {
+      "entry": "0x401484",
+      "function_name_learned_only_post_generation": "print_indicators",
+      "instructions": 92,
+      "call_sites_reconstructed": 18,
+      "memory_regions": "ELF .rodata and .text",
+      "imported_calls_recognized": "__printf_chk@plt",
+      "output_bytes": 126,
+      "output_sha256": "efe0f74688616d2beff9ec51022e0a68bb849c6c5269bdf4f9388f04a31be559",
+      "compared_to_independent_compiled_C": true,
+      "actual_matches_oracle_byte_for_byte": true,
+      "byte_differences": 0
+    }
+  },
+  "tested_against_corrupted_literal_ELF": true,
+  "tests_reexecuted_in_isolated_container": {
+    "total": 53,
+    "passed": 53,
+    "failed": 0,
+    "fixed_prior_missing_oracle_path": true
+  },
+  "generator_used_fixed_hardcoded_game_addresses": false,
+  "target_abi_signature_assumed": "void() for static print sequence, signatures assumed elsewhere",
+  "whole_game_decompiled": false,
+  "whole_game_executable_recompiled": false,
+  "arbitrary_behavioral_equivalence_proven": false,
+  "remaining_limitations": [
+    "9 post-hoc named game functions remain without verified C++ reconstruction",
+    "Source-blind generator only recognizes constant printf data flow for this new function; unmodeled libc imports are rejected",
+    "Dynamic PLT import names are visible even when game .symtab is stripped",
+    "CLI game startup, event loop, randomness, termios and heap/stack memory remain unsupported",
+    "The 60.87% figure is named function count coverage, not complete program equivalence",
+    "The 1.2 million previous tests measure sampled behaviors; print functions each have one independent deterministic output sample"
+  ]
+}
