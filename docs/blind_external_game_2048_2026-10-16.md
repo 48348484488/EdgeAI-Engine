@@ -48,6 +48,30 @@ do C original. O ABI de entrada `void(uint32_t board[16])` é uma
 [oráculo C pós-geração](../tests/oracles/2048_board_rand_subset.c).
 Este oráculo, proveniente do 2048-cli MIT, **não é usado pelo gerador**.
 
+### Sete funções restantes, identificadas pelo oráculo após o teste
+
+| Endereço | Função | Dependência predominante |
+|---|---|---|
+| `0x401004` | `_print_cell` | Impressão com múltiplos ramos e argumentos |
+| `0x4011cc` | `setBufferedInput` | `termios`, dados globais e operações de 128 bits |
+| `0x4012d0` | `print_score` | Formatação variável, global e chamadas importadas |
+| `0x401404` | `print_board` | Iteração bidimensional e chamada a `_print_cell` |
+| `0x4016ac` | `signal_callback_handler` | Limpeza do terminal e encerramento do processo |
+| `0x401704` | `setup` | Relógio, semente aleatória e registro de sinais |
+| `0x401758` | `main` | Loop de entrada, quadro local extenso e chamadas entre módulos |
+
+Esses nomes e endereços foram usados **somente depois da geração**
+para classificar os próximos bloqueios; nenhum deles foi declarado
+recuperado ou compilado. Para aumentar a cobertura com segurança,
+a próxima função mais viável é `_print_cell`, seguida de `print_board`.
+Depois, o suporte a `termios`/sinais e leitura de terminal será
+necessário para reconstruir o processo completo.
+
+**Integridade do pacote V7:** SHA-256
+`861d924bca40342a160aa60029aa6d5ddc2841ca087e7ab566790b799667d811`.
+Após extração em pasta limpa, 63 testes passaram e os 16 arquivos C++
+regenerados foram idênticos byte a byte aos originais do pacote.
+
 **Ainda faltam sete funções nomeadas**, inclusive componentes maiores
 de terminal, entrada e controle do programa. A recuperação de 16 funções
 não significa recuperação do executável inteiro e as verificações
