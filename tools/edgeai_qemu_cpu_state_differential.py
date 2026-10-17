@@ -83,6 +83,7 @@ def run_interpreter(code,start,board,*,invert_equal=False,budget=4096):
             target=TARGET.fullmatch(pieces[1])
             if not target:raise ValueError('unknown compare-and-branch target')
             zero=(get(pieces[0])==0)
+            if invert_equal and op=='cbz':zero=not zero
             if zero == (op=='cbz'):
                 nxt=int(target[1],16)
         elif op=='cmp' and len(pieces)==2:
