@@ -23,6 +23,12 @@ no caso 2** e recuperou a entrada exata do tabuleiro. A comparação possui
 **Importante:** isso valida funções já traduzidas, não adiciona novas
 funções descompiladas e não prova equivalência para todas as entradas.
 
+### Verificador ARM64 unificado — etapa concluída (21/10/2026)
+
+O módulo experimental **de comparação com execução real do processador** foi consolidado: o mesmo motor validou **5 funções do 2048** em **50 casos** capturados do ELF original no QEMU, com **35.147 verificações sem divergências**, e passou **20 testes de regressão**. Essa etapa fortalece a precisão do diagnóstico, **não aumenta automaticamente a contagem de funções decompiladas nem significa que o jogo inteiro foi recuperado**.
+
+[Relatório técnico, reprodução e limites](docs/edgeai_arm64_unified_cpu_vm_2026-10-21.md) · [Evidência JSON](results/2048_unified_aarch64_real_qemu_5_functions_2026-10-21.json).
+
 ### Novo teste cego: jogo público desconhecido pela EdgeAI
 
 Selecionamos [Frost-Phoenix/2048-cli](https://github.com/Frost-Phoenix/2048-cli),
