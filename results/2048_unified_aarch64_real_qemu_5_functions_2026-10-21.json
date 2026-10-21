@@ -1,0 +1,76 @@
+{
+  "stage": "Constrained reusable ARM64 CPU-state oracle; consolidation of prior function-specific testers",
+  "date": "2026-10-21",
+  "status": "LOCAL_TESTS_COMPLETE_QEMU_TRACE_REPLAY_PASS",
+  "original_elf_sha256": "a3ca49d16ca6428291574ebd3f7c54153ef0913f8aa1eee4279408c3bf9d499b",
+  "upstream": {
+    "repository": "Frost-Phoenix/2048-cli",
+    "commit": "53f4da8249cbe9bce17e0daefbd7903f4a4684be",
+    "license": "MIT"
+  },
+  "functions_validated_this_stage": [
+    {
+      "entry": "0x400abc",
+      "stop": "0x400b5c",
+      "cases": 10,
+      "checks": 13950
+    },
+    {
+      "entry": "0x4009e8",
+      "stop": "0x400abc",
+      "cases": 10,
+      "checks": 8588
+    },
+    {
+      "entry": "0x400b5c",
+      "stop": "0x400ba0",
+      "cases": 10,
+      "checks": 4762
+    },
+    {
+      "entry": "0x400ba0",
+      "stop": "0x400bfc",
+      "cases": 10,
+      "checks": 1371
+    },
+    {
+      "entry": "0x400dc4",
+      "stop": "0x400e0c",
+      "cases": 10,
+      "checks": 6476
+    }
+  ],
+  "totals": {
+    "functions": 5,
+    "replayed_qemu_cases": 50,
+    "pc": 3748,
+    "registers": 27111,
+    "nzcv": 3438,
+    "board_words": 800,
+    "score": 10,
+    "returns": 40,
+    "checks": 35147,
+    "divergences": 0,
+    "unit_tests_passed": 20
+  },
+  "verified_in_clean_temp_directory": true,
+  "benchmark_elf_source_read": false,
+  "qemu_capture_new_this_run": false,
+  "execution_evidence": [
+    "https://github.com/48348484488/oxide/actions/runs/39662231398",
+    "https://github.com/48348484488/oxide/actions/runs/39663881109",
+    "https://github.com/48348484488/oxide/actions/runs/39045208136",
+    "https://github.com/48348484488/oxide/actions/runs/39045208145"
+  ],
+  "source_code_sha256": "cff5cd0059f17f2683ee2861ddc8e90cfa8b0e977cd58ad469d72203939c9b10",
+  "source_distribution": "Full human-readable module and tests included in the conversation download: EdgeAI_ARM64_Verificador_Unificado_5_Funcoes.zip",
+  "package_sha256": "a1e21ab10bbd30127ac3f23a0b6b193a36b1f052cdf0bc03083609ae6db7230e",
+  "unsupported": [
+    "arbitrary AArch64 instructions",
+    "unknown libc/syscalls",
+    "full game rebuild",
+    "universal equivalence"
+  ],
+  "whole_game_decompiled": false,
+  "recovery_function_count_increment_this_stage": 0
+}
