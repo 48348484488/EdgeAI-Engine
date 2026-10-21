@@ -1,0 +1,110 @@
+{
+  "project": "EdgeAI Engine",
+  "date": "2026-10-21",
+  "source_game": "Frost-Phoenix/2048-cli",
+  "pinned_upstream_commit": "53f4da8249cbe9bce17e0daefbd7903f4a4684be",
+  "compiled_original_stripped_ELF_sha256": "a3ca49d16ca6428291574ebd3f7c54153ef0913f8aa1eee4279408c3bf9d499b",
+  "function_start": "0x4009e8",
+  "function_end_exclusive": "0x400abc",
+  "decoded_instructions": 53,
+  "original_arm64_QEMU_execution_workflow": "https://github.com/48348484488/oxide/actions/runs/39663881109",
+  "QEMU_probe_source": "https://github.com/48348484488/oxide/blob/edgeai-blind-2048-experiment/edgeai_probe/arm64_targeted_slide_column_trace.c",
+  "QEMU_workflow_source": "https://github.com/48348484488/oxide/blob/edgeai-blind-2048-experiment/.github/workflows/edgeai-slide-column-cpu-trace.yml",
+  "source_read_during_recovery": false,
+  "game_function_symbols_used": false,
+  "original_machine_calls_executed": 10,
+  "original_machine_cpu_snapshots": 641,
+  "parity_checks": {
+    "PC": 641,
+    "registers": 7196,
+    "NZCV_flags": 571,
+    "board_words": 160,
+    "score": 10,
+    "return": 10,
+    "total": 8588,
+    "differences": 0
+  },
+  "individual_cases": [
+    {
+      "case": 0,
+      "executed_original_machine_steps": 31,
+      "verified_checks": 335,
+      "passed": true
+    },
+    {
+      "case": 1,
+      "executed_original_machine_steps": 73,
+      "verified_checks": 1004,
+      "passed": true
+    },
+    {
+      "case": 2,
+      "executed_original_machine_steps": 73,
+      "verified_checks": 1004,
+      "passed": true
+    },
+    {
+      "case": 3,
+      "executed_original_machine_steps": 67,
+      "verified_checks": 914,
+      "passed": true
+    },
+    {
+      "case": 4,
+      "executed_original_machine_steps": 73,
+      "verified_checks": 1004,
+      "passed": true
+    },
+    {
+      "case": 5,
+      "executed_original_machine_steps": 31,
+      "verified_checks": 335,
+      "passed": true
+    },
+    {
+      "case": 6,
+      "executed_original_machine_steps": 73,
+      "verified_checks": 1004,
+      "passed": true
+    },
+    {
+      "case": 7,
+      "executed_original_machine_steps": 73,
+      "verified_checks": 1004,
+      "passed": true
+    },
+    {
+      "case": 8,
+      "executed_original_machine_steps": 74,
+      "verified_checks": 980,
+      "passed": true
+    },
+    {
+      "case": 9,
+      "executed_original_machine_steps": 73,
+      "verified_checks": 1004,
+      "passed": true
+    }
+  ],
+  "cpp_native_additional_randomized_cases": 3000,
+  "cpp_randomized_case_differences": 0,
+  "regression_tests": 8,
+  "regressions_passed": 8,
+  "negative_control": {
+    "changed_branch_at": "0x400a90",
+    "from": "B.EQ",
+    "to": "B.NE",
+    "first_detected_case": 1,
+    "observed_divergence": true
+  },
+  "new_game_functions_recovered": 0,
+  "whole_game_decompiled": false,
+  "zip_bundle_sha256": "0358c571f831db23d7bd1711f8f60a327b8e71a585d73b4bcc7c595d2003b02a",
+  "limitations": [
+    "Only ten original ARM64 machine input cases; does not prove all inputs",
+    "The CPU-state comparison uses a bounded AArch64 subset, not a full emulator",
+    "Reconstructed C++ matches final board, score and return; QEMU snapshots are compared against a separate instruction interpreter",
+    "Explicit three-argument ABI assumption, not automatically recovered original C signature",
+    "No new functions recovered: this improves validation confidence of an existing function"
+  ]
+}
