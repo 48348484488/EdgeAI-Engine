@@ -36,6 +36,12 @@ independente com Ghidra, identificada explicitamente como backend externo.
 **Avanço medido em jogo externo 2048:** a [compilação ARM64 original](https://github.com/48348484488/oxide/actions/runs/38969071956) passou. Analisando **somente o ELF sem símbolos do jogo**, a EdgeAI localizou as 23 entradas nomeadas pelo oráculo posterior e gerou **16 funções C++ (69,57%)**, abrangendo **529 instruções ARM64**. As novas rotinas foram identificadas por chamadas `rand@plt` e grafo `BL` sem endereços fixos e correspondem, após conferência com o código original, à inserção aleatória de uma peça e à inicialização do tabuleiro. **100.000 comparações novas isoladas**, **20.000 novas na biblioteca de 16 funções** e **1.200.088 comparações anteriores** passaram com zero divergências observadas; **63/63 testes de regressão** passaram. A geração assume um contrato ABI explícito, modela pilha e `rand` somente para esse subconjunto e nunca usa o fonte C como entrada. **Restam sete funções nomeadas e o jogo inteiro NÃO foi descompilado nem recompilado.** A compilação e os testes da EdgeAI foram validados localmente; o CI privado não oferece atualmente a mesma evidência.
 [Relatório, limites e reprodução](docs/blind_external_game_2048_2026-10-16.md).
 
+### Teste da CPU ARM64 real no QEMU — 21/10/2026
+
+A rotina de movimentação de coluna do jogo externo 2048 (ELF stripped, intervalo `0x4009e8–0x400abc`) foi verificada **instrução por instrução** contra CPU ARM64 emulada pelo QEMU, usando o executável compilado original: **641 estados de PC, 7.196 registradores, 571 flags NZCV e 180 verificações finais de tabuleiro/pontuação/retorno**, totalizando **8.588 verificações sem divergências** em dez casos. O C++ reconstruído também coincidiu nesses dez casos; outras **3.000 entradas locais** coincidiram entre o interpretador do ELF e a biblioteca C++. Um desvio condicional propositalmente invertido foi detectado. **Não é uma nova função recuperada**, nem equivalência universal.
+
+[Relatório detalhado](docs/2048_slide_column_qemu_cpu_parity_2026-10-21.md) · [Execução ARM64 original](https://github.com/48348484488/oxide/actions/runs/39663881109)
+
 ### Jogo completo de teste: reconstrução funcional ARM32
 
 O novo teste do jogo da velha conecta três candidatos C++ (`winner`,
