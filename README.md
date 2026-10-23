@@ -6,6 +6,14 @@ O objetivo é analisar arquivos compilados, entender como o código funciona e, 
 
 > **Estado atual:** projeto experimental com **reconstrução automática parcial de C++ a partir de ARM64**, comprovada em funções pequenas e intermediárias. Ainda **não** descompila jogos inteiros nem recupera o código-fonte original de forma geral.
 
+### Validação sem GitHub Actions — 23/10/2026
+
+Foi executado e publicado um [validador offline independente](tools/edgeai_offline_ci.py). Usando pacotes V7 e V12 fixados por SHA-256, ele **regenerou e compilou 16 funções C++** a partir do ELF ARM64 stripped (529 instruções), confirmou arquivos C++ byte a byte e executou **63 + 20 testes**, além de **50 replays de rastreamento de CPU do QEMU** com **35.147 verificações sem divergências**. O próprio validador passou em seis testes contra entradas alteradas e arquivos ZIP maliciosos.
+
+[Reprodução e limites](docs/edgeai_offline_ci_2026-10-23.md) · [Relatório da execução](results/edgeai_offline_ci_repro_2026-10-23.json).
+
+**O CI hospedado do repositório privado permanece bloqueado antes de executar etapas.** Isso não foi corrigido pelo validador offline. Também não houve ganho na cobertura de descompilação do jogo inteiro: V7 segue em 16/23 funções.
+
 ### Nova validação: executando o ELF ARM64 original (QEMU)
 
 Além da reconstrução estática, a EdgeAI agora compara o C++ gerado com
