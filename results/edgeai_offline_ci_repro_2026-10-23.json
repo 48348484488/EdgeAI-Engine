@@ -1,0 +1,37 @@
+{
+  "status": "OFFLINE_REGENERATED_AND_TESTED",
+  "original_source_used": false,
+  "github_actions_runner_required": false,
+  "input_sha256": {
+    "v7": "861d924bca40342a160aa60029aa6d5ddc2841ca087e7ab566790b799667d811",
+    "v12": "a1e21ab10bbd30127ac3f23a0b6b193a36b1f052cdf0bc03083609ae6db7230e",
+    "elf": "a3ca49d16ca6428291574ebd3f7c54153ef0913f8aa1eee4279408c3bf9d499b"
+  },
+  "v7": {
+    "test_cases": 63,
+    "cpp_regenerated_and_compiled": 16,
+    "cpp_sources_byte_identical": true,
+    "arm64_instructions": 529,
+    "elapsed": {
+      "unit_tests": "13.82s",
+      "code_generation": "10.29s"
+    }
+  },
+  "v12": {
+    "test_cases": 20,
+    "qemu_snapshot_cases_replayed": 50,
+    "functions": 5,
+    "cpu_and_memory_checks": 35147,
+    "differences": 0,
+    "elapsed": {
+      "unit_tests": "3.75s",
+      "cpu_replay": "1.90s"
+    }
+  },
+  "whole_game_decompiled": false,
+  "notes": [
+    "Replay uses original QEMU captures, not new live QEMU executions.",
+    "This validates sampled behavior and diagnostic fidelity, not full program equivalence.",
+    "GitHub Actions failures before job steps are not fixed by offline validation."
+  ]
+}
