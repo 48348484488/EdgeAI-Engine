@@ -1,0 +1,78 @@
+{
+  "date": "2026-10-24",
+  "type": "source-blind 2048-cli AArch64 -> C++ reconstruction V14",
+  "upstream": {
+    "repo": "Frost-Phoenix/2048-cli",
+    "commit": "53f4da8249cbe9bce17e0daefbd7903f4a4684be",
+    "license": "MIT"
+  },
+  "original_stripped_elf_sha256": "a3ca49d16ca6428291574ebd3f7c54153ef0913f8aa1eee4279408c3bf9d499b",
+  "inferred_candidate_entries": 27,
+  "compiled_cpp_functions": 18,
+  "unhandled_entries": 9,
+  "posthoc_named_game_functions": 23,
+  "verified_named_functions": 18,
+  "remaining_named_functions": 5,
+  "percentage_named_functions": 78.26,
+  "translated_arm64_instructions": 675,
+  "compiled_single_cpp_shared_library": true,
+  "new_functions": [
+    {
+      "entry": "0x401004",
+      "posthoc_name": "_print_cell",
+      "instruction_count": 114,
+      "dynamic_printf_call_sites": 14,
+      "internal_scalar_callee_call_sites": 1,
+      "samples": 1116,
+      "bytes_compared": 172955,
+      "comparison": "independent original C compiled AFTER C++ generation",
+      "reference_stream_sha256": "307215f48085035a31be896a53adbaa80cdfa69df24bd98f0fce2ede08cea19f",
+      "mismatches": 0
+    },
+    {
+      "entry": "0x401404",
+      "posthoc_name": "print_board",
+      "instruction_count": 32,
+      "internal_printer_call_sites": 1,
+      "indexed_board_read_sites": 1,
+      "samples": 261,
+      "bytes_compared": 648324,
+      "comparison": "independent original C compiled AFTER C++ generation",
+      "reference_stream_sha256": "f7c75aa11422b53c9f983d1a5318f4cd332105d626a8dfe809c416e4fe4b5bea",
+      "mismatches": 0
+    }
+  ],
+  "prior_differential_retested_on_18_candidate_library": 1200088,
+  "prior_differential_mismatches": 0,
+  "native_library_new_functions_additional_calls": 384,
+  "regression_tests_passed": 78,
+  "regression_tests_failed": 0,
+  "tests_include_corrupt_elf_sha_rejection": true,
+  "tests_include_mutated_elf_literal_changes_generated_source": true,
+  "tests_include_intentionally_wrong_cpp_branch_detection": true,
+  "source_read_during_emission": false,
+  "symtab_read_during_emission": false,
+  "libc_plt_symbol_names_used_from_stripped_elf": true,
+  "original_code_consulted_only_post_emission_for_validation": true,
+  "original_assembly_new_functions_qemu_instructionwise_compared": false,
+  "generated_cpp_requires_declared_ABI_signatures": true,
+  "unknown_external_calls_rejected": true,
+  "buffer_bounds_checked": true,
+  "whole_game_rebuilt": false,
+  "source_code_recovered_identically": false,
+  "remaining_known_game_functions_posthoc_oracle": [
+    "setBufferedInput",
+    "print_score",
+    "signal_callback_handler",
+    "setup",
+    "main"
+  ],
+  "limitations": [
+    "Values >=10000 excluded from _print_cell: original leaves spacing locals uninitialized for that path.",
+    "ABI signatures and scalar callee role are inherited from already accepted source-blind lifter contracts.",
+    "Full game logic/terminal state, external imports, signal and main are not reconstructed.",
+    "Current benchmark validation compares new generated native C++ with independently compiled C; original AArch64 QEMU CPU-trace parity for these two new routines remains pending.",
+    "78.26% counts named functions, not instructions, control-flow coverage, or universal equivalence.",
+    "Private GitHub Actions CI remains separately blocked upstream; local reproducible validation succeeded."
+  ]
+}
