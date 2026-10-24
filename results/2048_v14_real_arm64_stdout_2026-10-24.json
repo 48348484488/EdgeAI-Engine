@@ -34,12 +34,13 @@
   "old_diff_cases_reexecuted": 1200088,
   "reproduce_extracted_archive_command": "python3 tools/verify_2048_v14.py --full",
   "archive_name": "EdgeAI_2048_V14_18_funcoes_teste_cego.zip",
-  "archive_sha256": "3c8f06eb7f61ceba00b2c823d2fd975ed8ef180b8baa7e32aecca820036c0873",
+  "archive_sha256": "260a6218e07c392402571de41dc9fdb402bb3eaaa61bb73db10a36843881e5be",
   "audit_note": "The complete ZIP includes original machine stdout files, case JSON with per-case SHA256, stripped binary, lifters and independent tests. No full program or remaining five functions has been reconstructed.",
   "caveats": [
     "This verifies stdout equality on 21 sampled original ARM64 runs; it is not a full CPU-state parity check for the two new functions.",
     "ABI roles were assumed in the source-blind lifter.",
     "Value >=10000 is excluded due to undefined uninitialized locals in the original C.",
     "Full game not reconstructed; 5 named game functions remain."
-  ]
+  ],
+  "clean_extracted_package_full_verification": "PASSED: 18 C++ funcs, 675 translated instructions, 82 tests, 1,200,088 prior diff checks, 21 original ARM64 QEMU cases 21,880 bytes identical"
 }
