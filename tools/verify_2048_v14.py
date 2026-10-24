@@ -12,7 +12,12 @@ ELF=ROOT/'bin/2048-arm64-stripped.elf'
 PINNED='a3ca49d16ca6428291574ebd3f7c54153ef0913f8aa1eee4279408c3bf9d499b'
 
 def cmd(args,**kwargs):
-    return subprocess.run([str(x) for x in args],check=True,**kwargs)
+    try:
+        return subprocess.run([str(x) for x in args],check=True,**kwargs)
+    except subprocess.CalledProcessError as exc:
+        if exc.stdout: print(str(exc.stdout)[-2000:],file=sys.stderr)
+        if exc.stderr: print(str(exc.stderr)[-6500:],file=sys.stderr)
+        raise
 
 def verify(*,full=False):
     if hashlib.sha256(ELF.read_bytes()).hexdigest()!=PINNED:raise ValueError('incorrect benchmark ELF SHA256')
