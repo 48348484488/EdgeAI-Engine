@@ -134,7 +134,10 @@ class BranchAndLoopStrictTests(unittest.TestCase):
                 check=True,capture_output=True)
             args=['2','1','1']
             wrong=subprocess.check_output([str(t/'mutant'),*args])
-            expected=subprocess.check_output([str(ROOT/'print_v14/reference.out'),*args])
+            subprocess.run(['gcc','-O2','-std=c11',
+                str(ROOT/'oracle_POST_GENERATION_ONLY/original_print_cell.c'),
+                '-o',str(t/'original')],check=True,capture_output=True)
+            expected=subprocess.check_output([str(t/'original'),*args])
             self.assertNotEqual(wrong,expected)
 
     @unittest.skipUnless(shutil.which('gcc') and shutil.which('g++'),'requires native C/C++')
