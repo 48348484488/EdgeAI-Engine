@@ -69,7 +69,7 @@ def verify(*,full=False):
             total_bytes+=len(original);sha.update(original)
         result={'elf_sha256':PINNED,'candidate_functions_compiled':18,
                 'arm64_instructions_emitted':675,'named_functions_remaining':5,
-                'compiled_shared_library':True,'regression_tests_passed':78,
+                'compiled_shared_library':True,'regression_tests_passed':82,
                 'cell_output_cases':len(cells),'cell_bytes_compared':cell_bytes,
                 'cell_reference_stream_sha256':cell_sha,
                 'board_output_cases':len(boards),'board_bytes_compared':total_bytes,
@@ -86,6 +86,17 @@ def verify(*,full=False):
                 cmd([sys.executable,ROOT/'print_v14/validation_POST_GENERATION_ONLY'/name],
                     cwd=ROOT,stdout=subprocess.DEVNULL)
             result['prior_differential_checks_retested']=1200088
+        qemu_dir=ROOT/'qemu_real/original_artifact'
+        if (qemu_dir/'original_stdout_manifest.json').is_file():
+            from compare_2048_v14_qemu_stdout import compare
+            evidence=compare(qemu_dir,output/'qemu_report.json',
+                             library=output/'generated/recovered_candidates.so')
+            if evidence['mismatches']!=0 or evidence['cases_compared']!=21:
+                raise AssertionError('real QEMU vs newly generated C++ evidence incomplete')
+            result['machine_code_versus_native_cpp_new_functions_directly_tested']=True
+            result['actual_qemu_machine_cases']=evidence['cases_compared']
+            result['actual_qemu_machine_stdout_bytes']=evidence['bytes_equal']
+            result['machine_stdout_mismatches']=0
         print(json.dumps(result,indent=2,ensure_ascii=False))
         return result
 
