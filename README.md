@@ -6,13 +6,41 @@ O objetivo é analisar arquivos compilados, entender como o código funciona e, 
 
 > **Estado atual:** projeto experimental com **reconstrução automática parcial de C++ a partir de ARM64**, comprovada em funções pequenas e intermediárias. Ainda **não** descompila jogos inteiros nem recupera o código-fonte original de forma geral.
 
+### V14 — duas funções novas do 2048 reconstruídas (24/10/2026)
+
+**A recuperação validada avançou para 18/23 funções (78,26%).** O pipeline
+source-blind percorreu 27 entradas do ELF ARM64 sem símbolos, emitiu C++ de
+**18 funções / 675 instruções** e compilou uma biblioteca conjunta. As novas
+rotinas são o desenho de uma célula (`0x401004`, 114 instruções) e o
+desenho do tabuleiro completo (`0x401404`, 32 instruções). Uma recupera
+chamadas a `printf` e uma função escalar já gerada; a outra percorre a memória
+do tabuleiro e invoca diretamente a primeira.
+
+A saída do C++ coincidiu byte a byte com implementações C independentes
+em **1.116 células e 261 tabuleiros**, totalizando **821.279 bytes**,
+sem diferenças. Também passaram **78 testes de regressão** e **1.200.088
+comparações anteriores reexecutadas** com a biblioteca ampliada.
+
+[Relatório detalhado](docs/blind_external_game_2048_v14_2026-10-24.md) ·
+[Resultados JSON](results/blind_2048_eighteen_function_reconstruction_2026-10-24.json) ·
+[Tradutor de ramificações e impressão](tools/aarch64_branch_printf_lifter.py) ·
+[Tradutor de loop e chamadas](tools/aarch64_print_loop_caller_lifter.py) ·
+[Validador V14](tools/verify_2048_v14.py).
+
+O validador é executado dentro do pacote reproduzível V14, que inclui o ELF
+original, 18 arquivos C++, as referências C usadas **após** gerar o C++ e as
+dependências. **Não é uma descompilação universal nem jogo completo:** ainda
+faltam 5 funções nomeadas. A validação destas duas novas rotinas é feita
+contra C compilado independentemente, não diretamente por rastreamento
+instrucional do QEMU. O CI privado continua bloqueado.
+
 ### Validação sem GitHub Actions — 23/10/2026
 
 Foi executado e publicado um [validador offline independente](tools/edgeai_offline_ci.py). Usando pacotes V7 e V12 fixados por SHA-256, ele **regenerou e compilou 16 funções C++** a partir do ELF ARM64 stripped (529 instruções), confirmou arquivos C++ byte a byte e executou **63 + 20 testes**, além de **50 replays de rastreamento de CPU do QEMU** com **35.147 verificações sem divergências**. O próprio validador passou em seis testes contra entradas alteradas e arquivos ZIP maliciosos.
 
 [Reprodução e limites](docs/edgeai_offline_ci_2026-10-23.md) · [Relatório da execução](results/edgeai_offline_ci_repro_2026-10-23.json).
 
-**O CI hospedado do repositório privado permanece bloqueado antes de executar etapas.** Isso não foi corrigido pelo validador offline. Também não houve ganho na cobertura de descompilação do jogo inteiro: V7 segue em 16/23 funções.
+**O CI hospedado do repositório privado permanece bloqueado antes de executar etapas.** Isso não foi corrigido pelo validador offline. Na etapa V7 havia 16/23 funções; a etapa V14, acima, já alcançou 18/23.
 
 ### Nova validação: executando o ELF ARM64 original (QEMU)
 
