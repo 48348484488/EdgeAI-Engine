@@ -18,7 +18,7 @@ do tabuleiro e invoca diretamente a primeira.
 
 A saída do C++ coincidiu byte a byte com implementações C independentes
 em **1.116 células e 261 tabuleiros**, totalizando **821.279 bytes**,
-sem diferenças. Também passaram **78 testes de regressão** e **1.200.088
+sem diferenças. Também passaram **82 testes de regressão** e **1.200.088
 comparações anteriores reexecutadas** com a biblioteca ampliada.
 
 [Relatório detalhado](docs/blind_external_game_2048_v14_2026-10-24.md) ·
@@ -27,12 +27,20 @@ comparações anteriores reexecutadas** com a biblioteca ampliada.
 [Tradutor de loop e chamadas](tools/aarch64_print_loop_caller_lifter.py) ·
 [Validador V14](tools/verify_2048_v14.py).
 
-O validador é executado dentro do pacote reproduzível V14, que inclui o ELF
-original, 18 arquivos C++, as referências C usadas **após** gerar o C++ e as
-dependências. **Não é uma descompilação universal nem jogo completo:** ainda
-faltam 5 funções nomeadas. A validação destas duas novas rotinas é feita
-contra C compilado independentemente, não diretamente por rastreamento
-instrucional do QEMU. O CI privado continua bloqueado.
+Além da comparação com C, as duas novas rotinas foram chamadas diretamente
+no **ELF ARM64 original sob QEMU**, sem fonte original: **21 casos e 21.880
+bytes de saída idênticos** ao C++ gerado. O [teste original ARM64 no GitHub
+Actions](https://github.com/48348484488/oxide/actions/runs/40068149313)
+passou; o [comparador independente](tools/compare_2048_v14_qemu_stdout.py)
+reproduziu a igualdade a partir dos 21 arquivos binários de saída arquivados.
+
+O pacote reproduzível V14 reúne o ELF, 18 arquivos C++, os dados originais
+do QEMU, o manifesto SHA-256, a referência C consultada **após** a geração,
+e o validador. O comando `python3 tools/verify_2048_v14.py --full`
+reexecuta também os 1.200.088 diferenciais antigos. **Não é descompilação
+universal nem jogo completo:** faltam 5 funções. A validação direta do ARM64
+mediu bytes de saída, não cada estado interno do processador. O CI privado
+permanece bloqueado antes da primeira etapa.
 
 ### Validação sem GitHub Actions — 23/10/2026
 
