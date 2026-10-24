@@ -1,3 +1,19 @@
+## Validação adicional executando o ARM64 original (24/10/2026)
+
+Uma segunda referência, **independente do código C original**, foi executada com sucesso: o ELF AArch64 stripped **inalterado** sob QEMU user-mode, chamando diretamente os endereços recuperados por um probe `LD_PRELOAD` carregado antes do loop interativo. O `sha256` do ELF foi verificado antes do teste.
+
+A [execução GitHub Actions #40068149313](https://github.com/48348484488/oxide/actions/runs/40068149313) passou em **21 casos** (13 de célula, 8 de tabuleiro), com **21.880 bytes de stdout** comparados **byte a byte** com a biblioteca de **18 funções C++ gerada novamente**. **Zero divergências**. Os resultados originais, separados por caso, foram baixados e empacotados na V14 junto ao manifesto de hash SHA-256.
+
+Foram acrescentados **quatro testes de integridade**: detecção de saída original alterada, manifesto de entradas adulterado, falta de saída e comparação real positiva. O total de regressões passou a **82/82**. Uma reprodução completa em pasta limpa aprovou a geração C++, os 21 casos ARM64 reais, os 1.377 diferenciais de saída pós-geração e os **1.200.088 diferenciais anteriores**, sem diferenças.
+
+[Resultado QEMU em JSON](../results/2048_v14_real_arm64_stdout_2026-10-24.json) ·
+[Comparador genérico de saída](../tools/compare_2048_v14_qemu_stdout.py) ·
+[Testes de integridade](../benchmarks/2048_v14/test_qemu_stdout_v14.py).
+
+**Distinção:** QEMU executou instruções ARM64 originais, mas não comparamos o estado de cada registrador dessas duas funções; aqui o oráculo mede equivalência de `stdout` para entradas amostradas. Não significa que as cinco funções restantes ou o jogo inteiro estejam recuperados.
+
+---
+
 # EdgeAI V14 — 18 funções do jogo externo 2048 reconstruídas
 
 **Data:** 24/10/2026. **Método:** análise do ELF AArch64 sem símbolos, geração de C++ limitada por contratos de ABI, compilação nativa e validação diferencial posterior.
@@ -9,7 +25,7 @@ O benchmark usa somente o executável `2048-arm64-stripped.elf` original, SHA-25
 - **27 entradas candidatas** detectadas; **18 funções C++ geradas e compiladas**, **9 entradas ainda não suportadas**.
 - **675 instruções ARM64** traduzidas, incluindo **146 novas**.
 - **18/23 funções nomeadas pós-validação (78,26%)**, sem alegar reconstrução integral.
-- **78/78 testes automatizados**, incluindo casos negativos e a alteração proposital de um desvio, corretamente detectada.
+- **82/82 testes automatizados**, incluindo casos negativos e a alteração proposital de um desvio, corretamente detectada.
 - **1.200.088 comparações diferenciais anteriores** repetidas contra a biblioteca ampliada, com zero divergências.
 
 | Entrada | Nome descoberto após gerar C++ | Instruções | Testes diferenciais | Bytes de saída conferidos |
@@ -31,7 +47,7 @@ O pacote V14 inclui o binário sem símbolos, tradutores em `analysis/`, geraç�
 python3 tools/verify_2048_v14.py --full
 ```
 
-O comando verifica o hash do ELF, regenera as 18 funções do zero, compila a biblioteca, compara todos os arquivos de C++ gerados com o pacote, executa os 78 testes e confere novamente as 1.377 novas saídas e os 1.200.088 casos antigos.
+O comando verifica o hash do ELF, regenera as 18 funções do zero, compila a biblioteca, compara todos os arquivos de C++ gerados com o pacote, executa os 82 testes e confere novamente as 1.377 novas saídas e os 1.200.088 casos antigos.
 
 Os tradutores recusam instruções fora do subconjunto aceito, contratos de chamada ausentes e leituras fora do buffer. Não usam nomes de função nem código-fonte original para gerar C++.
 
