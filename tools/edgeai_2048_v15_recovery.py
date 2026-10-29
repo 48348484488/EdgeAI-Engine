@@ -109,7 +109,7 @@ def rebuild(elf, destination, tool_dir, expected_count=19,
             'limitations': 'Host-native C++ linkage only; not ARM64/QEMU or full-game parity.'
         }
         (stage / 'bundle_manifest.json').write_text(json.dumps(manifest, indent=2) + '\n', encoding='utf-8')
-        verify(stage, elf)
+        verify(stage, elf, rebuild_native=True)
         # Atomic publish: no partial output directory is exposed on failure.
         os.rename(stage, destination)
         return manifest

@@ -15,7 +15,7 @@ p=argparse.ArgumentParser(); p.add_argument('elf'); p.add_argument('--output-dir
 o=Path(a.output_dir)
 (o/'candidate_2000.cpp').write_text('extern "C" int recovered_2000(){return 7;}')
 (o/'candidate_3000.cpp').write_text('extern "C" int recovered_2000(); extern "C" int recovered_3000(){return recovered_2000();}')
-subprocess.run(['g++','-shared','-fPIC','-Wl,-z,defs',str(o/'candidate_2000.cpp'),str(o/'candidate_3000.cpp'),'-o',str(o/'recovered_candidates.so')],check=True)
+subprocess.run(['g++','-std=c++17','-O2','-fPIC','-shared','-Wl,-z,defs',str(o/'candidate_2000.cpp'),str(o/'candidate_3000.cpp'),'-o',str(o/'recovered_candidates.so')],check=True)
 r={'binary_sha256':hashlib.sha256(Path(a.elf).read_bytes()).hexdigest(),'source_read':False,'symbols_used':False,'compile_status':'SUCCEEDED','cpp_emitted_candidate_count':2,'functions':[{'address':'0x2000','status':'CPP_EMITTED_NOT_BEHAVIORALLY_VALIDATED'},{'address':'0x3000','status':'CPP_EMITTED_NOT_BEHAVIORALLY_VALIDATED'}]}
 (o/'coverage.json').write_text(json.dumps(r))
 '''

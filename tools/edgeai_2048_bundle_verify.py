@@ -9,8 +9,10 @@ import hashlib
 import json
 from pathlib import Path
 import re
+import shutil
 import subprocess
 import sys
+import tempfile
 
 CANDIDATE = re.compile(r'candidate_([0-9a-fA-F]+)\.cpp\Z')
 DIGEST = re.compile(r'[0-9a-f]{64}\Z')
@@ -48,6 +50,33 @@ def inspect_native_exports(library, expected):
     return sorted(defined)
 
 
+
+def verify_reproducible_library(root, names, library, timeout=120):
+    """Rebuild with the V15 generator's exact flags and compare ELF bytes.
+
+    This is a same-toolchain attestation. A matching symbol table alone cannot
+    establish that the published library was built from its C++ candidates.
+    """
+    compiler = shutil.which('g++')
+    if not compiler:
+        raise ValueError('reproducible native rebuild unavailable: g++ not found')
+    with tempfile.TemporaryDirectory(prefix='edgeai-v30-relink-') as tmp:
+        output = Path(tmp) / 'relinked.so'
+        argv = [compiler, '-std=c++17', '-O2', '-fPIC', '-shared',
+                '-Wl,-z,defs', *[str(root / n) for n in names], '-o', str(output)]
+        try:
+            proc = subprocess.run(argv, capture_output=True, text=True,
+                                  timeout=timeout, check=False)
+        except (OSError, subprocess.TimeoutExpired) as exc:
+            raise ValueError(f'reproducible native rebuild unavailable: {exc}') from exc
+        if proc.returncode or not output.is_file():
+            raise ValueError('reproducible native rebuild failed: '
+                             + (proc.stderr or proc.stdout)[-600:])
+        if digest(output) != digest(library):
+            raise ValueError('native ELF bytes differ from same-toolchain C++ rebuild')
+    return True
+
+
 def digest(path):
     h = hashlib.sha256()
     with path.open('rb') as f:
@@ -65,7 +94,7 @@ def safe_file(root, name):
     return path
 
 
-def verify(root, elf=None):
+def verify(root, elf=None, rebuild_native=False):
     root = Path(root).resolve()
     if not root.is_dir():
         raise ValueError('bundle directory not found')
@@ -147,8 +176,14 @@ def verify(root, elf=None):
         raise ValueError('native export address set mismatch')
     actual_exports = inspect_native_exports(safe_file(root, 'recovered_candidates.so'),
                                             {f'recovered_{a:x}' for a in addresses})
+    if rebuild_native:
+        compile_order = [f'candidate_{int(r["address"], 16):x}.cpp' for r in selected
+                         if r.get('status') != 'UNSUPPORTED']
+        verify_reproducible_library(root, compile_order,
+                                    safe_file(root, 'recovered_candidates.so'))
     return {'passed': True, 'candidate_count': count, 'elf_sha256': elf_sha,
             'files_verified': len(files), 'native_exports_verified_from_elf': len(actual_exports),
+            'same_toolchain_rebuild_matched': bool(rebuild_native),
             'native_host_only': True,
             'arm64_qemu_parity_tested_in_this_run': False,
             'whole_game_recovered': False}
@@ -158,9 +193,11 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('bundle', type=Path)
     parser.add_argument('--elf', type=Path)
+    parser.add_argument('--rebuild-native', action='store_true',
+                        help='compile published C++ with V15 flags and compare ELF bytes')
     args = parser.parse_args()
     try:
-        print(json.dumps(verify(args.bundle, args.elf), indent=2))
+        print(json.dumps(verify(args.bundle, args.elf, rebuild_native=args.rebuild_native), indent=2))
         return 0
     except (ValueError, OSError, KeyError, TypeError, json.JSONDecodeError) as exc:
         print(f'BUNDLE REJECTED: {exc}', file=sys.stderr)

@@ -1,6 +1,7 @@
 """V28 regression suite: published bytes must match independent evidence."""
 import hashlib
 import json
+import shutil
 from pathlib import Path
 import sys
 import subprocess
@@ -14,20 +15,33 @@ from test_edgeai_2048_v15_recovery import GENERATOR
 
 
 class BundleIntegrityTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        # Generate and link the synthetic library once; each test gets a copy.
+        cls.fixture = tempfile.TemporaryDirectory()
+        root = Path(cls.fixture.name)
+        elf = root / 'original.elf'
+        elf.write_bytes(b'fixture ELF')
+        tool = root / 'tools'
+        tool.mkdir()
+        (tool / 'aarch64_multistage_batch.py').write_text(GENERATOR)
+        gate = Path(__file__).resolve().parents[1] / 'tools' / 'edgeai_cpp_link_gate.py'
+        (tool / gate.name).write_bytes(gate.read_bytes())
+        rebuild(elf, root / 'bundle', tool, expected_count=2,
+                expected_elf_sha256=hashlib.sha256(elf.read_bytes()).hexdigest())
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.fixture.cleanup()
+
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
         self.addCleanup(self.temp.cleanup)
         self.root = Path(self.temp.name)
         self.elf = self.root / 'original.elf'
         self.elf.write_bytes(b'fixture ELF')
-        self.tool = self.root / 'tools'
-        self.tool.mkdir()
-        (self.tool / 'aarch64_multistage_batch.py').write_text(GENERATOR)
-        gate = Path(__file__).resolve().parents[1] / 'tools' / 'edgeai_cpp_link_gate.py'
-        (self.tool / gate.name).write_bytes(gate.read_bytes())
         self.bundle = self.root / 'bundle'
-        rebuild(self.elf, self.bundle, self.tool, expected_count=2,
-                expected_elf_sha256=hashlib.sha256(self.elf.read_bytes()).hexdigest())
+        shutil.copytree(Path(self.fixture.name) / 'bundle', self.bundle)
 
     def test_valid_bundle_verified_against_elf(self):
         report = verify(self.bundle, self.elf)
@@ -44,6 +58,24 @@ class BundleIntegrityTests(unittest.TestCase):
 
     def test_valid_bundle_has_real_native_exports(self):
         self.assertEqual(verify(self.bundle)['native_exports_verified_from_elf'], 2)
+
+    def test_reproducible_native_library_passes(self):
+        self.assertTrue(verify(self.bundle, self.elf, rebuild_native=True)
+                        ['same_toolchain_rebuild_matched'])
+
+    def test_rejects_forged_library_with_identical_exports_and_new_hash(self):
+        # A V29 false positive: export names were correct, but function bodies
+        # could be replaced if an attacker recomputed the manifest's SHA-256.
+        source = self.root / 'forged.cpp'
+        source.write_text('extern "C" int recovered_2000(){return 999;} '
+                          'extern "C" int recovered_3000(){return 888;}')
+        subprocess.run(['g++', '-std=c++17', '-O2', '-fPIC', '-shared',
+                        '-Wl,-z,defs', str(source), '-o',
+                        str(self.bundle / 'recovered_candidates.so')], check=True)
+        self._rehash_library()
+        self.assertTrue(verify(self.bundle)['passed'])  # V29 only checked names
+        with self.assertRaisesRegex(ValueError, 'ELF bytes differ'):
+            verify(self.bundle, rebuild_native=True)
 
     def test_rejects_rehashed_library_missing_expected_export(self):
         source = self.root / 'forged.cpp'
