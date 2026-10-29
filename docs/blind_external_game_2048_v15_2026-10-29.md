@@ -27,3 +27,21 @@ O primeiro teste [#40817418577](https://github.com/48348484488/last-Island-of-su
 **Cobertura observada em testes:** 19/23 funções nomeadas do 2048 (82,61%), com a nova função também comparada diretamente à execução ARM64 original. Isso não demonstra equivalência universal, reconstrução integral do executável, nem recuperação do código-fonte textual original.
 
 **Ainda faltam quatro funções nomeadas** e o encadeamento do jogo completo. O novo lifter e o pacote V15 estão disponíveis como pacote de reprodução local, mas **a integração integral do gerador V15 ao repositório privado ainda está pendente**. O GitHub Actions privado do EdgeAI-Engine continua falhando antes de executar steps, sem causa confirmada.
+
+## Reprodução independente do artifact
+
+Baixei o artifact ZIP da execução #40817479109 e executei novamente o verificador
+`tools/verify_2048_v15_qemu_parity.py` contra **os 20 arquivos binários brutos
+produzidos pelo QEMU** e contra um executável x86_64 compilado do C++ V15.
+Resultado: **20/20 casos, 179 chamadas, 11.914 bytes, zero divergências**.
+Essa comparação foi feita fora do workflow original e rejeita arquivos ausentes,
+hashes alterados e diferenças de comprimento. Os testes de regressão locais do
+verificador também passaram (4 casos).
+
+Exemplo após baixar e extrair o artifact do GitHub Actions:
+
+```bash
+python3 tools/verify_2048_v15_qemu_parity.py \\
+  --cases benchmarks/2048_v15/score_cases.tsv \\
+  --original-dir /caminho/para/arquivos_extraidos
+```
