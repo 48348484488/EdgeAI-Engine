@@ -6,6 +6,24 @@ O objetivo é analisar arquivos compilados, entender como o código funciona e, 
 
 > **Estado atual:** projeto experimental com **reconstrução automática parcial de C++ a partir de ARM64**, comprovada em funções pequenas e intermediárias. Ainda **não** descompila jogos inteiros nem recupera o código-fonte original de forma geral.
 
+### V15 — 19ª função verificada no ARM64 original (29/10/2026)
+
+**19/23 funções nomeadas reconstruídas em C++ (82,61%)**, 752 instruções
+traduzidas no pacote local V15. A função nova usa estado global persistente e
+formatação de pontuação. Passou em **259 sequências / 1.643 chamadas / 112.634
+bytes** comparados com um oráculo C pós-geração.
+
+A [execução ARM64 original no QEMU](https://github.com/48348484488/last-Island-of-survival-lite/actions/runs/40817479109)
+passou em **20 sequências / 179 chamadas / 11.914 bytes**, com hashes SHA-256
+idênticos aos resultados fixados do C++ gerado. O novo
+[verificador fail-closed](tools/verify_2048_v15_qemu_parity.py) e os
+[casos fixados](benchmarks/2048_v15/score_cases.tsv) estão no repositório.
+[Relatório e limitações](docs/blind_external_game_2048_v15_2026-10-29.md).
+
+**Limites:** isso não prova equivalência para todas as entradas, nem jogo completo.
+Restam quatro funções; a integração completa do lifter V15 ao repositório
+privado e o desbloqueio do CI privado ainda estão pendentes.
+
 ### V14 — duas funções novas do 2048 reconstruídas (24/10/2026)
 
 **A recuperação validada avançou para 18/23 funções (78,26%).** O pipeline
