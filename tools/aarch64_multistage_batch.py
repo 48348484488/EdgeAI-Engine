@@ -24,6 +24,7 @@ from aarch64_static_printf_sequence_lifter import run as static_printf_sequence
 from aarch64_stack_vm_lifter import generate as generate_stack_pair
 from aarch64_branch_printf_lifter import lift as branch_printf_leaf
 from aarch64_print_loop_caller_lifter import lift as print_loop_caller
+from aarch64_stateful_printf_lifter import lift as stateful_printf_leaf
 
 LEAVES=(('read_only_leaf',read_leaf),('mutating_leaf',mutable_leaf),
         ('scalar_leaf',scalar_leaf),('three_arg_memory_leaf',multimem_leaf),
@@ -43,7 +44,7 @@ def _evidence(row,typ,src,meta,output):
             'attempt_failures':row.get('attempt_failures',[])}
 
 
-def run(elf,output,compile_cpp=True):
+def run(elf,output,compile_cpp=True,enable_stateful_printf=False):
     output=Path(output)
     output.mkdir(parents=True,exist_ok=True)
     scan=analyze(elf)
@@ -149,6 +150,17 @@ def run(elf,output,compile_cpp=True):
             except (ValueError,KeyError,RuntimeError,subprocess.CalledProcessError) as exc:
                 row['attempt_failures'].append({'lifter':'read_only_print_loop_caller','error':str(exc)[:240]})
 
+    # V15 opt-in: bounded .bss-u32 printer. A generated C++ file is NOT
+    # evidence of behavioral validation; external QEMU parity is separate.
+    if enable_stateful_printf:
+        for entry,row in candidates.items():
+            if row['status']!='UNSUPPORTED':continue
+            try:
+                code,meta=stateful_printf_leaf(elf,entry,limits[entry])
+                candidates[entry]=_evidence(row,'stateful_printf_u32',code,meta,output)
+            except (ValueError,KeyError,RuntimeError,subprocess.CalledProcessError) as exc:
+                row['attempt_failures'].append({'lifter':'stateful_printf_u32','error':str(exc)[:240]})
+
     selected=[row for row in candidates.values() if row['status']!='UNSUPPORTED']
     report={'tool':'EdgeAI ARM64 blind multi-stage batch translator',
             'binary_sha256':scan['input_sha256'],'source_read':False,'symbols_used':False,
@@ -162,6 +174,8 @@ def run(elf,output,compile_cpp=True):
             'roles_inferred_from_opcode_compatibility_only':True,
             'known_abi_contract_is_assumed':True,
             'functions':list(candidates.values())}
+    if enable_stateful_printf:
+        report['experimental_stateful_printf_enabled']=True
     if compile_cpp and selected:
         compiler=shutil.which('g++')
         if not compiler:
@@ -183,8 +197,10 @@ def main():
     p.add_argument('elf',type=Path)
     p.add_argument('--output-dir',type=Path,required=True)
     p.add_argument('--no-compile',action='store_true')
+    p.add_argument('--enable-stateful-printf',action='store_true',
+                   help='opt into bounded V15 global-u32 printf reconstruction')
     a=p.parse_args()
-    rep=run(a.elf,a.output_dir,not a.no_compile)
+    rep=run(a.elf,a.output_dir,not a.no_compile,a.enable_stateful_printf)
     print(json.dumps({k:rep[k] for k in ('candidate_entry_count','cpp_emitted_candidate_count',
         'unsupported_candidate_count','instructions_emitted','compile_status')},indent=2))
 
