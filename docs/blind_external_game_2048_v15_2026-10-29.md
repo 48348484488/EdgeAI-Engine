@@ -41,7 +41,7 @@ verificador também passaram (4 casos).
 Exemplo após baixar e extrair o artifact do GitHub Actions:
 
 ```bash
-python3 tools/verify_2048_v15_qemu_parity.py \\
-  --cases benchmarks/2048_v15/score_cases.tsv \\
+python3 tools/verify_2048_v15_qemu_parity.py \
+  --cases benchmarks/2048_v15/score_cases.tsv \
   --original-dir /caminho/para/arquivos_extraidos
 ```
