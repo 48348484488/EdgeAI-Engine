@@ -15,6 +15,44 @@ SOURCE_NAME = re.compile(r'^candidate_([0-9a-fA-F]+)\.cpp$')
 HEX = re.compile(r'^0x[0-9a-fA-F]+$')
 
 
+def decode_bl_sites(code, base, start, end):
+    """Independently decode AArch64 direct BL targets from executable bytes."""
+    import struct
+    if start % 4 or end % 4 or start >= end or start < base or end > base + len(code):
+        raise ValueError('invalid main range in ELF .text')
+    result = []
+    for pc in range(start, end, 4):
+        word, = struct.unpack_from('<I', code, pc - base)
+        if word & 0xfc000000 != 0x94000000:
+            continue
+        imm = word & 0x03ffffff
+        if imm & 0x02000000:
+            imm -= 0x04000000
+        result.append((pc, pc + imm * 4))
+    return result
+
+
+def verify_cfg_against_elf(cfg, elf):
+    """Reject stale, missing, fabricated or retargeted direct calls in a CFG."""
+    from aarch64_stripped_discovery import load_text
+    info = load_text(elf)
+    if cfg.get('binary_sha256', '').lower() != info['sha256']:
+        raise ValueError('CFG SHA-256 does not match actual ELF')
+    try:
+        start = int(cfg['start'], 16)
+        end = int(cfg['end_exclusive'], 16)
+        recorded = Counter((int(c['pc'], 16), int(c['target'], 16))
+                           for c in cfg['calls'] if not c.get('indirect'))
+    except (KeyError, TypeError, ValueError) as exc:
+        raise ValueError('invalid CFG call records') from exc
+    actual = Counter(decode_bl_sites(info['text'], info['text_address'], start, end))
+    if recorded != actual:
+        missing = list((actual - recorded).elements())
+        extra = list((recorded - actual).elements())
+        raise ValueError(f'CFG direct BL mismatch: missing={missing[:5]}, extra={extra[:5]}')
+    return len(actual)
+
+
 def generated_functions(folder):
     """Require source filenames and exported function names to agree."""
     if not folder.is_dir():
@@ -95,13 +133,17 @@ def audit(cfg, generated, expected_binary_sha256=None):
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('--cfg', required=True, type=Path)
+    p.add_argument('--elf', type=Path, help='independently verify every CFG direct BL against stripped ELF')
     p.add_argument('--generated-dir', required=True, type=Path)
     p.add_argument('--expected-sha256')
     p.add_argument('--output', required=True, type=Path)
     p.add_argument('--require-dependency-closure', action='store_true',
                    help='exit nonzero if any internal call is missing or indirect unresolved')
     args = p.parse_args()
-    result = audit(json.loads(args.cfg.read_text()), generated_functions(args.generated_dir), args.expected_sha256)
+    cfg = json.loads(args.cfg.read_text())
+    if args.elf is not None:
+        verify_cfg_against_elf(cfg, args.elf)
+    result = audit(cfg, generated_functions(args.generated_dir), args.expected_sha256)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, indent=2) + '\n')
     print(f"{result['call_sites']} call sites; {result['calls_to_generated_cpp']} generated C++; "
