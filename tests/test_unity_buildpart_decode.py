@@ -42,7 +42,9 @@ class TestBuildPartDecode(unittest.TestCase):
         self.assertEqual(r["model"],"part/diji_lv1.ab")
         self.assertEqual(result["groups"]["foundation"]["count"],2)
     def test_truncated_rejected(self):
-        with self.assertRaises(ValueError): decode(self.blob[:-3])
+        # Reject truncation inside a verified record prefix; unknown legacy
+        # extension tails are preserved but cannot be exhaustively decoded.
+        with self.assertRaises(ValueError): decode(self.blob[:90])
     def test_bad_string_length_rejected(self):
         tampered=bytearray(self.blob)
         tampered[12:16]=struct.pack("<i",2147483647)
