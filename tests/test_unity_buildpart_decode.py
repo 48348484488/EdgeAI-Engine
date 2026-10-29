@@ -30,7 +30,7 @@ def row(n,typ,icon="buildpart/dj"):
 
 class TestBuildPartDecode(unittest.TestCase):
     def setUp(self):
-        self.blob=b"".join(row(i+1,2+(i%7)) for i in range(14))
+        self.blob=b"".join(row(24000+i,2+(i%7)) for i in range(14))
     def test_exact_fields_and_order(self):
         result=report_from_bytes(self.blob)
         self.assertEqual(result["record_count"],14)
@@ -49,7 +49,7 @@ class TestBuildPartDecode(unittest.TestCase):
         with self.assertRaises(ValueError):decode(tampered)
     def test_duplicate_ids_rejected(self):
         with self.assertRaises(ValueError):
-            report_from_bytes(b"".join(row(1,2) for _ in range(14)))
+            report_from_bytes(b"".join(row(24000,2) for _ in range(14)))
     def test_sprite_mapping_exact_only(self):
         data=report_from_bytes(self.blob,[{"bundle":"assets/icon/buildpart.ab",
                        "icons":[{"name":"dj","id":"-42","file":"p.png"}]}])
