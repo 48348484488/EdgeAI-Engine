@@ -1,16 +1,17 @@
 """Fail-closed compiler and repeat-run regression tests for ARM64 C++ batch."""
-import hashlib
 from pathlib import Path
+import shutil
+import sys
 import tempfile
 import unittest
-from aarch64_multistage_batch import _compile_candidates, run
+from unittest.mock import patch
 
-ROOT = Path(__file__).resolve().parents[1]
-ELF = ROOT/'bin/2048-arm64-stripped.elf'
-ELF_SHA256 = 'a3ca49d16ca6428291574ebd3f7c54153ef0913f8aa1eee4279408c3bf9d499b'
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]/'tools'))
+from aarch64_multistage_batch import _compile_candidates, run
 
 
 class BatchLinkIntegrityTests(unittest.TestCase):
+    @unittest.skipUnless(shutil.which('g++'), 'g++ required')
     def test_valid_cpp_is_linked(self):
         with tempfile.TemporaryDirectory() as d:
             out = Path(d)
@@ -20,6 +21,7 @@ class BatchLinkIntegrityTests(unittest.TestCase):
             self.assertTrue((out/'recovered_candidates.so').is_file())
             self.assertFalse((out/'recovered_candidates.so.tmp').exists())
 
+    @unittest.skipUnless(shutil.which('g++'), 'g++ required')
     def test_undefined_external_symbol_rejected_and_old_library_removed(self):
         with tempfile.TemporaryDirectory() as d:
             out = Path(d)
@@ -33,17 +35,25 @@ class BatchLinkIntegrityTests(unittest.TestCase):
             self.assertFalse((out/'recovered_candidates.so.tmp').exists())
 
     def test_repeat_run_cleans_stale_candidates_and_library(self):
-        self.assertEqual(hashlib.sha256(ELF.read_bytes()).hexdigest(), ELF_SHA256)
+        # Synthetic scan: this test does not depend on large ELF test artifacts.
+        empty_scan = {
+            'symbols_used': False, 'source_read': False,
+            'input_sha256': '0'*64, 'candidate_entries': [],
+            'text_address': '0x1000', 'text_size_bytes': 0,
+        }
         with tempfile.TemporaryDirectory() as d:
             out = Path(d)
             (out/'candidate_deadbeef.cpp').write_text('stale')
             (out/'recovered_candidates.so').write_bytes(b'PREVIOUS_SUCCESS')
-            report = run(ELF, out, compile_cpp=False)
-            self.assertEqual(report['cpp_emitted_candidate_count'], 18)
+            with patch('aarch64_multistage_batch.analyze', return_value=empty_scan):
+                with patch('aarch64_multistage_batch.generate_stack_pair',
+                           side_effect=ValueError('no pair')):
+                    report = run(Path('unused.elf'), out, compile_cpp=False)
+            self.assertEqual(report['cpp_emitted_candidate_count'], 0)
             self.assertEqual(report['compile_status'], 'NOT_REQUESTED')
             self.assertFalse((out/'candidate_deadbeef.cpp').exists())
             self.assertFalse((out/'recovered_candidates.so').exists())
-            self.assertEqual(len(list(out.glob('candidate_*.cpp'))),18)
+            self.assertEqual(len(list(out.glob('candidate_*.cpp'))), 0)
 
 
 if __name__=='__main__':
