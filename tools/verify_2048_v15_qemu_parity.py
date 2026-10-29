@@ -14,10 +14,21 @@ import subprocess
 ELF_SHA = 'a3ca49d16ca6428291574ebd3f7c54153ef0913f8aa1eee4279408c3bf9d499b'
 CPP_SHA = 'b43bba39aeafbb9375be3f852e16e801b15ed59c32d069b25874386eb66337c5'
 HEX64 = re.compile(r'[0-9a-f]{64}\Z')
+# SHA-256 of the exact 22-line manifest, including its trailing newline.
+# Pinning only the ELF/C++ header allowed changing the scores and expected
+# stdout digests together without invalidating the verifier.
+CASES_SHA256 = 'd7ff5478ef7164fce7b8aa29c2a329c9eb7c4ae5a30b6aff9dd264566c2ea121'
+MAX_CASES_BYTES = 4096
 
 
 def parse_cases(path):
-    lines = Path(path).read_text(encoding='ascii').splitlines()
+    path = Path(path)
+    if path.stat().st_size > MAX_CASES_BYTES:
+        raise ValueError('unpinned V15 case manifest: oversized')
+    raw = path.read_bytes()
+    if hashlib.sha256(raw).hexdigest() != CASES_SHA256:
+        raise ValueError('unpinned V15 case manifest: SHA-256 mismatch')
+    lines = raw.decode('ascii').splitlines()
     if len(lines) != 22 or lines[:2] != [f'# ELF sha256: {ELF_SHA}',
                                         f'# Generated C++ sha256: {CPP_SHA}']:
         raise ValueError('wrong case count or unpinned ELF/C++ provenance')
