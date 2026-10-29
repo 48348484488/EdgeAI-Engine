@@ -44,9 +44,40 @@ def _evidence(row,typ,src,meta,output):
             'attempt_failures':row.get('attempt_failures',[])}
 
 
+def _compile_candidates(output, selected):
+    """Link atomically, rejecting unresolved generated symbols (not just syntax)."""
+    library = output/'recovered_candidates.so'
+    temporary = output/'recovered_candidates.so.tmp'
+    library.unlink(missing_ok=True)
+    temporary.unlink(missing_ok=True)
+    compiler = shutil.which('g++')
+    if not compiler:
+        return 'COMPILER_UNAVAILABLE', None
+    args = [compiler, '-std=c++17', '-O2', '-fPIC', '-shared',
+            '-Wl,-z,defs',
+            *[str(output/row['file']) for row in selected],
+            '-o', str(temporary)]
+    try:
+        process = subprocess.run(args, capture_output=True, text=True, timeout=70)
+        if process.returncode or not temporary.is_file() or temporary.stat().st_size == 0:
+            return 'FAILED', (process.stderr or 'linker produced no shared library')[-2500:]
+        temporary.replace(library)
+        return 'SUCCEEDED', None
+    except (subprocess.TimeoutExpired, OSError) as exc:
+        return 'FAILED', str(exc)[-2500:]
+    finally:
+        temporary.unlink(missing_ok=True)
+
+
 def run(elf,output,compile_cpp=True,enable_stateful_printf=False):
     output=Path(output)
     output.mkdir(parents=True,exist_ok=True)
+    # A re-run must not leave prior candidates or a prior successful library
+    # that could be misinterpreted as products of the current input.
+    for stale in output.glob('candidate_*.cpp'):
+        stale.unlink()
+    for name in ('recovered_candidates.so', 'recovered_candidates.so.tmp', 'coverage.json'):
+        (output/name).unlink(missing_ok=True)
     scan=analyze(elf)
     if scan.get('symbols_used') is not False or scan.get('source_read') is not False:
         raise ValueError('stripped scan provenance missing')
@@ -177,17 +208,9 @@ def run(elf,output,compile_cpp=True,enable_stateful_printf=False):
     if enable_stateful_printf:
         report['experimental_stateful_printf_enabled']=True
     if compile_cpp and selected:
-        compiler=shutil.which('g++')
-        if not compiler:
-            report['compile_status']='COMPILER_UNAVAILABLE'
-        else:
-            args=[compiler,'-std=c++17','-O2','-fPIC','-shared',
-                  *[str(output/row['file']) for row in selected],
-                  '-o',str(output/'recovered_candidates.so')]
-            process=subprocess.run(args,capture_output=True,text=True,timeout=70)
-            report['compile_status']='SUCCEEDED' if process.returncode==0 else 'FAILED'
-            if process.returncode:
-                report['compiler_stderr']=process.stderr[-2500:]
+        report['compile_status'], error = _compile_candidates(output, selected)
+        if error:
+            report['compiler_stderr'] = error
     (output/'coverage.json').write_text(json.dumps(report,indent=2)+'\n')
     return report
 
