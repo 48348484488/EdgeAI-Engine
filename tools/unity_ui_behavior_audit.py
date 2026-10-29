@@ -64,6 +64,11 @@ def audit(source, native=None, original_path="BattlePanel.cs",
                          r"\s*\.onClick\s*=\s*(\w+)\s*;")
     for match in pattern.finditer(source):
         button, handler = match.group(1, 2)
+        # Other UI controls (e.g. btn_head) are deliberately rebound for
+        # different target types at runtime. Audit only construction controls;
+        # do not treat their unrelated dynamic handlers as ambiguous builds.
+        if button not in BUILD_CONTROLS:
+            continue
         if button in callbacks and callbacks[button]["callback"] != handler:
             raise ValueError("Ambiguous click wiring: " + button)
         callbacks[button] = {
