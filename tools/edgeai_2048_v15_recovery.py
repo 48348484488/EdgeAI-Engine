@@ -14,6 +14,8 @@ import subprocess
 import sys
 import tempfile
 
+from edgeai_2048_bundle_verify import verify
+
 PINNED_ELF_SHA256 = 'a3ca49d16ca6428291574ebd3f7c54153ef0913f8aa1eee4279408c3bf9d499b'
 NAME = re.compile(r'candidate_([0-9a-fA-F]+)\.cpp\Z')
 
@@ -97,16 +99,17 @@ def rebuild(elf, destination, tool_dir, expected_count=19,
                 or native.get('candidate_count') != expected_count):
             raise RuntimeError('native export/link gate did not prove closure')
         manifest = {
-            'schema_version': 1, 'elf_sha256': digest,
+            'schema_version': 2, 'elf_sha256': digest,
             'generated_candidates': expected_count,
             'source_blind_provenance': True,
             'native_host_link_verified': True,
             'arm64_qemu_parity_tested_in_this_run': False,
             'whole_game_recovered': False,
-            'files': {p.name: sha256(p) for p in sources},
+            'files': {p.name: sha256(p) for p in [*sources, coverage_path, native_path, stage / 'recovered_candidates.so']},
             'limitations': 'Host-native C++ linkage only; not ARM64/QEMU or full-game parity.'
         }
         (stage / 'bundle_manifest.json').write_text(json.dumps(manifest, indent=2) + '\n', encoding='utf-8')
+        verify(stage, elf)
         # Atomic publish: no partial output directory is exposed on failure.
         os.rename(stage, destination)
         return manifest
