@@ -44,7 +44,39 @@ class Octets:
         self.off+=count
         return result
 
+def _candidate_record(data, offset):
+    """Validate next source record with original icon bundle and model paths."""
+    try:
+        r=Octets(data)
+        r.off=offset
+        ident=r.integer()
+        typ=r.integer()
+        function_type=r.integer()
+        if not (100 <= ident <= 1_000_000 and
+                1 <= typ <= 100 and 0 <= function_type <= 100_000):
+            return False
+        name=r.string()
+        lv,revision,lv1,next_id=(r.integer() for _ in range(4))
+        icon=r.string()
+        if not (name and len(name)<=70 and 1<=lv<=1000 and
+                0<=revision<=1000 and lv1>0 and
+                icon.startswith("buildpart")):
+            return False
+        if r.pop("B") not in (0,1):return False
+        model=r.string()
+        return not model or model.startswith(("part/","model/","sceneprefab/"))
+    except (UnicodeError,ValueError,IndexError,struct.error):
+        return False
+
 def decode(payload):
+    """Decode only original fields whose offsets are verified against 7.3.
+
+    The older decompiled BuildPart.cs differs from the XAPK by an additional
+    integer after lv, a flag after basic and an omitted otherPlayerbtns
+    string. The trailing record extension is version-dependent. Preserve its
+    hash and scan for the next strongly validated BuildPart header rather
+    than guessing extension fields. Fail closed when no boundary is found.
+    """
     reader=Octets(payload)
     rows=[]
     while reader.off<len(reader.data):
@@ -53,34 +85,47 @@ def decode(payload):
         for name in ("id","type","functionType"):
             r[name]=reader.integer()
         r["name"]=reader.string()
-        for name in ("lv","lv1Id","nextId"):
+        for name in ("lv","unknown_version_level","lv1Id","nextId"):
             r[name]=reader.integer()
         r["icon"]=reader.string()
         r["canUpgrade"]=reader.boolean()
         r["model"]=reader.string()
         r["basic"]=reader.boolean()
+        r["unknown_post_basic_flag"]=reader.boolean()
         for name in ("needSupportValue","destoryEffectId",
                      "buildEffectId","upLvEffectId"):
             r[name]=reader.integer()
         r["needCheck"]=reader.boolean()
         r["btns"]=[int(x) for x in reader.string().split("|") if x.lstrip("-").isdigit()]
-        r["otherPlayerbtns"]=[int(x) for x in reader.string().split("|") if x.lstrip("-").isdigit()]
+        r["otherPlayerbtns"]=None  # Not present in 7.3 binary prefix.
         r["materialInfo"]={k:reader.integer() for k in
                            ("itemId","needNum","hp","returnNum")}
         for name in ("buildSoundId","destorySoundId","upSoundId"):
             r[name]=reader.integer()
-        r["isDoor"]=reader.boolean()
-        r["OnceAngle"]=reader.integer()
-        r["canFix"]=reader.boolean()
-        n=reader.integer()
-        if n<0 or n>100:raise ValueError("Invalid fix-material list length")
-        r["fixMaterialInfos"]=[
-            {"itemId":reader.integer(),"needNum":reader.integer()}
-            for _ in range(n)]
-        r["canRename"]=reader.boolean()
-        r["canAutoUpgrade"]=reader.boolean()
-        r["byte_span"]=[start,reader.off]
-        if r["id"]<=0 or r["lv"]<0 or r["lv"]>100:
+        suffix_start=reader.off
+        # Verified in source level-1 base parts: a 32-bit isDoor flag followed
+        # by 32-bit OnceAngle. Do not claim angles for unverified structures.
+        r["OnceAngle"]=None
+        if r["type"] in CATEGORIES and suffix_start+8 <= len(payload):
+            possible=struct.unpack_from("<i",payload,suffix_start+4)[0]
+            if 0<=possible<=360:r["OnceAngle"]=possible
+        remaining=len(payload)-suffix_start
+        end=None
+        for position in range(suffix_start,min(suffix_start+1500,len(payload)-10)):
+            if _candidate_record(payload,position):
+                end=position
+                break
+        if end is None:
+            if remaining>1500:
+                raise ValueError("Cannot establish source BuildPart record boundary "
+                                 +str(r["id"])+" at "+str(suffix_start))
+            end=len(payload)
+        suffix=payload[suffix_start:end]
+        r["extension_bytes"]=len(suffix)
+        r["extension_sha256"]=hashlib.sha256(suffix).hexdigest()
+        r["byte_span"]=[start,end]
+        reader.off=end
+        if r["id"]<=0 or r["lv"]<1 or r["type"]<1:
             raise ValueError("Bad BuildPart record at "+str(start))
         rows.append(r)
         if len(rows)>20000:raise ValueError("Unbounded BuildPart records")
@@ -89,17 +134,19 @@ def decode(payload):
     return rows
 
 def verify_icons(rows, sprites):
-    # A source icon name can appear in several bundles. Do NOT assign
-    # arbitrarily; report candidate FileID/PathID and missing/ambiguous.
+    """Resolve exact 'buildpart/basename' -> assets/icon/buildpart.ab Sprite."""
     lookup=collections.defaultdict(list)
     for bundle in sprites:
         for icon in bundle["icons"]:
             if not icon.get("file"):continue
-            lookup[icon["name"]].append(
+            lookup[(bundle["bundle"],icon["name"])].append(
                 {"bundle":bundle["bundle"],"path_id":icon["id"],
                  "file":icon["file"]})
     for row in rows:
-        refs=lookup.get(row["icon"],[])
+        icon=row["icon"].split("/")
+        refs=[]
+        if len(icon)==2:
+            refs=lookup.get(("assets/icon/"+icon[0]+".ab",icon[1]),[])
         row["verified_icon_candidates"]=refs
         row["icon_resolution"]=("unique" if len(refs)==1 else
                                 "missing" if not refs else "ambiguous")
@@ -126,7 +173,7 @@ def report_from_bytes(payload, sprites=None):
         "original_source_order_preserved":True,
         "pixel_fidelity_proven":False,
         "notes":[
-            "Format matches Share.Octets and cfg.BuildPart constructor",
+            "Reader accounts for verified 7.3 Octets fields and version-dependent record extension",
             "Category menu includes only basic && lv == 1 per BuildManager.GetBasicPartByType",
             "Icon candidate is valid only when exact BuildPart.icon name resolves",
             "Model Prefab and material IDs are source fields, not proof of successful port",
