@@ -3,6 +3,7 @@ import hashlib
 import json
 from pathlib import Path
 import sys
+import subprocess
 import tempfile
 import unittest
 
@@ -33,6 +34,53 @@ class BundleIntegrityTests(unittest.TestCase):
         self.assertTrue(report['passed'])
         self.assertEqual(report['files_verified'], 5)
         self.assertFalse(report['whole_game_recovered'])
+
+    def _rehash_library(self):
+        manifest_path = self.bundle / 'bundle_manifest.json'
+        manifest = json.loads(manifest_path.read_text())
+        p = self.bundle / 'recovered_candidates.so'
+        manifest['files'][p.name] = hashlib.sha256(p.read_bytes()).hexdigest()
+        manifest_path.write_text(json.dumps(manifest))
+
+    def test_valid_bundle_has_real_native_exports(self):
+        self.assertEqual(verify(self.bundle)['native_exports_verified_from_elf'], 2)
+
+    def test_rejects_rehashed_library_missing_expected_export(self):
+        source = self.root / 'forged.cpp'
+        source.write_text('extern "C" int recovered_2000(){return 7;}')
+        subprocess.run(['g++','-shared','-fPIC',str(source),'-o',
+                        str(self.bundle / 'recovered_candidates.so')], check=True)
+        self._rehash_library()
+        with self.assertRaisesRegex(ValueError, 'native ELF export mismatch'):
+            verify(self.bundle)
+
+    def test_rejects_rehashed_non_elf_library(self):
+        (self.bundle / 'recovered_candidates.so').write_bytes(b'not a shared library')
+        self._rehash_library()
+        with self.assertRaisesRegex(ValueError, 'native library is invalid'):
+            verify(self.bundle)
+
+    def test_rejects_rehashed_library_with_extra_export(self):
+        source = self.root / 'forged.cpp'
+        source.write_text('extern "C" int recovered_2000(){return 7;} '
+                          'extern "C" int recovered_3000(){return 7;} '
+                          'extern "C" int recovered_dead(){return 0;}')
+        subprocess.run(['g++','-shared','-fPIC',str(source),'-o',
+                        str(self.bundle / 'recovered_candidates.so')], check=True)
+        self._rehash_library()
+        with self.assertRaisesRegex(ValueError, 'native ELF export mismatch'):
+            verify(self.bundle)
+
+    def test_rejects_unresolved_recovered_dependency(self):
+        source = self.root / 'forged.cpp'
+        source.write_text('extern "C" int recovered_4040(); '
+                          'extern "C" int recovered_2000(){return recovered_4040();} '
+                          'extern "C" int recovered_3000(){return 1;}')
+        subprocess.run(['g++','-shared','-fPIC',str(source),'-o',
+                        str(self.bundle / 'recovered_candidates.so')], check=True)
+        self._rehash_library()
+        with self.assertRaisesRegex(ValueError, 'native ELF export mismatch'):
+            verify(self.bundle)
 
     def test_rejects_modified_cpp(self):
         with (self.bundle / 'candidate_2000.cpp').open('a') as f:
