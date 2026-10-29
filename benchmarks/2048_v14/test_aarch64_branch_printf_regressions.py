@@ -12,6 +12,7 @@ from aarch64_branch_printf_lifter import (_bounded_frame, _string_roles,
 from aarch64_print_loop_caller_lifter import (discover as caller_discover, lift as caller_lift)
 from aarch64_leaf_lifter import parse_instructions
 from aarch64_printf_lifter import load_rodata
+from aarch64_stripped_discovery import load_text
 
 ROOT=Path(__file__).resolve().parents[1]
 ELF=ROOT/'bin/2048-arm64-stripped.elf'
@@ -94,6 +95,24 @@ class BranchAndLoopStrictTests(unittest.TestCase):
             orig=printer_lift(ELF,0x401004,0x4011cc,{0x400f58})[0]
             mutant=printer_lift(p,0x401004,0x4011cc,{0x400f58})[0]
             self.assertNotEqual(orig,mutant)
+
+    def test_cbz_mutation_is_translated_instead_of_rejected(self):
+        info=load_text(ELF)
+        rows=parse_instructions(ELF,0x401004,0x4011cc)
+        pc=next(pc for pc,op,_ in rows if op=='cbnz')
+        data=bytearray(ELF.read_bytes())
+        offset=data.find(info['text'])
+        self.assertGreaterEqual(offset,0)
+        at=offset+pc-info['text_address']
+        opcode,=struct.unpack_from('<I',data,at)
+        self.assertEqual(opcode&0x7f000000,0x35000000)
+        struct.pack_into('<I',data,at,opcode&~(1<<24))
+        with tempfile.TemporaryDirectory() as d:
+            changed=Path(d)/'cbz.elf';changed.write_bytes(data)
+            original=printer_lift(ELF,0x401004,0x4011cc,{0x400f58})[0]
+            mutated=printer_lift(changed,0x401004,0x4011cc,{0x400f58})[0]
+            self.assertNotEqual(original,mutated)
+            self.assertIn('if (uint32_t(r[0])==0)',mutated)
 
     def test_invalid_elf_provenance_detected(self):
         with tempfile.TemporaryDirectory() as d:
