@@ -141,7 +141,7 @@ def lift(elf,entry,stop,scalar_callees):
     printf_runtime,string_count=_printf_runtime(rodata)
     source+=printf_runtime
     num_printf=0; num_callee=0
-    supported={'stp','ldp','mov','and','cbnz','adrp','add','bl','mul','cmp','b','b.ls','b.hi','csel','ret'}
+    supported={'stp','ldp','mov','and','cbz','cbnz','adrp','add','bl','mul','cmp','b','b.ls','b.hi','csel','ret'}
     frame_idxs=[]
     for pc,op,args in rows:
         if op not in supported:raise ValueError(f'unsupported opcode at {hex(pc)}: {op} {args}')
