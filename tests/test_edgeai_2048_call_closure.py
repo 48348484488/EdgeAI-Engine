@@ -55,6 +55,34 @@ class ClosureTests(unittest.TestCase):
             p.write_text('extern "C" int recovered_2000() { return 1; }')
             self.assertIn(0x2000, generated_functions(Path(d)))
 
+    def test_prototype_only_does_not_count_as_recovered(self):
+        with tempfile.TemporaryDirectory() as d:
+            p = Path(d) / 'candidate_2000.cpp'
+            p.write_text('extern "C" int recovered_2000();')
+            with self.assertRaisesRegex(ValueError, 'matching exported'):
+                generated_functions(Path(d))
+            p.write_text('extern "C" int recovered_2000();\n'
+                         'extern "C" int recovered_2000() { return 1; }')
+            self.assertIn(0x2000, generated_functions(Path(d)))
+
+    def test_main_hook_is_not_a_native_export(self):
+        with tempfile.TemporaryDirectory() as d:
+            p = Path(d) / 'candidate_401758.cpp'
+            p.write_text('int candidate_401758(const Hooks&, size_t);')
+            with self.assertRaisesRegex(ValueError, 'matching exported'):
+                generated_functions(Path(d))
+
+    def test_dependency_gate_fails_when_missing(self):
+        result = audit(cfg([call(0x1000, 0x2000)]), {})
+        self.assertFalse(result['dependency_closure_complete'])
+        self.assertFalse(result['native_link_tested'])
+
+    def test_dependency_gate_does_not_claim_whole_game(self):
+        result = audit(cfg([call(0x1000, 0x2000)]), {0x2000: {'file': 'candidate_2000.cpp'}})
+        self.assertTrue(result['dependency_closure_complete'])
+        self.assertFalse(result['native_link_tested'])
+        self.assertFalse(result['complete'])
+
     def test_no_generated_directory_rejected(self):
         with self.assertRaisesRegex(ValueError, 'does not exist'):
             generated_functions(Path('/definitely/not/an/edgeai/path'))
