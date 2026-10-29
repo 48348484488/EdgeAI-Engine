@@ -3,7 +3,7 @@ import tempfile
 import unittest
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'tools'))
-from edgeai_2048_call_closure import audit, generated_functions
+from edgeai_2048_call_closure import audit, generated_functions, decode_bl_sites
 
 SHA = 'a' * 64
 
@@ -54,6 +54,18 @@ class ClosureTests(unittest.TestCase):
                 generated_functions(Path(d))
             p.write_text('extern "C" int recovered_2000() { return 1; }')
             self.assertIn(0x2000, generated_functions(Path(d)))
+
+    def test_independent_bl_decoder_forward_and_backward(self):
+        code = b''.join(word.to_bytes(4, 'little') for word in
+                        (0x94000004, 0x97fffffe, 0xd503201f, 0x94000000))
+        self.assertEqual(decode_bl_sites(code, 0x1000, 0x1000, 0x1010),
+                         [(0x1000, 0x1010), (0x1004, 0xffc), (0x100c, 0x100c)])
+
+    def test_independent_bl_decoder_rejects_bad_ranges(self):
+        for start, end in ((0, 4), (0x1001, 0x1004), (0x1000, 0x1010),
+                           (0x1008, 0x1008)):
+            with self.assertRaises(ValueError):
+                decode_bl_sites(b'\\0'*12, 0x1000, start, end)
 
     def test_prototype_only_does_not_count_as_recovered(self):
         with tempfile.TemporaryDirectory() as d:
