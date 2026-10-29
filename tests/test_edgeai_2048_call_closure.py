@@ -2,8 +2,9 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'tools'))
-from edgeai_2048_call_closure import audit, generated_functions, decode_bl_sites
+from edgeai_2048_call_closure import audit, generated_functions, decode_bl_sites, verify_cfg_against_elf
 
 SHA = 'a' * 64
 
@@ -66,6 +67,22 @@ class ClosureTests(unittest.TestCase):
                            (0x1008, 0x1008)):
             with self.assertRaises(ValueError):
                 decode_bl_sites(b'\\0'*12, 0x1000, start, end)
+
+    def test_cfg_binary_crosscheck_detects_tampered_target(self):
+        text = (0x94000004).to_bytes(4, 'little') + (0xd503201f).to_bytes(4, 'little') * 15
+        binary = {'text': text, 'text_address': 0x1000, 'sha256': SHA}
+        good = cfg([call(0x1000, 0x1010)])
+        bad = cfg([call(0x1000, 0x1014)])
+        with mock.patch('aarch64_stripped_discovery.load_text', return_value=binary):
+            self.assertEqual(verify_cfg_against_elf(good, Path('/unused')), 1)
+            with self.assertRaisesRegex(ValueError, 'direct BL mismatch'):
+                verify_cfg_against_elf(bad, Path('/unused'))
+
+    def test_cfg_binary_crosscheck_detects_wrong_sha(self):
+        binary = {'text': b'\\0' * 64, 'text_address': 0x1000, 'sha256': 'b' * 64}
+        with mock.patch('aarch64_stripped_discovery.load_text', return_value=binary):
+            with self.assertRaisesRegex(ValueError, 'SHA-256'):
+                verify_cfg_against_elf(cfg([]), Path('/unused'))
 
     def test_prototype_only_does_not_count_as_recovered(self):
         with tempfile.TemporaryDirectory() as d:
