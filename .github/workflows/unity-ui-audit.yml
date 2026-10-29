@@ -1,0 +1,17 @@
+name: EdgeAI lightweight Unity UI source verification
+on:
+  push:
+    paths:
+      - tools/unity_ui_behavior_audit.py
+      - tests/test_unity_ui_behavior_audit.py
+      - .github/workflows/unity-ui-audit.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Test Unity prefab/script callback auditor without neural dependencies
+        run: python3 -m unittest discover -s tests -p 'test_unity_ui_behavior_audit.py' -v
