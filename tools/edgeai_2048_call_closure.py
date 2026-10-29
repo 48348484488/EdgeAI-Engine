@@ -29,7 +29,7 @@ def generated_functions(folder):
             raise ValueError(f'duplicate generated function address: {addr:#x}')
         source_bytes = source.read_bytes()
         source_text = source_bytes.decode('utf-8')
-        if not re.search(r'extern\s+"C"\s+[^{;]+\brecovered_' + format(addr, 'x') + r'\s*\(', source_text):
+        if not re.search(r'extern\s+"C"\s+[^;{}]+\brecovered_' + format(addr, 'x') + r'\s*\([^;{}]*\)\s*\{', source_text):
             raise ValueError(f'missing matching exported C++ function: {source.name}')
         found[addr] = {'file': source.name, 'sha256': hashlib.sha256(source_bytes).hexdigest()}
     if not found:
@@ -85,6 +85,8 @@ def audit(cfg, generated, expected_binary_sha256=None):
         'indirect_unresolved_calls': counts['indirect_unresolved'],
         'missing_internal_targets': [hex(a) for a in distinct_missing],
         'calls': classified,
+        'dependency_closure_complete': (counts['missing_internal_cpp'] == 0 and counts['indirect_unresolved'] == 0),
+        'native_link_tested': False,
         'complete': False,
         'limitations': 'Source-blind structural dependency audit only; generated files are not proof of valid ABI, behavioral equivalence, or an executable game.'
     }
@@ -96,6 +98,8 @@ def main():
     p.add_argument('--generated-dir', required=True, type=Path)
     p.add_argument('--expected-sha256')
     p.add_argument('--output', required=True, type=Path)
+    p.add_argument('--require-dependency-closure', action='store_true',
+                   help='exit nonzero if any internal call is missing or indirect unresolved')
     args = p.parse_args()
     result = audit(json.loads(args.cfg.read_text()), generated_functions(args.generated_dir), args.expected_sha256)
     args.output.parent.mkdir(parents=True, exist_ok=True)
@@ -104,6 +108,8 @@ def main():
           f"{result['calls_to_external_plt']} external PLT; "
           f"{result['calls_missing_internal_cpp']} missing internal calls "
           f"({', '.join(result['missing_internal_targets'])}); not executable")
+    if args.require_dependency_closure and not result['dependency_closure_complete']:
+        raise SystemExit(2)
 
 
 if __name__ == '__main__':
