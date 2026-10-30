@@ -65,10 +65,19 @@ class StrippedWinnerTests(unittest.TestCase):
 
     def test_corrupt_table_base_rejected(self):
         buf=bytearray(self.stripped.read_bytes())
-        ins=bytes.fromhex('08c101e3')  # MOVW r12, #0x1108
+        # Find the real MOVW r12 encoding in this compiler's disassembly;
+        # LLVM17/LLVM18 place the table at different addresses.
+        dump=subprocess.run(['llvm-objdump','-d',str(self.orig)],
+                            capture_output=True,text=True,check=True).stdout
+        import re
+        match=re.search(r'^\\s*[0-9a-fA-F]+:\\s+([0-9a-fA-F]{8})\\s+movw\\s+r12,',dump,re.M)
+        self.assertIsNotNone(match)
+        word=int(match[1],16)
+        ins=word.to_bytes(4,'little')
         self.assertEqual(buf.count(ins),1)
         off=buf.index(ins)
-        buf[off:off+4]=bytes.fromhex('18c101e3')
+        # Change high MOVW immediate nibble; pointer no longer maps to table.
+        buf[off:off+4]=(word ^ 0x00010000).to_bytes(4,'little')
         with tempfile.TemporaryDirectory() as td:
             file=Path(td)/'bad.elf';file.write_bytes(buf)
             with self.assertRaises(ValueError):
