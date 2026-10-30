@@ -1,3 +1,13 @@
+## Continuação — 2026-10-30 01:25–01:30 (America/Recife), chamada ARM/Thumb
+
+- Consultados os runs atuais e logs reais: CI geral anterior [#40997127557](https://github.com/48348484488/EdgeAI-Engine/actions/runs/40997127557) executou 688 testes, terminou com 3 falhas e 16 erros, sem travamento. Os erros ainda decorrem de fingerprints ARM32 antigos de `winner` sob LLVM atual; não reduzir verificações sem evidência.
+- Corrigido o analisador **genérico** `tools/edgeai_arm_callgraph.py` para reconhecer disassembly LLVM ARM/Thumb com bytes separados (2–4), halfwords Thumb e words de 32 bits, mantendo formato sem raw bytes. Commit [e8eb4c9](https://github.com/48348484488/EdgeAI-Engine/commit/e8eb4c9ca6fc93dc8e68dc3e533b7e1e2c1e0efc).
+- Reconhecimento de saltos Thumb `b.w` e resolução de destino ARM32 com bit de interworking para identificar funções rotuladas, preservando o endereço bruto no relatório. Commit [ca95d7c](https://github.com/48348484488/EdgeAI-Engine/commit/ca95d7cdb0dd31c86b77af08dd3dc2b1fa8908a4).
+- Cinco testes de regressão sintéticos para ARM32/Thumb/ARM64 e alvos indiretos em `tests/test_edgeai_arm_callgraph_formats.py`, commits [eee4553](https://github.com/48348484488/EdgeAI-Engine/commit/eee455350358a19fdd346d89e1ea9bac5459b917) e [a9514eb](https://github.com/48348484488/EdgeAI-Engine/commit/a9514eb06c44036f6f900b429046d7e9f43e593c). O regex foi reproduzido e testado localmente contra oito formatos; a suíte GitHub mais recente [#41002949037](https://github.com/48348484488/EdgeAI-Engine/actions/runs/41002949037) estava em execução ao registrar este bloco.
+- **Não foi reconstruída função C++ nova, nem analisado o binário original do Last nesta etapa.** A cobertura histórica 19/23 não mudou.
+- Referências públicas LITE encontradas da versão 6.7 (julho/2026), não correspondem comprovadamente ao Unity LITE 7.3; nenhuma paridade visual alegada.
+- Próxima prioridade: verificar os testes ARM/Thumb novos no CI, diagnosticar os fingerprints ARM32 antigos com disassembly da toolchain atual e validar uma reconstrução C++ diferencial. Em paralelo, usar o novo workflow virtual do Last para obter screenshot/logcat real e só então medir fidelidade.
+
 ## Continuação — 2026-10-30 (America/Recife), auditoria e correções ARM
 
 - Retomada a partir do estado registrado em 2026-10-29; diagnóstico da execução CI geral [#40989848609](https://github.com/48348484488/EdgeAI-Engine/actions/runs/40989848609): **685 testes, 3 falhas, 16 erros, 38 ignorados**. Não foi travamento; os casos ARM32 continuam incompatíveis com fingerprints LLVM atuais.
