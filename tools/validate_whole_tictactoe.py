@@ -21,7 +21,17 @@ HARNESS=ROOT/'tests/whole_game_differential_harness.cpp'
 
 
 def invoke(argv):
-    return subprocess.run([str(x) for x in argv], check=True, capture_output=True, text=True, timeout=180).stdout
+    command = [str(x) for x in argv]
+    result = subprocess.run(command, capture_output=True, text=True, timeout=180)
+    if result.returncode:
+        # Keep the underlying recognizer's refusal reason visible in CI.
+        # This is diagnostic only: failed recovery remains a hard failure.
+        raise RuntimeError(
+            "command failed (exit %d): %s\\nstdout:\\n%s\\nstderr:\\n%s" %
+            (result.returncode, " ".join(command),
+             result.stdout[-6000:], result.stderr[-6000:])
+        )
+    return result.stdout
 
 
 def validate(output=ROOT/'results/whole_game_rebuild.json'):
