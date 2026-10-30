@@ -143,10 +143,12 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p output/ghidra /tmp/edgeai-ghidra/project
-          exe="$(find /tmp/edgeai-ghidra -path '*/support/analyzeHeadless' -type f -print -quit)"
+          exe="$(find /tmp/edgeai-ghidra -path '*/support/pyghidraRun' -type f -print -quit)"
           test -n "$exe"
           chmod +x "$exe"
-          "$exe" /tmp/edgeai-ghidra/project Blind2048 \
+          ghidra_root="${exe%/support/pyghidraRun}"
+          python3 -m pip install --no-index -f "$ghidra_root/Ghidra/Features/PyGhidra/pypkg/dist" pyghidra
+          "$exe" --headless /tmp/edgeai-ghidra/project Blind2048 \
             -import "$PWD/input/2048-stripped.aarch64.elf" \
             -scriptPath "$PWD/tools" \
             -analysisTimeoutPerFile 400 \
