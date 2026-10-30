@@ -1,3 +1,8 @@
+### Twenty original source OBJ seam probes — 2026-10-30
+
+- Expanded the independent geometric comparison from four to **20 probes** (five along each of four adjacent borders, 0.5m inside/outside). **20/20 covered**, maximum absolute height deltas north 0.31252m, south 0.12032m, east 0.24381m, west 0.04688m. Saved measured summary and mesh provenance in [updated audit f1c4258](https://github.com/48348484488/EdgeAI-Engine/commit/f1c4258b04e91af0bf29af6890019d91f8b1372c).
+- All sampled source seams meet a provisional 0.55m walking-step criterion, but runtime traversal, collision implementation and original-game parity remain untested. Next: cross-check against Last's Android seam events.
+
 ### Latest EdgeAI CI verified — 2026-10-30
 
 - [General CI #41104294902](https://github.com/48348484488/EdgeAI-Engine/actions/runs/41104294902) **completed successfully** on commit `94527304`. Inspected job logs: **759 Python tests, 38 skipped, zero failures**, plus **15/15 C++ tests**. Includes the generic tile-catalog and OBJ seam differential regressions. QEMU-dependent test runners reported `not_executed_missing_qemu`; do not misrepresent those as executed.
