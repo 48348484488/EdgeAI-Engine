@@ -1,0 +1,105 @@
+{
+  "source_resolution": [
+    1920,
+    1080
+  ],
+  "target_resolution": [
+    1080,
+    640
+  ],
+  "controls": [
+    {
+      "name": "craft",
+      "source_center": [
+        61,
+        1025
+      ],
+      "observed_center": [
+        34,
+        480
+      ],
+      "source_bounds": [
+        11,
+        975,
+        111,
+        1075
+      ]
+    },
+    {
+      "name": "inventory",
+      "source_center": [
+        513.02501,
+        976.625
+      ],
+      "observed_center": [
+        289,
+        454
+      ]
+    },
+    {
+      "name": "settings",
+      "source_center": [
+        1854.70078,
+        354.98001
+      ],
+      "observed_center": [
+        1043,
+        103
+      ]
+    },
+    {
+      "name": "jump",
+      "source_center": [
+        1834.49316,
+        789.9768
+      ],
+      "observed_center": [
+        1032,
+        348
+      ]
+    },
+    {
+      "name": "joystick",
+      "source_center": [
+        326.3,
+        794.7
+      ],
+      "observed_center": [
+        183,
+        351
+      ]
+    }
+  ],
+  "evidence": {
+    "source": "Last Island LITE 7.3 battlepanel.ab RectTransform export",
+    "source_audit": "https://github.com/48348484488/last-Island-of-survival-lite/actions/runs/41041068355",
+    "virtual_runtime": "https://github.com/48348484488/last-Island-of-survival-lite/actions/runs/41043684939",
+    "artifact": "https://github.com/48348484488/last-Island-of-survival-lite/actions/runs/41043684939/artifacts/12971836919",
+    "capture_resolution": [
+      1080,
+      640
+    ],
+    "tap_coordinates": [
+      34,
+      480
+    ],
+    "fresh_log_marker": "LIOS_CRAFT_PANEL_OPEN",
+    "changed_pixels": 539385,
+    "changed_fraction": 0.78036,
+    "min_channel_delta": 30,
+    "script_exit_code": 0,
+    "note": "Post-fix real Android virtual screenshot and fresh touch action; screenshot change alone does not prove the specific menu, and no original 7.3 runtime parity is claimed."
+  },
+  "touch_trials": [
+    {
+      "control": "craft",
+      "screen_point": [
+        34,
+        480
+      ],
+      "action_observed": true,
+      "visual_transition_observed": true,
+      "evidence": "Real Android emulator fresh LIOS_CRAFT_PANEL_OPEN marker and decoded RGB screenshot delta; not original Unity parity"
+    }
+  ]
+}
