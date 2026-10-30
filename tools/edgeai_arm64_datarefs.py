@@ -72,16 +72,25 @@ def analyze_text(disassembly):
             else:
                 tracked[dest] = (target & ~0xfff if op == "adrp" else target, pc)
             continue
-        if op == "add" and len(args) == 3 and dest:
+        if op == "add" and len(args) in (3, 4) and dest:
             # A W-register write zero-extends/truncates the value. Never
             # propagate a 64-bit PC-relative address through Wn arithmetic.
             if args[0].lower().startswith("w") or args[1].lower().startswith("w"):
                 tracked.pop(dest, None)
                 continue
+            # AArch64 ADD-immediate may encode an optional LSL #12.
+            # Reject other shifts or register operands instead of guessing.
+            shift = 0
+            if len(args) == 4:
+                modifier = re.fullmatch(r"lsl\s+#(0|12)", args[3], re.I)
+                if modifier is None:
+                    tracked.pop(dest, None)
+                    continue
+                shift = int(modifier[1])
             src, offset = _reg(args[1]), _imm(args[2])
             state = tracked.get(src)
             if state is not None and offset is not None:
-                address = state[0] + offset
+                address = state[0] + (offset << shift)
                 tracked[dest] = (address, state[1])
                 references.append({"function": current, "pc": hex(pc),
                                    "kind": "computed_address", "opcode": op,
