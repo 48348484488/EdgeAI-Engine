@@ -66,7 +66,7 @@ class ClosureTests(unittest.TestCase):
         for start, end in ((0, 4), (0x1001, 0x1004), (0x1000, 0x1010),
                            (0x1008, 0x1008)):
             with self.assertRaises(ValueError):
-                decode_bl_sites(b'\\0'*12, 0x1000, start, end)
+                decode_bl_sites(b'\0'*12, 0x1000, start, end)
 
     def test_cfg_binary_crosscheck_detects_tampered_target(self):
         text = (0x94000004).to_bytes(4, 'little') + (0xd503201f).to_bytes(4, 'little') * 15
@@ -79,7 +79,7 @@ class ClosureTests(unittest.TestCase):
                 verify_cfg_against_elf(bad, Path('/unused'))
 
     def test_cfg_binary_crosscheck_detects_wrong_sha(self):
-        binary = {'text': b'\\0' * 64, 'text_address': 0x1000, 'sha256': 'b' * 64}
+        binary = {'text': b'\0' * 64, 'text_address': 0x1000, 'sha256': 'b' * 64}
         with mock.patch('aarch64_stripped_discovery.load_text', return_value=binary):
             with self.assertRaisesRegex(ValueError, 'SHA-256'):
                 verify_cfg_against_elf(cfg([]), Path('/unused'))

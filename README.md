@@ -48,3 +48,14 @@ python3 -m unittest discover -s tests -p 'test_elf_inspect.py'
 - [Histórico de alterações](CHANGELOG.md)
 - [Runtime de baixo consumo](docs/low-resource-runtime.md)
 - [Relatório do teste 2048 V15](docs/blind_external_game_2048_v15_2026-10-29.md)
+
+## Limites e execução em CPU
+
+O perfil **EDGEAI_LOW_RESOURCE** usa limites de referência de **64 MiB** de memória
+para o processo e **16 MiB** para o modelo em testes de baixo consumo, com execução
+**CPU-only**. São limites de configuração/benchmark, não garantia de desempenho
+para qualquer APK. Consulte [os testes](docs/low-resource-runtime.md).
+
+Os números de **tool accuracy** são medidos por tarefa e conjunto de testes;
+o componente **neural** é experimental e **does not claim parity** com o jogo
+original sem comparação dinâmica de entradas, estados e saídas.

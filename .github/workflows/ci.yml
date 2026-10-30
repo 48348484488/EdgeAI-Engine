@@ -18,6 +18,12 @@ jobs:
         run: ctest --test-dir build --output-on-failure
       - name: Install Python test dependencies
         run: python3 -m pip install --disable-pip-version-check --index-url https://download.pytorch.org/whl/cpu torch==2.10.0 && python3 -m pip install --disable-pip-version-check 'numpy>=1.26,<3'
+      - name: Install LLVM binary analysis tools
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y llvm
+          command -v llvm-objdump
+          command -v llvm-objcopy
       - name: Python tests
         run: python3 -m unittest discover -s tests -p 'test_*.py'
 

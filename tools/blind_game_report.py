@@ -12,7 +12,7 @@ def summarize(build, edgeai, ghidra, binary_hash):
     if edgeai.get('file_sha256') != binary_hash:
         raise ValueError('EdgeAI report does not match the exact ELF')
     if build.get('source_used_in_analysis') is not False:
-        raise ValueError('build provenance does not guarantee blind split')
+        raise ValueError('source_used_in_analysis must be false; build provenance does not guarantee blind split')
     if edgeai.get('target_executed') is not False:
         raise ValueError('static audit unexpectedly executed target')
     if ghidra.get('target_source_read') is not False:

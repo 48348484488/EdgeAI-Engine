@@ -41,7 +41,7 @@ class StrictSubsetTests(unittest.TestCase):
         self.assertIn(' >> 34',line)
 
     def test_no_original_game_name_templates(self):
-        source=(ROOT/'analysis/aarch64_stack_vm_lifter.py').read_text()
+        source=(ROOT/'tests/aarch64_stack_vm_lifter.py').read_text()
         for name in ('board_add_piece','board_init','src/board.c','0x400bfc','0x400d08','0x41ffd8'):
             self.assertNotIn(name,source)
 
