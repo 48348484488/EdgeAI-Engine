@@ -1,0 +1,32 @@
+{
+  "description": "Static ARM64 audit comparison of two verified Last Island recreated APK builds; not original game parity",
+  "before": {
+    "commit": "a290f59a",
+    "elf_sha256": "fef5ef63907c9d7f7ca2dd30b16442ab57176654e871dbf8997b091c97dd09e8",
+    "elf_size": 3525008,
+    "instructions": 616657,
+    "call_sites": 25188,
+    "indirect": 674,
+    "unresolved_direct": 10535
+  },
+  "after": {
+    "commit": "b5473200",
+    "elf_sha256": "8c4afd0f4c1ac59a8a7b0ee58f7cf4f4d4d6cf5329737d1d282ca098f3484e21",
+    "elf_size": 3525136,
+    "instructions": 616689,
+    "call_sites": 25187,
+    "indirect": 674,
+    "unresolved_direct": 10536
+  },
+  "delta": {
+    "elf_size_bytes": 128,
+    "instructions": 32,
+    "call_sites": -1
+  },
+  "build_run": "https://github.com/48348484488/last-Island-of-survival-lite/actions/runs/41002903306",
+  "limitations": [
+    "Differences may include compiler/linker effects; do not attribute every changed instruction to a specific source edit",
+    "No runtime ARM64 execution or original APK differential test",
+    "Static call graph labels are not reconstructed functions"
+  ]
+}
