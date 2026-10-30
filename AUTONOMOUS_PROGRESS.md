@@ -1,3 +1,10 @@
+### Source-mesh seam differential — 2026-10-30
+
+- Added generic `tools/edgeai_mesh_seam.py` to compare OBJ highest-surface heights across explicitly supplied inside/outside seam coordinates, rejecting uncovered samples and excessive step heights [8518683](https://github.com/48348484488/EdgeAI-Engine/commit/85186838642196bc87c3a51ec4eed1faf031c8b2). Added synthetic flat, high-step, missing-coverage and nonfinite-input regressions [0a0d195](https://github.com/48348484488/EdgeAI-Engine/commit/0a0d195891d25437f42b395a4979fa00b53e4717).
+- Independently parsed all five **actual source OBJ triangle meshes** from the Last GitHub repository and sampled 0.5m either side of each center-tile border using barycentric vertical intersection. Height changes: north **+0.17189m**, south **+0.00313m**, east **-0.03907m**, west **-0.01094m**; each side had two triangle intersections at both probes. All four are below a provisional 0.55m walk-step threshold. Exact mesh blob SHAs and coordinates are in [JSON](https://github.com/48348484488/EdgeAI-Engine/blob/main/docs/last_spawn_mesh_seam_heights_2026-10-30.json) [2aa90a3](https://github.com/48348484488/EdgeAI-Engine/commit/2aa90a3293fd1189684390e9d4ad15bc7d52eae0).
+- This establishes **source mesh geometry continuity at four specific probe positions only**. It does not establish runtime collision continuity, original Unity collider equivalence, or full edge continuity. New seam-tool CI queued at checkpoint. Next: verify CI and compare Android runtime seam events with these independent geometry values.
+
+
 ## 2026-10-30 — reusable 3D tile-adjacency audit (current run)
 
 - Added dependency-free generic source-world catalog parser `tools/edgeai_tile_catalog.py` with conservative four-way neighbor selection, shared-edge coverage and size filtering, unsafe-path/nonfinite/duplicate rejection. [Implementation 0359044](https://github.com/48348484488/EdgeAI-Engine/commit/03590444062c3740eb1b4fe6a8f48a458d96dfea); [regressions b1d5af8](https://github.com/48348484488/EdgeAI-Engine/commit/b1d5af8885e78f87d3f1a29c0f24dcf9930330c8).
