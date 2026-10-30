@@ -1,3 +1,11 @@
+### 2026-10-30 — generic multi-offset runtime collision differential
+
+- Extended reusable `tools/edgeai_runtime_seam_audit.py` to compare **multiple source/runtime probes per edge** using optional finite `offset` identifiers while preserving legacy single-midpoint input [0e589bf](https://github.com/48348484488/EdgeAI-Engine/commit/0e589bfde0c499694bd103beb220d52998bd6a3c). It rejects malformed, duplicate, missing, unexpected, uncovered, nonfinite, excessive-step and source-mismatched samples. Corrected Python raw-regex escaping [fcf94f5](https://github.com/48348484488/EdgeAI-Engine/commit/fcf94f5ed640a39bad4a350cc04c367deeb8d852).
+- Added five new deterministic multi-offset regression cases [638b36c](https://github.com/48348484488/EdgeAI-Engine/commit/638b36c91c815963d4470862501eca4683d04449). [General CI #41124558087](https://github.com/48348484488/EdgeAI-Engine/actions/runs/41124558087) was **in progress at checkpoint**; do not declare these tests passed until the job finishes.
+- Last now emits 20 collision probes (five per boundary) and has a strict Android runtime gate; latest Last build [#41124589423](https://github.com/48348484488/last-Island-of-survival-lite/actions/runs/41124589423) pending. This remains sampled collision comparison, **not** player traversal or automatic C++ decompilation of the original game.
+- **Next:** audit the 20 actual Android log events against independent source OBJ geometry, inspect any failing offsets and prioritize real player movement, camera and source terrain material recovery. No new ARM32/ARM64 gameplay function has been reconstructed this cycle.
+
+
 ### Runtime seam differential validator and Android evidence — 2026-10-30
 
 - Added reusable `tools/edgeai_runtime_seam_audit.py` to compare finite runtime collision heights and coverage against independent OBJ seam references, rejecting missing/duplicate/unexpected directions, source mismatches and steps above the chosen threshold. [Implementation a1bb532](https://github.com/48348484488/EdgeAI-Engine/commit/a1bb532904d3550f600fae48d23df9de3e3d5f6a); [five synthetic regressions 29f6ad0](https://github.com/48348484488/EdgeAI-Engine/commit/29f6ad05d7f36005f4bdf8646606b74d83fc81e5). **5/5 tests passed locally; new GitHub CI pending**.
