@@ -1,0 +1,62 @@
+"""Regression: LLVM objdump ARM/Thumb raw formats preserve call edges."""
+import sys
+import unittest
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
+from edgeai_arm_callgraph import analyze_text
+
+
+class ArmCallgraphFormats(unittest.TestCase):
+    def test_thumb_separate_bytes_and_halfwords(self):
+        disassembly = """
+00001000 <entry>:
+  1000: 00 f0 00 f8 bl 0x2000 <worker>
+  1004: f000 f800 bl 0x2000 <worker>
+  1008: 00 47 blx r0
+  100a: e000 b 0x2000 <worker>
+00002000 <worker>:
+  2000: 70 47 bx lr
+"""
+        graph = analyze_text(disassembly, "ARM32")
+        self.assertEqual(graph["function_count"], 2)
+        self.assertEqual(len(graph["calls"]), 3)
+        self.assertEqual([c["indirect"] for c in graph["calls"]], [False, False, True])
+        self.assertEqual(graph["calls"][0]["target_function"], "worker")
+        self.assertEqual(len(graph["tail_edges"]), 1)
+
+    def test_arm32_word_and_no_raw(self):
+        disassembly = """
+00001000 <entry>:
+  1000: eb000001 bl 0x2000 <worker>
+  1004: bl 0x2000 <worker>
+00002000 <worker>:
+  2000: e12fff1e bx lr
+"""
+        graph = analyze_text(disassembly, "ARM32")
+        self.assertEqual(len(graph["calls"]), 2)
+        self.assertEqual(graph["functions"][0]["instruction_count"], 2)
+        self.assertEqual(graph["unresolved_direct_targets"], [])
+
+    def test_aarch64_raw_and_indirect(self):
+        disassembly = """
+00001000 <entry>:
+  1000: 94000001 bl 0x3000 <target>
+  1004: d63f0120 blr x9
+  1008: 14000001 b 0x3000 <target>
+00003000 <target>:
+  3000: d65f03c0 ret
+"""
+        graph = analyze_text(disassembly, "ARM64")
+        self.assertEqual(len(graph["calls"]), 2)
+        self.assertEqual(len(graph["indirect_calls"]), 1)
+        self.assertEqual(graph["calls"][0]["target_function"], "target")
+        self.assertEqual(len(graph["tail_edges"]), 1)
+
+    def test_reject_unsupported_architecture(self):
+        with self.assertRaises(ValueError):
+            analyze_text("1000 <entry>:\\n 1000: bl 0x2000", "x86")
+
+
+if __name__ == "__main__":
+    unittest.main()
