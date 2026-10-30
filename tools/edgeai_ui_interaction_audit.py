@@ -8,8 +8,11 @@ this tool never invents actions or claims parity with an original game.
 import argparse
 import json
 import math
+import sys
 from pathlib import Path
 
+# Also work when loaded by importlib from tests outside the tools directory.
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 from edgeai_ui_transform_fit import fit
 
 
