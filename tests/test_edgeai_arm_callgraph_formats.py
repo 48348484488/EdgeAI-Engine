@@ -65,6 +65,20 @@ class ArmCallgraphFormats(unittest.TestCase):
         self.assertEqual(graph["calls"][0]["target_function"], "target")
         self.assertEqual(len(graph["tail_edges"]), 1)
 
+    def test_stripped_section_label_is_not_a_proven_function(self):
+        disassembly = """
+00001000 <.text>:
+  1000: bl 0x2000
+  1004: blr x8
+00002000 <known_export>:
+  2000: ret
+"""
+        graph = analyze_text(disassembly, "ARM64")
+        self.assertEqual(graph["section_pseudolabel_count"], 1)
+        self.assertEqual(graph["disassembled_instruction_count"], 3)
+        self.assertEqual(graph["unresolved_direct_call_count"], 0)
+        self.assertEqual(len(graph["indirect_calls"]), 1)
+
     def test_reject_unsupported_architecture(self):
         with self.assertRaises(ValueError):
             analyze_text("1000 <entry>:\\n 1000: bl 0x2000", "x86")
