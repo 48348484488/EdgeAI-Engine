@@ -1,3 +1,13 @@
+## Continuação — 2026-10-29, ciclo seguinte (America/Recife)
+
+- Novo analisador **genérico** [`tools/edgeai_arm_callgraph.py`](https://github.com/48348484488/EdgeAI-Engine/blob/main/tools/edgeai_arm_callgraph.py), commit [4c9e53e](https://github.com/48348484488/EdgeAI-Engine/commit/4c9e53eafc557f2fcf9948c63da6cb56e2e730c8): lê ELF ARM32/ARM64 little-endian, executa `llvm-objdump`, identifica chamadas diretas, indiretas não resolvidas e saltos incondicionais entre funções rotuladas. Não confunde chamadas indiretas com alvos recuperados, nem afirma semântica ou decompilação.
+- Testes sintéticos de ambas as arquiteturas adicionados em [f6cceff](https://github.com/48348484488/EdgeAI-Engine/commit/f6cceffa79e07edc8cd1abafc0ff0a79097220fc). O pipeline de jogo externo ARM64 foi estendido em [2ce6330](https://github.com/48348484488/EdgeAI-Engine/commit/2ce633061c1a292beb9616528a6cbdf63e045452) para executar o auditor sobre o **ELF compilado real do 2048**, mantendo a fonte do projeto externo isolada do job de análise. Execução [#40989894014](https://github.com/48348484488/EdgeAI-Engine/actions/runs/40989894014) iniciada; resultado ainda pendente nesta anotação.
+- Corrigidos dois testes ARM32 que assumiam o endereço obsoleto `0x1074`: agora a mutação encontra o alvo `play` presente no disassembly da compilação atual. Commit [0f7921c](https://github.com/48348484488/EdgeAI-Engine/commit/0f7921cba43dcefab204a4d481359b491db7b505).
+- Falha anterior do CI geral [#40987881469](https://github.com/48348484488/EdgeAI-Engine/actions/runs/40987881469): 681 testes executados, 5 falhas, 16 erros, 38 ignorados. A maioria está relacionada a fingerprints ARM32 de Clang/LLVM que não correspondem à geração atual. **Não travou**; o teste terminou com exit 1. Não relaxar validação para declarar recuperação sem prova.
+- Novo CI [#40989848609](https://github.com/48348484488/EdgeAI-Engine/actions/runs/40989848609) ainda em execução. Workflow de reconstrução ARM32 [#40989848682](https://github.com/48348484488/EdgeAI-Engine/actions/runs/40989848682) terminou com sucesso.
+- Last recriado: os controles de quantidade agora usam os limites de referência Unity 7.3, com regressões estáticas no repositório Last; APK mais recente ainda em compilação, sem execução Android virtual confirmada.
+- Próxima prioridade: confirmar call graph ARM64 externo e regressões; corrigir fingerprints ARM32 sem enfraquecer as verificações; obter APK e execução real Android ARM64 do Last, comparando o mesmo estado de menu com o original autorizado. **Nenhuma função nova foi reconstruída nem validada diferencialmente nesta etapa.**
+
 # AUTONOMOUS_PROGRESS.md
 
 ## Estado em 2026-10-29 (America/Recife)
