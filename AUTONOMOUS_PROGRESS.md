@@ -1,3 +1,12 @@
+## Stripped ARM call-backed entry candidates — 2026-10-30 05:15 (America/Recife)
+
+- Recovered previous green CI and analyzed the generic ARM32/ARM64 call-graph parser. Previously, a stripped ELF with only a `.text` pseudo-label exposed unresolved direct calls but did not distinguish targets that were actually present as instructions in the same disassembly.
+- Added conservative `candidate_function_entries` and `candidate_function_entry_count`: a target is a candidate only when a direct call points to an observed instruction address without a matching function label. Report includes incoming call sites and containing objdump label. ARM32 Thumb interworking bit is normalized. **Candidates are not proven function boundaries or decompiled functions.** Code commit [c906274](https://github.com/48348484488/EdgeAI-Engine/commit/c9062741f2a292b52c51844de6fccbbde1873e2a).
+- Added two regressions for unlabeled ARM64 targets, repeated call sites, targets absent from disassembly, and ARM32 Thumb-bit normalization, commit [e332018](https://github.com/48348484488/EdgeAI-Engine/commit/e33201883de2b178a435b06041399de4cc221ce2).
+- The new [ARM64 CI #41024983009](https://github.com/48348484488/EdgeAI-Engine/actions/runs/41024983009) passed. [General CI #41024983018](https://github.com/48348484488/EdgeAI-Engine/actions/runs/41024983018) was running at this checkpoint; do not claim its result until completed. Prior baseline [#41019540476](https://github.com/48348484488/EdgeAI-Engine/actions/runs/41019540476) passed.
+- The original Last LITE Unity 7.3 binary was not executed or differentially compared in this cycle. Public screenshots found for LITE 6.7 (Uptodown) and listing 7.6 (APKPure) are not verified 7.3 equivalents.
+- Next: validate new parser regressions in general CI, run candidate discovery on an authorized original ARM binary, and compare inferred entry points with independent disassembly/function boundaries. Avoid claiming automatic 3D decompilation.
+
 ## Generic ARM disassembly formats validated — 2026-10-30 04:20 (America/Recife)
 
 - Implemented generic recognition of GNU-style bare-hex / `#0x` direct targets and Thumb wide `bl.w` / `blx.w` calls in `tools/edgeai_arm_callgraph.py`, commit [cf5f798](https://github.com/48348484488/EdgeAI-Engine/commit/cf5f798ccf2639f30741a5c70e33075c93162128). Indirect register calls remain unresolved, not misclassified as direct calls.
