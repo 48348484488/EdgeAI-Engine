@@ -1,5 +1,12 @@
 ## Continuação — 2026-10-29, ciclo seguinte (America/Recife)
 
+### Resultados verificados após os workflows
+
+- Auditor genérico executado no ELF ARM64 **real e compilado** do 2048 externo: [#40989894014](https://github.com/48348484488/EdgeAI-Engine/actions/runs/40989894014) **sucesso**. Foram reconhecidas 50 entradas de função rotuladas, 134 instruções de chamada e 0 chamadas indiretas detectadas neste ELF. Testes novos: **4/4 aprovados**. O relatório JSON foi anexado aos artefatos da execução. Esses números representam grafo estático, não reconstrução C++.
+- CI geral [#40989848609](https://github.com/48348484488/EdgeAI-Engine/actions/runs/40989848609): **falha sem travamento** após 685 testes, 3 falhas, 16 erros e 38 ignorados. Duas falhas anteriores de testes com endereço fixo foram corrigidas; o restante permanece em fingerprints ARM32 incompatíveis com a compilação atual.
+- Last Android ARM64: [build #40989774432](https://github.com/48348484488/last-Island-of-survival-lite/actions/runs/40989774432) compilou o APK com sucesso, 25.013.534 bytes, testes nativos e geometria 4/4 aprovados. A publicação da release e a execução virtual ainda requerem confirmação.
+
+
 - Novo analisador **genérico** [`tools/edgeai_arm_callgraph.py`](https://github.com/48348484488/EdgeAI-Engine/blob/main/tools/edgeai_arm_callgraph.py), commit [4c9e53e](https://github.com/48348484488/EdgeAI-Engine/commit/4c9e53eafc557f2fcf9948c63da6cb56e2e730c8): lê ELF ARM32/ARM64 little-endian, executa `llvm-objdump`, identifica chamadas diretas, indiretas não resolvidas e saltos incondicionais entre funções rotuladas. Não confunde chamadas indiretas com alvos recuperados, nem afirma semântica ou decompilação.
 - Testes sintéticos de ambas as arquiteturas adicionados em [f6cceff](https://github.com/48348484488/EdgeAI-Engine/commit/f6cceffa79e07edc8cd1abafc0ff0a79097220fc). O pipeline de jogo externo ARM64 foi estendido em [2ce6330](https://github.com/48348484488/EdgeAI-Engine/commit/2ce633061c1a292beb9616528a6cbdf63e045452) para executar o auditor sobre o **ELF compilado real do 2048**, mantendo a fonte do projeto externo isolada do job de análise. Execução [#40989894014](https://github.com/48348484488/EdgeAI-Engine/actions/runs/40989894014) iniciada; resultado ainda pendente nesta anotação.
 - Corrigidos dois testes ARM32 que assumiam o endereço obsoleto `0x1074`: agora a mutação encontra o alvo `play` presente no disassembly da compilação atual. Commit [0f7921c](https://github.com/48348484488/EdgeAI-Engine/commit/0f7921cba43dcefab204a4d481359b491db7b505).
