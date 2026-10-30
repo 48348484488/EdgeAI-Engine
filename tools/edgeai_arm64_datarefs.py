@@ -15,7 +15,10 @@ import subprocess
 from edgeai_arm_callgraph import HEADER, INSTRUCTION, elf_architecture
 
 REGISTER = re.compile(r"^[wx](\d+)$", re.I)
-ADDRESS = re.compile(r"^#?(0x[0-9a-f]+|[0-9a-f]+)$", re.I)
+# LLVM may append a symbol annotation after an otherwise absolute target:
+# "adrp x0, 0x33e000 <symbol+0xb0>". Accept only that exact suffix,
+# never an arbitrary trailing operand that could be a register.
+ADDRESS = re.compile(r"^#?(0x[0-9a-f]+|[0-9a-f]+)(?:\s+<[^>]+>)?$", re.I)
 IMMEDIATE = re.compile(r"^#([+-]?(?:0x[0-9a-f]+|[0-9]+))$", re.I)
 MEMORY = re.compile(r"\[\s*(x\d+)\s*(?:,\s*#([+-]?(?:0x[0-9a-f]+|[0-9]+)))?\s*\]", re.I)
 MEMORY_BASE = re.compile(r"\[\s*(x\d+)\b", re.I)
