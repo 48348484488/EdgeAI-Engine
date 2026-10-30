@@ -1,3 +1,11 @@
+## 2026-10-30 — reusable 3D tile-adjacency audit (current run)
+
+- Added dependency-free generic source-world catalog parser `tools/edgeai_tile_catalog.py` with conservative four-way neighbor selection, shared-edge coverage and size filtering, unsafe-path/nonfinite/duplicate rejection. [Implementation 0359044](https://github.com/48348484488/EdgeAI-Engine/commit/03590444062c3740eb1b4fe6a8f48a458d96dfea); [regressions b1d5af8](https://github.com/48348484488/EdgeAI-Engine/commit/b1d5af8885e78f87d3f1a29c0f24dcf9930330c8).
+- Independently parsed the Last Unity-extracted `map_tiles.txt` (365 entries) and selected four 400m source sectors adjacent to `a-57_mesh0.obj`: north `a-56_mesh1.obj` (0.78122m bbox gap), south `d-01_mesh2.obj` (0.00047m), east `c-07_mesh0.obj` (0m), west `b-50_mesh2.obj` (0m). [Provenance JSON 8568b48](https://github.com/48348484488/EdgeAI-Engine/commit/8568b48f667d5bb58949aaf9c12ef6c0f0546a89).
+- Last native now loads those four neighbors in addition to the proven spawn sector, with bounded height queries, XZ distance culling, and seam diagnostics. New APK and Android runtime validation are **pending**. Bbox adjacency alone does not prove seamless geometry, original Unity collision, or material fidelity.
+- Latest prior verified EdgeAI general CI was [#41097406152](https://github.com/48348484488/EdgeAI-Engine/actions/runs/41097406152) on the previous code. New CI for this tool was queued at checkpoint. Next: verify new CI, inspect actual Android seam logs and screenshots, then measure seam discontinuities and compare to version-matched original terrain evidence.
+
+
 ### Real Android confirmation of the source-mask fix — 2026-10-30
 
 - Last [Android run #41096420997](https://github.com/48348484488/last-Island-of-survival-lite/actions/runs/41096420997) passed build, virtual runtime and release. Real screenshot [artifact #12995518891](https://github.com/48348484488/last-Island-of-survival-lite/actions/runs/41096420997/artifacts/12995518891) shows the source OBJ terrain visible after replacing incorrect alpha opacity with an explicitly provisional splatmap-driven palette.
