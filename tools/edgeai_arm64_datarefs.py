@@ -119,13 +119,36 @@ def analyze_text(disassembly):
                 tracked.pop(dest, None)
             continue
         if op in ("ldp", "ldpsw", "ldnp", "stp", "stnp"):
-            # Pair loads overwrite TWO registers; writeback modifies the base.
-            # Pair addresses are intentionally not inferred yet.
+            # For simple, non-writeback pair accesses, both elements have
+            # independently addressable locations. AArch64 W-register and
+            # LDPSW pairs transfer 4-byte elements; X-register pairs use 8.
+            # Reject SIMD registers and register-offset/writeback forms.
+            writeback = "!" in operands or bool(re.search(r"\]\s*,", operands))
+            pair_memory = MEMORY.search(operands)
+            if (pair_memory and not writeback and operands.rstrip().endswith("]")
+                    and len(args) >= 3
+                    and all(re.fullmatch(r"[wx]\\d+", a, re.I) for a in args[:2])):
+                base = _reg(pair_memory[1])
+                offset = _imm("#" + (pair_memory[2] or "0"))
+                state = tracked.get(base)
+                if state is not None and offset is not None:
+                    width = 4 if op == "ldpsw" or args[0].lower().startswith("w") else 8
+                    for index in range(2):
+                        references.append({
+                            "function": current, "pc": hex(pc),
+                            "kind": "load" if op.startswith("ld") else "store",
+                            "opcode": op,
+                            "address": hex(state[0] + offset + index * width),
+                            "origin_pc": hex(state[1]),
+                            "pair_index": index, "width_bytes": width,
+                        })
+            # Pair loads overwrite both destinations, even if the base is
+            # one of those destinations. Post/pre-index also clobbers base.
             if op.startswith("ld"):
                 for item in args[:2]:
                     tracked.pop(_reg(item), None)
             base_match = MEMORY_BASE.search(operands)
-            if base_match and ("!" in operands or re.search(r"\]\s*,", operands)):
+            if base_match and writeback:
                 tracked.pop(_reg(base_match[1]), None)
             continue
         if op.startswith(("b.", "cbz", "cbnz", "tbz", "tbnz")) or op in (
