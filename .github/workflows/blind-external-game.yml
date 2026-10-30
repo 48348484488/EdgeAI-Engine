@@ -9,6 +9,8 @@ on:
       - "tools/blind_game_report.py"
       - "tools/edgeai_ghidra_export.py"
       - "tools/aarch64_batch_audit.py"
+      - "tools/edgeai_arm_callgraph.py"
+      - "tests/test_edgeai_arm_callgraph.py"
       - "tests/test_blind_game_report.py"
 
 permissions:
@@ -123,6 +125,23 @@ jobs:
           python3 tools/aarch64_batch_audit.py input/2048-unstripped.aarch64.elf \
             --max-functions 50 --min-size 4 \
             --output output/edgeai-static-audit.json
+      - name: Audit real external ARM64 game call graph (static, not reconstructed)
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m unittest discover -s tests -p 'test_edgeai_arm_callgraph.py' -v
+          python3 tools/edgeai_arm_callgraph.py input/2048-unstripped.aarch64.elf \
+            --report output/edgeai-arm64-callgraph.json
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          report=json.loads(Path('output/edgeai-arm64-callgraph.json').read_text())
+          assert report['architecture']=='ARM64'
+          assert report['function_count']>0
+          print('EDGEAI_ARM64_CALLGRAPH_FUNCTIONS='+str(report['function_count']))
+          print('EDGEAI_ARM64_CALLGRAPH_CALLS='+str(len(report['calls'])))
+          print('EDGEAI_ARM64_INDIRECT_UNRESOLVED='+str(len(report['indirect_calls'])))
+          PY
       - name: Install Ghidra external reference backend with pinned digest
         shell: bash
         run: |
