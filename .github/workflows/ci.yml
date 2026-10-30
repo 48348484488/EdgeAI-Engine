@@ -24,6 +24,10 @@ jobs:
           sudo apt-get install -y llvm
           command -v llvm-objdump
           command -v llvm-objcopy
+      - name: Generic 3D skinning differential (100000 deterministic vertices)
+        run: |
+          g++ -std=c++17 -O2 -Wall -Wextra -Werror -Iinclude tests/test_edgeai_lbs_kernel.cpp -o /tmp/edgeai_lbs_test
+          /tmp/edgeai_lbs_test
       - name: Python tests
         run: python3 -m unittest discover -s tests -p 'test_*.py'
 
