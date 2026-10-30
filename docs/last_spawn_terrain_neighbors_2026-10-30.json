@@ -1,0 +1,33 @@
+{
+  "date": "2026-10-30",
+  "source_repository": "48348484488/last-Island-of-survival-lite",
+  "source_path": "last_island_recreated_game/assets/original_world/map_tiles.txt",
+  "record_count": 365,
+  "anchor": "a-57_mesh0.obj",
+  "source_coordinate_note": "OBJ UnityPy Z-up converted to native Y-up (x,y,z)->(x,z,-y)",
+  "method": "adjacent_tiles: <=1.5m shared-edge gap, >=80% overlap, <=20% span difference",
+  "neighbors": {
+    "north": {
+      "mesh": "a-56_mesh1.obj",
+      "texture": "a-56_tex0.png",
+      "gap_m": 0.78122
+    },
+    "south": {
+      "mesh": "d-01_mesh2.obj",
+      "texture": "d-01_tex1.png",
+      "gap_m": 0.00047
+    },
+    "east": {
+      "mesh": "c-07_mesh0.obj",
+      "texture": "c-07_tex0.png",
+      "gap_m": 0
+    },
+    "west": {
+      "mesh": "b-50_mesh2.obj",
+      "texture": "b-50_tex2.png",
+      "gap_m": 0
+    }
+  },
+  "validation": "Catalog bounding boxes only; mesh seam heights, Unity colliders and material parity not yet validated",
+  "status": "Native five-sector implementation committed; Android build and screenshot pending"
+}
