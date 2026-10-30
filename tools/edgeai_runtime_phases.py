@@ -11,7 +11,7 @@ import math
 import re
 from pathlib import Path
 
-NUMBER = r"[+-]?(?:\\d+(?:\\.\\d*)?|\\.\\d+)(?:[eE][+-]?\\d+)?"
+NUMBER = r"[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?"
 KEY = r"[a-z][a-z0-9_]*"
 DEFAULT_KEYS = ("pose_cpu_ms", "vbo_submit_ms", "end_drawing_ms", "frame_work_ms")
 
@@ -24,7 +24,7 @@ def summarize(log_text, marker="LIOS_PHASE_TIMING", keys=DEFAULT_KEYS):
             not re.fullmatch(KEY, key) for key in keys):
         raise ValueError("invalid metric keys")
     pattern = re.compile(
-        re.escape(marker) + r"\\s+frames=(\\d+)((?:\\s+" + KEY +
+        re.escape(marker) + r"\s+frames=(\d+)((?:\s+" + KEY +
         r"=" + NUMBER + r")+)")
     windows = []
     for match in pattern.finditer(log_text):
