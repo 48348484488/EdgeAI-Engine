@@ -92,6 +92,42 @@ def read_png(path):
     return width, height, bytes(pixels)
 
 
+
+def alpha_statistics(width, height, rgba):
+    """Measure RGBA transparency without assuming alpha means opacity.
+
+    Unity splatmaps and packed material masks can contain useful RGB under
+    zero alpha. A mask candidate is a warning, never a shader classification.
+    """
+    count = width * height
+    if count <= 0 or len(rgba) != count * 4:
+        raise ValueError('invalid RGBA pixel buffer')
+    zero = partial = opaque = hidden_rgb = 0
+    for i in range(0, len(rgba), 4):
+        a = rgba[i+3]
+        if a == 0:
+            zero += 1
+            if any(rgba[i:i+3]):
+                hidden_rgb += 1
+        elif a == 255:
+            opaque += 1
+        else:
+            partial += 1
+    return {
+        'width': width, 'height': height, 'pixels': count,
+        'alpha_zero_pixels': zero, 'alpha_partial_pixels': partial,
+        'alpha_opaque_pixels': opaque,
+        'nonzero_rgb_under_zero_alpha_pixels': hidden_rgb,
+        'alpha_zero_fraction': zero/count,
+        'hidden_rgb_fraction': hidden_rgb/count,
+        'possible_packed_material_mask': hidden_rgb/count > 0.5,
+        'original_shader_semantics_proven': False,
+    }
+
+
+def inspect_alpha(path):
+    return alpha_statistics(*read_png(path))
+
 def frame_statistics(width, height, rgba, min_distinct_colors=16):
     """Report a conservative lower bound for distinct RGB colors in a real PNG.
 
@@ -160,10 +196,16 @@ def main():
     p.add_argument('candidate', type=Path, nargs='?')
     p.add_argument('--inspect-frame', type=Path,
                    help='Inspect a single real screenshot for flat/incomplete frames')
+    p.add_argument('--inspect-alpha', type=Path,
+                   help='Audit texture alpha and hidden RGB without assuming opacity semantics')
     p.add_argument('--threshold', type=int, default=0)
     p.add_argument('--report', type=Path)
     args = p.parse_args()
-    if args.inspect_frame is not None:
+    if args.inspect_alpha is not None:
+        if args.inspect_frame is not None or args.reference is not None or args.candidate is not None:
+            p.error('--inspect-alpha cannot be combined with other input modes')
+        result = inspect_alpha(args.inspect_alpha)
+    elif args.inspect_frame is not None:
         if args.reference is not None or args.candidate is not None:
             p.error('--inspect-frame cannot be combined with comparison inputs')
         result = inspect_frame(args.inspect_frame)
