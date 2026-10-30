@@ -1,0 +1,50 @@
+{
+  "analysis_date": "2026-10-30",
+  "source_repository": "48348484488/last-Island-of-survival-lite",
+  "source_workflow": "https://github.com/48348484488/last-Island-of-survival-lite/actions/runs/41049010214",
+  "source_artifact": "https://github.com/48348484488/last-Island-of-survival-lite/actions/runs/41049010214/artifacts/12974206175",
+  "apk_name": "LastIslandLite-v0.25.0-434c726a-ARM64.apk",
+  "apk_sha256": "945f86272b1d95a54f9359e22b2e946dff1741a00bffc72404a985527258857a",
+  "elf_path": "lib/arm64-v8a/libraymob.so",
+  "elf_sha256": "cfb747f78f5a1425a98500f9e8b5ad7e05acfc050583533425b43f3dec987d52",
+  "elf_type": "ET_DYN",
+  "elf_architecture": "AArch64",
+  "elf_stripped": true,
+  "analyzer": "tools/edgeai_arm64_datarefs.py",
+  "execution": "Local mirror of committed conservative ADRP/ADR+ADD+LDR/STR parser over llvm-objdump output",
+  "static_reference_count": 10116,
+  "by_kind": {
+    "computed_address": 7593,
+    "load": 2489,
+    "store": 34
+  },
+  "distinct_target_addresses": 4731,
+  "reference_sites_within_elf_pt_load_segments": 10116,
+  "reference_sites_outside_elf_pt_load_segments": 0,
+  "examples": [
+    {
+      "function": "main",
+      "pc": "0xe3b9c",
+      "kind": "computed_address",
+      "address": "0x71ae0"
+    },
+    {
+      "function": "main",
+      "pc": "0xe5e18",
+      "kind": "load",
+      "address": "0x87450"
+    },
+    {
+      "function": "rlPopMatrix",
+      "pc": "0x1d4158",
+      "kind": "store",
+      "address": "0x360224"
+    }
+  ],
+  "limitations": [
+    "These are static candidate data references, not identified C++ globals, vtables, or recovered game logic.",
+    "ELF is from the recreated game, not the original Unity LITE 7.3 binary.",
+    "100% target addresses lie in mapped PT_LOAD segments, which is a sanity check, not semantic proof.",
+    "No original-versus-recreation functional or visual parity is established."
+  ]
+}
