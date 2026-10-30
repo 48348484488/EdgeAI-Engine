@@ -1,3 +1,9 @@
+### Real Android confirmation of the source-mask fix — 2026-10-30
+
+- Last [Android run #41096420997](https://github.com/48348484488/last-Island-of-survival-lite/actions/runs/41096420997) passed build, virtual runtime and release. Real screenshot [artifact #12995518891](https://github.com/48348484488/last-Island-of-survival-lite/actions/runs/41096420997/artifacts/12995518891) shows the source OBJ terrain visible after replacing incorrect alpha opacity with an explicitly provisional splatmap-driven palette.
+- Measured exact sky-color fraction in three real 1080x640 screenshots: old flat plane **36.586%**, initial source terrain with mistaken alpha **78.338%** (invisible ground), corrected material preview **31.003%**. Flat-vs-corrected threshold-30 RGB difference: **232,656 pixels (33.666%)**, mean absolute RGB error **19.57654**. These are changes in the recreated game, not original-game parity.
+- The generic OBJ geometry auditor and packed-alpha auditor remain CI-green (**752 Python tests, 38 skipped, 15/15 C++** in [#41096160324](https://github.com/48348484488/EdgeAI-Engine/actions/runs/41096160324)). Next: audit original Unity terrain layer materials and reconstruct shader inputs, plus resume ARM32/ARM64 differential function validation.
+
 ### 2026-10-30 — real terrain material-mask failure converted into reusable audit
 
 - A real Android virtual screenshot from [Last run #41094777146](https://github.com/48348484488/last-Island-of-survival-lite/actions/runs/41094777146/artifacts/12995657838) proved the new source mesh collider worked (spawn Y=22.30350, game menus functional), but the ground was **invisible**: 541,473/691,200 pixels (78.3381%) were exact sky RGB. Compared to the previous flat-ground screenshot, 387,437 pixels changed at RGB threshold 30. This is a regression, not fidelity.
