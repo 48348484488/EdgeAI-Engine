@@ -1,3 +1,10 @@
+## Freestanding ARM32 libc independence — 2026-10-30 03:15 (America/Recife)
+
+- Consultado o CI geral [#41010346542](https://github.com/48348484488/EdgeAI-Engine/actions/runs/41010346542): **695 testes, 1 falha, 8 erros, 38 ignorados**, sem travamento. Os 7 erros de reconhecimento permanecem nas variantes LLVM18 `-O2/-O3/-Os`; o erro de freestanding e a falha dependente dele são causados por `ld.lld: undefined symbol: memset`.
+- Corrigido `tests/winner_freestanding_arm.cpp` com implementação explícita de `memset` para o harness ARM32 sem libc, usando escritas `volatile` para impedir recursão por otimização. Commit [1ebb2c7](https://github.com/48348484488/EdgeAI-Engine/commit/1ebb2c7e10e06d1f8271cf9d5981d1ec8be67915). Um ELF ARM32 freestanding mínimo com essa implementação foi compilado e ligado localmente com Clang/LLD; **a validação integral do harness depende do novo CI**.
+- Novo [CI geral #41013110996](https://github.com/48348484488/EdgeAI-Engine/actions/runs/41013110996) iniciado; não declarar testes aprovados até concluir. Workflows ARM reference e QEMU iniciaram com falha; investigar logs e distinguir falha de infraestrutura de regressão.
+- O EdgeAI ainda não reconstruiu um sistema 3D completo do Last original. Próxima prioridade: verificar o novo CI, tratar `-O2/-O3/-Os` com fingerprints estritos capturados do LLVM18 e executar comparação diferencial real.
+
 ## Auditoria de despacho indireto ARM e diagnóstico virtual — 2026-10-30 02:45 (America/Recife)
 
 - Implementado no auditor genérico `tools/edgeai_arm_callgraph.py` o registro explícito de branches indiretos por registrador (`br`/ `braa` ARM64 e `bx` ARM32), sem inferir destino ou confundir `bx lr`/`br x30` com dispatch. Adicionado suporte a chamadas ARM64 autenticadas (`blraa`, `blrab` e variantes Z). Commit [669dfdd](https://github.com/48348484488/EdgeAI-Engine/commit/669dfdd94cb7f770cd98ffb957eb42eb81638095).
