@@ -71,12 +71,15 @@ def analyze_text(disassembly, architecture):
     all_calls = []
     indirect = []
     tails = []
+    indirect_branches = []
     for index, func in enumerate(functions):
         next_address = functions[index + 1]["address"] if index + 1 < len(functions) else None
         calls = []
         for pc, op, operands in func["instructions"]:
-            is_call = op in (("bl", "blx") if architecture == "ARM32" else ("bl", "blr"))
-            is_unconditional_tail = op in (("b", "b.w", "bx") if architecture == "ARM32" else ("b", "br"))
+            is_call = op in (("bl", "blx") if architecture == "ARM32" else
+                             ("bl", "blr", "blraa", "blrab", "blraaz", "blrabz"))
+            is_unconditional_tail = op in (("b", "b.w", "bx") if architecture == "ARM32" else
+                                           ("b", "br", "braa", "brab", "braaz", "brabz"))
             if not (is_call or is_unconditional_tail):
                 continue
             match = DIRECT.match(operands)
@@ -102,6 +105,18 @@ def analyze_text(disassembly, architecture):
                     "from": func["name"], "pc": hex(pc),
                     "to": addresses[lookup_target], "target": hex(target)
                 })
+            elif target is None:
+                # Branches through registers may be virtual dispatch, jump
+                # tables, or tail calls. Record the site, not a guessed edge.
+                # 'bx lr' and 'br x30' are return idioms, not dispatch sites.
+                register = operands.strip().lower()
+                is_return = ((architecture == "ARM32" and op == "bx" and register in ("lr", "r14")) or
+                             (architecture == "ARM64" and op == "br" and register in ("x30", "lr")))
+                if not is_return:
+                    indirect_branches.append({
+                        "from": func["name"], "pc": hex(pc),
+                        "opcode": op, "operands": operands,
+                    })
         result.append({
             "name": func["name"], "address": hex(func["address"]),
             "instruction_count": len(func["instructions"]),
@@ -120,12 +135,15 @@ def analyze_text(disassembly, architecture):
         ),
         "functions": result, "calls": all_calls,
         "indirect_calls": indirect, "tail_edges": tails,
+        "indirect_branches": indirect_branches,
+        "unresolved_indirect_branch_count": len(indirect_branches),
         "unresolved_direct_targets": sorted({
             c["target"] for c in all_calls
             if c["target"] is not None and c["target_function"] is None
         }),
         "limitations": [
             "Static call sites only; indirect targets unresolved",
+            "Register-indirect branches may be jump tables, returns, or tail calls; no target inferred",
             "Function boundaries require objdump labels; stripped or unlabeled code may be missed",
             "A .text section label is not proof of a function boundary",
             "No proof of source-level semantics, execution, or game fidelity",
