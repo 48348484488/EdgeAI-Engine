@@ -1,3 +1,9 @@
+## CI geral restaurado — 2026-10-30 03:23 (America/Recife)
+
+- [EdgeAI CI #41013235252](https://github.com/48348484488/EdgeAI-Engine/actions/runs/41013235252) **sucesso**: **695 testes Python executados, 38 ignorados, nenhuma falha/erro**, além de **15/15 testes C++ CTest**. O baseline anterior de 1 falha e 8 erros foi eliminado por correções de fingerprint LLVM18 e `memset` freestanding.
+- [ARM32 QEMU #41013235248](https://github.com/48348484488/EdgeAI-Engine/actions/runs/41013235248) sucesso: cinco otimizações, 1.638.420 comparações diferenciais nativas sem divergência e 426.115 casos no QEMU sem divergência. O escopo é o exemplo `winner()`, não jogos 3D.
+- Próxima prioridade: manter a suíte verde, expandir análise para funções genéricas de câmera/física/renderização e executar validação do Last original autorizado em paralelo ao APK recriado.
+
 ## ARM32 QEMU confirmado — 2026-10-30 03:21 (America/Recife)
 
 - [Workflow ARM32 QEMU #41013235248](https://github.com/48348484488/EdgeAI-Engine/actions/runs/41013235248) **aprovado** após correção do harness `memset` e dos fingerprints LLVM18 otimizados. Cinco otimizações de binário stripped passaram na validação diferencial nativa: **1.638.420 comparações, zero divergências** (327.684 por otimização).
