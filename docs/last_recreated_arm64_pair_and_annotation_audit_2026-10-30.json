@@ -1,0 +1,48 @@
+{
+  "date": "2026-10-30",
+  "source": {
+    "repository": "48348484488/last-Island-of-survival-lite",
+    "workflow_run_id": 41054357399,
+    "artifact_id": 12974969938,
+    "apk_version": "v0.25.0-85419731",
+    "library": "lib/arm64-v8a/libraymob.so",
+    "library_sha256": "15aecfee988094b378ea7cb178ef9a3b125c5c80e774eae0eb1e3e17900ee3d5",
+    "library_bytes": 3525880,
+    "architecture": "AArch64",
+    "llvm_objdump_version": "17.0.0",
+    "disassembly_lines": 626339
+  },
+  "method": "Independent local mirror of the EdgeAI conservative data-reference state machine over the same llvm-objdump disassembly. Counts are static candidates, not validated C++ variables. Not the original proprietary game binary.",
+  "instruction_counts": {
+    "adrp_total": 10037,
+    "adrp_with_symbol_annotation": 2042,
+    "non_writeback_gpr_pairs": 691
+  },
+  "comparisons": {
+    "previous_behavior": {
+      "computed_address": 7678,
+      "load": 2485,
+      "store": 34,
+      "total": 10197
+    },
+    "symbol_annotations_enabled": {
+      "computed_address": 8686,
+      "load": 4106,
+      "store": 230,
+      "total": 13022
+    },
+    "symbol_annotations_and_pair_enabled": {
+      "computed_address": 8686,
+      "load": 4106,
+      "store": 230,
+      "pair_element_refs": 0,
+      "total": 13022
+    }
+  },
+  "observations": [
+    "2,825 additional static candidates were recovered when symbol-annotated ADRP targets were accepted.",
+    "No additional pair-element references arose in this linked ELF under the conservative PC-relative base tracking. Many GPR pairs address SP, which is intentionally not tracked.",
+    "Regression fixtures test pair address/width semantics; CI and original-game differential validation remain pending.",
+    "All numbers refer to the reconstructed Last library, not the Unity original."
+  ]
+}
