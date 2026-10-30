@@ -1,0 +1,23 @@
+{
+  "source": "Last Island recreated APK v0.25.0-a290f59a (previous verified build, not original game)",
+  "apk_artifact_run": "https://github.com/48348484488/last-Island-of-survival-lite/actions/runs/40996851203",
+  "elf": "lib/arm64-v8a/libraymob.so",
+  "elf_sha256": "fef5ef63907c9d7f7ca2dd30b16442ab57176654e871dbf8997b091c97dd09e8",
+  "architecture": "ARM64",
+  "labeled_regions": 4754,
+  "section_pseudolabels": 2,
+  "disassembled_instructions": 616657,
+  "unparsed_address_lines": 0,
+  "static_call_sites": 25188,
+  "indirect_call_sites": 674,
+  "resolved_call_sites_to_label": 13979,
+  "unresolved_direct_call_sites": 10535,
+  "labeled_tail_edges": 172,
+  "methodology": "llvm-objdump 17 --no-show-raw-insn, EdgeAI callgraph recognition logic reproduced locally",
+  "caveats": [
+    "Not an audit of the original Last Island APK",
+    "ELF is stripped; labels are not proof of function boundaries",
+    "Static callsites are not decompilation or functional equivalence",
+    "Original vs reconstructed runtime comparison not performed"
+  ]
+}
