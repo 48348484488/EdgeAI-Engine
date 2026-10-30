@@ -1,3 +1,8 @@
+### Latest EdgeAI CI verified — 2026-10-30
+
+- [General CI #41104294902](https://github.com/48348484488/EdgeAI-Engine/actions/runs/41104294902) **completed successfully** on commit `94527304`. Inspected job logs: **759 Python tests, 38 skipped, zero failures**, plus **15/15 C++ tests**. Includes the generic tile-catalog and OBJ seam differential regressions. QEMU-dependent test runners reported `not_executed_missing_qemu`; do not misrepresent those as executed.
+- This verifies test suite behavior, not original-game function reconstruction. Last five-sector APK and runtime seams remain pending after a separate NDK constructor compile error was identified and patched.
+
 ### Source-mesh seam differential — 2026-10-30
 
 - Added generic `tools/edgeai_mesh_seam.py` to compare OBJ highest-surface heights across explicitly supplied inside/outside seam coordinates, rejecting uncovered samples and excessive step heights [8518683](https://github.com/48348484488/EdgeAI-Engine/commit/85186838642196bc87c3a51ec4eed1faf031c8b2). Added synthetic flat, high-step, missing-coverage and nonfinite-input regressions [0a0d195](https://github.com/48348484488/EdgeAI-Engine/commit/0a0d195891d25437f42b395a4979fa00b53e4717).
