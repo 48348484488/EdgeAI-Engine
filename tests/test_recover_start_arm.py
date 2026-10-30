@@ -38,7 +38,7 @@ class StartRecoveryTests(unittest.TestCase):
         self.assertIn('return play(2, 1)',emit_cpp(recovered))
 
     def test_wrong_direct_call_target_refused(self):
-        corrupted=re.sub(r'(\bbl\s+)0x1074',r'\g<1>0x1000',self.disasm,count=1)
+        corrupted=re.sub(r'(\bbl\s+)0x[0-9a-fA-F]+(?=\s+<play>)',r'\g<1>0x1000',self.disasm,count=1)
         self.assertNotEqual(corrupted,self.disasm)
         with self.assertRaisesRegex(ValueError,'target'):
             recover_text(corrupted)
@@ -50,7 +50,7 @@ class StartRecoveryTests(unittest.TestCase):
             recover_text(corrupted)
 
     def test_corrupt_final_tail_branch_refused(self):
-        corrupted=self.disasm.replace('b\t0x1074 <play>', 'bl\t0x1074 <play>')
+        corrupted=re.sub(r'(\s)b(\s+0x[0-9a-fA-F]+\s+<play>[^\n]*)',r'\g<1>bl\g<2>',self.disasm,count=1)
         self.assertNotEqual(corrupted,self.disasm)
         with self.assertRaisesRegex(ValueError,'epilogue'):
             recover_text(corrupted)
