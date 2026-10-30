@@ -42,6 +42,32 @@ class Arm64DataReferenceTests(unittest.TestCase):
         self.assertEqual([(r["kind"], r["address"]) for r in refs],
                          [("computed_address", "0x430130"), ("store", "0x430134")])
 
+    def test_shifted_add_immediate_recovers_page_relative_address(self):
+        asm = """
+0000000000400000 <shifted>:
+  400000: adrp x9, 0x430000
+  400004: add x10, x9, #0x2, lsl #12
+  400008: ldr w0, [x10, #0x18]
+  40000c: ret
+"""
+        refs = analyze_text(asm)["references"]
+        self.assertEqual([(r["kind"], r["address"]) for r in refs],
+                         [("computed_address", "0x432000"),
+                          ("load", "0x432018")])
+
+    def test_unsupported_shift_and_w_register_add_do_not_invent_refs(self):
+        for instruction in ("add x10, x9, #2, lsl #3",
+                            "add w10, w9, #2, lsl #12"):
+            with self.subTest(instruction=instruction):
+                asm = ("""
+0000000000400000 <shift_reject>:
+  400000: adrp x9, 0x430000
+  400004: """ + instruction + """
+  400008: ldr w0, [x10, #0x18]
+  40000c: ret
+""")
+                self.assertEqual(analyze_text(asm)["references"], [])
+
     def test_calls_and_unknown_writes_invalidate_dataflow(self):
         asm = """
 0000000000400000 <tick>:
