@@ -1,3 +1,7 @@
+### CI verification addendum — 2026-10-30
+
+- [General CI #41085836744](https://github.com/48348484488/EdgeAI-Engine/actions/runs/41085836744) **passed** with **745 Python tests (38 skipped)** and **15/15 C++ tests**, including the three new SUB-immediate regressions. [ARM64 #41085836608](https://github.com/48348484488/EdgeAI-Engine/actions/runs/41085836608), [Windows #41085836615](https://github.com/48348484488/EdgeAI-Engine/actions/runs/41085836615), and [low-resource #41085836641](https://github.com/48348484488/EdgeAI-Engine/actions/runs/41085836641) also passed. This proves regression test success, not full game decompilation.
+
 ## Generic ARM64 SUB-immediate dataflow — 2026-10-30
 
 - Rechecked [previous general CI #41082914871](https://github.com/48348484488/EdgeAI-Engine/actions/runs/41082914871): **742 Python tests (38 skipped) and 15/15 C++ tests passed**. Previous ARM64, Windows and low-resource pipelines also completed successfully.
