@@ -18,6 +18,7 @@ REGISTER = re.compile(r"^[wx](\d+)$", re.I)
 ADDRESS = re.compile(r"^#?(0x[0-9a-f]+|[0-9a-f]+)$", re.I)
 IMMEDIATE = re.compile(r"^#([+-]?(?:0x[0-9a-f]+|[0-9]+))$", re.I)
 MEMORY = re.compile(r"\[\s*(x\d+)\s*(?:,\s*#([+-]?(?:0x[0-9a-f]+|[0-9]+)))?\s*\]", re.I)
+MEMORY_BASE = re.compile(r"\[\s*(x\d+)\b", re.I)
 LOADS = {"ldr", "ldrb", "ldrh", "ldrsb", "ldrsh", "ldrsw", "ldur", "ldurb", "ldurh"}
 STORES = {"str", "strb", "strh", "stur", "sturb", "sturh"}
 
@@ -69,6 +70,11 @@ def analyze_text(disassembly):
                 tracked[dest] = (target & ~0xfff if op == "adrp" else target, pc)
             continue
         if op == "add" and len(args) == 3 and dest:
+            # A W-register write zero-extends/truncates the value. Never
+            # propagate a 64-bit PC-relative address through Wn arithmetic.
+            if args[0].lower().startswith("w") or args[1].lower().startswith("w"):
+                tracked.pop(dest, None)
+                continue
             src, offset = _reg(args[1]), _imm(args[2])
             state = tracked.get(src)
             if state is not None and offset is not None:
@@ -81,6 +87,9 @@ def analyze_text(disassembly):
                 tracked.pop(dest, None)
             continue
         if op == "mov" and len(args) == 2 and dest:
+            if args[0].lower().startswith("w") or args[1].lower().startswith("w"):
+                tracked.pop(dest, None)
+                continue
             src = _reg(args[1])
             if src in tracked:
                 tracked[dest] = tracked[src]
@@ -101,11 +110,27 @@ def analyze_text(disassembly):
                         "opcode": op, "address": hex(state[0] + offset),
                         "origin_pc": hex(state[1]),
                     })
+            # Pre/post-indexed accesses modify the base even when we cannot
+            # resolve their effective address. Keeping it would invent refs.
+            base_match = MEMORY_BASE.search(operands)
+            if base_match and ("!" in operands or re.search(r"\]\s*,", operands)):
+                tracked.pop(_reg(base_match[1]), None)
             if op in LOADS and dest:
                 tracked.pop(dest, None)
             continue
-        if op.startswith(("b.", "b", "cb", "tb")) or op in (
-                "ret", "retaa", "retab", "br", "blr", "bl", "svc", "eret"):
+        if op in ("ldp", "ldpsw", "ldnp", "stp", "stnp"):
+            # Pair loads overwrite TWO registers; writeback modifies the base.
+            # Pair addresses are intentionally not inferred yet.
+            if op.startswith("ld"):
+                for item in args[:2]:
+                    tracked.pop(_reg(item), None)
+            base_match = MEMORY_BASE.search(operands)
+            if base_match and ("!" in operands or re.search(r"\]\s*,", operands)):
+                tracked.pop(_reg(base_match[1]), None)
+            continue
+        if op.startswith(("b.", "cbz", "cbnz", "tbz", "tbnz")) or op in (
+                "b", "bl", "blr", "br", "braa", "brab", "blraa", "blrab",
+                "ret", "retaa", "retab", "svc", "eret"):
             tracked.clear()
             continue
         # Conservatively invalidate the first register on any unmodeled
