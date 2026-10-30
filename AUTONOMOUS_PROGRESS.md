@@ -1,3 +1,12 @@
+## Continuação — 2026-10-30 (America/Recife), auditoria e correções ARM
+
+- Retomada a partir do estado registrado em 2026-10-29; diagnóstico da execução CI geral [#40989848609](https://github.com/48348484488/EdgeAI-Engine/actions/runs/40989848609): **685 testes, 3 falhas, 16 erros, 38 ignorados**. Não foi travamento; os casos ARM32 continuam incompatíveis com fingerprints LLVM atuais.
+- Atualizado o parser compartilhado de disassembly em `tools/recover_winner.py` para aceitar instruções LLVM com word hexadecimal, bytes separados ou sem bytes, inclusive Thumb de 16 bits. Adicionados três testes em `tests/test_arm_disassembly_formats.py` (commit [99c8e2b](https://github.com/48348484488/EdgeAI-Engine/commit/99c8e2b0769d89effdb4826e5ab478732c20ebb9)). O módulo duplicado acidentalmente durante a edição foi identificado, removido e o Python restaurado no commit [45fd41b](https://github.com/48348484488/EdgeAI-Engine/commit/45fd41baa889aac4b910346a70660929e4f92ffc).
+- O pipeline `validate_whole_tictactoe.py` agora expõe stderr/stdout do processo de recuperação em falhas, sem aceitar falsos positivos (commit [5bb0305](https://github.com/48348484488/EdgeAI-Engine/commit/5bb03056b31d03b9db46377cf549dfd1bf279e09)).
+- Validação de reconstrução integral **do pequeno exemplo**, [#40996954428](https://github.com/48348484488/EdgeAI-Engine/actions/runs/40996954428): **sucesso** após correção sintática; inclui etapa `play` assistida por fonte, não é decompilação autônoma. CI ARM64 [#40996954412](https://github.com/48348484488/EdgeAI-Engine/actions/runs/40996954412): **sucesso**.
+- Verificador estrito ARM32 QEMU [#40996954387](https://github.com/48348484488/EdgeAI-Engine/actions/runs/40996954387) ainda **falha** porque `reconstruct_winner.py` não reconhece o novo loop LLVM; não declarar equivalência nem mascarar fingerprint. Referência ARM32 e CI geral também precisam de nova inspeção.
+- Próxima prioridade: coletar disassembly ARM32 produzido pelo Clang 18 e adicionar fingerprint rigoroso/versionado, sem substituir a verificação semântica por mera presença de instruções. Depois integrar analisador genérico a observações de transformações 3D e testes diferenciais reais.
+
 ## Continuação — 2026-10-29, ciclo seguinte (America/Recife)
 
 ### Resultados verificados após os workflows
