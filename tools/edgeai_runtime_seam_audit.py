@@ -11,10 +11,10 @@ import re
 from pathlib import Path
 
 EVENT = re.compile(
-    r"(?<!\\w){marker}\\s+(?P<direction>[A-Za-z][\\w-]*)\\s+"
-    r"(?:offset=(?P<offset>\\S+)\\s+)?"
-    r"inner=(?P<inner>\\S+)\\s+outer=(?P<outer>\\S+)\\s+"
-    r"height_in=(?P<hin>\\S+)\\s+height_out=(?P<hout>\\S+)"
+    r"(?<!\w){marker}\s+(?P<direction>[A-Za-z][\w-]*)\s+"
+    r"(?:offset=(?P<offset>\S+)\s+)?"
+    r"inner=(?P<inner>\S+)\s+outer=(?P<outer>\S+)\s+"
+    r"height_in=(?P<hin>\S+)\s+height_out=(?P<hout>\S+)"
 )
 
 
@@ -47,7 +47,7 @@ def audit_runtime(log_text, reference, marker="LIOS_TERRAIN_SEAM_PROBE",
     expected = {}
     for seam in seams:
         direction = seam["direction"]
-        if not isinstance(direction, str) or not re.fullmatch(r"[A-Za-z][\\w-]*", direction):
+        if not isinstance(direction, str) or not re.fullmatch(r"[A-Za-z][\w-]*", direction):
             raise ValueError("Invalid reference direction")
         offset = _finite_number(seam.get("offset", 0), "reference offset")
         key = (direction, offset)
