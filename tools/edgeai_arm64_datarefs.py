@@ -22,7 +22,7 @@ ADDRESS = re.compile(r"^#?(0x[0-9a-f]+|[0-9a-f]+)(?:\s+<[^>]+>)?$", re.I)
 IMMEDIATE = re.compile(r"^#([+-]?(?:0x[0-9a-f]+|[0-9]+))$", re.I)
 MEMORY = re.compile(r"\[\s*(x\d+)\s*(?:,\s*#([+-]?(?:0x[0-9a-f]+|[0-9]+)))?\s*\]", re.I)
 MEMORY_BASE = re.compile(r"\[\s*(x\d+)\b", re.I)
-LOADS = {"ldr", "ldrb", "ldrh", "ldrsb", "ldrsh", "ldrsw", "ldur", "ldurb", "ldurh"}
+LOADS = {"ldrsw", "ldr", "ldrb", "ldrh", "ldrsb", "ldrsh", "ldrsw", "ldur", "ldurb", "ldurh"}
 STORES = {"str", "strb", "strh", "stur", "sturb", "sturh"}
 
 
@@ -99,6 +99,19 @@ def analyze_text(disassembly):
             else:
                 tracked.pop(dest, None)
             continue
+        # LDR/ LDRSW (literal) addresses a PC-relative memory location
+        # directly, without ADRP. LLVM objdump prints the resolved absolute
+        # target (optionally followed by a symbol annotation).
+        if op in ("ldr", "ldrsw") and len(args) == 2 and dest:
+            literal = _absolute(args[1])
+            if literal is not None:
+                references.append({
+                    "function": current, "pc": hex(pc), "kind": "load",
+                    "opcode": op, "address": hex(literal),
+                    "origin_pc": hex(pc), "addressing": "literal",
+                })
+                tracked.pop(dest, None)
+                continue
         if op in LOADS | STORES:
             # Reject register-offset, pre/post-index and writeback forms.
             match = MEMORY.search(operands)
