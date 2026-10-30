@@ -24,7 +24,7 @@ class PhaseAuditTests(unittest.TestCase):
         self.assertEqual(result["mean_phase_ms"]["pose_cpu_ms"], 6.0)
         self.assertAlmostEqual(result["mean_phase_ms"]["frame_work_ms"], 26.6667)
         self.assertEqual(result["largest_observed_cpu_component"],
-                         "unattributed_cpu_ms")
+                         "end_drawing_ms")
         self.assertFalse(result["original_game_parity_proven"])
 
     def test_missing_log_is_not_invented(self):
