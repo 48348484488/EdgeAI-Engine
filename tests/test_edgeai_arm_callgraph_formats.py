@@ -14,7 +14,7 @@ class ArmCallgraphFormats(unittest.TestCase):
   1000: 00 f0 00 f8 bl 0x2000 <worker>
   1004: f000 f800 bl 0x2000 <worker>
   1008: 00 47 blx r0
-  100a: e000 b 0x2000 <worker>
+  100a: e000 b.w 0x2000 <worker>
 00002000 <worker>:
   2000: 70 47 bx lr
 """
@@ -24,6 +24,18 @@ class ArmCallgraphFormats(unittest.TestCase):
         self.assertEqual([c["indirect"] for c in graph["calls"]], [False, False, True])
         self.assertEqual(graph["calls"][0]["target_function"], "worker")
         self.assertEqual(len(graph["tail_edges"]), 1)
+
+    def test_thumb_interworking_bit_normalized_for_label_lookup(self):
+        disassembly = """
+00001000 <entry>:
+  1000: blx 0x2001 <worker>
+00002000 <worker>:
+  2000: bx lr
+"""
+        graph = analyze_text(disassembly, "ARM32")
+        self.assertEqual(graph["calls"][0]["target"], "0x2001")
+        self.assertEqual(graph["calls"][0]["target_function"], "worker")
+        self.assertEqual(graph["unresolved_direct_targets"], [])
 
     def test_arm32_word_and_no_raw(self):
         disassembly = """
