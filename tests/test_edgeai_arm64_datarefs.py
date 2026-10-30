@@ -66,6 +66,57 @@ class Arm64DataReferenceTests(unittest.TestCase):
 """
         self.assertEqual(analyze_text(asm)["references"], [])
 
+
+    def test_pair_load_clobbers_both_destination_registers(self):
+        asm = """
+0000000000400000 <pair>:
+  400000: adrp x9, 0x430000
+  400004: adrp x10, 0x440000
+  400008: ldp x9, x10, [x11]
+  40000c: ldr w0, [x9, #0x20]
+  400010: ldr w1, [x10, #0x20]
+  400014: ret
+"""
+        self.assertEqual(analyze_text(asm)["references"], [])
+
+    def test_writeback_invalidates_base_for_load_store_and_pair(self):
+        for writeback in ("str w0, [x9], #8",
+                          "ldr w0, [x9, #8]!",
+                          "stp x0, x1, [x9, #16]!"):
+            with self.subTest(writeback=writeback):
+                asm = ("""
+0000000000400000 <writeback>:
+  400000: adrp x9, 0x430000
+  400004: """ + writeback + """
+  400008: ldr w0, [x9, #0x30]
+  40000c: ret
+""")
+                self.assertEqual(analyze_text(asm)["references"], [])
+
+    def test_w_register_operations_cannot_preserve_64bit_addresses(self):
+        for op in ("mov w9, w9", "add w9, w9, #8"):
+            with self.subTest(op=op):
+                asm = ("""
+0000000000400000 <truncate>:
+  400000: adrp x9, 0x430000
+  400004: """ + op + """
+  400008: ldr w0, [x9, #0x30]
+  40000c: ret
+""")
+                self.assertEqual(analyze_text(asm)["references"], [])
+
+    def test_bitwise_bic_does_not_clear_unrelated_address_register(self):
+        asm = """
+0000000000400000 <bitwise>:
+  400000: adrp x9, 0x430000
+  400004: bic x0, x0, x1
+  400008: ldr w0, [x9, #0x30]
+  40000c: ret
+"""
+        refs = analyze_text(asm)["references"]
+        self.assertEqual(len(refs), 1)
+        self.assertEqual(refs[0]["address"], "0x430030")
+
     def test_relocatable_object_rejected(self):
         with tempfile.TemporaryDirectory() as folder:
             path = Path(folder) / "test.o"
