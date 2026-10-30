@@ -76,28 +76,31 @@ def analyze_text(disassembly, architecture):
         calls = []
         for pc, op, operands in func["instructions"]:
             is_call = op in (("bl", "blx") if architecture == "ARM32" else ("bl", "blr"))
-            is_unconditional_tail = op in (("b", "bx") if architecture == "ARM32" else ("b", "br"))
+            is_unconditional_tail = op in (("b", "b.w", "bx") if architecture == "ARM32" else ("b", "br"))
             if not (is_call or is_unconditional_tail):
                 continue
             match = DIRECT.match(operands)
             target = int(match[1], 16) if match else None
+            # ARM/Thumb interworking uses bit 0 to tag Thumb targets in
+            # pointers; disassembly function labels are instruction-aligned.
+            lookup_target = (target & ~1) if target is not None and architecture == "ARM32" else target
             if is_call:
                 item = {
                     "pc": hex(pc), "opcode": op,
                     "target": hex(target) if target is not None else None,
-                    "target_function": addresses.get(target) if target is not None else None,
+                    "target_function": addresses.get(lookup_target) if target is not None else None,
                     "indirect": target is None,
                 }
                 calls.append(item)
                 all_calls.append({"from": func["name"], **item})
                 if target is None:
                     indirect.append({"from": func["name"], **item})
-            elif target is not None and target in addresses and target != func["address"]:
+            elif target is not None and lookup_target in addresses and lookup_target != func["address"]:
                 # Only label-backed cross-function unconditional branches are
                 # claimed as tail edges; local loop/condition branches excluded.
                 tails.append({
                     "from": func["name"], "pc": hex(pc),
-                    "to": addresses[target], "target": hex(target)
+                    "to": addresses[lookup_target], "target": hex(target)
                 })
         result.append({
             "name": func["name"], "address": hex(func["address"]),
