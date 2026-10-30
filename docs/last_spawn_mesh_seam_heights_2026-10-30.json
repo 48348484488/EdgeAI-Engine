@@ -94,5 +94,26 @@
   ],
   "all_four_covered": true,
   "all_four_within_step": true,
-  "limits": "Static source mesh only; runtime mesh collision, visual materials, edge normals and Unity LITE 7.3 gameplay equivalence remain unverified"
+  "limits": "Static source mesh only; runtime mesh collision, visual materials, edge normals and Unity LITE 7.3 gameplay equivalence remain unverified",
+  "additional_cross_section_audit": {
+    "probe_offsets_m": [
+      -150,
+      -75,
+      0,
+      75,
+      150
+    ],
+    "inside_offset_m": 0.5,
+    "outside_offset_m": 0.5,
+    "covered_probes": 20,
+    "total_probes": 20,
+    "max_abs_delta_m": {
+      "north": 0.31251961726318456,
+      "south": 0.12032210557991974,
+      "east": 0.24380677979913656,
+      "west": 0.046881661423498144
+    },
+    "all_below_provisional_step_0_55m": true,
+    "warning": "Only five samples per side; no guarantee at every edge point or of Unity runtime physics"
+  }
 }
