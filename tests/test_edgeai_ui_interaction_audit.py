@@ -43,6 +43,43 @@ class InteractionAuditTests(unittest.TestCase):
         self.assertEqual(result["observed_activation_count"], 1)
         self.assertEqual(result["touch_trials"][0]["verdict"], "observed_inside_activation")
 
+    def test_real_screenshot_and_action_event_both_required(self):
+        data = sample()
+        data["touch_trials"] = [{"control": "craft", "screen_point": [34, 480],
+                                 "action_observed": True,
+                                 "visual_transition_observed": True}]
+        result = module.audit(data)
+        self.assertEqual(result["action_and_visual_transition_confirmed_count"], 1)
+        self.assertEqual(result["visual_runtime_disagreements"], 0)
+        self.assertTrue(result["touch_trials"][0]["action_and_visual_transition_confirmed"])
+        self.assertEqual(result["touch_trials"][0]["visual_verdict"],
+                         "action_and_visual_transition_observed")
+        self.assertFalse(result["original_game_parity_proven"])
+
+    def test_log_only_and_visual_only_do_not_confirm_action_transition(self):
+        data = sample()
+        data["touch_trials"] = [
+            {"control": "craft", "screen_point": [34, 480],
+             "action_observed": True, "visual_transition_observed": False},
+            {"control": "craft", "screen_point": [34, 480],
+             "action_observed": False, "visual_transition_observed": True},
+        ]
+        result = module.audit(data)
+        self.assertEqual(result["action_and_visual_transition_confirmed_count"], 0)
+        self.assertEqual(result["visual_runtime_disagreements"], 2)
+        self.assertEqual([x["visual_verdict"] for x in result["touch_trials"]],
+                         ["action_logged_without_visual_transition",
+                          "visual_change_without_action_log"])
+
+    def test_visual_evidence_requires_explicit_boolean(self):
+        data = sample()
+        data["touch_trials"][0]["visual_transition_observed"] = "yes"
+        with self.assertRaisesRegex(ValueError, "visual_transition_observed"):
+            module.audit(data)
+        data["touch_trials"][0]["visual_transition_observed"] = None
+        with self.assertRaisesRegex(ValueError, "visual_transition_observed"):
+            module.audit(data)
+
     def test_invalid_and_missing_touch_evidence_rejected(self):
         data = sample()
         data["touch_trials"][0]["action_observed"] = "yes"
