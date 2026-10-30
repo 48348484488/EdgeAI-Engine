@@ -26,7 +26,7 @@ def summarize(log_text):
         fps = float(match[6])
         if not (frames > 0 and 0 <= slow <= frames and
                 all(math.isfinite(v) for v in (mean, p95, maximum, fps)) and
-                0 < mean <= p95 <= maximum and fps > 0):
+                0 < mean <= maximum and 0 < p95 <= maximum and fps > 0):
             raise ValueError("invalid frame timing window")
         if abs(fps - 1000.0 / mean) > max(0.5, fps * 0.01):
             raise ValueError("reported FPS disagrees with frame duration")
