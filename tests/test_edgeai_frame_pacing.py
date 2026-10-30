@@ -29,11 +29,18 @@ class FramePacingTests(unittest.TestCase):
             module.summarize("FPS: 60")
 
     def test_invalid_or_inconsistent_measurements_rejected(self):
-        for case in (log(20, 10, 40), log(20, 30, 40, 61),
+        for case in (log(20, 45, 40), log(20, 30, 40, 61),
                      log(20, 30, 40).replace("mean_fps=50.00", "mean_fps=200.00")):
             with self.subTest(case=case):
                 with self.assertRaises(ValueError):
                     module.summarize(case)
+
+    def test_rare_long_frame_can_make_mean_exceed_p95(self):
+        # A single 1-second stall can raise the mean above the 95th
+        # percentile; rejecting such logs would hide the worst FPS bugs.
+        result = module.summarize(log(26.5, 10, 1000, 1))
+        self.assertEqual(result["mean_ms"], 26.5)
+        self.assertEqual(result["worst_window_p95_ms"], 10)
 
     def test_regression_uses_duration_not_fps_difference(self):
         baseline = module.summarize(log(20, 30, 40))
