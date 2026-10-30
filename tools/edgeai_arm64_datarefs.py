@@ -14,10 +14,10 @@ import subprocess
 
 from edgeai_arm_callgraph import HEADER, INSTRUCTION, elf_architecture
 
-REGISTER = re.compile(r"^[wx](\\d+)$", re.I)
+REGISTER = re.compile(r"^[wx](\d+)$", re.I)
 ADDRESS = re.compile(r"^#?(0x[0-9a-f]+|[0-9a-f]+)$", re.I)
 IMMEDIATE = re.compile(r"^#([+-]?(?:0x[0-9a-f]+|[0-9]+))$", re.I)
-MEMORY = re.compile(r"\\[\\s*(x\\d+)\\s*(?:,\\s*#([+-]?(?:0x[0-9a-f]+|[0-9]+)))?\\s*\\]", re.I)
+MEMORY = re.compile(r"\[\s*(x\d+)\s*(?:,\s*#([+-]?(?:0x[0-9a-f]+|[0-9]+)))?\s*\]", re.I)
 LOADS = {"ldr", "ldrb", "ldrh", "ldrsb", "ldrsh", "ldrsw", "ldur", "ldurb", "ldurh"}
 STORES = {"str", "strb", "strh", "stur", "sturb", "sturh"}
 
@@ -146,7 +146,7 @@ def main():
     parser.add_argument("--report", type=Path)
     args = parser.parse_args()
     report = analyze_elf(args.elf)
-    payload = json.dumps(report, indent=2) + "\\n"
+    payload = json.dumps(report, indent=2) + "\n"
     if args.report:
         args.report.parent.mkdir(parents=True, exist_ok=True)
         args.report.write_text(payload, encoding="utf-8")
