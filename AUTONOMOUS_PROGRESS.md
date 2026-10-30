@@ -1,3 +1,10 @@
+## ARM64 literal loads + verified CI — 2026-10-30
+
+- Added generic direct PC-relative ARM64 LDR/LDRSW literal references, with destination clobber handling [437d465](https://github.com/48348484488/EdgeAI-Engine/commit/437d465f5b63438125bbd2b00f3d7912f7f93f93), plus memory-form LDRSW support.
+- Added literal, clobber, and memory regressions [4cfbd6b](https://github.com/48348484488/EdgeAI-Engine/commit/4cfbd6b1947fad79b6dc49e06321771d35396c88). [CI #41070493336](https://github.com/48348484488/EdgeAI-Engine/actions/runs/41070493336) passed **739 Python (38 skipped), 15/15 C++**, plus ARM64/Windows/low-resource.
+- Independently assembled/linked AArch64 ELF with Clang/LLD; LLVM objdump showed `ldr x0, 0x10238 <literal_test+0x10>` and `ldrsw x1, 0x10240 <literal_test+0x18>`. Added actual-format fixture [85f2ef3](https://github.com/48348484488/EdgeAI-Engine/commit/85f2ef31a8c9d8944443f45073fc1ff75396d743); ARM64 CI passed, other CI pending.
+- No automatic C++ reconstruction or original Unity LITE 7.3 parity proven. Next: verify all fixture CI and test original authorized ELF with independent ground truth.
+
 ## Generic ARM64 pair data-reference recovery + real Last inventory evidence — 2026-10-30 (America/Recife)
 
 - Found and fixed a second generic parsing limitation on **real LLVM 17 disassembly**: `adrp x0, 0x33e000 <symbol+offset>` was rejected because the analyzer demanded an unannotated address [b55bfee](https://github.com/48348484488/EdgeAI-Engine/commit/b55bfee884b1894626288d0b68c42d4d15d1fbdf); added three annotated ADRP/ADR regressions [82b5459](https://github.com/48348484488/EdgeAI-Engine/commit/82b54599c84a1fdc0147f7cb52fae042d1727a59).
