@@ -14,7 +14,9 @@ import subprocess
 HEADER = re.compile(r"^\s*([0-9a-fA-F]+) <([^>]+)>:\s*$")
 INSTRUCTION = re.compile(
     r"^\s*([0-9a-fA-F]+):\s+"
-    r"(?:(?:[0-9a-fA-F]{2}\s+){4}|[0-9a-fA-F]{8}\s+)?"
+    r"(?:(?:[0-9a-fA-F]{2}(?:\s+[0-9a-fA-F]{2}){1,3}|"
+    r"[0-9a-fA-F]{4}(?:\s+[0-9a-fA-F]{4})?|"
+    r"[0-9a-fA-F]{8})\s+)?"
     r"([a-zA-Z][a-zA-Z0-9.]*)\s*(.*?)\s*$"
 )
 DIRECT = re.compile(r"^0x([0-9a-fA-F]+)(?:\s|$)")
