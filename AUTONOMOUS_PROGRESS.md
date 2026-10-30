@@ -1,3 +1,11 @@
+## Generic ARM64 SUB-immediate dataflow — 2026-10-30
+
+- Rechecked [previous general CI #41082914871](https://github.com/48348484488/EdgeAI-Engine/actions/runs/41082914871): **742 Python tests (38 skipped) and 15/15 C++ tests passed**. Previous ARM64, Windows and low-resource pipelines also completed successfully.
+- Extended linked-AArch64 PC-relative address propagation to support **SUB Xd, Xn, #imm** (including the architectural optional LSL #12) in addition to ADD. Negative and overflowing computed addresses invalidate provenance rather than becoming fictitious data references. This is a generic analyzer change, not a Last-specific pattern. [Implementation 98bc97b](https://github.com/48348484488/EdgeAI-Engine/commit/98bc97bc46a8465de4739af30a174110b7b5b352).
+- Added regressions for backwards ADRP/SUB/LDR references, unsupported shifts, register offsets, W-register truncation, underflow, and overwrite invalidation. [Tests 83e0576](https://github.com/48348484488/EdgeAI-Engine/commit/83e05760f3f80a49d1051703d3b26454ff425868). [New general CI #41085836744](https://github.com/48348484488/EdgeAI-Engine/actions/runs/41085836744) was still running at this checkpoint; ARM64 CI #41085836608 passed. **Do not claim new general CI passed until verified.**
+- Public reference check: [LITE 6.7 listing](https://last-island-of-survival-lite.br.uptodown.com/android) and [LITE 6.2 gameplay](https://www.taptap.io/ru/post/7661386) do not establish same-version Unity 7.3 pixel ground truth. No original Unity 7.3 function recovery proven.
+- Next: verify CI, run AArch64 SUB dataflow against independently compiled linked ELF and authorized original binary if accessible; improve camera/build state analysis with cross-checked behavioral evidence.
+
 ## Shifted ARM64 ADD-immediate dataflow — 2026-10-30
 
 - Added reusable AArch64 data-reference propagation for `ADD Xd, Xn, #imm, LSL #12`, including optional `LSL #0`; only architectural immediate shifts 0 and 12 are accepted, and W-register writes still invalidate 64-bit provenance. Implementation [06d1977](https://github.com/48348484488/EdgeAI-Engine/commit/06d1977430c2509dd5b9f97b9270ee4f8f4349a3).
