@@ -1,3 +1,10 @@
+## Shifted ARM64 ADD-immediate dataflow — 2026-10-30
+
+- Added reusable AArch64 data-reference propagation for `ADD Xd, Xn, #imm, LSL #12`, including optional `LSL #0`; only architectural immediate shifts 0 and 12 are accepted, and W-register writes still invalidate 64-bit provenance. Implementation [06d1977](https://github.com/48348484488/EdgeAI-Engine/commit/06d1977430c2509dd5b9f97b9270ee4f8f4349a3).
+- Added two regression methods: shifted ADRP+ADD+LDR address `0x432018`, and rejection of unsupported shifts / W-register truncation [4d6428a](https://github.com/48348484488/EdgeAI-Engine/commit/4d6428a856cd6c0a31f7c4320ff07893cb097c3d). [CI #41082914871](https://github.com/48348484488/EdgeAI-Engine/actions/runs/41082914871) was in progress at checkpoint; **do not claim it passed yet**.
+- Public reference research on 2026-10-30 found [2024 LITE gameplay](https://www.youtube.com/watch?v=yYPWf_Jp_aQ), but current [Uptodown LITE listing](https://last-island-of-survival-lite.br.uptodown.com/android) identifies 6.7; neither establishes frame-matched Unity LITE 7.3 ground truth. No new original APK analysis or C++ recovery proven.
+- Next: verify CI; run shifted-ADD parser against independently assembled linked AArch64 ELF and authorized original binaries when available, then correlate original 7.3 behavior with recreated runtime evidence.
+
 ## ARM64 literal loads + verified CI — 2026-10-30
 
 - Added generic direct PC-relative ARM64 LDR/LDRSW literal references, with destination clobber handling [437d465](https://github.com/48348484488/EdgeAI-Engine/commit/437d465f5b63438125bbd2b00f3d7912f7f93f93), plus memory-form LDRSW support.
