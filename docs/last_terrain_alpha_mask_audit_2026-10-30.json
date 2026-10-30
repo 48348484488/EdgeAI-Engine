@@ -1,0 +1,24 @@
+{
+  "date": "2026-10-30",
+  "source": "Last Island LITE 7.3 source-extracted a-57_tex0.png (existing asset in user's repository)",
+  "source_apk_build": "https://github.com/48348484488/last-Island-of-survival-lite/actions/runs/41094777146",
+  "image_size": [
+    512,
+    512
+  ],
+  "total_pixels": 262144,
+  "alpha_zero_pixels": 189038,
+  "alpha_partial_pixels": 40138,
+  "alpha_opaque_pixels": 32968,
+  "nonzero_rgb_under_zero_alpha_pixels": 189038,
+  "alpha_zero_fraction": 0.7211227416992188,
+  "hidden_rgb_fraction": 0.7211227416992188,
+  "observation": "When used directly as a raylib diffuse RGBA texture, most terrain pixels were transparent. In actual Android virtual screenshot the exact sky RGB covered 78.3381% of pixels, with the ground visually absent. Native ray collision nevertheless reported spawn height 22.30350.",
+  "runtime_evidence": "https://github.com/48348484488/last-Island-of-survival-lite/actions/runs/41094777146/artifacts/12995657838",
+  "corrective_action": "Convert the existing source texture to RGB8 before upload, preserving RGB while treating alpha as material-mask data rather than diffuse opacity.",
+  "limitations": [
+    "Original Unity shader/material layer mapping is not reconstructed",
+    "RGB8 preview is not guaranteed to match original terrain appearance",
+    "Post-fix Android screenshot validation pending"
+  ]
+}
