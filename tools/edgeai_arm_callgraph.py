@@ -110,6 +110,14 @@ def analyze_text(disassembly, architecture):
         })
     return {
         "architecture": architecture, "function_count": len(result),
+        # ObjDump can label a whole stripped .text section as one pseudo-
+        # function. Keep the legacy label count, but expose its uncertainty.
+        "section_pseudolabel_count": sum(f["name"].startswith(".") for f in result),
+        "disassembled_instruction_count": sum(f["instruction_count"] for f in result),
+        "unresolved_direct_call_count": sum(
+            c["target"] is not None and c["target_function"] is None
+            for c in all_calls
+        ),
         "functions": result, "calls": all_calls,
         "indirect_calls": indirect, "tail_edges": tails,
         "unresolved_direct_targets": sorted({
@@ -119,6 +127,7 @@ def analyze_text(disassembly, architecture):
         "limitations": [
             "Static call sites only; indirect targets unresolved",
             "Function boundaries require objdump labels; stripped or unlabeled code may be missed",
+            "A .text section label is not proof of a function boundary",
             "No proof of source-level semantics, execution, or game fidelity",
         ],
     }
