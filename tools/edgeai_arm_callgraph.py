@@ -19,7 +19,10 @@ INSTRUCTION = re.compile(
     r"[0-9a-fA-F]{8})\s+)?"
     r"([a-zA-Z][a-zA-Z0-9.]*)\s*(.*?)\s*$"
 )
-DIRECT = re.compile(r"^0x([0-9a-fA-F]+)(?:\s|$)")
+# LLVM prints 0xADDR; GNU-style dumps may print #0xADDR or bare hex.
+# A token must end before a space/end-of-line, so registers like r3/x9
+# remain unresolved indirect operands rather than fabricated addresses.
+DIRECT = re.compile(r"^#?(?:0x)?([0-9a-fA-F]+)(?=\s|$)")
 
 
 def elf_architecture(path):
@@ -76,7 +79,7 @@ def analyze_text(disassembly, architecture):
         next_address = functions[index + 1]["address"] if index + 1 < len(functions) else None
         calls = []
         for pc, op, operands in func["instructions"]:
-            is_call = op in (("bl", "blx") if architecture == "ARM32" else
+            is_call = op in (("bl", "bl.w", "blx", "blx.w") if architecture == "ARM32" else
                              ("bl", "blr", "blraa", "blrab", "blraaz", "blrabz"))
             is_unconditional_tail = op in (("b", "b.w", "bx") if architecture == "ARM32" else
                                            ("b", "br", "braa", "brab", "braaz", "brabz"))
