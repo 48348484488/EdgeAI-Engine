@@ -27,3 +27,27 @@ jobs:
       - name: Python tests
         run: python3 -m unittest discover -s tests -p 'test_*.py'
 
+      - name: Capture current ARM32 LLVM fingerprints after test failure
+        if: failure()
+        shell: bash
+        run: |
+          mkdir -p results/arm32-llvm-diagnostics
+          clang --version > results/arm32-llvm-diagnostics/clang-version.txt 2>&1 || true
+          llvm-objdump --version > results/arm32-llvm-diagnostics/objdump-version.txt 2>&1 || true
+          for opt in 1 2 3 s z; do
+            clang --target=armv7-none-eabi -marm "-O$opt" -fno-inline \
+              -nostdlib -fuse-ld=lld -Wl,-Ttext=0x1000 -Wl,-e=start \
+              examples/reverse/tictactoe.c \
+              -o "results/arm32-llvm-diagnostics/winner-O$opt.elf" \
+              > "results/arm32-llvm-diagnostics/compile-O$opt.log" 2>&1 || continue
+            llvm-objdump -d "results/arm32-llvm-diagnostics/winner-O$opt.elf" \
+              > "results/arm32-llvm-diagnostics/disassembly-O$opt.txt" 2>&1 || true
+          done
+
+      - name: Upload ARM32 fingerprint evidence
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: edgeai-arm32-llvm-fingerprint-evidence
+          path: results/arm32-llvm-diagnostics/
+          if-no-files-found: warn
