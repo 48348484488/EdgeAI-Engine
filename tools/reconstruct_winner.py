@@ -94,24 +94,63 @@ LOOP_PATTERN = [
 ]
 
 
+# Clang/LLVM 18 -O1: the first board load is interleaved with table
+# reads; the boolean predicate uses ORR/CLZ/ANDS rather than LLVM17 flags.
+# Keep exact opcode and register constraints; do not wildcard the predicate.
+LOOP_PATTERN_LLVM18 = [
+    ('add', r'r2, r1, r1, lsl #1'),
+    ('mov', r'r3, r12'),
+    ('ldrb', r'r2, \[r3, r2\]!'),
+    ('ldr', r'r2, \[lr, r2, lsl #2\]'),
+    ('ldrb', r'r4, \[r3, #0x1\]'),
+    ('ldrb', r'r3, \[r3, #0x2\]'),
+    ('ldr', r'r4, \[lr, r4, lsl #2\]'),
+    ('eor', r'r5, r2, r4'),
+    ('ldr', r'r3, \[lr, r3, lsl #2\]'),
+    ('eor', r'r3, r4, r3'),
+    ('orr', r'r3, r5, r3'),
+    ('clz', r'r3, r3'),
+    ('lsr', r'r3, r3, #5'),
+    ('cmp', r'r2, #0'),
+    ('mov', r'r4, r2'),
+    ('movwne', r'r4, #0x1'),
+    ('ands', r'r3, r3, r4'),
+    ('movne', r'r0, r2'),
+    ('cmp', r'r3, #1'),
+    ('beq', r'(0x[0-9a-fA-F]+) <winner\+0x[0-9a-fA-F]+>'),
+    ('add', r'r1, r1, #1'),
+    ('cmp', r'r1, #8'),
+    ('bne', r'(0x[0-9a-fA-F]+) <winner\+0x[0-9a-fA-F]+>'),
+    ('mov', r'r0, #0'),
+    ('pop', r'\{r4, r5, r11, pc\}'),
+]
+
+
 def reconstruct(elf):
     elf = Path(elf)
     code = instructions(elf, 'winner')
     start = next((i for i, ins in enumerate(code) if ins['op'] == 'add' and
                   ins['args'] == 'r2, r1, r1, lsl #1'), -1)
-    if start < 0 or len(code) - start != len(LOOP_PATTERN):
+    if start < 0:
         raise ValueError('unrecognized winner loop extent')
+    if len(code) - start == len(LOOP_PATTERN):
+        pattern, compiler = LOOP_PATTERN, 'llvm17'
+    elif len(code) - start == len(LOOP_PATTERN_LLVM18):
+        pattern, compiler = LOOP_PATTERN_LLVM18, 'llvm18'
+    else:
+        raise ValueError('unrecognized winner loop extent')
+    eq_index, back_index = len(pattern) - 6, len(pattern) - 3
     prologue = code[:start]
     if len(prologue) != 7 or [(x['op']) for x in prologue] != [
             'push', 'add', 'mov', 'movw', 'movt', 'movw', 'movt']:
         raise ValueError('unsupported winner prologue')
     if prologue[0]['args'] != '{r4, r5, r11, lr}' or prologue[1]['args'] != 'r11, sp, #8' or prologue[2]['args'] != 'r1, #0':
         raise ValueError('unsupported winner loop initialization')
-    for ins, (op, pat) in zip(code[start:], LOOP_PATTERN):
+    for ins, (op, pat) in zip(code[start:], pattern):
         if ins['op'] != op or not re.fullmatch(pat, ins['args']):
             raise ValueError('unsupported winner instruction at ' + hex(ins['pc']) + ': ' + ins['op'] + ' ' + ins['args'])
-    eq_target = int(re.match(LOOP_PATTERN[16][1], code[start + 16]['args'])[1], 16)
-    back_target = int(re.match(LOOP_PATTERN[19][1], code[start + 19]['args'])[1], 16)
+    eq_target = int(re.match(pattern[eq_index][1], code[start + eq_index]['args'])[1], 16)
+    back_target = int(re.match(pattern[back_index][1], code[start + back_index]['args'])[1], 16)
     if eq_target != code[-1]['pc'] or back_target != code[start]['pc']:
         raise ValueError('unexpected loop or equality branch target')
     sec = sections(elf)
@@ -156,7 +195,8 @@ def reconstruct(elf):
         'table_bytes_sha256': hashlib.sha256(raw).hexdigest(),
         'rows': rows,
         'loop_iterations': 8,
-        'loop_back_edge': [hex(code[start + 19]['pc']), hex(back_target)],
+        'loop_back_edge': [hex(code[start + back_index]['pc']), hex(back_target)],
+        'compiler_pattern': compiler,
         'early_return_pc': hex(eq_target),
         'verified_instructions': len(code),
         'limits': 'Only this proven ARM32 clang-O1 code pattern; C++ signature/board declaration provided.'
