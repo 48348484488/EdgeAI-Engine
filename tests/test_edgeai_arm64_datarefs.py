@@ -117,6 +117,46 @@ class Arm64DataReferenceTests(unittest.TestCase):
         self.assertEqual(len(refs), 1)
         self.assertEqual(refs[0]["address"], "0x430030")
 
+    def test_literal_ldr_and_ldrsw_recover_direct_pc_relative_loads(self):
+        asm = """
+0000000000400000 <literals>:
+  400000: ldr x0, 0x401000 <constant_table>
+  400004: ldrsw x1, 0x401004
+  400008: ldr w2, 0x401008 <constant_table+0x8>
+  40000c: ret
+"""
+        refs = analyze_text(asm)["references"]
+        self.assertEqual([r["address"] for r in refs],
+                         ["0x401000", "0x401004", "0x401008"])
+        self.assertEqual([r["opcode"] for r in refs],
+                         ["ldr", "ldrsw", "ldr"])
+        self.assertTrue(all(r["kind"] == "load" and
+                            r["addressing"] == "literal" for r in refs))
+
+    def test_literal_load_clobbers_previous_address_provenance(self):
+        asm = """
+0000000000400000 <literal_clobber>:
+  400000: adrp x8, 0x430000
+  400004: ldr x8, 0x401000
+  400008: ldr w0, [x8, #0x30]
+  40000c: ret
+"""
+        refs = analyze_text(asm)["references"]
+        self.assertEqual(len(refs), 1)
+        self.assertEqual(refs[0]["address"], "0x401000")
+
+    def test_nonliteral_ldr_keeps_existing_memory_semantics(self):
+        asm = """
+0000000000400000 <memory>:
+  400000: adrp x8, 0x430000
+  400004: ldrsw x0, [x8, #0x24]
+  400008: ret
+"""
+        refs = analyze_text(asm)["references"]
+        self.assertEqual(len(refs), 1)
+        self.assertEqual(refs[0]["address"], "0x430024")
+        self.assertNotIn("addressing", refs[0])
+
     def test_relocatable_object_rejected(self):
         with tempfile.TemporaryDirectory() as folder:
             path = Path(folder) / "test.o"
