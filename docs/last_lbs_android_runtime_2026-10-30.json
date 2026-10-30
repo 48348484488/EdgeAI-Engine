@@ -1,0 +1,77 @@
+{
+  "date": "2026-10-30",
+  "purpose": "Portable EdgeAI weighted-matrix CPU LBS applied to Last Island recreated seven-mesh Unity-derived skeleton",
+  "baseline": {
+    "github_run": 41137774069,
+    "source_commit": "8d89f54a",
+    "runtime_artifact": 13017451836,
+    "unique_windows": 22,
+    "observed_frames": 1320,
+    "mean_frame_ms": 42.008,
+    "fps_from_mean_frame_ms": 23.805,
+    "slow_frames_gt_33_33ms": 1247,
+    "worst_window_p95_ms": 109.276,
+    "pose_cpu_ms": 20.711,
+    "vbo_submit_ms": 1.6019,
+    "end_drawing_ms": 18.2243,
+    "frame_work_ms": 42.3133
+  },
+  "candidate": {
+    "github_run": 41141881188,
+    "source_commit": "dc324103",
+    "runtime_artifact": 13019181169,
+    "apk_release": "v0.25.0-dc324103",
+    "apk_size_bytes": 26877051,
+    "jobs_passed": 3,
+    "unique_windows": 28,
+    "observed_frames": 1680,
+    "mean_frame_ms": 34.9649,
+    "fps_from_mean_frame_ms": 28.6001,
+    "slow_frames_gt_33_33ms": 770,
+    "worst_window_p95_ms": 110.313,
+    "pose_cpu_ms": 14.0583,
+    "vbo_submit_ms": 1.6046,
+    "end_drawing_ms": 17.514,
+    "frame_work_ms": 35.1644
+  },
+  "observed_change": {
+    "pose_cpu_reduction_pct": 32.122,
+    "frame_time_reduction_pct": 16.766,
+    "fps_increase_pct": 20.143
+  },
+  "differential_validation": {
+    "cases": 100000,
+    "influences_per_vertex": "1-8",
+    "position_abs_tolerance": 0.0001,
+    "normal_abs_tolerance": 0.0001,
+    "max_position_delta": 0.0000152587891,
+    "max_normal_delta": 0.00000111013651,
+    "edgeai_ci_run": 41141892749,
+    "edgeai_python_tests": 783,
+    "edgeai_python_skipped": 38,
+    "edgeai_cpp_tests_passed": 15
+  },
+  "virtual_runtime_checks": [
+    "terrain spawn and 20 seam probes",
+    "craft visible touch",
+    "inventory open/close",
+    "settings open/close",
+    "jump gameplay transition",
+    "attack gameplay transition"
+  ],
+  "startup_screenshot_comparison": {
+    "resolution": "1080x640",
+    "pixels_with_max_rgb_channel_delta_above_30": 655,
+    "total_pixels": 691200,
+    "fraction": 0.0009476273,
+    "comparison": "recreated build vs recreated build, not against original"
+  },
+  "methodology": "Deduplicated timestamped LIOS_FRAME_TIMING and LIOS_PHASE_TIMING records from overlapping archived Android logcat snapshots; 60 frames per unique window. CPU wall-clock phases, not GPU timing.",
+  "limitations": [
+    "Runs were different emulator sessions and interaction windows, not controlled A/B experiments.",
+    "Measured FPS remains below 30 on full candidate sample; last five windows are not representative of all frames.",
+    "Unity LITE 7.3 same-state original screenshot and original binary functional comparison not available.",
+    "Pixel stability between recreated builds does not prove original-game parity.",
+    "Android emulator uses x86_64 with ARM64 translation; native ARM64 physical GPU performance not measured."
+  ]
+}
