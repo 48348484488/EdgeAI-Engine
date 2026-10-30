@@ -70,6 +70,14 @@ def analyze_text(disassembly, architecture):
     if len(addresses) != len(functions):
         raise ValueError("duplicate function entry address")
 
+    # In stripped ELFs, objdump often supplies only a .text pseudo-label.
+    # A direct call into a disassembled instruction is evidence of a possible
+    # entry point, but not proof of a complete function boundary.
+    instruction_owners = {}
+    for function in functions:
+        for pc, _, _ in function["instructions"]:
+            instruction_owners.setdefault(pc, function["name"])
+
     result = []
     all_calls = []
     indirect = []
@@ -126,6 +134,25 @@ def analyze_text(disassembly, architecture):
             "direct_call_count": sum(not c["indirect"] for c in calls),
             "indirect_call_count": sum(c["indirect"] for c in calls),
         })
+    candidates = {}
+    for call in all_calls:
+        if call["target"] is None or call["target_function"] is not None:
+            continue
+        target = int(call["target"], 16)
+        if architecture == "ARM32":
+            target &= ~1
+        if target not in instruction_owners:
+            continue
+        entry = candidates.setdefault(target, {
+            "address": hex(target),
+            "containing_objdump_label": instruction_owners[target],
+            "incoming_direct_call_sites": [],
+        })
+        entry["incoming_direct_call_sites"].append({
+            "from": call["from"], "pc": call["pc"],
+        })
+    candidate_entries = [candidates[k] for k in sorted(candidates)]
+
     return {
         "architecture": architecture, "function_count": len(result),
         # ObjDump can label a whole stripped .text section as one pseudo-
@@ -136,6 +163,8 @@ def analyze_text(disassembly, architecture):
             c["target"] is not None and c["target_function"] is None
             for c in all_calls
         ),
+        "candidate_function_entries": candidate_entries,
+        "candidate_function_entry_count": len(candidate_entries),
         "functions": result, "calls": all_calls,
         "indirect_calls": indirect, "tail_edges": tails,
         "indirect_branches": indirect_branches,
@@ -148,6 +177,7 @@ def analyze_text(disassembly, architecture):
             "Static call sites only; indirect targets unresolved",
             "Register-indirect branches may be jump tables, returns, or tail calls; no target inferred",
             "Function boundaries require objdump labels; stripped or unlabeled code may be missed",
+            "Unlabeled call targets inside disassembled code are entry candidates, not proven function boundaries",
             "A .text section label is not proof of a function boundary",
             "No proof of source-level semantics, execution, or game fidelity",
         ],
