@@ -96,9 +96,12 @@ class StrippedWinnerTests(unittest.TestCase):
                            capture_output=True,check=True)
             result=recover_stripped(stripped)
             self.assertEqual(result['function_address'],'0x5000')
-            self.assertEqual(result['table_address'],'0x15108')
-            self.assertEqual(result['board_address'],'0x25120')
-            self.assertEqual(result['triplets'],recover_stripped(self.stripped)['triplets'])
+            baseline=recover_stripped(self.stripped)
+            # Relocation must shift all code/data pointers by the same
+            # linker delta; do not hardcode LLVM17-specific section padding.
+            for key in ('function_address','table_address','board_address'):
+                self.assertEqual(int(result[key],16)-int(baseline[key],16),0x4000,key)
+            self.assertEqual(result['triplets'],baseline['triplets'])
 
     def test_invalid_elf_header_rejected(self):
         with tempfile.TemporaryDirectory() as td:
