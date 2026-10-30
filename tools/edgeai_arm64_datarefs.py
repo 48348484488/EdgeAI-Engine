@@ -127,7 +127,7 @@ def analyze_text(disassembly):
             pair_memory = MEMORY.search(operands)
             if (pair_memory and not writeback and operands.rstrip().endswith("]")
                     and len(args) >= 3
-                    and all(re.fullmatch(r"[wx]\\d+", a, re.I) for a in args[:2])):
+                    and all(re.fullmatch(r"[wx]\d+", a, re.I) for a in args[:2])):
                 base = _reg(pair_memory[1])
                 offset = _imm("#" + (pair_memory[2] or "0"))
                 state = tracked.get(base)
