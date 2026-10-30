@@ -1,3 +1,9 @@
+## Diagnóstico ARM32 adicional — 2026-10-30 01:32 (America/Recife)
+
+- Artefato real de disassembly LLVM do CI falho [#41003061350](https://github.com/48348484488/EdgeAI-Engine/actions/runs/41003061350) recuperado; no `-O1`, o compilador usa sequência LLVM18 com `orr/clz/ands/movne` e loads intercalados, diferente do fingerprint LLVM17 legado.
+- Adicionado fingerprint LLVM18 **contíguo e estrito**, com contagem exata de instruções, no reconhecedor ARM32 stripped `tools/recover_winner_stripped.py`; commit [1e28362](https://github.com/48348484488/EdgeAI-Engine/commit/1e28362a1b047d2e79c5eeea2bfe938449c3860f). Mantidos os guardas de fluxo de controle, tabela e endereços.
+- Resultado de regressão deste commit ainda depende do novo CI. O reconhecimento `-O2/-O3/-Os/-Oz` e os testes de mutação continuam pendentes; **não declarar recuperação total** sem os testes.
+
 ## Resultados adicionais — 2026-10-30 01:30 (America/Recife)
 
 - A nova suíte de callgraph ARM/Thumb elevou a contagem de 688 para **693 testes** no CI [#41002949037](https://github.com/48348484488/EdgeAI-Engine/actions/runs/41002949037), mantendo **exatamente as 3 falhas e 16 erros antigos**; as cinco regressões novas passaram. CI ARM64 [#41002949047](https://github.com/48348484488/EdgeAI-Engine/actions/runs/41002949047) aprovado; pipeline externo ARM64 [#41002939066](https://github.com/48348484488/EdgeAI-Engine/actions/runs/41002939066) aprovado.
