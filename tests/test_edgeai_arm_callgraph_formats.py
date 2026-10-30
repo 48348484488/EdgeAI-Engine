@@ -141,6 +141,37 @@ class ArmCallgraphFormats(unittest.TestCase):
         self.assertEqual(graph["calls"][1]["target"], None)
         self.assertEqual(len(graph["tail_edges"]), 1)
 
+    def test_stripped_arm64_call_targets_are_candidates_not_proven_functions(self):
+        disassembly = """
+00001000 <.text>:
+  1000: bl 0x1020
+  1004: bl 0x1020
+  1008: bl 0x5000
+  1020: stp x29, x30, [sp, #-16]!
+  1024: ret
+"""
+        graph = analyze_text(disassembly, "ARM64")
+        self.assertEqual(graph["function_count"], 1)
+        self.assertEqual(graph["candidate_function_entry_count"], 1)
+        candidate = graph["candidate_function_entries"][0]
+        self.assertEqual(candidate["address"], "0x1020")
+        self.assertEqual(candidate["containing_objdump_label"], ".text")
+        self.assertEqual(len(candidate["incoming_direct_call_sites"]), 2)
+        self.assertEqual(graph["unresolved_direct_call_count"], 3)
+
+    def test_thumb_candidate_target_normalizes_interworking_bit(self):
+        disassembly = """
+00002000 <.text>:
+  2000: blx 0x2021
+  2004: blx r3
+  2020: push {r4, lr}
+  2022: bx lr
+"""
+        graph = analyze_text(disassembly, "ARM32")
+        self.assertEqual(graph["candidate_function_entry_count"], 1)
+        self.assertEqual(graph["candidate_function_entries"][0]["address"], "0x2020")
+        self.assertEqual(len(graph["indirect_calls"]), 1)
+
     def test_reject_unsupported_architecture(self):
         with self.assertRaises(ValueError):
             analyze_text("1000 <entry>:\\n 1000: bl 0x2000", "x86")
