@@ -1,3 +1,9 @@
+## ARM32 QEMU confirmado — 2026-10-30 03:21 (America/Recife)
+
+- [Workflow ARM32 QEMU #41013235248](https://github.com/48348484488/EdgeAI-Engine/actions/runs/41013235248) **aprovado** após correção do harness `memset` e dos fingerprints LLVM18 otimizados. Cinco otimizações de binário stripped passaram na validação diferencial nativa: **1.638.420 comparações, zero divergências** (327.684 por otimização).
+- Cinco executáveis ARM32 Linux freestanding foram compilados e executados no QEMU: **426.115 casos, zero divergências**, relatório `execution_status=passed`. Quatro testes estritos e três testes de freestanding passaram. Evidência: [artefato #12957484420](https://github.com/48348484488/EdgeAI-Engine/actions/runs/41013235248/artifacts/12957484420).
+- Isso valida a função `winner()` do jogo pequeno nas cinco variantes, **não** uma reconstrução automática de jogos 3D nem fidelidade do Last original. CI geral [#41013235252](https://github.com/48348484488/EdgeAI-Engine/actions/runs/41013235252) ainda aguardava resultado.
+
 ## LLVM18 optimized ARM32 fingerprint evidence — 2026-10-30 03:20 (America/Recife)
 
 - Recuperado o artefato real [edgeai-arm32-llvm-fingerprint-evidence #12956519489](https://github.com/48348484488/EdgeAI-Engine/actions/runs/41010346542/artifacts/12956519489) do CI falho e inspecionados os disassemblies de `-O2`, `-O3`, `-Os`. O LLVM18 altera a cauda do último teste diagonal em `-O2/-O3` e intercala dois loads antes do `beq` em `-Os`.
