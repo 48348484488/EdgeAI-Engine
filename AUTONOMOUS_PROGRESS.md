@@ -1,3 +1,10 @@
+## LLVM18 optimized ARM32 fingerprint evidence — 2026-10-30 03:20 (America/Recife)
+
+- Recuperado o artefato real [edgeai-arm32-llvm-fingerprint-evidence #12956519489](https://github.com/48348484488/EdgeAI-Engine/actions/runs/41010346542/artifacts/12956519489) do CI falho e inspecionados os disassemblies de `-O2`, `-O3`, `-Os`. O LLVM18 altera a cauda do último teste diagonal em `-O2/-O3` e intercala dois loads antes do `beq` em `-Os`.
+- Atualizado o reconhecedor de funções ARM32 em [747a448](https://github.com/48348484488/EdgeAI-Engine/commit/747a448598ebb5f06f1c08b8e1041ace34461780) com **duas assinaturas completas e estritas** para as caudas LLVM17/LLVM18 e guarda `-Os` que exige os dois loads intermediários específicos; não foi relaxada a prova para apenas procurar mnemônicos.
+- Validação local do padrão contra os disassemblies reais: **3/3 formas inspecionadas** (`-O2/-O3/-Os`) correspondem às sequências esperadas. Isso **não é validação diferencial do executável**. Novo CI do commit [747a448](https://github.com/48348484488/EdgeAI-Engine/actions) iniciado e aguardando resultado.
+- Pesquisa pública adicional confirmou que referências disponíveis de LITE são da versão 6.7, sem equivalência comprovada ao Unity LITE 7.3. Nenhuma captura de outra versão foi tratada como prova de paridade.
+
 ## Freestanding ARM32 libc independence — 2026-10-30 03:15 (America/Recife)
 
 - Consultado o CI geral [#41010346542](https://github.com/48348484488/EdgeAI-Engine/actions/runs/41010346542): **695 testes, 1 falha, 8 erros, 38 ignorados**, sem travamento. Os 7 erros de reconhecimento permanecem nas variantes LLVM18 `-O2/-O3/-Os`; o erro de freestanding e a falha dependente dele são causados por `ld.lld: undefined symbol: memset`.
