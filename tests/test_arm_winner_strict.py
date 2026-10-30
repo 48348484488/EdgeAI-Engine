@@ -33,8 +33,11 @@ class Tests(unittest.TestCase):
     def test_arm_loop_and_table_extraction(self):
         cpp,ev=recovery.reconstruct(self.elf)
         self.assertEqual(len(ev['rows']),8)
-        self.assertEqual(ev['verified_instructions'],29)
-        self.assertEqual(ev['loop_back_edge'],['0x1068','0x101c'])
+        expected={'llvm17':(29,'0x1068'),'llvm18':(32,'0x1074')}
+        self.assertIn(ev['compiler_pattern'],expected)
+        count,back_pc=expected[ev['compiler_pattern']]
+        self.assertEqual(ev['verified_instructions'],count)
+        self.assertEqual(ev['loop_back_edge'],[back_pc,'0x101c'])
         self.assertIn('{0, 1, 2}',cpp)
     def test_changed_xor_instruction_is_rejected(self):
         changed=self.mutate(struct.pack('<I',0xe0225004),struct.pack('<I',0xe0825004))
