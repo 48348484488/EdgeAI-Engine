@@ -1,0 +1,63 @@
+{
+  "date": "2026-10-30",
+  "source_repo": "48348484488/last-Island-of-survival-lite",
+  "source_path": "last_island_recreated_game/assets/original_world/a-57_mesh0.obj",
+  "source_git_blob_sha": "05f8aebb2b883c3c0f416ff0b3b0f2e805da7adb",
+  "source_version_claim": "Unity LITE 7.3 extraction as recorded in source repository; not an independently executed original-game screenshot",
+  "tool": "tools/edgeai_obj_surface.py",
+  "axis": "unity-z-up -> y-up: (x,y,z) => (x,z,-y)",
+  "vertices": 1276,
+  "triangles": 2289,
+  "bounds": {
+    "x": [
+      -200,
+      200
+    ],
+    "y": [
+      8.00207996,
+      34.5576324
+    ],
+    "z": [
+      -200.000015,
+      200
+    ]
+  },
+  "queries": [
+    {
+      "x": 0,
+      "z": 0,
+      "top_height": 22.3035011,
+      "intersections": 6
+    },
+    {
+      "x": 8,
+      "z": 8,
+      "top_height": 24.51606198322932,
+      "intersections": 1
+    },
+    {
+      "x": 30,
+      "z": 0,
+      "top_height": 26.702009278045942,
+      "intersections": 2
+    },
+    {
+      "x": -20,
+      "z": -20,
+      "top_height": 20.128335152993706,
+      "intersections": 1
+    },
+    {
+      "x": 0,
+      "z": 150,
+      "top_height": 20.84222660232546,
+      "intersections": 2
+    }
+  ],
+  "limitations": [
+    "Highest vertical triangle intersection is not a walkability test",
+    "OBJ does not establish original Unity runtime collision layers, terrain shader or scene placement",
+    "No original Unity 7.3 runtime screenshot comparison performed",
+    "Geometry sampling was independently computed from the repository's source OBJ"
+  ]
+}
