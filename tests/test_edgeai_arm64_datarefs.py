@@ -133,6 +133,23 @@ class Arm64DataReferenceTests(unittest.TestCase):
         self.assertTrue(all(r["kind"] == "load" and
                             r["addressing"] == "literal" for r in refs))
 
+    def test_linked_clang_arm64_literal_fixture(self):
+        # Independently assembled with Clang and linked as AArch64 ET_DYN.
+        # LLVM objdump emits literal targets with function+offset comments.
+        asm = """
+0000000000010228 <literal_test>:
+   10228:       ldr x0, 0x10238 <literal_test+0x10>
+   1022c:       ldrsw x1, 0x10240 <literal_test+0x18>
+   10230:       ret
+   10234:       nop
+   10238: f0 de bc 9a   .word 0x9abcdef0
+   1023c: 78 56 34 12   .word 0x12345678
+   10240: 2a 00 00 00   .word 0x0000002a
+"""
+        refs = analyze_text(asm)["references"]
+        self.assertEqual([(r["opcode"], r["address"]) for r in refs],
+                         [("ldr", "0x10238"), ("ldrsw", "0x10240")])
+
     def test_literal_load_clobbers_previous_address_provenance(self):
         asm = """
 0000000000400000 <literal_clobber>:
