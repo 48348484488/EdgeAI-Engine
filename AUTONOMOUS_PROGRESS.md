@@ -1,3 +1,10 @@
+### Verified outcome — 2026-10-30 17:42 America/Recife
+
+- [EdgeAI general CI #41124558087](https://github.com/48348484488/EdgeAI-Engine/actions/runs/41124558087) **passed** on commit `fcf94f5`: **769 Python tests (38 skipped, zero failures)** and **15/15 C++ tests**. Includes generic multi-offset seam comparison and five new regressions; ARM64 CI [#41124558054](https://github.com/48348484488/EdgeAI-Engine/actions/runs/41124558054) also passed.
+- Last's [Android runtime #41124589423](https://github.com/48348484488/last-Island-of-survival-lite/actions/runs/41124589423) independently logged **20/20 covered seam grid collision samples**, maximum 0.31260m vertical difference across 1m and four midpoint samples matching source OBJ within 0.01m. Real [evidence artifact](https://github.com/48348484488/last-Island-of-survival-lite/actions/runs/41124589423/artifacts/13010022355) retained. The generic auditor's new multi-offset logic passed CI on deterministic fixtures; this run did **not** claim a new recovered C++ function or original-game physics parity.
+- Next: compare the 20 real runtime probes against 20 independently measured OBJ height pairs, then add controlled player movement traces. Continue ARM32/ARM64 C++ function recovery on authorized original binaries, not just the recreated APK.
+
+
 ### 2026-10-30 — generic multi-offset runtime collision differential
 
 - Extended reusable `tools/edgeai_runtime_seam_audit.py` to compare **multiple source/runtime probes per edge** using optional finite `offset` identifiers while preserving legacy single-midpoint input [0e589bf](https://github.com/48348484488/EdgeAI-Engine/commit/0e589bfde0c499694bd103beb220d52998bd6a3c). It rejects malformed, duplicate, missing, unexpected, uncovered, nonfinite, excessive-step and source-mismatched samples. Corrected Python raw-regex escaping [fcf94f5](https://github.com/48348484488/EdgeAI-Engine/commit/fcf94f5ed640a39bad4a350cc04c367deeb8d852).
