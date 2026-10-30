@@ -10,16 +10,19 @@ import math
 import re
 from pathlib import Path
 
-MARKER = re.compile(
-    r"LIOS_FRAME_TIMING\s+frames=(\d+)\s+mean_ms=([0-9.eE+-]+)"
-    r"\s+p95_ms=([0-9.eE+-]+)\s+max_ms=([0-9.eE+-]+)"
-    r"\s+slow_33ms=(\d+)\s+mean_fps=([0-9.eE+-]+)"
-)
+def _pattern(marker):
+    if not marker or not isinstance(marker, str):
+        raise ValueError("frame timing marker must be a nonempty string")
+    return re.compile(
+        re.escape(marker) + r"\s+frames=(\d+)\s+mean_ms=([0-9.eE+-]+)"
+        r"\s+p95_ms=([0-9.eE+-]+)\s+max_ms=([0-9.eE+-]+)"
+        r"\s+slow_33ms=(\d+)\s+mean_fps=([0-9.eE+-]+)"
+    )
 
 
-def summarize(log_text):
+def summarize(log_text, marker="LIOS_FRAME_TIMING"):
     windows = []
-    for match in MARKER.finditer(log_text):
+    for match in _pattern(marker).finditer(log_text):
         frames = int(match[1])
         mean, p95, maximum = (float(match[i]) for i in (2, 3, 4))
         slow = int(match[5])
@@ -61,12 +64,13 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("log", type=Path)
     parser.add_argument("--baseline", type=Path)
+    parser.add_argument("--marker", default="LIOS_FRAME_TIMING")
     parser.add_argument("--max-regression-pct", type=float, default=5.0)
     parser.add_argument("--report", type=Path)
     args = parser.parse_args()
-    result = dict(candidate=summarize(args.log.read_text(encoding="utf-8")))
+    result = dict(candidate=summarize(args.log.read_text(encoding="utf-8"), args.marker))
     if args.baseline:
-        base = summarize(args.baseline.read_text(encoding="utf-8"))
+        base = summarize(args.baseline.read_text(encoding="utf-8"), args.marker)
         result["baseline"] = base
         result["comparison"] = compare(result["candidate"], base, args.max_regression_pct)
     output = json.dumps(result, indent=2) + "\n"
