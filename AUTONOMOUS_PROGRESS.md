@@ -1,3 +1,10 @@
+## Fechamento de validações intermediárias — 2026-10-30 01:35 (America/Recife)
+
+- CI geral [#41003538537](https://github.com/48348484488/EdgeAI-Engine/actions/runs/41003538537) completou **694 testes, 1 falha, 8 erros e 38 ignorados**; anteriormente eram 3 falhas e 16 erros. Os 8 erros restantes são principalmente variantes ARM32 `-O2/-O3/-Os` e validação freestanding dependente dessas variantes. Não houve travamento.
+- Testes estritos ARM32 [#41003396585](https://github.com/48348484488/EdgeAI-Engine/actions/runs/41003396585): 4/4 passaram e o validador registrou **327.684 casos, zero mismatches** em variante reconhecida. O workflow geral continua falhando nas variantes otimizadas; não chamar isso de reconstrução integral.
+- Comparação dos dois APKs recriados ARM64 (não o original) publicada em [relatório](https://github.com/48348484488/EdgeAI-Engine/blob/main/docs/last_recreated_arm64_build_diff_2026-10-30.json), commit [b5d416a](https://github.com/48348484488/EdgeAI-Engine/commit/b5d416ae8e5b46e17e0003bf3964f822efc82f34): SHA-256 da biblioteca alterado, tamanho +128 bytes e 32 instruções estáticas a mais. Isso não substitui comparação de gameplay.
+- Próxima prioridade: usar os disassemblies capturados do LLVM18 para `-O2/-O3/-Os` e preservar prova semântica; executar Last no virtual e obter screenshot original autorizado da mesma versão.
+
 ## ARM32 strict / QEMU — 2026-10-30 01:33–01:35 (America/Recife)
 
 - `tools/reconstruct_winner.py` agora valida o corpo LLVM18 `-O1` completo (25 instruções após o prólogo), incluindo registradores, branches e endereços; o fingerprint LLVM17 permanece separado. Commit [49b4808](https://github.com/48348484488/EdgeAI-Engine/commit/49b4808028ab04cb838af3f0e065cac164bdce2a).
