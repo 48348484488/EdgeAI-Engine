@@ -1,0 +1,73 @@
+{
+  "source_resolution": [
+    1920,
+    1080
+  ],
+  "target_resolution": [
+    1080,
+    640
+  ],
+  "controls": [
+    {
+      "name": "craft",
+      "source_center": [
+        61,
+        1025
+      ],
+      "observed_center": [
+        34,
+        480
+      ]
+    },
+    {
+      "name": "inventory",
+      "source_center": [
+        513.02501,
+        976.625
+      ],
+      "observed_center": [
+        289,
+        454
+      ]
+    },
+    {
+      "name": "settings",
+      "source_center": [
+        1854.70078,
+        354.98001
+      ],
+      "observed_center": [
+        1043,
+        103
+      ]
+    },
+    {
+      "name": "jump",
+      "source_center": [
+        1834.49316,
+        789.9768
+      ],
+      "observed_center": [
+        1032,
+        348
+      ]
+    },
+    {
+      "name": "joystick",
+      "source_center": [
+        326.3,
+        794.7
+      ],
+      "observed_center": [
+        183,
+        351
+      ]
+    }
+  ],
+  "evidence": {
+    "source": "Last Island LITE 7.3 battlepanel.ab RectTransform export",
+    "source_audit": "https://github.com/48348484488/last-Island-of-survival-lite/actions/runs/41041068355",
+    "virtual_runtime": "https://github.com/48348484488/last-Island-of-survival-lite/actions/runs/41041246689",
+    "note": "Observed screenshot centers measured from real 1080x640 emulator PNG; small manual measurement uncertainty; not original Unity runtime parity."
+  }
+}
