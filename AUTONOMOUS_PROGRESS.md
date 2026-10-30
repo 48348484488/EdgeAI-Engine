@@ -1,3 +1,11 @@
+## ARM32 strict / QEMU — 2026-10-30 01:33–01:35 (America/Recife)
+
+- `tools/reconstruct_winner.py` agora valida o corpo LLVM18 `-O1` completo (25 instruções após o prólogo), incluindo registradores, branches e endereços; o fingerprint LLVM17 permanece separado. Commit [49b4808](https://github.com/48348484488/EdgeAI-Engine/commit/49b4808028ab04cb838af3f0e065cac164bdce2a).
+- No workflow ARM32 QEMU [#41003396585](https://github.com/48348484488/EdgeAI-Engine/actions/runs/41003396585), os **4/4 testes estritos de mutação e extração passaram**. A validação de uma variante gerou **327.684 casos comparados e zero divergências**, com candidato ARM32 compilado; o workflow completo ainda falhou na fase posterior `-O2/-O3/-Os` (não declarar QEMU completo aprovado).
+- CI geral intermediário [#41003396591](https://github.com/48348484488/EdgeAI-Engine/actions/runs/41003396591): 694 testes, 4 falhas e 8 erros (melhora em relação a 3 falhas/16 erros; uma falha era assert antigo de contagem 29 vs 32). Teste estrito atualizado para diferenciar LLVM17/LLVM18 no commit [1f7be44](https://github.com/48348484488/EdgeAI-Engine/commit/1f7be44e3aa428c909ee5bfe15b464fce9557c97).
+- Teste de mutação de ponteiro ARM32 passou a localizar instrução MOVW da toolchain real em vez de bytes LLVM17 fixos; commits [22b7de8](https://github.com/48348484488/EdgeAI-Engine/commit/22b7de81f2560f1a0b9253bfaec4fe5ab0c9b8dc), [024f5d8](https://github.com/48348484488/EdgeAI-Engine/commit/024f5d8a4b9bc288079594f5305a09b85b030a21). Regressão de relocação agora verifica delta de endereço em vez de padding antigo, commit [cb07e24](https://github.com/48348484488/EdgeAI-Engine/commit/cb07e24c06cef34bcb37d6b00caa3252dd87820e).
+- Próxima prioridade: adaptar reconhecedores `-O2/-O3/-Os` aos disassemblies capturados, mantendo provas de fluxo/índices e testes diferenciais; confirmar novos runs antes de declarar sucesso.
+
 ## Diagnóstico ARM32 adicional — 2026-10-30 01:32 (America/Recife)
 
 - Artefato real de disassembly LLVM do CI falho [#41003061350](https://github.com/48348484488/EdgeAI-Engine/actions/runs/41003061350) recuperado; no `-O1`, o compilador usa sequência LLVM18 com `orr/clz/ands/movne` e loads intercalados, diferente do fingerprint LLVM17 legado.
