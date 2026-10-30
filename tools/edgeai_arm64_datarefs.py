@@ -72,9 +72,10 @@ def analyze_text(disassembly):
             else:
                 tracked[dest] = (target & ~0xfff if op == "adrp" else target, pc)
             continue
-        if op == "add" and len(args) in (3, 4) and dest:
-            # A W-register write zero-extends/truncates the value. Never
-            # propagate a 64-bit PC-relative address through Wn arithmetic.
+        if op in ("add", "sub") and len(args) in (3, 4) and dest:
+            # Track immediate pointer arithmetic in either direction.
+            # W-register writes truncate the 64-bit pointer provenance.
+            # SUBS/ADDS and register-offset forms remain unmodeled.
             if args[0].lower().startswith("w") or args[1].lower().startswith("w"):
                 tracked.pop(dest, None)
                 continue
@@ -90,7 +91,13 @@ def analyze_text(disassembly):
             src, offset = _reg(args[1]), _imm(args[2])
             state = tracked.get(src)
             if state is not None and offset is not None:
-                address = state[0] + (offset << shift)
+                delta = offset << shift
+                address = state[0] + (delta if op == "add" else -delta)
+                # Invalid or wrapped values cannot be used as linked-ELF
+                # addresses; invalidate rather than invent a reference.
+                if not 0 <= address < (1 << 64):
+                    tracked.pop(dest, None)
+                    continue
                 tracked[dest] = (address, state[1])
                 references.append({"function": current, "pc": hex(pc),
                                    "kind": "computed_address", "opcode": op,
