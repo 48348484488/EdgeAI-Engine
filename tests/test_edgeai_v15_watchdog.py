@@ -52,7 +52,7 @@ class WatchdogTests(unittest.TestCase):
         self.assertEqual(result['status'], 'PREFLIGHT_PASSED')
         self.assertFalse(self.dest.exists())
 
-    def test_success_publishes_only_completed_bundle(self):
+    def test_forged_manifest_is_not_published(self):
         self.driver('''
             import pathlib, sys
             dest = pathlib.Path(sys.argv[sys.argv.index('--destination')+1])
@@ -61,8 +61,9 @@ class WatchdogTests(unittest.TestCase):
         ''')
         result = run(self.elf, self.dest, self.tools, expected_sha256=self.sha,
                      timeout=5, heartbeat=.01)
-        self.assertEqual(result['status'], 'SUCCEEDED')
-        self.assertTrue((self.dest / 'bundle_manifest.json').is_file())
+        self.assertEqual(result['status'], 'FAILED')
+        self.assertFalse(self.dest.exists())
+        self.assertIn('independent verifier', result['stderr_tail'])
 
     def test_failed_child_does_not_publish(self):
         self.driver('import sys; print("bad child", file=sys.stderr); sys.exit(9)\n')
