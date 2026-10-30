@@ -3,6 +3,18 @@ extern "C" volatile int board[9];
 extern "C" int original_winner(void);
 extern "C" int winner(void);
 
+// Clang may lower zero-initialization to memset even with -ffreestanding.
+// This standalone ARM32 harness deliberately links without libc, so provide
+// the required memory primitive instead of depending on a host sysroot.
+// Volatile stores prevent the compiler from replacing this loop with a
+// recursive call to memset.
+extern "C" void* memset(void* dest, int value, __SIZE_TYPE__ count) {
+    volatile unsigned char* out = static_cast<volatile unsigned char*>(dest);
+    for (__SIZE_TYPE__ i = 0; i < count; ++i)
+        out[i] = static_cast<unsigned char>(value);
+    return dest;
+}
+
 static unsigned int random_state = 0x9e3779b9u;
 static unsigned int count_cases = 0;
 static unsigned int count_mismatches = 0;
