@@ -1,4 +1,4 @@
-## Generic runtime touch-to-render audit — 2026-10-30 08:00 (America/Recife)
+## Generic runtime touch-to-render audit — 2026-10-30 (America/Recife)
 
 - Added reusable `tools/edgeai_ui_interaction_audit.py` [fc3c2ef](https://github.com/48348484488/EdgeAI-Engine/commit/fc3c2efed920d415e65cedcbaf551929dec2c5c4), with import-path fix [53599c5](https://github.com/48348484488/EdgeAI-Engine/commit/53599c5c0d9cf55a817dbc69b5544f5404ed5fc2). It correlates fitted source HUD bounds, measured screenshot centers and **explicit real touch-event outcomes**, reporting inside-but-not-activated / outside-but-activated contradictions without claiming original-game parity.
 - Added five regression cases [1295f36](https://github.com/48348484488/EdgeAI-Engine/commit/1295f36bf38a855de6ca5e38778b80c78db4b624). **5/5 passed locally** against the real existing transform fitter. Historical Unity 7.3 vs recreated Android pre-fix evidence stored in [JSON](https://github.com/48348484488/EdgeAI-Engine/blob/main/docs/last_android_hud_touch_evidence_2026-10-30.json) [6bdf013](https://github.com/48348484488/EdgeAI-Engine/commit/6bdf01312fdf530b1e0c0f7e1e9a740664cd2002).
