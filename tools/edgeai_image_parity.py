@@ -92,6 +92,35 @@ def read_png(path):
     return width, height, bytes(pixels)
 
 
+def frame_statistics(width, height, rgba, min_distinct_colors=16):
+    """Report a conservative lower bound for distinct RGB colors in a real PNG.
+
+    A uniform/low-color screenshot can be an incomplete GPU frame even when
+    the Android process is alive. Nonflat images are NOT proof of gameplay.
+    """
+    if not 2 <= min_distinct_colors <= 256:
+        raise ValueError('min_distinct_colors must be in [2,256]')
+    colors = set()
+    for offset in range(0, len(rgba), 4):
+        colors.add(rgba[offset:offset+3])
+        if len(colors) >= min_distinct_colors:
+            break
+    nonflat = len(colors) >= min_distinct_colors
+    return {
+        'width': width, 'height': height,
+        'min_distinct_rgb_colors': min_distinct_colors,
+        'distinct_rgb_colors_at_least': len(colors),
+        'color_count_is_lower_bound': nonflat,
+        'nonflat_frame': nonflat,
+        'gameplay_or_visual_parity_proven': False,
+    }
+
+
+def inspect_frame(path, min_distinct_colors=16):
+    width, height, rgba = read_png(path)
+    return frame_statistics(width, height, rgba, min_distinct_colors)
+
+
 def compare(reference, candidate, threshold=0):
     if not 0 <= threshold <= 255:
         raise ValueError('threshold must be in [0,255]')
@@ -118,6 +147,8 @@ def compare(reference, candidate, threshold=0):
         'mean_absolute_rgb_error': total_error/(rw*rh*3),
         'max_channel_error': max_error,
         'difference_bbox_xyxy_inclusive': bbox if changed else None,
+        'reference_frame': frame_statistics(rw, rh, rp),
+        'candidate_frame': frame_statistics(cw, ch, cp),
         'parity_proven': False,
         'note': 'Pixel metrics only; matching pixels do not prove equivalent gameplay, controls, or timing.',
     }
@@ -125,12 +156,21 @@ def compare(reference, candidate, threshold=0):
 
 def main():
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument('reference', type=Path)
-    p.add_argument('candidate', type=Path)
+    p.add_argument('reference', type=Path, nargs='?')
+    p.add_argument('candidate', type=Path, nargs='?')
+    p.add_argument('--inspect-frame', type=Path,
+                   help='Inspect a single real screenshot for flat/incomplete frames')
     p.add_argument('--threshold', type=int, default=0)
     p.add_argument('--report', type=Path)
     args = p.parse_args()
-    result = compare(args.reference, args.candidate, args.threshold)
+    if args.inspect_frame is not None:
+        if args.reference is not None or args.candidate is not None:
+            p.error('--inspect-frame cannot be combined with comparison inputs')
+        result = inspect_frame(args.inspect_frame)
+    else:
+        if args.reference is None or args.candidate is None:
+            p.error('reference and candidate PNGs are required for comparison')
+        result = compare(args.reference, args.candidate, args.threshold)
     payload = json.dumps(result, indent=2) + '\n'
     if args.report:
         args.report.parent.mkdir(parents=True, exist_ok=True)
