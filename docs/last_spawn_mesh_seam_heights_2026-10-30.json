@@ -1,0 +1,98 @@
+{
+  "date": "2026-10-30",
+  "source": "UnityPy-exported source OBJ meshes in 48348484488/last-Island-of-survival-lite",
+  "axis": "unity-z-up -> y-up (x,y,z) -> (x,z,-y)",
+  "method": "Barycentric highest vertical triangle intersection, 0.5m inside/outside each tile edge",
+  "max_step_m": 0.55,
+  "anchor": {
+    "mesh": "a-57_mesh0.obj",
+    "blob_sha": "05f8aebb2b883c3c0f416ff0b3b0f2e805da7adb",
+    "vertices": 1276,
+    "triangles": 2289
+  },
+  "seams": [
+    {
+      "direction": "north",
+      "mesh": "a-56_mesh1.obj",
+      "blob_sha": "0322d705da8d088e302041b5dcc492ee5653e6bc",
+      "inner": [
+        0,
+        199.5
+      ],
+      "outer": [
+        0,
+        200.5
+      ],
+      "inner_height": 33.8332333178658,
+      "outer_height": 34.005118328,
+      "delta_m": 0.1718850101342042,
+      "hits": [
+        2,
+        2
+      ]
+    },
+    {
+      "direction": "south",
+      "mesh": "d-01_mesh2.obj",
+      "blob_sha": "8d7572934b4fb9ec9d079a5eaadfc97c336747d7",
+      "inner": [
+        0,
+        -199.5
+      ],
+      "outer": [
+        0,
+        -200.5
+      ],
+      "inner_height": 23.622817541997698,
+      "outer_height": 23.625942600571427,
+      "delta_m": 0.0031250585737296888,
+      "hits": [
+        2,
+        2
+      ]
+    },
+    {
+      "direction": "east",
+      "mesh": "c-07_mesh0.obj",
+      "blob_sha": "a4f0d99cf67d58b3a94dfe76469326cc23b567ff",
+      "inner": [
+        199.5,
+        0
+      ],
+      "outer": [
+        200.5,
+        0
+      ],
+      "inner_height": 26.394343992758614,
+      "outer_height": 26.355275537427623,
+      "delta_m": -0.039068455330991014,
+      "hits": [
+        2,
+        2
+      ]
+    },
+    {
+      "direction": "west",
+      "mesh": "b-50_mesh2.obj",
+      "blob_sha": "09af2e86fb246e2de473f347cf77b67e12b2d592",
+      "inner": [
+        -199.5,
+        0
+      ],
+      "outer": [
+        -200.5,
+        0
+      ],
+      "inner_height": 8.310323519064955,
+      "outer_height": 8.299384349133796,
+      "delta_m": -0.010939169931159398,
+      "hits": [
+        2,
+        2
+      ]
+    }
+  ],
+  "all_four_covered": true,
+  "all_four_within_step": true,
+  "limits": "Static source mesh only; runtime mesh collision, visual materials, edge normals and Unity LITE 7.3 gameplay equivalence remain unverified"
+}
