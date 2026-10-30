@@ -82,7 +82,7 @@ def recognize(data, segments, rows):
     table_addr = composed_address(rows, 'r12')
     board_addr = composed_address(rows, 'lr')
     # Verify key compiler-specific indexed-load structure and loop shape.
-    expected = [
+    llvm17_expected = [
         ('add', 'r2, r1, r1, lsl #1'),
         ('mov', 'r3, r12'),
         ('ldrb', 'r2, [r3, r2]!'),
@@ -100,17 +100,52 @@ def recognize(data, segments, rows):
         ('orrs', 'r3, r3, r4'),
         ('moveq', 'r0, r2'),
     ]
+    # LLVM 18 / Clang -O1 interleaves the first board load with table
+    # loads and replaces the LLVM17 XOR/CLZ flag sequence. This is a full
+    # contiguous body fingerprint, not a relaxed mnemonic bag.
+    llvm18_expected = [
+        ('add', 'r2, r1, r1, lsl #1'),
+        ('mov', 'r3, r12'),
+        ('ldrb', 'r2, [r3, r2]!'),
+        ('ldr', 'r2, [lr, r2, lsl #2]'),
+        ('ldrb', 'r4, [r3, #0x1]'),
+        ('ldrb', 'r3, [r3, #0x2]'),
+        ('ldr', 'r4, [lr, r4, lsl #2]'),
+        ('eor', 'r5, r2, r4'),
+        ('ldr', 'r3, [lr, r3, lsl #2]'),
+        ('eor', 'r3, r4, r3'),
+        ('orr', 'r3, r5, r3'),
+        ('clz', 'r3, r3'),
+        ('lsr', 'r3, r3, #5'),
+        ('cmp', 'r2, #0'),
+        ('mov', 'r4, r2'),
+        ('movwne', 'r4, #0x1'),
+        ('ands', 'r3, r3, r4'),
+        ('movne', 'r0, r2'),
+        ('cmp', 'r3, #1'),
+    ]
     actual = [(i['op'], i['args']) for i in rows]
-    cursor = 0
-    matched = []
-    for item in expected:
+    matched = None
+    fingerprint = None
+    for name, expected in [('llvm17', llvm17_expected), ('llvm18', llvm18_expected)]:
+        cursor = 0
+        candidate = []
         try:
-            cursor = actual.index(item, cursor) + 1
-            matched.append(rows[cursor - 1])
-        except ValueError as exc:
-            raise ValueError('unsupported ARM loop or boolean test pattern: ' + str(item)) from exc
-    if any(b['pc'] != a['pc'] + 4 for a, b in zip(matched, matched[1:])):
-        raise ValueError('ARM loop instruction sequence is not contiguous')
+            for item in expected:
+                cursor = actual.index(item, cursor) + 1
+                candidate.append(rows[cursor - 1])
+        except ValueError:
+            continue
+        if any(b['pc'] != a['pc'] + 4 for a, b in zip(candidate, candidate[1:])):
+            continue
+        # Prologue, pointer loads, body, and six-instruction exit tail must
+        # account for the entire candidate. No unrecognized operations.
+        if len(rows) != 7 + len(expected) + 6 or candidate[0]['pc'] != rows[7]['pc']:
+            continue
+        matched, fingerprint = candidate, name
+        break
+    if matched is None:
+        raise ValueError('unsupported ARM loop or boolean test pattern')
     loop_pc = matched[0]['pc']
     bounds = [(i['pc'], int(i['args'].split('#', 1)[1], 0)) for i in rows
               if i['op'] == 'cmp' and re.fullmatch(r'r1, #(0x[0-9a-fA-F]+|\d+)', i['args'])]
@@ -145,7 +180,7 @@ def recognize(data, segments, rows):
         'triplets': triplets, 'loop_iterations': rows_count,
         'board_load_pcs': [hex(i['pc']) for i in matched if i['op'] == 'ldr'],
         'table_load_pcs': [hex(i['pc']) for i in matched if i['op'] == 'ldrb'],
-        'boolean_test': 'strict_clang_arm_o1_xor_clz_fingerprint',
+        'boolean_test': 'strict_clang_arm_o1_' + fingerprint + '_fingerprint',
         'constraints': [
             'Works without ELF symbol names but requires ELF program headers and ARM disassembly',
             'Only matches this clang -O1 winner loop pattern; no generic loop inference',
