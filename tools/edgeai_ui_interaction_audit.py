@@ -58,6 +58,21 @@ def audit(data, tolerance_px=3.0):
         event = trial.get("action_observed")
         if type(event) is not bool:
             raise ValueError("action_observed must be an explicit boolean from runtime evidence")
+        visual = trial.get("visual_transition_observed")
+        if "visual_transition_observed" in trial and type(visual) is not bool:
+            raise ValueError("visual_transition_observed must be an explicit boolean from real screenshots")
+        # A changed screenshot is not evidence of this particular action unless
+        # the runtime independently logged the action after the touch.
+        if visual is None:
+            visual_verdict = "not_supplied"
+        elif event and visual:
+            visual_verdict = "action_and_visual_transition_observed"
+        elif event:
+            visual_verdict = "action_logged_without_visual_transition"
+        elif visual:
+            visual_verdict = "visual_change_without_action_log"
+        else:
+            visual_verdict = "no_action_or_visual_transition"
         px, py = _point(trial.get("screen_point"), "screen_point")
         x1, y1, x2, y2 = bounds[name]
         inside = x1 <= px <= x2 and y1 <= py <= y2
@@ -74,12 +89,21 @@ def audit(data, tolerance_px=3.0):
         result.append({"control": name, "screen_point": [px, py],
                        "predicted_screen_bounds": [round(v, 3) for v in bounds[name]],
                        "inside_fitted_bounds": inside,
-                       "action_observed": event, "verdict": verdict})
+                       "action_observed": event,
+                       "visual_transition_observed": visual,
+                       "visual_verdict": visual_verdict,
+                       "action_and_visual_transition_confirmed": event and visual is True,
+                       "verdict": verdict})
     contradictions = {"inside_but_no_activation", "outside_but_activated"}
     return {"alignment": alignment,
             "touch_trials": result,
             "observed_activation_count": sum(r["action_observed"] for r in result),
             "geometry_runtime_disagreements": sum(r["verdict"] in contradictions for r in result),
+            "visual_runtime_disagreements": sum(
+                r["visual_verdict"] in ("action_logged_without_visual_transition",
+                                        "visual_change_without_action_log") for r in result),
+            "action_and_visual_transition_confirmed_count": sum(
+                r["action_and_visual_transition_confirmed"] for r in result),
             "original_game_parity_proven": False}
 
 
