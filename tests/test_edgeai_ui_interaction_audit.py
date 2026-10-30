@@ -71,6 +71,18 @@ class InteractionAuditTests(unittest.TestCase):
                          ["action_logged_without_visual_transition",
                           "visual_change_without_action_log"])
 
+    def test_real_android_craft_transition_evidence(self):
+        import json
+        evidence = (Path(__file__).resolve().parents[1] / "docs" /
+                    "last_android_craft_transition_verified_2026-10-30.json")
+        data = json.loads(evidence.read_text(encoding="utf-8"))
+        result = module.audit(data)
+        self.assertTrue(result["alignment"]["alignment_passed"])
+        self.assertEqual(result["geometry_runtime_disagreements"], 0)
+        self.assertEqual(result["action_and_visual_transition_confirmed_count"], 1)
+        self.assertEqual(result["visual_runtime_disagreements"], 0)
+        self.assertFalse(result["original_game_parity_proven"])
+
     def test_visual_evidence_requires_explicit_boolean(self):
         data = sample()
         data["touch_trials"][0]["visual_transition_observed"] = "yes"
