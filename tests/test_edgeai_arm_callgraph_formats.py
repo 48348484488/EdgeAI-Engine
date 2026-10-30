@@ -79,6 +79,33 @@ class ArmCallgraphFormats(unittest.TestCase):
         self.assertEqual(graph["unresolved_direct_call_count"], 0)
         self.assertEqual(len(graph["indirect_calls"]), 1)
 
+    def test_indirect_branch_sites_are_not_guessed_tail_calls(self):
+        arm64 = """
+00001000 <dispatch>:
+  1000: blraa x17, x16
+  1004: br x9
+  1008: braa x10, x11
+  100c: br x30
+  1010: ret
+"""
+        graph = analyze_text(arm64, "ARM64")
+        self.assertEqual(len(graph["calls"]), 1)
+        self.assertTrue(graph["calls"][0]["indirect"])
+        self.assertEqual(graph["calls"][0]["opcode"], "blraa")
+        self.assertEqual(graph["unresolved_indirect_branch_count"], 2)
+        self.assertEqual([x["opcode"] for x in graph["indirect_branches"]], ["br", "braa"])
+        self.assertEqual(graph["tail_edges"], [])
+
+        arm32 = """
+00002000 <dispatch>:
+  2000: bx r2
+  2004: bx lr
+  2008: bx r14
+"""
+        graph = analyze_text(arm32, "ARM32")
+        self.assertEqual(graph["unresolved_indirect_branch_count"], 1)
+        self.assertEqual(graph["indirect_branches"][0]["operands"], "r2")
+
     def test_reject_unsupported_architecture(self):
         with self.assertRaises(ValueError):
             analyze_text("1000 <entry>:\\n 1000: bl 0x2000", "x86")
