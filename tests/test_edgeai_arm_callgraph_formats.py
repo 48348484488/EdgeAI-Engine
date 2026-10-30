@@ -106,6 +106,41 @@ class ArmCallgraphFormats(unittest.TestCase):
         self.assertEqual(graph["unresolved_indirect_branch_count"], 1)
         self.assertEqual(graph["indirect_branches"][0]["operands"], "r2")
 
+    def test_gnu_style_thumb_wide_calls_and_branch_immediates(self):
+        disassembly = """
+00001000 <entry>:
+  1000: bl.w #0x2001 <worker>
+  1004: blx.w 2001 <worker>
+  1008: b.w #0x2000 <worker>
+  100c: blx r3
+00002000 <worker>:
+  2000: bx lr
+"""
+        graph = analyze_text(disassembly, "ARM32")
+        self.assertEqual([c["opcode"] for c in graph["calls"]],
+                         ["bl.w", "blx.w", "blx"])
+        self.assertEqual([c["target_function"] for c in graph["calls"]],
+                         ["worker", "worker", None])
+        self.assertEqual([c["indirect"] for c in graph["calls"]],
+                         [False, False, True])
+        self.assertEqual(len(graph["tail_edges"]), 1)
+        self.assertEqual(graph["tail_edges"][0]["to"], "worker")
+        self.assertEqual(graph["unresolved_direct_targets"], [])
+
+    def test_bare_hex_arm64_branch_and_register_indirect(self):
+        disassembly = """
+00001000 <entry>:
+  1000: bl 2000 <worker>
+  1004: blr x9
+  1008: b #0x2000 <worker>
+00002000 <worker>:
+  2000: ret
+"""
+        graph = analyze_text(disassembly, "ARM64")
+        self.assertEqual(graph["calls"][0]["target_function"], "worker")
+        self.assertEqual(graph["calls"][1]["target"], None)
+        self.assertEqual(len(graph["tail_edges"]), 1)
+
     def test_reject_unsupported_architecture(self):
         with self.assertRaises(ValueError):
             analyze_text("1000 <entry>:\\n 1000: bl 0x2000", "x86")
