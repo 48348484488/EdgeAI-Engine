@@ -11,7 +11,11 @@ import re
 import struct
 import subprocess
 
-INSTRUCTION = re.compile(\n    r'^\\s*([0-9a-fA-F]+):\\s+'\n    r'(?:(?:[0-9a-fA-F]{8}|[0-9a-fA-F]{2}(?:\\s+[0-9a-fA-F]{2}){1,3})\\s+)?'\n    r'([a-z][a-z0-9.]*)\\s*(.*?)\\s*
+INSTRUCTION = re.compile(
+    r'^\s*([0-9a-fA-F]+):\s+'
+    r'(?:(?:[0-9a-fA-F]{8}|[0-9a-fA-F]{2}(?:\s+[0-9a-fA-F]{2}){1,3})\s+)?'
+    r'([a-z][a-z0-9.]*)\s*(.*?)\s*$'
+)
 SYMBOL_HEADER = re.compile(r'^([0-9a-fA-F]+) <([^>]+)>:', re.M)
 
 
