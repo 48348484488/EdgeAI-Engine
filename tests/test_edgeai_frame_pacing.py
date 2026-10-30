@@ -24,6 +24,13 @@ class FramePacingTests(unittest.TestCase):
         self.assertEqual(result["slow_33ms"], 48)
         self.assertFalse(result["original_game_parity_proven"])
 
+    def test_custom_engine_marker_is_supported(self):
+        trace = log().replace("LIOS_FRAME_TIMING", "ENGINE_FRAME_TIMING")
+        with self.assertRaisesRegex(ValueError, "no observed"):
+            module.summarize(trace)
+        result = module.summarize(trace, marker="ENGINE_FRAME_TIMING")
+        self.assertEqual(result["observed_frames"], 60)
+
     def test_missing_evidence_is_rejected(self):
         with self.assertRaisesRegex(ValueError, "no observed"):
             module.summarize("FPS: 60")
