@@ -1,3 +1,10 @@
+## Generic ARM disassembly formats validated — 2026-10-30 04:20 (America/Recife)
+
+- Implemented generic recognition of GNU-style bare-hex / `#0x` direct targets and Thumb wide `bl.w` / `blx.w` calls in `tools/edgeai_arm_callgraph.py`, commit [cf5f798](https://github.com/48348484488/EdgeAI-Engine/commit/cf5f798ccf2639f30741a5c70e33075c93162128). Indirect register calls remain unresolved, not misclassified as direct calls.
+- Added two regression tests for Thumb interworking, bare-hex ARM64 targets and register-indirect safety, commit [c853953](https://github.com/48348484488/EdgeAI-Engine/commit/c853953743bb9e6786b18c639cc209e53b44dad5).
+- [EdgeAI CI #41019322917](https://github.com/48348484488/EdgeAI-Engine/actions/runs/41019322917) **passed**: 697 Python tests executed (38 skipped) and 15/15 C++ CTest passed; ARM64, Windows and Low-Resource CI for the same commit also passed. No hang or regressions observed in these workflows.
+- Scope: static call-graph parsing improvement, **not** automated C++ decompilation or original Last game runtime parity. Next: develop generic dataflow / function boundary recovery, test against authorized original ARM64 binary, and compare source-derived HUD behavior with Android runtime evidence.
+
 ## CI geral restaurado — 2026-10-30 03:23 (America/Recife)
 
 - [EdgeAI CI #41013235252](https://github.com/48348484488/EdgeAI-Engine/actions/runs/41013235252) **sucesso**: **695 testes Python executados, 38 ignorados, nenhuma falha/erro**, além de **15/15 testes C++ CTest**. O baseline anterior de 1 falha e 8 erros foi eliminado por correções de fingerprint LLVM18 e `memset` freestanding.
