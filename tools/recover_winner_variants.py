@@ -92,7 +92,16 @@ def verify_candidate(data,segments,rows):
         zero_check=next((i for i in rows if (i['op'],i['args'])==('cmp','r0, #0')),None)
         equal_check=next((i for i in rows if (i['op'],i['args'])==('cmpeq','r2, r3')),None)
         retry_pc=next((i['pc'] for i in rows if (i['op'],i['args'])==('add','r1, r1, #1')),None)
+        # LLVM18 -Os schedules the two remaining board loads between
+        # 'cmp r0, #0' and its BEQ. Accept only this exact intervening
+        # pair, or the older adjacent-branch LLVM17 form.
         zero_branch=bypc.get(zero_check['pc']+4,{}) if zero_check else {}
+        if zero_check and zero_branch.get('op')!='beq':
+            first=bypc.get(zero_check['pc']+4,{})
+            second=bypc.get(zero_check['pc']+8,{})
+            if ((first.get('op'),first.get('args'))==('ldr','r2, [lr, r3, lsl #2]') and
+                (second.get('op'),second.get('args'))==('ldr','r3, [lr, r4, lsl #2]')):
+                zero_branch=bypc.get(zero_check['pc']+12,{})
         equal_branch=bypc.get(equal_check['pc']+4,{}) if equal_check else {}
         if not retry_pc or zero_branch.get('op')!='beq' or branch_target(zero_branch)!=retry_pc:
             raise ValueError('zero-board-value retry path not proven')
@@ -204,10 +213,16 @@ def verify_unrolled(data,segments,rows):
                     raise ValueError('matching triplets must return the first value')
         else:
             last=[(row['op'],row['args']) for row in rows[after:]]
-            expected=[('cmp','r3, r0'),('mov','r0, r2'),('movwne','r0, #0x0'),
-                      ('cmp','r2, r3'),('movwne','r0, #0x0'),
-                      ('cmp','r2, #0'),('moveq','r0, r2'),('bx','lr')]
-            if last!=expected:
+            llvm17=[('cmp','r3, r0'),('mov','r0, r2'),('movwne','r0, #0x0'),
+                    ('cmp','r2, r3'),('movwne','r0, #0x0'),
+                    ('cmp','r2, #0'),('moveq','r0, r2'),('bx','lr')]
+            # LLVM18 -O2/-O3 uses a separate zero register and a
+            # conditional move, with the same three equality guards.
+            # Match the entire tail so a similar-looking loop cannot pass.
+            llvm18=[('mov','r1, #0'),('cmp','r3, r0'),('mov','r0, #0'),
+                    ('moveq','r0, r2'),('cmp','r2, r3'),('movne','r0, r1'),
+                    ('cmp','r2, #0'),('moveq','r0, r2'),('bx','lr')]
+            if last not in (llvm17,llvm18):
                 raise ValueError('final diagonal guard not supported')
     board_cells=max(max(row) for row in triplets)+1
     if board_cells>4096:
