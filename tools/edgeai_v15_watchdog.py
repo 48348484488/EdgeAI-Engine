@@ -81,26 +81,69 @@ def preflight(elf, tool_dir, expected_sha256=PINNED_ELF_SHA256):
 
 
 def terminate_group(proc):
-    if proc.poll() is not None:
-        return
+    """Reap the leader AND kill descendants, even if the leader already exited.
+
+    On POSIX the driver runs in a new session, so its process-group ID is
+    its PID. Checking only proc.poll() misses grandchildren orphaned by a
+    driver that exits early. Never kill a group belonging to the caller.
+    """
     if os.name == 'posix':
         try:
             os.killpg(proc.pid, signal.SIGTERM)
         except ProcessLookupError:
             pass
-    else:
-        proc.terminate()
-    try:
-        proc.wait(timeout=2)
-    except subprocess.TimeoutExpired:
-        if os.name == 'posix':
+        deadline = time.monotonic() + 0.3
+        while time.monotonic() < deadline:
+            try:
+                os.killpg(proc.pid, 0)
+            except ProcessLookupError:
+                break
+            time.sleep(0.02)
+        else:
             try:
                 os.killpg(proc.pid, signal.SIGKILL)
             except ProcessLookupError:
                 pass
-        else:
-            proc.kill()
+    elif proc.poll() is None:
+        proc.terminate()
+    try:
+        proc.wait(timeout=2)
+    except subprocess.TimeoutExpired:
+        proc.kill()
         proc.wait(timeout=5)
+
+
+def verify_before_publish(stage, elf, tool_dir, expected_sha, deadline):
+    """Independently validate published bytes and reproducible C++ linkage.
+
+    A zero exit code and a bundle_manifest.json are not sufficient proof.
+    The verification process has its own process group and shares the same
+    overall deadline as the generator.
+    """
+    remaining = deadline - time.monotonic()
+    if remaining <= 0:
+        return 'TIMED_OUT', 'deadline exhausted before independent verification', None
+    command = [sys.executable, str(Path(tool_dir).resolve() / 'edgeai_2048_bundle_verify.py'),
+               str(stage), '--elf', str(Path(elf).resolve()), '--rebuild-native']
+    proc = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                            start_new_session=(os.name == 'posix'))
+    try:
+        stdout, stderr = proc.communicate(timeout=remaining)
+    except subprocess.TimeoutExpired:
+        return 'TIMED_OUT', 'independent verification exceeded total deadline', None
+    finally:
+        terminate_group(proc)
+    if proc.returncode:
+        return 'FAILED', 'independent verification rejected bundle: ' + stderr.decode('utf-8', 'replace')[-1200:], None
+    try:
+        report = json.loads(stdout.decode('utf-8'))
+    except (UnicodeError, json.JSONDecodeError) as exc:
+        return 'FAILED', f'independent verifier returned invalid JSON: {exc}', None
+    if (report.get('passed') is not True or
+            report.get('same_toolchain_rebuild_matched') is not True or
+            report.get('elf_sha256') != expected_sha):
+        return 'FAILED', 'independent verifier did not attest ELF and native rebuild', None
+    return 'PASSED', '', report
 
 
 def run(elf, destination, tool_dir, timeout=180, heartbeat=5,
@@ -163,12 +206,24 @@ def run(elf, destination, tool_dir, timeout=180, heartbeat=5,
                     'stderr_tail': 'driver produced no bundle_manifest.json',
                     'regeneration_executed': True, 'destination_published': False,
                     'qemu_parity_tested': False}
-        # Recovery driver has already verified its manifest and native rebuild.
+        status, error, attestation = verify_before_publish(
+            staged, elf, tool_dir, proof['elf_sha256'], start + timeout)
+        if status != 'PASSED':
+            return {'status': status, 'elapsed_seconds': round(time.monotonic() - start, 3),
+                    'exit_code': proc.returncode, 'stderr_tail': error,
+                    'regeneration_executed': True, 'destination_published': False,
+                    'independent_bundle_verification_passed': False,
+                    'qemu_parity_tested': False}
+        # Both the recovery driver and a fresh independent verifier passed.
         # Publishing into the requested destination is a same-filesystem rename.
+        if dest.exists() or dest.is_symlink():
+            raise FileExistsError('destination created during verification; refusing overwrite')
         os.rename(staged, dest)
-        return {'status': 'SUCCEEDED', 'elapsed_seconds': duration,
+        return {'status': 'SUCCEEDED', 'elapsed_seconds': round(time.monotonic() - start, 3),
                 'exit_code': 0, 'regeneration_executed': True,
                 'destination_published': True, 'destination': str(dest),
+                'independent_bundle_verification_passed': True,
+                'native_exports_verified': attestation['native_exports_verified_from_elf'],
                 'qemu_parity_tested': False}
 
 
