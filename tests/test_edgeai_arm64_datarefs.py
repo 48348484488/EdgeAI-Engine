@@ -55,6 +55,44 @@ class Arm64DataReferenceTests(unittest.TestCase):
                          [("computed_address", "0x432000"),
                           ("load", "0x432018")])
 
+    def test_sub_immediate_recovers_backward_global_reference(self):
+        asm = """
+0000000000400000 <backward>:
+  400000: adrp x9, 0x440000
+  400004: sub x10, x9, #0x2, lsl #12
+  400008: ldr w0, [x10, #0x18]
+  40000c: ret
+"""
+        refs = analyze_text(asm)["references"]
+        self.assertEqual([(r["opcode"], r["kind"], r["address"]) for r in refs],
+                         [("sub", "computed_address", "0x43e000"),
+                          ("ldr", "load", "0x43e018")])
+
+    def test_sub_unknown_shift_w_register_and_underflow_are_rejected(self):
+        for instruction in ("sub x10, x9, x1",
+                            "sub x10, x9, #2, lsl #3",
+                            "sub w10, w9, #2",
+                            "sub x10, x9, #0x10, lsl #12"):
+            with self.subTest(instruction=instruction):
+                asm = ("""
+0000000000001000 <invalid_sub>:
+  1000: adrp x9, 0x0
+  1004: """ + instruction + """
+  1008: ldr w0, [x10, #0x18]
+  100c: ret
+""")
+                self.assertEqual(analyze_text(asm)["references"], [])
+
+    def test_sub_overwriting_source_invalidates_on_unsupported_form(self):
+        asm = """
+0000000000400000 <overwrite>:
+  400000: adrp x9, 0x430000
+  400004: sub x9, x9, x0
+  400008: ldr w0, [x9, #0x20]
+  40000c: ret
+"""
+        self.assertEqual(analyze_text(asm)["references"], [])
+
     def test_unsupported_shift_and_w_register_add_do_not_invent_refs(self):
         for instruction in ("add x10, x9, #2, lsl #3",
                             "add w10, w9, #2, lsl #12"):
