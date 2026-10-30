@@ -60,6 +60,29 @@ class ImageParityTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'min_distinct_colors'):
             module.frame_statistics(1, 1, bytes([0, 0, 0, 255]), 1)
 
+    def test_packed_alpha_mask_warning_and_hidden_rgb(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            a = Path(tmp)/'packed.png'
+            row = bytes([10,20,30,0, 40,50,60,0,
+                         70,80,90,0, 0,0,0,255])
+            png(a, 4, 1, [row], color=6)
+            report = module.inspect_alpha(a)
+            self.assertEqual(report['alpha_zero_pixels'], 3)
+            self.assertEqual(report['nonzero_rgb_under_zero_alpha_pixels'], 3)
+            self.assertEqual(report['alpha_zero_fraction'], .75)
+            self.assertTrue(report['possible_packed_material_mask'])
+            self.assertFalse(report['original_shader_semantics_proven'])
+
+    def test_rgb_has_opaque_alpha_and_invalid_buffer_rejected(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            a = Path(tmp)/'rgb.png'
+            png(a, 1, 1, [bytes([12,34,56])])
+            report = module.inspect_alpha(a)
+            self.assertEqual(report['alpha_opaque_pixels'], 1)
+            self.assertFalse(report['possible_packed_material_mask'])
+        with self.assertRaisesRegex(ValueError, 'RGBA pixel buffer'):
+            module.alpha_statistics(2, 2, bytes(3))
+
     def test_resolution_mismatch_fails(self):
         with tempfile.TemporaryDirectory() as tmp:
             a, b = Path(tmp)/'a.png', Path(tmp)/'b.png'
