@@ -1,3 +1,10 @@
+### 2026-10-31 06:49 America/Recife — reusable swept-AABB movement oracle (CI pending)
+
+- Added `tools/edgeai_swept_collision_audit.py` and six deterministic regressions. It detects high-delta motion tunneling through axis-aligned 2D collision boxes when an endpoint-only check misses the intersection, validates finite input, and supports a JSON test-case manifest. Generic to any 2D ground-plane collision geometry, not hardcoded to Last.
+- Applied the oracle to the Last provisional wall at grid (1,0), orientation 0: fast crossing and near-end-cap crossing must block; outside-end-cap travel and exiting an overlap must pass. Source test cases in `docs/last_native_wall_swept_cases.json`. Local tests passed 6/6; GitHub CI still needs confirmation.
+- Last integration commit [d2c2270](https://github.com/48348484488/last-Island-of-survival-lite/commit/d2c2270c594814ad6b81dca558535ef4af461560) replaces destination-only collision checks with continuous segment tests and adds C++ regressions. APK build and Android runtime for this new commit not yet confirmed.
+- Prior EdgeAI [CI #41184625050](https://github.com/48348484488/EdgeAI-Engine/actions/runs/41184625050) passed on the preceding geometry auditor. No new original ARM function has been reconstructed, and the original Unity wall mesh is still missing.
+
 ### 2026-10-31 05:23 America/Recife — geometry/collider footprint auditor (CI pending)
 
 - Added reusable `tools/edgeai_wall_footprint_audit.py` ([dde154b2](https://github.com/48348484488/EdgeAI-Engine/commit/dde154b2a953c2139c9dbec2f2a0192a26fde7e2), corrected gap accounting [31156b2](https://github.com/48348484488/EdgeAI-Engine/commit/31156b2ca2019aa74a5242978e43b7dada372539)) and five unit tests ([dfafeaed](https://github.com/48348484488/EdgeAI-Engine/commit/dfafeaed67ee4640daddf79cf713c317ee94b82e)). It audits four orthogonal wall orientations, render/collider endpoint coverage, surface thickness, and normal collision overhang without depending on Last-specific code.

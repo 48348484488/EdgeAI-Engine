@@ -1,0 +1,102 @@
+{
+  "schema": "edgeai.swept_aabb.v1",
+  "source": "Last provisional wall at grid (1,0), orientation 0",
+  "cases": [
+    {
+      "name": "crossing_wall_with_both_endpoints_outside",
+      "start": [
+        3,
+        -2.3
+      ],
+      "end": [
+        3,
+        -0.7
+      ],
+      "colliders": [
+        {
+          "center": [
+            3,
+            -1.5
+          ],
+          "half_extents": [
+            1.5,
+            0.38
+          ]
+        }
+      ],
+      "expected_blocked": true
+    },
+    {
+      "name": "outside_wall_endcap",
+      "start": [
+        4.51,
+        -2.3
+      ],
+      "end": [
+        4.51,
+        -0.7
+      ],
+      "colliders": [
+        {
+          "center": [
+            3,
+            -1.5
+          ],
+          "half_extents": [
+            1.5,
+            0.38
+          ]
+        }
+      ],
+      "expected_blocked": false
+    },
+    {
+      "name": "near_wall_endcap",
+      "start": [
+        4.49,
+        -2.3
+      ],
+      "end": [
+        4.49,
+        -0.7
+      ],
+      "colliders": [
+        {
+          "center": [
+            3,
+            -1.5
+          ],
+          "half_extents": [
+            1.5,
+            0.38
+          ]
+        }
+      ],
+      "expected_blocked": true
+    },
+    {
+      "name": "overlap_escape",
+      "start": [
+        3,
+        -1.5
+      ],
+      "end": [
+        3,
+        0
+      ],
+      "colliders": [
+        {
+          "center": [
+            3,
+            -1.5
+          ],
+          "half_extents": [
+            1.5,
+            0.38
+          ]
+        }
+      ],
+      "expected_blocked": false
+    }
+  ]
+}
