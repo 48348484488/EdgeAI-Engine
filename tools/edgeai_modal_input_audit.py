@@ -51,3 +51,20 @@ def audit(log, spec):
         raise ValueError("no observed panel opens")
     return {"opens": opens, "violations": violations,
             "passed": not violations, "original_game_parity_proven": False}
+
+
+def main():
+    if len(sys.argv) not in (3, 4):
+        raise SystemExit("usage: edgeai_modal_input_audit.py log.txt spec.json [report.json]")
+    report = audit(Path(sys.argv[1]).read_text(encoding="utf-8"),
+                   json.loads(Path(sys.argv[2]).read_text(encoding="utf-8")))
+    payload = json.dumps(report, indent=2) + "\n"
+    if len(sys.argv) == 4:
+        Path(sys.argv[3]).write_text(payload, encoding="utf-8")
+    print(payload, end="")
+    if not report["passed"]:
+        raise SystemExit(1)
+
+
+if __name__ == "__main__":
+    main()
