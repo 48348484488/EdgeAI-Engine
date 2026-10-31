@@ -1,3 +1,9 @@
+### Validação CI — 2026-10-31
+
+- [CI completo #41168257949](https://github.com/48348484488/EdgeAI-Engine/actions/runs/41168257949) **sucesso** no commit de documentação [8732ccfa](https://github.com/48348484488/EdgeAI-Engine/commit/8732ccfae5a73f314196b712d49793a365fde47a); C++ tests, Python tests e kernel 3D diferencial (100.000 casos) aprovados. [CI ARM64 #41168226000](https://github.com/48348484488/EdgeAI-Engine/actions/runs/41168226000) e [low-resource #41168258037](https://github.com/48348484488/EdgeAI-Engine/actions/runs/41168258037) também aprovados.
+- No Android Last [#41168341991](https://github.com/48348484488/last-Island-of-survival-lite/actions/runs/41168341991), houve transições instrumentadas de inventário/configurações, mas ainda não houve sessão de construção com `INPUT_DISPATCH scope=build`; não declarar auditoria runtime específica validada.
+- Próxima prioridade: coletar trace real de entrada no BuildState e executar `edgeai_transition_input_audit.py --require-transition`, depois ampliar para análise de grafo de callbacks Unity e recuperação ARM64 com teste diferencial.
+
 ## 2026-10-31 — auditor genérico de transições de entrada
 
 - Novo `tools/edgeai_transition_input_audit.py` verifica logs com `INPUT_TRANSITION frame=N from=X to=Y` e `INPUT_DISPATCH frame=N scope=Y`. Detecta despacho indevido no modo recém-aberto durante o frame de transição, além de marcadores malformados; gera JSON com evidências por linha. Independente de Unity/Last, reutilizável em jogos e apps.
