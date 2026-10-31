@@ -1,0 +1,57 @@
+{
+  "schema": "edgeai.runtime_evidence.v1",
+  "source": "GitHub Actions Android virtual ARM64 translated runtime",
+  "workflow": "https://github.com/48348484488/last-Island-of-survival-lite/actions/runs/41180256670",
+  "artifact": "https://github.com/48348484488/last-Island-of-survival-lite/actions/runs/41180256670/artifacts/13034851649",
+  "game_commit": "ef7281c9f98805acdd881c4deb541393e18a385e",
+  "edgeai_auditor": "tools/edgeai_event_sequence_audit.py",
+  "observed_lines": 327,
+  "matched_ordered_steps": 15,
+  "numeric_comparisons": 3,
+  "audit_errors": [],
+  "passed": true,
+  "events": {
+    "foundation": {
+      "source_id": 24000,
+      "source_angle": 90,
+      "native_piece": 0,
+      "placed": 1
+    },
+    "wall": {
+      "source_id": 24012,
+      "source_angle": 180,
+      "native_piece": 1,
+      "placed": 2
+    },
+    "rotation": {
+      "before": 0,
+      "after": 2,
+      "source_angle": 180
+    },
+    "rotated_wall": {
+      "native_piece": 1,
+      "placed": 3
+    }
+  },
+  "screenshots": {
+    "resolution": [
+      1080,
+      640
+    ],
+    "rotation_preview": {
+      "changed_pixels_rgb30": 31370,
+      "changed_fraction_rgb30": 0.045384837962962964
+    },
+    "rotated_placement": {
+      "changed_pixels_rgb30": 452,
+      "changed_fraction_rgb30": 0.0006539351851851851
+    }
+  },
+  "limits": {
+    "resources_fixture": true,
+    "original_runtime_executed": false,
+    "original_visual_parity_proven": false,
+    "original_function_reconstructed": false,
+    "original_material_item_id_50001_mapped": false
+  }
+}
