@@ -1,3 +1,8 @@
+### Verified 2026-10-31 — exclusive input audit CI
+
+- [EdgeAI CI #41165814108](https://github.com/48348484488/EdgeAI-Engine/actions/runs/41165814108) **passed** on checkpoint commit `0c30db5c`; [low-resource CI #41165814084](https://github.com/48348484488/EdgeAI-Engine/actions/runs/41165814084) also passed. The new generic exclusive-mode auditor and its nine unit tests are included.
+- The auditor has **not yet been run on an actual Last builder-state log**; a source regression is not a real Android UI interaction. No original ARM function reconstructed. Next: capture a real builder touch sequence and verify no gameplay leakage.
+
 ### 2026-10-31 00:44 America/Recife — generic exclusive UI input auditor
 
 - Added reusable `tools/edgeai_exclusive_input_audit.py` ([aa6b8bb](https://github.com/48348484488/EdgeAI-Engine/commit/aa6b8bbb69a335403f1c2e4c89b5fc8cda2dff5c)): audits real ordered mode-enter/mode-exit, UI touch capture and forbidden gameplay markers; reports duplicate enters, orphan exits, uncaptured touches, unclosed modes and action leaks. Generic for construction, vehicle menus and other 3D game modes; does not infer original-game parity.
