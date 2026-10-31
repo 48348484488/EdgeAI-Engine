@@ -1,3 +1,9 @@
+### VALIDADO — 2026-10-31 07:23 America/Recife — Android ARM64 collision oracle integration
+
+- [Last Android #41192077552](https://github.com/48348484488/last-Island-of-survival-lite/actions/runs/41192077552) **3/3 jobs success**, with real in-process ARM64 wall checks at rotations 0 and 2: crossing blocked, 5cm outward overlap escape allowed, inward penetration blocked, outside movement allowed (**2/2 probes**). Screenshots/logcat [artifact #13039396569](https://github.com/48348484488/last-Island-of-survival-lite/actions/runs/41192077552/artifacts/13039396569). These are diagnostic checks in the real Android process, not joystick wall traversal or Unity parity.
+- Generic EdgeAI swept-collision oracle [d661867](https://github.com/48348484488/EdgeAI-Engine/commit/d661867a5c3b6b8b2f6d028576b5232b13c598b0) with six new regression scenarios [8b38a81](https://github.com/48348484488/EdgeAI-Engine/commit/8b38a817982d26bb48b3b0a663fd9345d4431485) has [CI #41192058538](https://github.com/48348484488/EdgeAI-Engine/actions/runs/41192058538) **success** (849 Python, 38 skipped; 15/15 C++; 100,000 LBS cases). ARM64, Windows, low-resource CI all passed.
+- Next: add actual joystick movement/position differential trace and compare against this oracle, recover original prefab mesh/UV from authorized on-demand data, then reconstruct a selected ARM64 IL2CPP callback with differential validation.
+
 ### VALIDADO — 2026-10-31 07:18 America/Recife — progressive collider escape audit
 
 - Generic 2D swept-collision auditor now distinguishes **progressive escape from an initial overlap** from motion deeper into a collider: short outward steps are allowed; inward and tangent-only moves remain blocked. Implementation [d661867](https://github.com/48348484488/EdgeAI-Engine/commit/d661867a5c3b6b8b2f6d028576b5232b13c598b0), six additional regression cases [8b38a81](https://github.com/48348484488/EdgeAI-Engine/commit/8b38a817982d26bb48b3b0a663fd9345d4431485).
