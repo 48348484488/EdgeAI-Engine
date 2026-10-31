@@ -1,0 +1,76 @@
+{
+  "source": "Actual Android virtual runtime evidence from GitHub Actions; no original-game parity assertion",
+  "date": "2026-10-31",
+  "last_repository": "48348484488/last-Island-of-survival-lite",
+  "last_commit": "28e3ec5d6b1cfeb44486c68842efed6959980ced",
+  "workflow_run": "https://github.com/48348484488/last-Island-of-survival-lite/actions/runs/41201279692",
+  "artifact": "https://github.com/48348484488/last-Island-of-survival-lite/actions/runs/41201279692/artifacts/13043340366",
+  "artifact_sha256": "441dcb9b6df83b54b7bdee13c7c736b36b8f5979e578da33e7adee7e88b8cc03",
+  "trace_file": "build-joystick-motion.json",
+  "auditor": "tools/edgeai_movement_trace_audit.py",
+  "audit_result": {
+    "ok": true,
+    "checks": {
+      "enough_samples": true,
+      "free_movement": true,
+      "wall_contact": true,
+      "independent_oracle": true,
+      "blocked_input_nonzero": true
+    },
+    "samples": 15,
+    "free": 4,
+    "blocked": 11,
+    "travel_m": 1.0392,
+    "contact_drift_m": 0,
+    "oracle_matches": 15,
+    "oracle_mismatches": [],
+    "boundary_ambiguous": 0,
+    "original_game_parity_verified": false
+  },
+  "frame_range": [
+    4310,
+    4450
+  ],
+  "colliders": [
+    {
+      "rotation": 0,
+      "center": [
+        0,
+        1.5
+      ],
+      "half_extents": [
+        1.5,
+        0.38
+      ]
+    },
+    {
+      "rotation": 2,
+      "center": [
+        0,
+        4.5
+      ],
+      "half_extents": [
+        1.5,
+        0.38
+      ]
+    }
+  ],
+  "first_frame": {
+    "phase_sequence": [
+      "before_pose",
+      "after_pose",
+      "before_begin_drawing",
+      "after_terrain_draw",
+      "before_end_drawing",
+      "after_end_drawing"
+    ],
+    "first_end_drawing": true,
+    "nonflat_frame": true
+  },
+  "caveats": [
+    "The previous Android run failed before first EndDrawing; this successful rerun does not establish the root cause of that intermittent failure.",
+    "Only the reconstructed game's wall collider was checked; original Unity collision equivalence is not established.",
+    "Original source wall mesh and UVs remain unverified.",
+    "The 15 telemetry rows are sampled every ten frames, not all frames."
+  ]
+}
