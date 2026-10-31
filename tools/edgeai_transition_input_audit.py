@@ -12,11 +12,11 @@ import re
 from pathlib import Path
 
 TRANSITION = re.compile(
-    r"\\bINPUT_TRANSITION\\s+frame=(\\d+)\\s+from=([A-Za-z0-9_-]+)"
-    r"\\s+to=([A-Za-z0-9_-]+)\\b"
+    r"\bINPUT_TRANSITION\s+frame=(\d+)\s+from=([A-Za-z0-9_-]+)"
+    r"\s+to=([A-Za-z0-9_-]+)\b"
 )
 DISPATCH = re.compile(
-    r"\\bINPUT_DISPATCH\\s+frame=(\\d+)\\s+scope=([A-Za-z0-9_-]+)\\b"
+    r"\bINPUT_DISPATCH\s+frame=(\d+)\s+scope=([A-Za-z0-9_-]+)\b"
 )
 
 
@@ -75,7 +75,7 @@ def main() -> int:
     result = audit(args.log.read_text(encoding="utf-8", errors="replace"))
     if args.output:
         args.output.parent.mkdir(parents=True, exist_ok=True)
-        args.output.write_text(json.dumps(result, indent=2) + "\\n", encoding="utf-8")
+        args.output.write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(result, indent=2))
     return int(result["violation_count"] > 0 or
                (args.require_transition and result["transition_count"] == 0))
