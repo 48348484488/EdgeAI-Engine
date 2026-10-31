@@ -1,3 +1,10 @@
+### 2026-10-31 08:30 America/Recife — generic differential movement trace auditor (CI pending)
+
+- Added generic `tools/edgeai_movement_trace_audit.py` to compare **actual avatar movement telemetry** against independent swept-AABB predictions, including overlap escape, frame order, free motion, stable blocked contact and boundary rounding tolerance. Commit [2086393](https://github.com/48348484488/EdgeAI-Engine/commit/208639328d7c06686fa813796d05563dda58fb37).
+- Added eight regression cases covering contact, mismatched oracle, absent contact, unstable contact, bad frame ordering, invalid numbers, invalid geometry and boundary tolerance. Commit [ff15b81](https://github.com/48348484488/EdgeAI-Engine/commit/ff15b819c261f27de20a0d76822972918eaa4b4c).
+- Last Android now exports `evidence/build-joystick-motion.json` with real player coordinates and wall collider bounds for `python3 tools/edgeai_movement_trace_audit.py --spec build-joystick-motion.json`. **New CI and runtime results not yet confirmed**; do not count these tests as passing until verified.
+- Next: retrieve the completed Last Android trace, run the auditor and publish evidence/diagnosis, correct any mismatch. Original Unity parity and ARM64 callback reconstruction remain open.
+
 ### VALIDADO — 2026-10-31 07:23 America/Recife — Android ARM64 collision oracle integration
 
 - [Last Android #41192077552](https://github.com/48348484488/last-Island-of-survival-lite/actions/runs/41192077552) **3/3 jobs success**, with real in-process ARM64 wall checks at rotations 0 and 2: crossing blocked, 5cm outward overlap escape allowed, inward penetration blocked, outside movement allowed (**2/2 probes**). Screenshots/logcat [artifact #13039396569](https://github.com/48348484488/last-Island-of-survival-lite/actions/runs/41192077552/artifacts/13039396569). These are diagnostic checks in the real Android process, not joystick wall traversal or Unity parity.
