@@ -33,6 +33,28 @@ class SweptCollisionTests(unittest.TestCase):
                            "expected_blocked": False}]}
         self.assertTrue(audit(case)["ok"])
 
+    def test_progressive_escape_in_short_steps(self):
+        collider = {"center": [3, -1.5], "half_extents": [1.5, .38]}
+        cases = [
+            {"name": "first_outward_step", "start": [3, -1.5],
+             "end": [3, -1.45], "expected_blocked": False},
+            {"name": "second_outward_step", "start": [3, -1.45],
+             "end": [3, -1.40], "expected_blocked": False},
+            {"name": "deeper_penetration", "start": [3, -1.75],
+             "end": [3, -1.65], "expected_blocked": True},
+            {"name": "tangent_at_same_depth", "start": [3, -1.5],
+             "end": [3.05, -1.5], "expected_blocked": True},
+            {"name": "full_exit", "start": [3, -1.5],
+             "end": [3, 0], "expected_blocked": False},
+            {"name": "entry_from_boundary", "start": [3, -1.12],
+             "end": [3, -1.20], "expected_blocked": True},
+        ]
+        for case in cases:
+            case["colliders"] = [collider]
+        result = audit({"cases": cases})
+        self.assertTrue(result["ok"], result)
+        self.assertEqual(len(result["cases"]), 6)
+
     def test_expected_mismatch_fails(self):
         case = {"cases": [{"start": [0, 0], "end": [2, 0],
                            "colliders": [{"center": [1, 0],
