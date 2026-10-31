@@ -1,0 +1,25 @@
+{
+  "stages": [
+    {
+      "name": "native_raylib_initialized",
+      "pattern": "Initializing raylib"
+    },
+    {
+      "name": "original_terrain_loaded",
+      "pattern": "LIOS_TERRAIN_SECTORS_READY count=5 total=5"
+    },
+    {
+      "name": "audio_initialized",
+      "pattern": "LIOS_AUDIO_READY"
+    },
+    {
+      "name": "input_initialized",
+      "pattern": "LIOS_JOYSTICK_CENTER",
+      "optional": true
+    },
+    {
+      "name": "first_frame_completed",
+      "pattern": "LIOS_FIRST_FRAME_ENDDRAWING"
+    }
+  ]
+}
