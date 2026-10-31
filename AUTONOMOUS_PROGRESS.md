@@ -1,3 +1,10 @@
+### 2026-10-31 — numeric differential assertions for 3D runtime traces
+
+- Generic `tools/edgeai_event_sequence_audit.py` now supports `numeric_comparisons` between named regex captures from the same or different ordered steps. Supports `eq/ne/lt/le/gt/ge` with finite numeric validation; usable for rotation, item counts, health and gameplay transitions. Commits [84ab167](https://github.com/48348484488/EdgeAI-Engine/commit/84ab167be26dd898c3266857668f7c29897e49b1), [c80faf3](https://github.com/48348484488/EdgeAI-Engine/commit/c80faf31bb1f425e41f7cc84d0487fcbb922c01f).
+- [EdgeAI CI #41180046356](https://github.com/48348484488/EdgeAI-Engine/actions/runs/41180046356) **passed**: 837 Python tests (38 skipped), 15/15 C++ tests, 100,000 deterministic LBS differential cases. ARM64 CI [#41180046305](https://github.com/48348484488/EdgeAI-Engine/actions/runs/41180046305) passed. The new comparisons have positive and negative regression tests.
+- Last Android probe extended to tap wall category, choose child 0, place a wall, rotate according to source `OnceAngle`, and place a second wall on a different edge. Runtime evidence **pending** from build triggered by Last commit [23925f3](https://github.com/48348484488/last-Island-of-survival-lite/commit/23925f3ee80e8f5632c6e1eed750584ec7fa69c7); do not claim Android parity before run passes.
+- Original-game LITE 7.3 catalog dated 23 Oct 2026 is listed by Aptoide; no matching original-game screenshot/functional trace for this build scenario. No new ARM32/ARM64 function recovered in this run. Next: audit actual wall/rotation Android log with numeric comparisons, resolve any source-angle mismatch, then inspect original ARM/IL2CPP callback semantics with authorized differential evidence.
+
 ### VALIDADO — 2026-10-31 — auditor genérico aplicado a construção Android real
 
 - [EdgeAI CI #41179267842](https://github.com/48348484488/EdgeAI-Engine/actions/runs/41179267842) passou: **834 testes Python (38 ignorados), 15/15 C++ e 100.000 casos diferenciais LBS**; ARM64, Windows e low-resource também aprovados.
