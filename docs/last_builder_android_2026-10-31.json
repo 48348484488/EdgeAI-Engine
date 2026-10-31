@@ -1,0 +1,61 @@
+{
+  "date": "2026-10-31",
+  "source": "Real Android emulator logcat (x86_64 guest with ARM64 native bridge)",
+  "last_repo": "48348484488/last-Island-of-survival-lite",
+  "last_commit": "9e66317e4cb11d563688316598c16184d029f13e",
+  "workflow": "https://github.com/48348484488/last-Island-of-survival-lite/actions/runs/41179218575",
+  "artifact": "https://github.com/48348484488/last-Island-of-survival-lite/actions/runs/41179218575/artifacts/13033998326",
+  "audit_tool": "tools/edgeai_event_sequence_audit.py",
+  "rules": "https://github.com/48348484488/last-Island-of-survival-lite/blob/main/docs/edgeai_builder_runtime_sequence.json",
+  "audit": {
+    "passed": true,
+    "observed_lines": 284,
+    "matched_steps": 10,
+    "errors": [],
+    "same_frame_input_leaks": 0,
+    "forbidden_attack_jump_events": 0
+  },
+  "steps": [
+    "craft_open",
+    "prototype",
+    "queue",
+    "blueprint_ready",
+    "craft_close",
+    "build_enter",
+    "foundation_category",
+    "foundation_child",
+    "foundation_place",
+    "build_exit"
+  ],
+  "runtime": {
+    "blueprint_crafted": 1,
+    "foundation_native_piece": 0,
+    "foundation_source_id": 24000,
+    "foundation_placed_count": 1,
+    "viewport_logical": [
+      1280,
+      720
+    ],
+    "screenshot_physical": [
+      1080,
+      640
+    ],
+    "physical_scale": 0.84375,
+    "physical_origin": [
+      0.0125,
+      17.3875
+    ],
+    "physical_foundation_tap": [
+      453,
+      454
+    ],
+    "frames_observed": 600,
+    "mean_frame_ms_mixed_states": 18.8147
+  },
+  "caveats": [
+    "Only resource materials seeded by explicit Android debug property; blueprint crafted via real offline UI touches",
+    "No original Unity gameplay or same-state visual comparison",
+    "FPS windows span different camera and UI states; not a controlled A/B",
+    "Builder rotation, wall placement and full UI parity not tested"
+  ]
+}
