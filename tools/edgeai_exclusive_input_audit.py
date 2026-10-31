@@ -20,12 +20,18 @@ def audit(log, spec):
         raise ValueError("log must be text and spec must be an object")
     enter = _marker(spec.get("enter"), "enter")
     exit_marker = _marker(spec.get("exit"), "exit")
-    capture = _marker(spec.get("capture"), "capture")
+    capture_spec = spec.get("capture")
+    if isinstance(capture_spec, str):
+        captures = [_marker(capture_spec, "capture")]
+    elif isinstance(capture_spec, list) and capture_spec:
+        captures = [_marker(value, "capture item") for value in capture_spec]
+    else:
+        raise ValueError("capture must be a marker or nonempty list of markers")
     forbidden = spec.get("forbidden", [])
     if not isinstance(forbidden, list) or not forbidden:
         raise ValueError("forbidden must contain at least one gameplay marker")
     forbidden = [_marker(v, "forbidden item") for v in forbidden]
-    markers = [enter, exit_marker, capture, *forbidden]
+    markers = [enter, exit_marker, *captures, *forbidden]
     if len(set(markers)) != len(markers):
         raise ValueError("event markers must be unique")
     required = spec.get("minimum_captures", 1)
@@ -58,7 +64,7 @@ def audit(log, spec):
                 violations.append([line_no, "orphan_exit"])
             active = False
             exits += 1
-        elif event == capture:
+        elif event in captures:
             if not active:
                 violations.append([line_no, "capture_outside_mode"])
             else:
