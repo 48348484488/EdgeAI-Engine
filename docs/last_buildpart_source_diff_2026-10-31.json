@@ -1,0 +1,53 @@
+{
+  "source": "GitHub Actions artifact 12883220942, run 40841337262, original LITE BuildPart cfg extraction",
+  "source_zip_sha256": "78274205ada24ebfdb5758ead56f4e06c9bca986dc9b932f86e0f2d82b2e45ac",
+  "source_buildpart_sha256": "eaedf3f5615786dbcf1d9404f3ed67de3dec0e7fda29181a6c5c4225b398cf63",
+  "rows": [
+    {
+      "role": "foundation",
+      "original_buildpart_id": 24000,
+      "original_type": 2,
+      "original_index": 0,
+      "original_once_angle_degrees": 90,
+      "original_prefab": "part/diji_lv1.ab",
+      "original_icon": "buildpart/dj_sb_1",
+      "original_material_cost": {
+        "itemId": 50001,
+        "needNum": 50,
+        "hp": 6000,
+        "returnNum": 0
+      },
+      "current_offline_native_cost": {
+        "wood": 60,
+        "stone": 20,
+        "metal": 0
+      },
+      "costs_directly_comparable": false,
+      "reason": "Original material itemId has not been mapped to the recreated inventory resource types; offline costs are provisional."
+    },
+    {
+      "role": "wall",
+      "original_buildpart_id": 24012,
+      "original_type": 3,
+      "original_index": 0,
+      "original_once_angle_degrees": 180,
+      "original_prefab": "part/qiangbi_lv1.ab",
+      "original_icon": "buildpart/qb_qb_1",
+      "original_material_cost": {
+        "itemId": 50001,
+        "needNum": 50,
+        "hp": 1500,
+        "returnNum": 0
+      },
+      "current_offline_native_cost": {
+        "wood": 50,
+        "stone": 0,
+        "metal": 0
+      },
+      "costs_directly_comparable": false,
+      "reason": "Original material itemId has not been mapped to the recreated inventory resource types; offline costs are provisional."
+    }
+  ],
+  "original_game_runtime_verified": false,
+  "same_scene_visual_parity_verified": false
+}
