@@ -1,0 +1,20 @@
+{
+  "description": "Runtime-only construction touch ownership for recreated Last; compare original separately",
+  "enter": "LIOS_BUILD_MODE_TRANSITION enabled=1",
+  "exit": "LIOS_BUILD_MODE_TRANSITION enabled=0",
+  "capture": [
+    "LIOS_BUILD_WIDGET_TOUCH_CAPTURE",
+    "LIOS_BUILD_CATEGORY ",
+    "LIOS_BUILD_CHILD ",
+    "LIOS_BUILD_ROTATE ",
+    "LIOS_BUILD_PLACE "
+  ],
+  "forbidden": [
+    "LIOS_JUMP_TRIGGERED",
+    "LIOS_ATTACK_TRIGGERED",
+    "LIOS_HOTBAR_TOUCH_SELECTED",
+    "LIOS_AIM_TOUCH_TRANSITION"
+  ],
+  "minimum_captures": 2,
+  "require_exit": true
+}
