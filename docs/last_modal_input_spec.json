@@ -1,1 +1,5 @@
-{}
+{
+  "panels": {"inventory": {"open": "LIOS_INVENTORY_PANEL_OPEN", "close": "LIOS_INVENTORY_PANEL_CLOSE"}, "craft": {"open": "LIOS_CRAFT_PANEL_OPEN", "close": "LIOS_CRAFT_PANEL_CLOSE"}, "settings": {"open": "LIOS_SETTINGS_PANEL_OPEN", "close": "LIOS_SETTINGS_PANEL_CLOSE"}},
+  "gameplay": ["LIOS_JUMP_TRIGGERED", "LIOS_ATTACK_TRIGGERED"],
+  "capture": "LIOS_MODAL_TOUCH_CAPTURE"
+}
