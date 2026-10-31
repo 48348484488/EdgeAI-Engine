@@ -12,11 +12,11 @@ import re
 from pathlib import Path
 
 TRANSITION = re.compile(
-    r"\bINPUT_TRANSITION\s+frame=(\d+)\s+from=([A-Za-z0-9_-]+)"
+    r"(?:^|[^A-Za-z0-9])INPUT_TRANSITION\s+frame=(\d+)\s+from=([A-Za-z0-9_-]+)"
     r"\s+to=([A-Za-z0-9_-]+)\b"
 )
 DISPATCH = re.compile(
-    r"\bINPUT_DISPATCH\s+frame=(\d+)\s+scope=([A-Za-z0-9_-]+)\b"
+    r"(?:^|[^A-Za-z0-9])INPUT_DISPATCH\s+frame=(\d+)\s+scope=([A-Za-z0-9_-]+)\b"
 )
 
 
