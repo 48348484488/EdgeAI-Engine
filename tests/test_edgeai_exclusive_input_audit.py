@@ -28,8 +28,8 @@ class ExclusiveInputAuditTests(unittest.TestCase):
         rules = {**RULES, "capture": [
             "BUILD_WIDGET_CAPTURE", "BUILD_CATEGORY", "BUILD_CHILD", "BUILD_PLACE"
         ], "minimum_captures": 3}
-        log = ("BUILD enabled=1\\nBUILD_WIDGET_CAPTURE finger=1\\n"
-               "BUILD_CATEGORY category=2\\nBUILD_CHILD child=0\\nBUILD enabled=0")
+        log = ("BUILD enabled=1\nBUILD_WIDGET_CAPTURE finger=1\n"
+               "BUILD_CATEGORY category=2\nBUILD_CHILD child=0\nBUILD enabled=0")
         report = module.audit(log, rules)
         self.assertTrue(report["passed"])
         self.assertEqual(report["captured_touches"], 3)
