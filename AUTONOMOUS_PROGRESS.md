@@ -1,3 +1,10 @@
+### VALIDADO — 2026-10-31 06:54 America/Recife — swept-AABB oracle CI passed
+
+- [EdgeAI CI #41190408200](https://github.com/48348484488/EdgeAI-Engine/actions/runs/41190408200) **success** on commit [e772f6e](https://github.com/48348484488/EdgeAI-Engine/commit/e772f6ed738adc634bf201d3faaad9318565553c): **848 Python tests (38 skipped), 15/15 C++ tests and 100,000 LBS differential cases**. ARM64 and Windows CI also passed; low-resource CI still pending at this checkpoint.
+- Executed the new generic swept-collision auditor against four deterministic Last wall movements: 4/4 expected outcomes, including **two cases where endpoint-only collision missed a crossed wall**. This is a mathematical/prototype check, not observed original Unity behavior.
+- Last native movement patch [d2c2270](https://github.com/48348484488/last-Island-of-survival-lite/commit/d2c2270c594814ad6b81dca558535ef4af461560) passed its C++ regression step in [Android build #41190377423](https://github.com/48348484488/last-Island-of-survival-lite/actions/runs/41190377423); APK build/runtime still running.
+- Original wall prefab scan [#41190497067](https://github.com/48348484488/last-Island-of-survival-lite/actions/runs/41190497067) started. No recovered source mesh/UVs or ARM function yet; do not claim visual parity.
+
 ### 2026-10-31 06:49 America/Recife — reusable swept-AABB movement oracle (CI pending)
 
 - Added `tools/edgeai_swept_collision_audit.py` and six deterministic regressions. It detects high-delta motion tunneling through axis-aligned 2D collision boxes when an endpoint-only check misses the intersection, validates finite input, and supports a JSON test-case manifest. Generic to any 2D ground-plane collision geometry, not hardcoded to Last.
