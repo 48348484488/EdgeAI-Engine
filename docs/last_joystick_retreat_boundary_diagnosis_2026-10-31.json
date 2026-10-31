@@ -1,0 +1,24 @@
+{
+  "date": "2026-10-31",
+  "source_run": "https://github.com/48348484488/last-Island-of-survival-lite/actions/runs/41207128615",
+  "evidence_artifact": "https://github.com/48348484488/last-Island-of-survival-lite/actions/runs/41207128615/artifacts/13045570378",
+  "artifact_sha256": "c01cb0d010b044e1825aae865366575fb71aadedee0a53e260db72d5c1ae969b",
+  "observed_failure": "LIOS_JOYSTICK_RETREAT_FAILED free=11 blocked=5 travel=3.117 gain=3.117",
+  "root_cause": "Five forward-gesture samples with negative stick_y remained in the captured log at the gesture boundary; the reverse samples had positive stick_y and were all unblocked. The test parser counted both phases as retreat.",
+  "raw_samples": 16,
+  "ignored_forward_samples": 5,
+  "retreat_samples": 11,
+  "retreat_free": 11,
+  "retreat_blocked": 0,
+  "retreat_distance_m": 3.0981,
+  "clearance_gain_m": 3.0981,
+  "independent_swept_oracle_matches": 11,
+  "independent_swept_oracle_mismatches": 0,
+  "code_fix": "https://github.com/48348484488/last-Island-of-survival-lite/commit/0b3ddcfe61e46e11858752da24df0c76d91e28fa",
+  "next_android_run": "https://github.com/48348484488/last-Island-of-survival-lite/actions/runs/41207682894",
+  "limitations": [
+    "The 11-sample filtered analysis was executed locally on the failed run's actual Android log; the corrected Android workflow is not yet validated.",
+    "No original-game collision equivalence is claimed.",
+    "The test parser now selects positive Y for this particular game's reverse joystick orientation; EdgeAI's retreat audit remains engine-agnostic."
+  ]
+}
