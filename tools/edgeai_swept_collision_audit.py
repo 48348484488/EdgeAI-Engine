@@ -45,6 +45,16 @@ def intersects(start, end, center, half_extents):
     return True
 
 
+def penetration_depth(point, center, half_extents):
+    """Distance to the closest box exit face for a point inside the box."""
+    x, z = _pair(point, "point")
+    cx, cz = _pair(center, "center")
+    hx, hz = _pair(half_extents, "half_extents")
+    if hx <= 0 or hz <= 0:
+        raise ValueError("half_extents must be positive")
+    return min(x-(cx-hx), (cx+hx)-x, z-(cz-hz), (cz+hz)-z)
+
+
 def inside(point, center, half_extents):
     x, z = _pair(point, "point")
     cx, cz = _pair(center, "center")
@@ -76,9 +86,16 @@ def audit(spec):
             start_inside = inside(start, center, extents)
             end_inside = inside(end, center, extents)
             endpoint |= end_inside
-            # Permit leaving an overlap caused by spawning inside geometry.
-            swept |= (end_inside if start_inside else
-                      intersects(start, end, center, extents))
+            # Allow an overlapped avatar to escape over multiple short
+            # frames. A full exit or a strictly decreasing penetration depth
+            # is safe; moving deeper or tangentially at equal depth is not.
+            if start_inside:
+                progressive_exit = (not end_inside or
+                    penetration_depth(end, center, extents) + 1e-6 <
+                    penetration_depth(start, center, extents))
+                swept |= not progressive_exit
+            else:
+                swept |= intersects(start, end, center, extents)
         expected = case.get("expected_blocked")
         if expected is not None and not isinstance(expected, bool):
             raise ValueError("expected_blocked must be a boolean")
