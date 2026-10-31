@@ -44,7 +44,7 @@ def audit(log, spec):
     active = False
     entries = 0
     exits = 0
-    captures = 0
+    capture_count = 0
     violations = []
     for line_no, line in enumerate(log.splitlines(), 1):
         matched = [name for name in markers if name in line]
@@ -68,19 +68,19 @@ def audit(log, spec):
             if not active:
                 violations.append([line_no, "capture_outside_mode"])
             else:
-                captures += 1
+                capture_count += 1
         elif active:
             violations.append([line_no, "gameplay_leak:" + event])
     if entries == 0:
         violations.append([0, "mode_never_observed"])
-    if captures < required:
+    if capture_count < required:
         violations.append([0, "insufficient_observed_captures"])
     if active and require_exit:
         violations.append([len(log.splitlines()), "mode_not_closed"])
     return {
         "mode_entries": entries,
         "mode_exits": exits,
-        "captured_touches": captures,
+        "captured_touches": capture_count,
         "violations": violations,
         "passed": not violations,
         "original_game_parity_proven": False,
