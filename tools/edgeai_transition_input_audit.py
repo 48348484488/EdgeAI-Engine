@@ -61,7 +61,7 @@ def audit(text: str) -> dict:
         "dispatch_count": len(dispatches),
         "violation_count": len(violations),
         "violations": violations,
-        "validated": bool(transitions) and not violations,
+        "validated": bool(transitions) and bool(dispatches) and not violations,
         "limitation": "Observed input routing only; not visual or original-game parity"
     }
 
