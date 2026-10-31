@@ -1,3 +1,10 @@
+### 2026-10-31 — original Unity BuildPart metadata checked against native prototype
+
+- Retrieved immutable [original BuildPart artifact #12883220942](https://github.com/48348484488/last-Island-of-survival-lite/actions/runs/40841337262/artifacts/12883220942) (ZIP SHA-256 `78274205ada24ebfdb5758ead56f4e06c9bca986dc9b932f86e0f2d82b2e45ac`). Source cfg SHA-256 `eaedf3f5615786dbcf1d9404f3ed67de3dec0e7fda29181a6c5c4225b398cf63`.
+- Original source: foundation BuildPart ID **24000**, `OnceAngle=90`, prefab `part/diji_lv1.ab`, HP 6000; wall ID **24012**, `OnceAngle=180`, prefab `part/qiangbi_lv1.ab`, HP 1500. Both list `material.itemId=50001, needNum=50`. Native offline costs differ, and itemId 50001 is **not yet mapped** to a native resource; do not substitute an assumed resource. Structured provenance: [docs/last_buildpart_source_diff_2026-10-31.json](https://github.com/48348484488/EdgeAI-Engine/blob/main/docs/last_buildpart_source_diff_2026-10-31.json), commit [b2dd6e7](https://github.com/48348484488/EdgeAI-Engine/commit/b2dd6e7fd00ffa4ada6600d0d090b490ebf374ca).
+- [EdgeAI CI #41180294633](https://github.com/48348484488/EdgeAI-Engine/actions/runs/41180294633) **passed** after provenance documentation; Last ARM64 compile and release [#41180256670](https://github.com/48348484488/last-Island-of-survival-lite/actions/runs/41180256670) passed, Android virtual runtime still running at this checkpoint.
+- Next: validate wall orientation 0→2 from the real Android touch trace and compare screenshot deltas; original Unity runtime equivalence remains unproven.
+
 ### 2026-10-31 — numeric differential assertions for 3D runtime traces
 
 - Generic `tools/edgeai_event_sequence_audit.py` now supports `numeric_comparisons` between named regex captures from the same or different ordered steps. Supports `eq/ne/lt/le/gt/ge` with finite numeric validation; usable for rotation, item counts, health and gameplay transitions. Commits [84ab167](https://github.com/48348484488/EdgeAI-Engine/commit/84ab167be26dd898c3266857668f7c29897e49b1), [c80faf3](https://github.com/48348484488/EdgeAI-Engine/commit/c80faf31bb1f425e41f7cc84d0487fcbb922c01f).
