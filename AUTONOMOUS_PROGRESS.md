@@ -440,3 +440,10 @@ Consultar as execuções mais recentes antes de repetir uma análise. Guardar SH
 - Configuração `docs/last_build_input_spec.json` ([3643e8b](https://github.com/48348484488/EdgeAI-Engine/commit/3643e8b10c9db8b37a501a5b68e1087cb00fc1b2)) define entrada/saída da construção, eventos permitidos e proibição de ataque/salto/mira/hotbar durante o modo. Deve ser executada sobre logs Android reais, não sintéticos, antes de declarar paridade de controles.
 - Last recriado: cache exato de alturas do terreno e eventos detalhados de construção publicados. Build [#41172427857](https://github.com/48348484488/last-Island-of-survival-lite/actions/runs/41172427857) em execução na consulta. Não houve reconstrução de função ARM32/ARM64 nem prova de equivalência com o Unity LITE 7.3 nesta execução.
 - Próxima prioridade: verificar CI, analisar contadores e eventos reais do APK; em paralelo retomar uma função ARM64 com entrada/saída observáveis e comparação diferencial. Não confundir auditoria de runtime com decompilação.
+
+
+### CI concluído após correção de regressão
+
+- O primeiro CI [#41172501102](https://github.com/48348484488/EdgeAI-Engine/actions/runs/41172501102) falhou com oito erros: o novo conjunto de marcadores `captures` foi indevidamente sobrescrito por um contador inteiro. Causa identificada no traceback e corrigida com `capture_count` em [149a6d5](https://github.com/48348484488/EdgeAI-Engine/commit/149a6d57bd227d9a2b5649bfb67dc0d2ba533c97).
+- [CI principal #41172627601](https://github.com/48348484488/EdgeAI-Engine/actions/runs/41172627601) **aprovado**: 821 testes Python (38 ignorados), 15/15 testes C++ e 100.000 casos diferenciais do kernel 3D. ARM64, Windows e baixo consumo também aprovados nos workflows #41172627603, #41172627629 e #41172627648.
+- Last: APK compilado/publicado no [workflow #41172610497](https://github.com/48348484488/last-Island-of-survival-lite/actions/runs/41172610497), execução virtual ainda pendente na consulta. Sem dados reais de hit ratio do cache nem equivalência visual ou função ARM reconstruída nesta etapa.
