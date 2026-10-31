@@ -24,6 +24,22 @@ class ExclusiveInputAuditTests(unittest.TestCase):
         self.assertEqual(report["captured_touches"], 1)
         self.assertFalse(report["original_game_parity_proven"])
 
+    def test_multiple_build_widget_actions_count_as_captures(self):
+        rules = {**RULES, "capture": [
+            "BUILD_WIDGET_CAPTURE", "BUILD_CATEGORY", "BUILD_CHILD", "BUILD_PLACE"
+        ], "minimum_captures": 3}
+        log = ("BUILD enabled=1\\nBUILD_WIDGET_CAPTURE finger=1\\n"
+               "BUILD_CATEGORY category=2\\nBUILD_CHILD child=0\\nBUILD enabled=0")
+        report = module.audit(log, rules)
+        self.assertTrue(report["passed"])
+        self.assertEqual(report["captured_touches"], 3)
+
+    def test_duplicate_capture_markers_are_rejected(self):
+        with self.assertRaisesRegex(ValueError, "unique"):
+            module.audit("", {**RULES, "capture": [
+                "BUILD_WIDGET_CAPTURE", "BUILD_WIDGET_CAPTURE"
+            ]})
+
     def test_jump_leak_is_rejected(self):
         log = "BUILD enabled=1\nBUILD_WIDGET_CAPTURE\nJUMP_TRIGGERED\nBUILD enabled=0"
         report = module.audit(log, RULES)
