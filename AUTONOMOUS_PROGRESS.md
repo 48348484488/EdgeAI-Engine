@@ -1,3 +1,8 @@
+### Verified 2026-10-30 21:58 America/Recife
+
+- [Full EdgeAI CI #41152347799](https://github.com/48348484488/EdgeAI-Engine/actions/runs/41152347799) **passed** on reciprocal LBS commit 628e5cf; [ARM64 CI #41152347746](https://github.com/48348484488/EdgeAI-Engine/actions/runs/41152347746) also passed. The portable kernel was copied byte-for-byte into Last. No original ARM game function was recovered this cycle.
+- Local standalone normal-only microbenchmark (Linux x86_64, -O2, 6 repeated paired trials, 524288 normals ×12 passes): reciprocal normalization ~21–24ms vs direct division ~33–38ms per trial. This measures only normalization on this CPU, **not** complete LBS or Android FPS.
+
 ### 2026-10-30 21:50 America/Recife — generic LBS normal optimization
 
 - Updated `include/edgeai_lbs_kernel.hpp`: normal normalization now uses one reciprocal and three multiplications instead of three divisions per skinned vertex. This is reusable C++ CPU skinning code, not Last-specific. Commit [628e5cf](https://github.com/48348484488/EdgeAI-Engine/commit/628e5cf1616a274f87e50e3c6f76ebd882d8a94e).
