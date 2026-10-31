@@ -379,3 +379,10 @@
 ## Regras de continuidade
 
 Consultar as execuções mais recentes antes de repetir uma análise. Guardar SHA dos binários, versão original, entrada/estado, prova de compilação, logs e artefatos por comparação. Não usar imagem gerada como captura de teste.
+
+## Continuação — 2026-10-30: auditoria de entrada modal
+
+- Novo analisador genérico `tools/edgeai_modal_input_audit.py`: verifica abertura/fechamento de menus, captura de toques e eventos de gameplay em logs reais. Cinco regressões adicionadas e especificação `docs/last_modal_input_spec.json` criada. Último commit de código: [a36561b](https://github.com/48348484488/EdgeAI-Engine/commit/a36561b9ac975e05d1e147876b28f1717c3118fe).
+- [CI #41156899534](https://github.com/48348484488/EdgeAI-Engine/actions/runs/41156899534) ainda enfileirado na última consulta. Não afirmar aprovação.
+- Last: captura modal e bloqueio de salto adicionados; build Android e teste de toque real ainda pendentes.
+- Próxima prioridade: validar logs Android com o auditor, testar barra de itens, mira e construção; comparar com Unity LITE 7.3 autorizado. Nenhuma nova função ARM reconstruída.
