@@ -388,3 +388,12 @@ Consultar as execuções mais recentes antes de repetir uma análise. Guardar SH
 - Próxima prioridade: validar logs Android com o auditor, testar barra de itens, mira e construção; comparar com Unity LITE 7.3 autorizado. Nenhuma nova função ARM reconstruída.
 
 - Verificação concluída: [EdgeAI CI #41156921115](https://github.com/48348484488/EdgeAI-Engine/actions/runs/41156921115) **sucesso**: 796 testes Python (38 ignorados), 15/15 C++ e 100.000 casos diferenciais de LBS. O auditor modal novo passou na suíte. Não é teste de paridade com o original.
+
+## Continuação — 2026-10-30: auditoria genérica de propriedade de toque
+
+- Expandido `tools/edgeai_modal_input_audit.py` para interpretar eventos `touch_down` opcionais e identificar ações de gameplay capturadas durante um modal. O analisador distingue `gameplay_touch_owned_by_modal` de `unparseable_modal_touch`, mantendo verificação de captura, abertura e fechamento; não afirma equivalência ao jogo original.
+- Commits [cf8cc01](https://github.com/48348484488/EdgeAI-Engine/commit/cf8cc0113594a0b3634dd72b9460ba68ec770298), [56189c8](https://github.com/48348484488/EdgeAI-Engine/commit/56189c80fecdbc37c71f7569d2aace43fc42c2c7), [4799b44](https://github.com/48348484488/EdgeAI-Engine/commit/4799b44c1d1fe0e563b89ceb4dd9efb95051bc3d) e [875a8f0](https://github.com/48348484488/EdgeAI-Engine/commit/875a8f0a87992aafa296061ddd8220aa2080b89b).
+- Quatro regressões novas cobrem toque neutro, fallback `Look` proibido, evento malformado e regex inválida. `docs/last_modal_input_spec.json` passou a exigir ações 0/8/12/13 durante modal. O analisador é configurável para outros jogos.
+- CI mais recente [#41160968526](https://github.com/48348484488/EdgeAI-Engine/actions/runs/41160968526) ainda estava em execução; não afirmar aprovação até conclusão. Nenhuma função ARM32/ARM64 nova reconstruída nesta etapa.
+- Referência pública da versão LITE 7.3 em 23/10/2026: https://last-island-of-survival-lite.vn.aptoide.com/app . Outras fontes exibem 6.7, portanto não assumir correspondência visual entre versões.
+- Próxima prioridade: aplicar auditor aos logs Android reais, exigir ausência de `action=2` em modal, adicionar teste de mira/hotbar/construção e retomar auditoria de funções ARM64 com entradas e saídas verificáveis.
