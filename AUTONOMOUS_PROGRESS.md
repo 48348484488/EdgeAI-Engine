@@ -386,3 +386,5 @@ Consultar as execuções mais recentes antes de repetir uma análise. Guardar SH
 - [CI #41156899534](https://github.com/48348484488/EdgeAI-Engine/actions/runs/41156899534) ainda enfileirado na última consulta. Não afirmar aprovação.
 - Last: captura modal e bloqueio de salto adicionados; build Android e teste de toque real ainda pendentes.
 - Próxima prioridade: validar logs Android com o auditor, testar barra de itens, mira e construção; comparar com Unity LITE 7.3 autorizado. Nenhuma nova função ARM reconstruída.
+
+- Verificação concluída: [EdgeAI CI #41156921115](https://github.com/48348484488/EdgeAI-Engine/actions/runs/41156921115) **sucesso**: 796 testes Python (38 ignorados), 15/15 C++ e 100.000 casos diferenciais de LBS. O auditor modal novo passou na suíte. Não é teste de paridade com o original.
