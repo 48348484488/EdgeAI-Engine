@@ -39,9 +39,13 @@ inline void skin_vertex(const float* matrices16, const std::uint16_t* paletteInd
                                  outputNormal[1]*outputNormal[1] +
                                  outputNormal[2]*outputNormal[2]);
     if (norm > 1.0e-7f) {
-        outputNormal[0] /= norm;
-        outputNormal[1] /= norm;
-        outputNormal[2] /= norm;
+        // One reciprocal instead of three scalar divisions per vertex.
+        // Floating-point rounding may differ from direct division; keep
+        // the independent differential test as the correctness gate.
+        const float inverseNorm = 1.0f / norm;
+        outputNormal[0] *= inverseNorm;
+        outputNormal[1] *= inverseNorm;
+        outputNormal[2] *= inverseNorm;
     }
 }
 }  // namespace edgeai_lbs
