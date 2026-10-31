@@ -1,0 +1,54 @@
+{
+  "date_local": "2026-10-30 22:15 America/Recife",
+  "project": "Last Island of Survival LITE recreation",
+  "source": {
+    "repository": "48348484488/last-Island-of-survival-lite",
+    "runtime_run": "https://github.com/48348484488/last-Island-of-survival-lite/actions/runs/41153871744",
+    "runtime_artifact": "https://github.com/48348484488/last-Island-of-survival-lite/actions/runs/41153871744/artifacts/13024965463",
+    "apk_commit": "ce50252f27870a6781b2efe6ea160e5ce294157b",
+    "device": "Android x86_64 emulator with ARM64 translation",
+    "real_logcat": true
+  },
+  "auditor": "tools/edgeai_visibility_phase_audit.py",
+  "observed": {
+    "windows": 9,
+    "frames": 540,
+    "visible_frames": 238,
+    "pose_calls": 238,
+    "full_third_person": {
+      "windows": 3,
+      "frames": 180,
+      "pose_cpu_ms": 11.4753,
+      "vbo_submit_ms": 1.0873,
+      "frame_work_ms": 26.885
+    },
+    "full_first_person": {
+      "windows": 4,
+      "frames": 240,
+      "pose_cpu_ms": 0,
+      "vbo_submit_ms": 0,
+      "frame_work_ms": 16.683
+    },
+    "mixed": {
+      "windows": 2,
+      "frames": 120,
+      "pose_cpu_ms": 5.822,
+      "vbo_submit_ms": 0.561,
+      "frame_work_ms": 22.199
+    }
+  },
+  "validation": {
+    "first_person_camera_input_confirmed": true,
+    "third_person_restored": true,
+    "hidden_work_zero": true,
+    "virtual_runtime_success": true,
+    "crouch_state_1_and_0": true,
+    "jump_and_attack": true
+  },
+  "limitations": [
+    "CPU wall-clock, not GPU timer",
+    "Different camera scenes; not a controlled FPS A/B comparison",
+    "No authorized original Unity LITE 7.3 same-state frame for visual parity",
+    "No new original ARM function decompiled"
+  ]
+}
