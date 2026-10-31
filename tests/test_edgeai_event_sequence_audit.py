@@ -73,20 +73,20 @@ class EventSequenceAuditTests(unittest.TestCase):
 
     def test_numeric_comparison_between_steps(self):
         rules = {"steps": [
-            {"name": "foundation", "pattern": r"PLACE count=(?P<count>\\d+)"},
-            {"name": "wall", "pattern": r"WALL count=(?P<count>\\d+)"},
+            {"name": "foundation", "pattern": r"PLACE count=(?P<count>\d+)"},
+            {"name": "wall", "pattern": r"WALL count=(?P<count>\d+)"},
         ], "numeric_comparisons": [{
             "left": {"step": "wall", "group": "count"}, "op": "gt",
             "right": {"step": "foundation", "group": "count"}
         }]}
-        self.assertTrue(audit("PLACE count=1\\nWALL count=2", rules)["ok"])
-        result = audit("PLACE count=1\\nWALL count=1", rules)
+        self.assertTrue(audit("PLACE count=1\nWALL count=2", rules)["ok"])
+        result = audit("PLACE count=1\nWALL count=1", rules)
         self.assertFalse(result["ok"])
         self.assertTrue(result["errors"][0].startswith("numeric_comparison_failed:"))
 
     def test_numeric_comparison_within_rotation_event(self):
         rules = {"steps": [{"name": "rotate",
-            "pattern": r"ROTATE before=(?P<before>\\d+) after=(?P<after>\\d+)"}],
+            "pattern": r"ROTATE before=(?P<before>\d+) after=(?P<after>\d+)"}],
             "numeric_comparisons": [{
                 "left": {"step": "rotate", "group": "after"}, "op": "ne",
                 "right": {"step": "rotate", "group": "before"}}
@@ -95,7 +95,7 @@ class EventSequenceAuditTests(unittest.TestCase):
         self.assertFalse(audit("ROTATE before=0 after=0", rules)["ok"])
 
     def test_numeric_comparison_rejects_invalid_specification(self):
-        rules = {"steps": [{"name": "x", "pattern": r"X (?P<n>\\d+)"}],
+        rules = {"steps": [{"name": "x", "pattern": r"X (?P<n>\d+)"}],
                  "numeric_comparisons": [{
                      "left": {"step": "x", "group": "n"}, "op": "bogus",
                      "right": {"step": "x", "group": "n"}
