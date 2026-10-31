@@ -26,7 +26,7 @@ def audit(log, spec):
     if touch_rule is not None:
         if not isinstance(touch_rule.get("prefix"), str) or not touch_rule["prefix"]:
             raise ValueError("touch_down.prefix must be a nonempty string")
-        touch_pattern = re.compile(touch_rule.get("action_regex", r"\\baction=(\\d+)\\b"))
+        touch_pattern = re.compile(touch_rule.get("action_regex", r"\baction=(\d+)\b"))
         if touch_pattern.groups != 1:
             raise ValueError("touch_down.action_regex requires one capture group")
         allowed = set(touch_rule.get("allowed_during_modal", [0]))
