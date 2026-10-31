@@ -25,10 +25,10 @@ def audit(spec):
     if (isinstance(tolerance, bool) or not isinstance(tolerance, (int, float))
             or not math.isfinite(tolerance) or tolerance < 0):
         raise ValueError("invalid tolerance")
-    endpoint_gap = max(0.0, dims["visual_half_length"] -
-                       dims["collision_half_length"] - tolerance)
-    thickness_gap = max(0.0, dims["visual_half_thickness"] -
-                        dims["collision_half_thickness"] - tolerance)
+    endpoint_gap = (dims["visual_half_length"] - dims["collision_half_length"]
+                    if dims["visual_half_length"] > dims["collision_half_length"] + tolerance else 0.0)
+    thickness_gap = (dims["visual_half_thickness"] - dims["collision_half_thickness"]
+                     if dims["visual_half_thickness"] > dims["collision_half_thickness"] + tolerance else 0.0)
     rotations = []
     for turn in range(4):
         along_x = turn % 2 == 0
