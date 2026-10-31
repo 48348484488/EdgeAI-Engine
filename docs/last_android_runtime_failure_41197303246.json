@@ -1,0 +1,34 @@
+{
+  "run_id": 41197303246,
+  "artifact_id": 13041525725,
+  "apk_build": "success",
+  "apk_release": "success",
+  "android_runtime": "failure",
+  "exit_code": 47,
+  "first_frame_completed": false,
+  "process_alive_at_timeout": true,
+  "stages": [
+    {
+      "name": "native_raylib_initialized",
+      "time": "2026-10-31T11:37:15.385Z"
+    },
+    {
+      "name": "original_terrain_loaded",
+      "time": "2026-10-31T11:37:26.710Z"
+    },
+    {
+      "name": "audio_initialized",
+      "time": "2026-10-31T11:37:27.613Z"
+    },
+    {
+      "name": "input_initialized",
+      "time": "2026-10-31T11:37:27.617Z"
+    }
+  ],
+  "last_observed_stage": "input_initialized",
+  "next_required_stage": "first_frame_completed",
+  "seconds_without_next_stage": 68.292,
+  "diagnosis": "Game process remained alive, source terrain and audio initialized, but neither EndDrawing nor render heartbeat was observed. Not enough evidence to distinguish CPU stall in animation pose, draw, GPU swap, or emulator scheduling.",
+  "original_parity_proven": false,
+  "next_action": "Inspect first-frame phase markers from new instrumented Android build; fix the exact stalled phase before joystick collision audit."
+}
