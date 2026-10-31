@@ -7,6 +7,7 @@ synthetic fixtures as proof of original-game parity.
 """
 import argparse
 import json
+import math
 import re
 from pathlib import Path
 
@@ -59,6 +60,40 @@ def audit(log_text, rules):
                 if m and m.group("frame") == frame:
                     errors.append("same_frame_leak:%s:frame_%s:line_%d" %
                                   (guard.get("name", "guard"), frame, i + 1))
+
+    # Compare captured numeric fields across ordered runtime steps. Useful for
+    # orientation changes, inventory counters, health deltas and placement
+    # counts without hardcoding a particular game or log format.
+    for check in rules.get("numeric_comparisons", []):
+        left, right = check["left"], check["right"]
+        op = check["op"]
+        if op not in ("eq", "ne", "lt", "le", "gt", "ge"):
+            raise ValueError("unsupported numeric comparison operator: " + op)
+        if left["step"] not in names or right["step"] not in names:
+            raise ValueError("unknown numeric comparison step")
+        if left["step"] not in matches or right["step"] not in matches:
+            continue
+
+        def value(spec):
+            step = next(s for s in steps if s["name"] == spec["step"])
+            line = matches[spec["step"]]["text"]
+            found = re.search(step["pattern"], line)
+            if found is None or spec["group"] not in found.groupdict():
+                raise ValueError("missing named capture: " + spec["group"])
+            try:
+                result = float(found.group(spec["group"]))
+            except (TypeError, ValueError):
+                raise ValueError("non-numeric capture: " + spec["group"])
+            if not math.isfinite(result):
+                raise ValueError("nonfinite capture: " + spec["group"])
+            return result
+
+        a, b = value(left), value(right)
+        valid = {"eq": a == b, "ne": a != b, "lt": a < b,
+                 "le": a <= b, "gt": a > b, "ge": a >= b}[op]
+        if not valid:
+            errors.append("numeric_comparison_failed:%s:%s:%s" %
+                          (left["step"], op, right["step"]))
 
     return {"ok": not errors, "observed_lines": len(lines),
             "matched_steps": matches, "errors": errors,
