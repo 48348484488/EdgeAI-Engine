@@ -20,5 +20,28 @@
     "The 11-sample filtered analysis was executed locally on the failed run's actual Android log; the corrected Android workflow is not yet validated.",
     "No original-game collision equivalence is claimed.",
     "The test parser now selects positive Y for this particular game's reverse joystick orientation; EdgeAI's retreat audit remains engine-agnostic."
-  ]
+  ],
+  "filtered_trace_edgeai_retreat_audit": {
+    "ok": true,
+    "checks": {
+      "enough_samples": true,
+      "free_movement": true,
+      "independent_oracle": true,
+      "blocked_input_nonzero": true,
+      "retreat_clearance": true,
+      "retreat_unblocked": true
+    },
+    "mode": "retreat",
+    "clearance_gain_m": 3.0981,
+    "samples": 11,
+    "free": 11,
+    "blocked": 0,
+    "travel_m": 3.0981,
+    "contact_drift_m": 0,
+    "oracle_matches": 11,
+    "oracle_mismatches": [],
+    "boundary_ambiguous": 0,
+    "original_game_parity_verified": false
+  },
+  "notes": "Executed EdgeAI's generic retreat audit logic locally on the filtered real Android trace; new Android workflow remains pending."
 }
