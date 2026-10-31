@@ -12,8 +12,8 @@ SPEC.loader.exec_module(MODULE)
 class TransitionInputAuditTests(unittest.TestCase):
     def test_transition_consumes_opening_touch(self):
         log = (
-            "raylib: LIOS_INPUT_TRANSITION frame=42 from=game to=build\\n"
-            "raylib: LIOS_INPUT_DISPATCH frame=43 scope=build\\n"
+            "raylib: LIOS_INPUT_TRANSITION frame=42 from=game to=build\n"
+            "raylib: LIOS_INPUT_DISPATCH frame=43 scope=build\n"
         )
         result = MODULE.audit(log)
         self.assertTrue(result["validated"])
@@ -22,8 +22,8 @@ class TransitionInputAuditTests(unittest.TestCase):
 
     def test_same_frame_dispatch_into_new_scope_is_failure(self):
         log = (
-            "LIOS_INPUT_TRANSITION frame=42 from=game to=build\\n"
-            "LIOS_INPUT_DISPATCH frame=42 scope=build\\n"
+            "LIOS_INPUT_TRANSITION frame=42 from=game to=build\n"
+            "LIOS_INPUT_DISPATCH frame=42 scope=build\n"
         )
         result = MODULE.audit(log)
         self.assertEqual(result["violation_count"], 1)
@@ -34,8 +34,8 @@ class TransitionInputAuditTests(unittest.TestCase):
 
     def test_other_scope_does_not_create_false_positive(self):
         result = MODULE.audit(
-            "INPUT_TRANSITION frame=9 from=game to=panel_2\\n"
-            "INPUT_DISPATCH frame=9 scope=game\\n"
+            "INPUT_TRANSITION frame=9 from=game to=panel_2\n"
+            "INPUT_DISPATCH frame=9 scope=game\n"
         )
         self.assertTrue(result["validated"])
 
