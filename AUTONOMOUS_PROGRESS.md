@@ -1,3 +1,12 @@
+## 2026-10-31 — auditor genérico de transições de entrada
+
+- Novo `tools/edgeai_transition_input_audit.py` verifica logs com `INPUT_TRANSITION frame=N from=X to=Y` e `INPUT_DISPATCH frame=N scope=Y`. Detecta despacho indevido no modo recém-aberto durante o frame de transição, além de marcadores malformados; gera JSON com evidências por linha. Independente de Unity/Last, reutilizável em jogos e apps.
+- Cinco regressões sintéticas em `tests/test_edgeai_transition_input_audit.py`: sequência válida, toque vazando no mesmo frame, outra área, marcador inválido e trace vazio.
+- Commits de código: [d412f87](https://github.com/48348484488/EdgeAI-Engine/commit/d412f87fd19b6f9a34f6644cef0e4cd909474623), [322f7f3](https://github.com/48348484488/EdgeAI-Engine/commit/322f7f38de76a694a86ef26e5d1e5e10730bb44f), [2a8a1d0](https://github.com/48348484488/EdgeAI-Engine/commit/2a8a1d034e144c9884d659381c6afb46463a2b79), [e90a3c1](https://github.com/48348484488/EdgeAI-Engine/commit/e90a3c122c8e8b47de0f4ca7f476974f0b7963df), [391b108](https://github.com/48348484488/EdgeAI-Engine/commit/391b1080e9762589865c92922a00a233e5c82c7d), [8f70782](https://github.com/48348484488/EdgeAI-Engine/commit/8f7078261456b8280283a59d8ea078b87bcdf59e).
+- [CI #41168206331](https://github.com/48348484488/EdgeAI-Engine/actions/runs/41168206331) corresponde a commit intermediário; CI do último commit ainda precisa ser verificado. Nenhuma equivalência com binário ARM original é reivindicada.
+- Integração no Last: `main.cpp` agora emite marcadores com número de frame para build e painéis. Auditoria runtime ainda pendente de logs de construção em Android virtual.
+- Próxima prioridade: executar auditor em trace real de construção, depois retomar recuperação ARM64 de função C++ com teste diferencial e comparação de comportamento.
+
 ### 2026-10-31 — Last Android source-grounded input and frame evidence
 
 - Last [Android #41166031283](https://github.com/48348484488/last-Island-of-survival-lite/actions/runs/41166031283) **passed 3/3 jobs**, including actual ARM64-translated emulator gameplay touch tests for hotbar slots 0/1, aim on/off, jump, attack and crouch. New source-grounded 1080x640 screenshots and 600 frame logcat measurements are preserved in [runtime artifact #13028829384](https://github.com/48348484488/last-Island-of-survival-lite/actions/runs/41166031283/artifacts/13028829384) and [structured report](https://github.com/48348484488/last-Island-of-survival-lite/blob/main/docs/android_input_priority_2026-10-31.json).
