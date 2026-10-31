@@ -1,3 +1,9 @@
+### 2026-10-31 — Last Android source-grounded input and frame evidence
+
+- Last [Android #41166031283](https://github.com/48348484488/last-Island-of-survival-lite/actions/runs/41166031283) **passed 3/3 jobs**, including actual ARM64-translated emulator gameplay touch tests for hotbar slots 0/1, aim on/off, jump, attack and crouch. New source-grounded 1080x640 screenshots and 600 frame logcat measurements are preserved in [runtime artifact #13028829384](https://github.com/48348484488/last-Island-of-survival-lite/actions/runs/41166031283/artifacts/13028829384) and [structured report](https://github.com/48348484488/last-Island-of-survival-lite/blob/main/docs/android_input_priority_2026-10-31.json).
+- Full third-person windows 120 frames: 28.7355ms / 34.80 FPS; first-person hidden 360 frames: 17.3365ms / 57.68 FPS. These camera states are **not a controlled A/B**. The new EdgeAI exclusive input audit passed CI but has not yet been applied to a real builder mode session. No original ARM function recovered.
+- Next: obtain actual build-mode event trace and apply `tools/edgeai_exclusive_input_audit.py`; continue reusable CPU skinning profiling and original-game binary analysis.
+
 ### Verified 2026-10-31 — exclusive input audit CI
 
 - [EdgeAI CI #41165814108](https://github.com/48348484488/EdgeAI-Engine/actions/runs/41165814108) **passed** on checkpoint commit `0c30db5c`; [low-resource CI #41165814084](https://github.com/48348484488/EdgeAI-Engine/actions/runs/41165814084) also passed. The new generic exclusive-mode auditor and its nine unit tests are included.
