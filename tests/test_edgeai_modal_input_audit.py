@@ -27,3 +27,19 @@ class ModalInputAuditTests(unittest.TestCase):
         result = module.audit("CRAFT_OPEN\nMODAL_CAPTURE\nJUMP\nCRAFT_CLOSE", RULES)
         self.assertFalse(result["passed"])
         self.assertIn("gameplay_during_modal", [v[1] for v in result["violations"]])
+
+    def test_missing_capture_rejected(self):
+        result = module.audit("INV_OPEN\nINV_CLOSE", RULES)
+        self.assertFalse(result["passed"])
+
+    def test_mismatched_close_rejected(self):
+        result = module.audit("INV_OPEN\nMODAL_CAPTURE\nCRAFT_CLOSE", RULES)
+        self.assertFalse(result["passed"])
+
+    def test_no_events_cannot_pass(self):
+        with self.assertRaisesRegex(ValueError, "no observed"):
+            module.audit("unrelated output", RULES)
+
+
+if __name__ == "__main__":
+    unittest.main()
