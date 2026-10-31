@@ -34,6 +34,8 @@ def audit(log, spec):
             opens += 1
             if active is not None:
                 violations.append((line_no, "overlapping"))
+            if pending:
+                violations.append((line_no, "missing_capture_before_next_open"))
             active, pending = name, bool(capture)
         elif kind == "close":
             if active != name or pending:
