@@ -35,7 +35,18 @@ def near_face(point, collider, tolerance):
             abs(abs(z-cz)-hz) <= tolerance and abs(x-cx) <= hx+tolerance)
 
 
+def outside_clearance(point, collider):
+    """Euclidean distance from a ground-plane point to an AABB (zero inside)."""
+    x, z = point
+    cx, cz = collider["center"]
+    hx, hz = collider["half_extents"]
+    return math.hypot(max(abs(x-cx)-hx, 0.0), max(abs(z-cz)-hz, 0.0))
+
+
 def audit_trace(spec):
+    mode = spec.get("mode", "contact")
+    if mode not in ("contact", "retreat"):
+        raise ValueError("mode must be contact or retreat")
     records = spec.get("records")
     colliders = spec.get("colliders")
     if not isinstance(records, list) or not records:
@@ -94,13 +105,32 @@ def audit_trace(spec):
     checks = {
         "enough_samples": len(normalized) >= min_samples,
         "free_movement": len(free) >= min_free and travel >= min_travel,
-        "wall_contact": len(blocked) >= min_blocked and drift <= max_drift,
-        "independent_oracle": not mismatches and checked >= min_free+min_blocked,
+        "independent_oracle": not mismatches and checked >= min_free,
         "blocked_input_nonzero": all(math.dist(r["start"], r["target"]) > .0001
                                       for r in blocked),
     }
+    clearance_gain = None
+    if mode == "contact":
+        checks["wall_contact"] = len(blocked) >= min_blocked and drift <= max_drift
+        checks["independent_oracle"] &= checked >= min_free+min_blocked
+    else:
+        # A retreat must create measurable clearance from the nearest collider,
+        # not merely move sideways along a blocked surface.
+        start_clearance = min(outside_clearance(normalized[0]["start"], c)
+                              for c in colliders)
+        end_clearance = min(outside_clearance(normalized[-1]["start"], c)
+                            for c in colliders)
+        clearance_gain = end_clearance - start_clearance
+        min_gain = finite(spec.get("min_clearance_gain", .15), "min_clearance_gain")
+        max_blocked = spec.get("max_retreat_blocked", 1)
+        if min_gain < 0 or type(max_blocked) is not int or max_blocked < 0:
+            raise ValueError("invalid retreat thresholds")
+        checks["retreat_clearance"] = clearance_gain >= min_gain
+        checks["retreat_unblocked"] = len(blocked) <= max_blocked
     return {
         "ok": all(checks.values()), "checks": checks,
+        "mode": mode, "clearance_gain_m": (
+            round(clearance_gain, 5) if clearance_gain is not None else None),
         "samples": len(normalized), "free": len(free), "blocked": len(blocked),
         "travel_m": round(travel, 5), "contact_drift_m": round(drift, 5),
         "oracle_matches": checked, "oracle_mismatches": mismatches,
