@@ -1,3 +1,11 @@
+### 2026-10-30 21:50 America/Recife — generic LBS normal optimization
+
+- Updated `include/edgeai_lbs_kernel.hpp`: normal normalization now uses one reciprocal and three multiplications instead of three divisions per skinned vertex. This is reusable C++ CPU skinning code, not Last-specific. Commit [628e5cf](https://github.com/48348484488/EdgeAI-Engine/commit/628e5cf1616a274f87e50e3c6f76ebd882d8a94e).
+- Independent local Linux x86_64 C++11 -O2 100,000-case reference differential passed: max position delta 1.52587891e-05, normal delta 1.11758709e-06, threshold 1e-4. This local check used a standalone reproduction of the kernel/reference; the repository CI is the definitive source test.
+- ARM64 CI [#41152347746](https://github.com/48348484488/EdgeAI-Engine/actions/runs/41152347746) passed; full [CI #41152347799](https://github.com/48348484488/EdgeAI-Engine/actions/runs/41152347799) pending at checkpoint.
+- Integrated identical kernel bytes into Last in commit [8c5297c](https://github.com/48348484488/last-Island-of-survival-lite/commit/8c5297c09f08764502c67484d25567ace5fdb625). Android build/runtime pending. No new original ARM function reconstructed; no measured FPS improvement claimed.
+- Next: verify EdgeAI full CI and Last Android emulator timings vs prior 14.0583ms pose CPU baseline, expand touch coverage and recover same-state authorized Unity LITE 7.3 visual evidence.
+
 ### Verified result — 2026-10-30 20:10 America/Recife — LBS optimization validated on Android
 
 - EdgeAI [CI #41141892749](https://github.com/48348484488/EdgeAI-Engine/actions/runs/41141892749) **passed**: 783 Python tests (38 skipped), 15/15 C++ tests, plus the **100,000-case independent LBS differential** (max position delta 1.52587891e-05, max normal delta 1.11013651e-06). This validates the portable weighted-matrix kernel within a strict 1e-4 tolerance, not original-game reverse-engineering completeness.
