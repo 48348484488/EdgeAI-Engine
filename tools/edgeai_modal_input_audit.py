@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Validate runtime UI ownership from event logs; no original-game parity claims."""
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -19,10 +20,30 @@ def audit(log, spec):
     expected = 2 * len(spec["panels"]) + len(spec["gameplay"]) + bool(capture)
     if len(markers) != expected:
         raise ValueError("duplicate markers")
+    touch_rule = spec.get("touch_down")
+    touch_pattern = None
+    allowed = set()
+    if touch_rule is not None:
+        if not isinstance(touch_rule.get("prefix"), str) or not touch_rule["prefix"]:
+            raise ValueError("touch_down.prefix must be a nonempty string")
+        touch_pattern = re.compile(touch_rule.get("action_regex", r"\\baction=(\\d+)\\b"))
+        if touch_pattern.groups != 1:
+            raise ValueError("touch_down.action_regex requires one capture group")
+        allowed = set(touch_rule.get("allowed_during_modal", [0]))
+        if any(type(value) is not int for value in allowed):
+            raise ValueError("touch action ids must be integers")
     active, pending = None, False
     violations = []
     opens = 0
+    modal_touches = 0
     for line_no, line in enumerate(log.splitlines(), 1):
+        if active is not None and touch_rule is not None and touch_rule["prefix"] in line.split():
+            modal_touches += 1
+            match = touch_pattern.search(line)
+            if match is None:
+                violations.append((line_no, "unparseable_modal_touch"))
+            elif int(match.group(1)) not in allowed:
+                violations.append((line_no, "gameplay_touch_owned_by_modal"))
         events = [value for key, value in markers.items() if key in line.split()]
         if len(events) > 1:
             violations.append((line_no, "ambiguous"))
@@ -51,8 +72,9 @@ def audit(log, spec):
         violations.append((len(log.splitlines()), "missing_capture"))
     if not opens:
         raise ValueError("no observed panel opens")
-    return {"opens": opens, "violations": violations,
-            "passed": not violations, "original_game_parity_proven": False}
+    return {"opens": opens, "modal_touches": modal_touches,
+            "violations": violations, "passed": not violations,
+            "original_game_parity_proven": False}
 
 
 def main():
