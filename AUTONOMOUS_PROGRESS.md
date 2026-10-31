@@ -1,3 +1,11 @@
+### VALIDADO — 2026-10-31 — auditor numérico aplicado a parede e rotação reais
+
+- [Last Android #41180256670](https://github.com/48348484488/last-Island-of-survival-lite/actions/runs/41180256670) **3/3 jobs aprovados**, APK v0.25.0-ef7281c9 instalado e executado no Android virtual. Artefato [#13034851649](https://github.com/48348484488/last-Island-of-survival-lite/actions/runs/41180256670/artifacts/13034851649).
+- O auditor genérico `tools/edgeai_event_sequence_audit.py` foi executado com `docs/edgeai_builder_runtime_sequence.json` do Last sobre **327 linhas reais de logcat**: **15 eventos na ordem, 3 comparações numéricas, zero erros**. Fundação ID 24000 colocada (1), parede ID 24012 colocada (2), orientação mudou 0→2 pelo `OnceAngle=180` original, segunda parede colocada (3), saiu sem vazamento de ataque/salto.
+- Evidência [docs/last_builder_wall_rotation_android_2026-10-31.json](https://github.com/48348484488/EdgeAI-Engine/blob/main/docs/last_builder_wall_rotation_android_2026-10-31.json), commit [38e60aa](https://github.com/48348484488/EdgeAI-Engine/commit/38e60aad24c66bd3c0d10b56c242a965b2f932f8). Capturas 1080×640: rotação alterou 31.370 pixels RGB>30 (4,538%); colocação seguinte 452 pixels (0,0654%). Comparação é entre estados do jogo recriado, **não** contra original Unity.
+- [EdgeAI CI #41180294633](https://github.com/48348484488/EdgeAI-Engine/actions/runs/41180294633) aprovado; testes Python 837 (38 ignorados), 15 C++, 100.000 casos diferenciais LBS do último CI de código. Nenhuma função ARM original recuperada nesta execução.
+- Próximo: recuperar malha/UV do prefab `part/qiangbi_lv1.ab` original, comparar ao nativo; desenvolver análise genérica de materiais e callbacks ARM64/IL2CPP, com teste diferencial e proveniência.
+
 ### 2026-10-31 — original Unity BuildPart metadata checked against native prototype
 
 - Retrieved immutable [original BuildPart artifact #12883220942](https://github.com/48348484488/last-Island-of-survival-lite/actions/runs/40841337262/artifacts/12883220942) (ZIP SHA-256 `78274205ada24ebfdb5758ead56f4e06c9bca986dc9b932f86e0f2d82b2e45ac`). Source cfg SHA-256 `eaedf3f5615786dbcf1d9404f3ed67de3dec0e7fda29181a6c5c4225b398cf63`.
