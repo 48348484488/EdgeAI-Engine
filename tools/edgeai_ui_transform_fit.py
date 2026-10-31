@@ -75,6 +75,59 @@ def fit(data, tolerance_px=3.0):
     }
 
 
+
+def calibrate_runtime_touch(data):
+    """Map logical UI hitboxes into physical touch coordinates using one live tap.
+
+    Scale is fixed by the declared viewport dimensions; the observed
+    source-space tap resolves only the physical translation. This explicitly
+    handles three coordinate spaces: source canvas, game logical viewport and
+    Android screenshot/touchscreen. A single sample cannot verify distortion
+    or prove visual parity.
+    """
+    sw, sh = _point(data.get("source_resolution"), "source_resolution")
+    lw, lh = _point(data.get("logical_resolution"), "logical_resolution")
+    pw, ph = _point(data.get("physical_resolution"), "physical_resolution")
+    if min(sw, sh, lw, lh, pw, ph) <= 0:
+        raise ValueError("resolutions must be positive")
+    sx, sy = _point(data.get("observed_source_touch"), "observed_source_touch")
+    px, py = _point(data.get("observed_physical_touch"), "observed_physical_touch")
+    ox, oy = _point(data.get("source_visual_offset", [0, 0]),
+                    "source_visual_offset")
+    canvas_scale = min(lw / sw, lh / sh)
+    canvas_left = (lw - sw * canvas_scale) / 2
+    canvas_top = (lh - sh * canvas_scale) / 2
+    physical_scale = min(pw / lw, ph / lh)
+    logical_touch = (canvas_left + (sx + ox) * canvas_scale,
+                     canvas_top + (sy + oy) * canvas_scale)
+    physical_origin = (px - logical_touch[0] * physical_scale,
+                       py - logical_touch[1] * physical_scale)
+    rects = data.get("logical_hitboxes", {})
+    if not isinstance(rects, dict):
+        raise ValueError("logical_hitboxes must be an object")
+    centers = {}
+    for name, rect in rects.items():
+        if not isinstance(name, str) or not name:
+            raise ValueError("invalid hitbox name")
+        if not isinstance(rect, (list, tuple)) or len(rect) != 4:
+            raise ValueError("hitboxes require [left,top,right,bottom]")
+        l, t = _point(rect[:2], name + ".top_left")
+        r, b = _point(rect[2:], name + ".bottom_right")
+        if r <= l or b <= t:
+            raise ValueError("nonpositive hitbox " + name)
+        x = (l + r) * 0.5 * physical_scale + physical_origin[0]
+        y = (t + b) * 0.5 * physical_scale + physical_origin[1]
+        centers[name] = [round(x, 3), round(y, 3)]
+    return {
+        "canvas_scale": round(canvas_scale, 9),
+        "physical_scale": round(physical_scale, 9),
+        "physical_origin": [round(v, 3) for v in physical_origin],
+        "physical_hitbox_centers": centers,
+        "calibration_samples": 1,
+        "single_sample_scale_validation_proven": False,
+        "original_game_parity_proven": False,
+    }
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("matches", type=Path, help="JSON with canvas sizes and matched control centers")
