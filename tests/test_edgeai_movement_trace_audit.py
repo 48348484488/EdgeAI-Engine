@@ -19,6 +19,40 @@ def fixture():
 
 
 class MovementTraceAuditTests(unittest.TestCase):
+    def retreat_fixture(self):
+        positions = [.8, .6, .4, .2, 0.]
+        targets = [.6, .4, .2, 0., -.2]
+        return {"mode": "retreat", "records": [
+            {"frame": i*10+100, "x": x, "z": 0., "target_x": target,
+             "target_z": 0., "blocked": 0, "terrain": 0}
+            for i, (x, target) in enumerate(zip(positions, targets))],
+            "colliders": [{"center": [1., 0.], "half_extents": [.1, 1.]}]}
+
+    def test_retreat_from_wall(self):
+        result = audit_trace(self.retreat_fixture())
+        self.assertTrue(result["ok"], result)
+        self.assertEqual(result["mode"], "retreat")
+        self.assertGreater(result["clearance_gain_m"], .5)
+
+    def test_retreat_requires_clearance_gain(self):
+        spec = self.retreat_fixture()
+        for i, row in enumerate(spec["records"]):
+            row.update(x=.8, z=i*.2, target_x=.8, target_z=(i+1)*.2)
+        result = audit_trace(spec)
+        self.assertFalse(result["ok"])
+        self.assertFalse(result["checks"]["retreat_clearance"])
+
+    def test_retreat_rejects_false_collision_flag(self):
+        spec = self.retreat_fixture()
+        spec["records"][2]["blocked"] = 1
+        self.assertFalse(audit_trace(spec)["ok"])
+
+    def test_retreat_rejects_invalid_mode(self):
+        spec = self.retreat_fixture()
+        spec["mode"] = "teleport"
+        with self.assertRaises(ValueError):
+            audit_trace(spec)
+
     def test_realistic_contact(self):
         r = audit_trace(fixture())
         self.assertTrue(r["ok"], r)
